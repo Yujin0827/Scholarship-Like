@@ -1,0 +1,43 @@
+<resources>
+    <string name="app_name">ScholarshipLike</string>
+
+    <!-- fragment_profile.xml에 사용 -->
+    <string name="change_profile">프로필 수정</string>
+    <string name="user_name">홍길동</string>
+    <string name="user_hello">님, 반갑습니다!</string>
+    <string name="change_my_condition">내 조건 수정</string>
+    <string name="set_alarm">알림설정 (장학금 관련)</string>
+    <string name="alarm_app_all">앱 전체</string>
+    <string name="alarm_scholarship">장학금</string>
+    <string name="alarm_magazine">매거진</string>
+    <string name="heart_post">좋아요 누른 게시물</string>
+    <string name="app_info">앱 정보</string>
+    <string name="inquiry">문의</string>
+    <string name="logout">로그아웃</string>
+
+    <!-- activity_profile_my_con_change.xml에 사용 -->
+    <string name="save">저장</string>
+    <string name="income">소득분위</string>
+    <string name="family_rel">가족관계</string>
+    <string name="family_rel_dad">부</string>
+    <string name="family_rel_mom">모</string>
+    <string name="school_att_leav">재학 여부</string>
+    <string name="school_attending">재학</string>
+    <string name="school_leaving">휴학</string>
+    <string name="semester">이수 학기</string>
+    <string name="high_school">출신 고등학교</string>
+    <string name="pre_semester">직전 학기</string>
+    <string name="high_school_area">지역</string>
+    <string name="high_school_type">종류</string>
+    <string name="high_school_area_rural">농어촌</string>
+    <string name="high_school_area_etc">해당 없음</string>
+    <string name="pre_semester_grade">이수 학점</string>
+    <string name="pre_semester_score">성적</string>
+    <string name="area">거주지</string>
+    <string name="country">국적</string>
+    <string name="country_local">내국인</string>
+    <string name="country_foreigner">외국인</string>
+    <string name="extra">추가사항</string>
+    <string name="extra_national_merit">국가유공자</string>
+    <string name="extra_disabled">장애 여부</string>
+</resources>

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "697294772314",
+    "project_id": "scholarshiplike-db",
+    "storage_bucket": "scholarshiplike-db.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:697294772314:android:1949aaa5072cb73b4fe063",
+        "android_client_info": {
+          "package_name": "com.cookandroid.scholarshiplike"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "697294772314-vdfvgl6guvatiuc4dcn2kkg12i7t7g8m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwKMfagIJCFYYInt6aaWJW4lsxLwL5znM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "697294772314-vdfvgl6guvatiuc4dcn2kkg12i7t7g8m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

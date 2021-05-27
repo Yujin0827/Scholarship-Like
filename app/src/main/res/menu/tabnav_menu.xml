@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/homeTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_home"
+        android:title="home" />
+
+    <item
+        android:id="@+id/scholarshipTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_scholarship"
+        android:title="scholarship" />
+
+    <item
+        android:id="@+id/magazineTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_magazine"
+        android:title="magazine" />
+
+    <item
+        android:id="@+id/profileTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_profile"
+        android:title="profile" />
+</menu>

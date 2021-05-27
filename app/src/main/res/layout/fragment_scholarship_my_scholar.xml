@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/mySchloarshipLaygout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:weightSum="5">
+
+        <LinearLayout
+            android:id="@+id/condition"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2"
+            android:orientation="vertical"
+            android:background="#E9E9F8">
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/incomeText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="학자금 지원구간"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:textColor="#312E2E"
+                        android:textSize="16sp"
+                        android:layout_marginBottom="3dp"/>
+
+
+                    <Spinner
+                        android:id="@+id/incomeSpinner"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="5dp"
+                        android:entries="@array/incomeList"
+                        android:layout_marginBottom="10dp">
+
+                    </Spinner>
+
+                    <TextView
+                        android:id="@+id/attending"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="3dp"
+                        android:text="재학여부"
+                        android:textColor="#312E2E"
+                        android:textSize="16sp"/>
+
+                    <RadioGroup
+                        android:id="@+id/attendingCheck"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="15dp">
+
+                        <RadioButton
+                            android:id="@+id/inSchool"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:text="재학"
+                            android:textSize="13dp"/>
+
+                        <RadioButton
+                            android:id="@+id/outSchool"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="휴학"
+                            android:textSize="13dp"/>
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/semesterLayout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginLeft="10dp"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <TextView
+                            android:id="@+id/semesterText"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="이수 학기"
+                            android:textColor="#312E2E"
+                            android:textSize="16sp" />
+
+                        <Spinner
+                            android:id="@+id/semesterSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="5dp"
+                            android:layout_weight="1"
+                            android:entries="@array/incomeList">
+
+                        </Spinner>
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
+                        android:id="@+id/preGrade"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:orientation="horizontal"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="0dp"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.3"
+                            android:text="직전학기 이수학점"
+                            android:textColor="#312E2E"
+                            android:textSize="15sp" />
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:hint="18"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:textColorHint="#434242"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/preScore"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:orientation="horizontal"
+                        android:layout_marginBottom="15dp"
+                        android:layout_marginLeft="10dp"
+                        android:weightSum="3">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="2.3"
+                            android:text="직전학기 성적  "
+                            android:textColor="#312E2E"
+                            android:textSize="15sp" />
+                        <EditText
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="0.7"
+                            android:hint="0.0"
+                            android:textColorHint="#605F5F"/>
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/areaText"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="거주지"
+                        android:textSize="16sp"
+                        android:textColor="#312E2E"/>
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:layout_marginBottom="10dp">
+
+                        <Spinner
+                            android:id="@+id/areaSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginLeft="10dp"
+                            android:entries="@array/kind"
+                            android:layout_weight="1">
+
+                        </Spinner>
+
+                        <Spinner
+                            android:id="@+id/inAreaSpinner"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:entries="@array/kind"
+                            android:layout_weight="1">
+
+                        </Spinner>
+
+
+                    </LinearLayout>
+
+
+                    <TextView
+                        android:id="@+id/add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:text="추가사항"
+                        android:textColor="#312E2E"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/nationalMerit"
+                        android:layout_width="match_parent"
+                        android:layout_height="18dp"
+                        android:text="보훈 대상자"
+                        android:textColor="#312E2E"
+                        android:layout_marginBottom="3dp"
+                        android:layout_marginLeft="10dp"/>
+
+                    <CheckBox
+                        android:id="@+id/disabled"
+                        android:layout_width="match_parent"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:layout_height="18dp"
+                        android:text="장애 여부"
+                        android:textColor="#312E2E"/>
+
+                    <Button
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:text="저장"/>
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+        <ScrollView
+            android:id="@+id/myScholarListScrolView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3">
+
+            <ListView
+                android:id="@+id/scholarList"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </ListView>
+
+
+        </ScrollView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id ="@+id/koreaScholarship"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+        android:orientation="vertical"
+        >
+    </LinearLayout>
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
