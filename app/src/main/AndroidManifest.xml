@@ -33,6 +33,9 @@
         <!-- 좋아요 -->
         <activity android:name=".LikeContentActivity" />
 
+        <!-- 매거진 세부 페이지 -->
+        <activity android:name=".MagazineDetailActivity" />
+
     </application>
 
 </manifest>

@@ -16,11 +16,13 @@ class MagazineFragment : Fragment() {
     lateinit var postlistAdapter: MagazineRecyclerViewAdapter
     private var firestore : FirebaseFirestore? = null // Firestore 인스턴스
     var postList : ArrayList<Post> = arrayListOf()
+    private lateinit var mContext : Context
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        mContext = context;
 
-        //매거진관련
+        //파이어스토어 매거진 데이터 불러오기
         firestore = FirebaseFirestore.getInstance() // Firestore 인스턴스 초기화
 
         firestore?.collection("장학라이크")?.document("매거진")?.collection("금융")?.get()?.addOnSuccessListener { result ->
@@ -50,16 +52,16 @@ class MagazineFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_magazine, container, false)
         Log.v("OnCreateView", "ENTER")
+
+        postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
         return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         Log.v("OnViewCreated", "ENTER")
-
-        postlistAdapter = MagazineRecyclerViewAdapter(postList)
-
         magazinerecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)
         magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
         magazinerecyclerView.adapter = postlistAdapter
