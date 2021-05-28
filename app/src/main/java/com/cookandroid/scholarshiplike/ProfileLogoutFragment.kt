@@ -16,16 +16,16 @@ import android.widget.Button
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
-import com.cookandroid.scholarshiplike.databinding.ProfileLogoutBinding
+import com.cookandroid.scholarshiplike.databinding.FragmentProfileLogoutBinding
 import java.security.AccessControlContext
 
 class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
-    private var _binding: ProfileLogoutBinding? = null
+    private var _binding: FragmentProfileLogoutBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         isCancelable = false    // 화면 밖 또는 뒤로가기 버튼 클릭시에도 다이얼로그 dismiss 안됨.
-        _binding = ProfileLogoutBinding.inflate(inflater, container, false)
+        _binding = FragmentProfileLogoutBinding.inflate(inflater, container, false)
 
 //        // 로그아웃 팝업 창 모서리를 둥글게 할 경우 사용
 //        dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
