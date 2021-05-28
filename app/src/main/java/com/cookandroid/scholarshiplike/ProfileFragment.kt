@@ -8,17 +8,22 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
 
     lateinit var myConChange : LinearLayout
     lateinit var likeContent : LinearLayout
+    lateinit var logout : LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        super.onCreate(savedInstanceState)
+        
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
         myConChange = view.findViewById<LinearLayout>(R.id.myConChange)
-        likeContent = view.findViewById<LinearLayout>(R.id.profileList_likePost)
+        likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
+        logout = view.findViewById<LinearLayout>(R.id.logout)
 
         return view
     }
@@ -36,7 +41,9 @@ class ProfileFragment : Fragment() {
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        //'내 조건 수정' 클릭 리스너 - MyConChangeActivity 실행
+        super.onActivityCreated(savedInstanceState)
+
+        // '내 조건 수정' 클릭 리스너
         myConChange.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, ProfileMyConChangeActivity::class.java)
@@ -44,12 +51,18 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        // '좋아요 누른 게시물' 클릭 리스너
         likeContent.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, LikeContentActivity::class.java)
                 it?.startActivity(intent)
             }
         }
-        super.onActivityCreated(savedInstanceState)
+
+        // '로그아웃' 클릭 리스너
+        logout.setOnClickListener {
+            val dialog = ProfileLogoutFragment()
+            dialog.show(parentFragmentManager, "logoutFragment")
+        }
     }
 }
