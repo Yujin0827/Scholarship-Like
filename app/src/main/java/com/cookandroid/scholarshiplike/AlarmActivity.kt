@@ -25,5 +25,7 @@ class AlarmActivity : AppCompatActivity() {
         TabLayoutMediator(alarm_tabLayout, alarm_viewpager){ tab, position->
             tab.text = tabLayoutTextArray[position]
         }.attach()
+
+        //?
     }
 }
