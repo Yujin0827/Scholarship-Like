@@ -221,10 +221,10 @@
                         android:id="@+id/nationalMerit"
                         android:layout_width="match_parent"
                         android:layout_height="18dp"
-                        android:text="보훈 대상자"
-                        android:textColor="#312E2E"
+                        android:layout_marginLeft="10dp"
                         android:layout_marginBottom="3dp"
-                        android:layout_marginLeft="10dp"/>
+                        android:text="보훈 보상 대상자"
+                        android:textColor="#312E2E" />
 
                     <CheckBox
                         android:id="@+id/disabled"

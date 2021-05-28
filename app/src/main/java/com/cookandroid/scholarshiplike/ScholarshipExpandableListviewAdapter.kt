@@ -1,5 +1,5 @@
 package com.cookandroid.scholarshiplike
-/*
+
 import android.content.Context
 import android.os.Parcel
 import android.os.Parcelable
@@ -7,13 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseExpandableListAdapter
+import kotlinx.android.synthetic.main.scholarship_expandlist_child.view.*
+import kotlinx.android.synthetic.main.scholarship_expandlist_parent.view.*
 
-class ScholarshipExpandableListAdapter(
-    private val context: Context,
+
+class ScholarshipExpandableListviewAdapter(
+    private val context: Context?,
     private val parents: MutableList<String>,
-    private val childList: MutableList<String>) : BaseExpandableListAdapter(), Parcelable {
+    private val childList: MutableList<MutableList<String>>) : BaseExpandableListAdapter(), Parcelable {
 
 
+    constructor(parcel: Parcel) : this(
+        TODO("context"),
+        TODO("parents"),
+        TODO("childList")
+    ) {
+    }
 
     override fun getGroupCount() = parents.size
 
@@ -36,10 +45,10 @@ class ScholarshipExpandableListAdapter(
     override fun getGroupView(
         parent: Int, isExpanded: Boolean, convertView: View?, parentview: ViewGroup
     ): View {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val parentView = inflater.inflate(R.layout.menu_parent, parentview, false)
+        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val parentView = inflater.inflate(R.layout.scholarship_expandlist_parent, parentview, false)
 
-        parentView.tv_list_title.text = parents[parent]
+        parentView.expandlist_parent.text = parents[parent]
 
 
         setArrow(parent, parentView, isExpanded)
@@ -49,10 +58,10 @@ class ScholarshipExpandableListAdapter(
     /* 자식 계층 레이아웃 설정 */
     override fun getChildView( parent: Int, child: Int, isLastChild: Boolean, convertView: View?, parentview: ViewGroup
     ): View {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val childView = inflater.inflate(R.layout.menu_child, parentview, false)
+        val inflater = context?.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val childView = inflater.inflate(R.layout.scholarship_expandlist_child, parentview, false)
 
-        childView.tv_child_title.text = getChild(parent, child)
+        childView.expandlist_child.text = getChild(parent, child)
         return childView
     }
 
@@ -60,8 +69,8 @@ class ScholarshipExpandableListAdapter(
     private fun setArrow(parentPosition: Int, parentView: View, isExpanded: Boolean) {
         /* 0번째 부모는 자식이 없으므로 화살표 설정해주지 않음 */
         if (parentPosition != 0) {
-            if (isExpanded) parentView.iv_arrow_drop.setImageResource(R.drawable.ic_arrow_drop_up)
-            else parentView.iv_arrow_drop.setImageResource(R.drawable.ic_arrow_drop_down)
+            if (isExpanded) parentView.scholar_image.setImageResource(R.drawable.img_scholarshiplist)
+            else parentView.scholar_image.setImageResource(R.drawable.img_scholarshiplist)
         }
     }
 
@@ -73,12 +82,12 @@ class ScholarshipExpandableListAdapter(
         return 0
     }
 
-    companion object CREATOR : Parcelable.Creator<ScholarshipViewPageAdapter> {
-        override fun createFromParcel(parcel: Parcel): ScholarshipViewPageAdapter {
-            return ScholarshipViewPageAdapter(parcel)
+    companion object CREATOR : Parcelable.Creator<ScholarshipExpandableListviewAdapter> {
+        override fun createFromParcel(parcel: Parcel): ScholarshipExpandableListviewAdapter {
+            return ScholarshipExpandableListviewAdapter(parcel)
         }
 
-        override fun newArray(size: Int): Array<ScholarshipViewPageAdapter?> {
+        override fun newArray(size: Int): Array<ScholarshipExpandableListviewAdapter?> {
             return arrayOfNulls(size)
         }
     }
@@ -86,4 +95,3 @@ class ScholarshipExpandableListAdapter(
 
 }
 
- */
