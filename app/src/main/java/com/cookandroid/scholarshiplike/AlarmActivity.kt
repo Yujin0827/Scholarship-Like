@@ -14,6 +14,7 @@ class AlarmActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_alarm)
 
+
         //어댑터 생성, 연결
         viewAdapter = ViewPageAdapter(this)
         viewAdapter.addFragment(AlarmAllFragment())
