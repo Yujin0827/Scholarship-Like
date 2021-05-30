@@ -41,7 +41,6 @@ class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
         binding.btnCancel.setOnClickListener {
             dismiss()   // 대화상자 닫기
         }
-
         return view
     }
 
