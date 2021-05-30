@@ -3,17 +3,17 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-class LikeContentMagazineFragment : Fragment() {
+class HomeSearchMagazineFragment : Fragment() {
     private lateinit var listAdapter: MagazineRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: ArrayList<Post> = arrayListOf()

@@ -75,7 +75,7 @@ open class MainActivity : AppCompatActivity(),
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.commit()
         transaction.isAddToBackStackAllowed
-        
+
         return true
     }
 
