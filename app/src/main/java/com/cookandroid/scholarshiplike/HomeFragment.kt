@@ -3,13 +3,13 @@ package com.cookandroid.scholarshiplike
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 class HomeFragment : Fragment() {
@@ -41,6 +41,7 @@ class HomeFragment : Fragment() {
                 ?.replace(R.id.nav, scholarshiptab, "scholarshipTab")
                 ?.commit()
         }
+
 
         return view
     }

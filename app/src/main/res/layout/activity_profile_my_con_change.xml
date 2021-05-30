@@ -53,8 +53,7 @@
                             android:id="@+id/myIncome"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:entries="@array/incomeList"/>
+                            android:layout_marginLeft="10dp" />
 
                     </LinearLayout>
 

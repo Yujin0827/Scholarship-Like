@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.*
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
+    private lateinit var myIncome : Spinner
     private lateinit var mySemester : Spinner
     private lateinit var myArea : Spinner
     private lateinit var myArea_datails : Spinner
@@ -18,6 +19,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_my_con_change)
 
+        myIncome = findViewById(R.id.myIncome)
         mySemester = findViewById(R.id.mySemester)
         myArea = findViewById(R.id.myArea)
         myArea_datails = findViewById(R.id.myArea_datails)
@@ -31,6 +33,18 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
     //스피너 초기화 & 리스너
     fun setSpinner() {
+        //'학자금 지원구간' 스피너의 ArrayAdapter
+        ArrayAdapter.createFromResource(
+            this,
+            R.array.incomeList,
+            android.R.layout.simple_spinner_item
+        ).also { adapter ->
+            // 스피너의 레이아웃 구체화
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+            // 스피너에 어뎁터 적용
+            myIncome.adapter = adapter
+        }
+
         //'이수 학기' 스피너의 ArrayAdapter
         ArrayAdapter.createFromResource(
             this,
