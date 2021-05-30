@@ -3,12 +3,13 @@
     package="com.cookandroid.scholarshiplike">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="장학라이크"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_round_button_background"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -23,7 +24,19 @@
         </activity>
 
         <!-- 검색창 -->
-        <activity android:name=".HomeSearchActivity" />
+        <activity android:name=".HomeSearchActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH" />
+            </intent-filter>
+            <meta-data android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity>
+
+        <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
+        <activity android:name=".HomeSearchResultActivity" >
+            <meta-data android:name="android.app.default_searchable"
+                android:value=".HomeSearchActivity" />
+        </activity>
 
         <!-- 내 조건 수정 -->
         <activity android:name=".ProfileMyConChangeActivity" />
@@ -39,6 +52,7 @@
 
         <!-- 알림 상세 -->
         <activity android:name=".AlarmDetailActivity" />
+
     </application>
 
 </manifest>

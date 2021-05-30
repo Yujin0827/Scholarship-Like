@@ -70,10 +70,10 @@ dependencies {
     // cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
-    //tab
+    // tab
     //noinspection GradleCompatible
 
-    //ScholarTab
-    //noinspection GradleCompatible
+    // ScholarTab
+    // noinspection GradleCompatible
     implementation 'com.android.support:design: 29.0.0'
 }
