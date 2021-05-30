@@ -20,6 +20,7 @@ open class MainActivity : AppCompatActivity(),
     val FINISH_INTERVAL_TIME = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

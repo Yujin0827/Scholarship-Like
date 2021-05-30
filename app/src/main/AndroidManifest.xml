@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.scholarshiplike">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -15,9 +14,11 @@
         android:theme="@style/AppTheme">
 
         <activity
-            android:name=".MainActivity" >
+            android:name=".MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -45,6 +46,12 @@
 
         <!-- 좋아요 -->
         <activity android:name=".LikeContentActivity" />
+
+        <!-- 앱 정보 -->
+        <activity android:name=".AppInfoActivity"/>
+
+        <!-- 알림 상세 -->
+        <activity android:name=".AlarmDetailActivity" />
 
     </application>
 
