@@ -29,7 +29,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
         // onBindViewHolder의 역할을 대신한다.
         fun bind(data: Alarm, position: Int) {
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
-            Log.d("ListAdapter", data.title+" "+data.date)
+            Log.d("ListAdapter", data.title + " " + data.date)
             category.text = data.category
             title.text = data.title
             date.text = data.date
