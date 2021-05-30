@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import org.w3c.dom.Text
 import java.lang.Exception
 
 class AppInfoActivity : AppCompatActivity() {
@@ -20,7 +19,7 @@ class AppInfoActivity : AppCompatActivity() {
         versionCode.text = getVersionCode(this)
     }
 
-
+    // build.gradle에서 versionName 호출
     fun getVersionName(context: Context): String{
         lateinit var versionName: String
         try{
@@ -31,6 +30,7 @@ class AppInfoActivity : AppCompatActivity() {
         return versionName
     }
 
+    // build.gradle에서 versionCode 호출
     fun getVersionCode(context: Context): String{
         lateinit var versionCode: String
         try{

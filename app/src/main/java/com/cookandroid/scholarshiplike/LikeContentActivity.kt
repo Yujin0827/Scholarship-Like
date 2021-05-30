@@ -1,10 +1,8 @@
 package com.cookandroid.scholarshiplike
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_alarm.*
 import kotlinx.android.synthetic.main.activity_like_content.*
 
 class LikeContentActivity : AppCompatActivity() {

@@ -11,8 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".AppInfoActivity"></activity>
-        <activity android:name=".AlarmDetailActivity" />
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme">
@@ -21,11 +20,25 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity> <!-- 검색창 -->
-        <activity android:name=".HomeSearchActivity" /> <!-- 내 조건 수정 -->
-        <activity android:name=".ProfileMyConChangeActivity" /> <!-- 알림 -->
-        <activity android:name=".AlarmActivity" /> <!-- 좋아요 -->
+        </activity>
+
+        <!-- 검색창 -->
+        <activity android:name=".HomeSearchActivity" />
+
+        <!-- 내 조건 수정 -->
+        <activity android:name=".ProfileMyConChangeActivity" />
+
+        <!-- 알림 -->
+        <activity android:name=".AlarmActivity" />
+
+        <!-- 좋아요 -->
         <activity android:name=".LikeContentActivity" />
+
+        <!-- 앱 정보 -->
+        <activity android:name=".AppInfoActivity"/>
+
+        <!-- 알림 상세 -->
+        <activity android:name=".AlarmDetailActivity" />
     </application>
 
 </manifest>
