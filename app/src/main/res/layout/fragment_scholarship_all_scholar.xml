@@ -11,6 +11,8 @@
         android:orientation="horizontal"
         android:weightSum="5">
 
+        <!-- 세부 장학금 -->
+
         <LinearLayout
             android:id="@+id/condition"
             android:layout_width="0dp"
@@ -19,14 +21,82 @@
             android:orientation="vertical"
             android:background="#E9E9F8">
 
-
-            <ExpandableListView
-                android:id="@+id/expandableList"
+            <Button
+                android:id="@+id/koreaScholarBt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:groupIndicator="@null"/>
+                android:text="@string/korea_scholar"
+                android:background="#9DABF4"
+                android:layout_marginBottom="10dp"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="10dp"
+                android:weightSum="10"
+                android:background="#9DABF4">
+
+                <Button
+                    android:id="@+id/outScholarBt"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="9.5"
+                    android:layout_marginLeft="30dp"
+                    android:text="@string/out_scholar"
+                    android:background="#9DABF4"
+                    />
+
+
+                <androidx.appcompat.widget.AppCompatImageButton
+                    android:id="@+id/expand_ic"
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_weight="0.5"
+                    android:background="@drawable/ic_scholarshiplist"
+                    android:layout_marginRight="10dp"/>
+
+
+            </LinearLayout>
+
+
+
+"           <!-- 버튼 클릭시 가시되는 레이아웃(expandableList) -->
+
+            <LinearLayout
+                android:id="@+id/expand_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <ExpandableListView
+                    android:id="@+id/expandableList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:groupIndicator="@null"
+                    android:layout_gravity="center"/>
+
+
+
+            </LinearLayout>
+
+
+            <Button
+                android:id="@+id/univScholarBt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#9DABF4"
+                android:text="@string/univ_scholar"/>
+
+
+
 
         </LinearLayout>
+
+        <!-- 장학금 리스트 -->
 
 
         <ScrollView

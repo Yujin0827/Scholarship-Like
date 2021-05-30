@@ -66,7 +66,9 @@ class ScholarshipFragment : Fragment() {
 
 
     }
-    private fun setUpViewPager(){ // 뷰페이저 레리아웃 연결 , 생성
+
+    // 뷰페이저 레리아웃 연결 , 생성
+    private fun setUpViewPager(){
         viewPagers = scholar_viewpager
         tabLayouts = scholar_tabLayout
 

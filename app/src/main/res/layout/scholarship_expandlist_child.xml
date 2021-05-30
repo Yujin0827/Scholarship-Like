@@ -4,9 +4,14 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!-- expandableList의 자식 리스트 -->
+
     <TextView
         android:id="@+id/expandlist_child"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#000000"
+        android:textSize="12sp"/>
 
 </LinearLayout>

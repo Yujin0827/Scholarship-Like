@@ -37,37 +37,96 @@
 
     </androidx.appcompat.widget.Toolbar>
 
+    <!-- 장학금 상단 타이틀 -->
     <TextView
-        android:id="@+id/scholarTitle"
+        android:id="@+id/scholarTitle_input"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="50dp"
         android:background="#A0ACE0"
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@id/topBar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:text="입력하신 정보로 장학금을 \n최대 n건 받을 수 있습니다."
+        android:text="@string/title_input"
         android:textColor="#ffffff"
         android:textSize="25sp" />
 
+    <LinearLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#A0ACE0"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@+id/scholarTitle_input"
+        android:weightSum="10">
+
+        <TextView
+            android:id="@+id/scholarTitle_max"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="2"
+            android:background="#A0ACE0"
+            android:gravity="center"
+            android:text="@string/title_max"
+            android:layout_marginLeft="10dp"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            tools:ignore="DuplicateIds" />
+
+        <TextView
+            android:id="@+id/scholarTitle_num"
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_weight="1"
+            android:background="#A0ACE0"
+            android:gravity="center"
+            android:text="@string/title_num"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar" />
+        s<TextView
+            android:id="@+id/scholarTitle_get"
+            android:layout_width="0dp"
+            android:layout_weight="7"
+            android:layout_height="50dp"
+            android:background="#A0ACE0"
+            android:gravity="center"
+            android:text="@string/title_get"
+            android:layout_marginRight="10dp"
+            android:textColor="#ffffff"
+            android:textSize="25sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/topBar"
+            tools:ignore="DuplicateIds" />
+
+    </LinearLayout>
+
+    <!-- 내 장학금, 전체 장학금 탭 & 뷰페이저 -->
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/scholar_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scholarTitle"
+        app:layout_constraintTop_toBottomOf="@+id/title_layout"
         app:tabIndicatorColor="@color/colorPrimaryDark">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="내 장학금" />
+            android:text="@string/my_scholarship" />
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="전체 장학금" />
+            android:text="@string/all_scholarship" />
     </com.google.android.material.tabs.TabLayout>
 
     <androidx.viewpager.widget.ViewPager
