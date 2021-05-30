@@ -5,10 +5,7 @@ import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.LinearLayout
-import android.widget.Spinner
+import android.widget.*
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
     private lateinit var mySemester : Spinner
@@ -47,17 +44,31 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 when(mySemester.getItemAtPosition(position).toString()) {
                     "0" -> {  //이수학기 0일 때 : '직전 학기' Layout 비활성화
-                        //구현해야함
-                        println("-----------<Test>----------------")
-                        println("'직전 학기' Layout 비활성화")
+                        disabledPreSemester()
                     }
                     else -> {   //이수학기 1 이상일 때 : '직전 학기' Layout 활성화
-                        //구현해야함
-                        println("------------<Test>----------------")
-                        println("'직전 학기' Layout 활성화")
+                        abledPreSemester()
                     }
                 }
             }
         }
+    }
+
+    //'직전학기' 레이아웃 비활성화 함수
+    fun disabledPreSemester() {
+        findViewById<TextView>(R.id.txtMyPreSemester).alpha = 0.5F
+        findViewById<TextView>(R.id.txtMyPreSemGrade).alpha = 0.3F
+        findViewById<TextView>(R.id.txtMyPreSemScore).alpha = 0.3F
+        findViewById<EditText>(R.id.myPreGrade).isEnabled = false
+        findViewById<EditText>(R.id.myScore).isEnabled = false
+    }
+
+    //'직전학기' 레이아웃 활성화 함수
+    fun abledPreSemester() {
+        findViewById<TextView>(R.id.txtMyPreSemester).alpha = 1F
+        findViewById<TextView>(R.id.txtMyPreSemGrade).alpha = 1F
+        findViewById<TextView>(R.id.txtMyPreSemScore).alpha = 1F
+        findViewById<EditText>(R.id.myPreGrade).isEnabled = true
+        findViewById<EditText>(R.id.myScore).isEnabled = true
     }
 }
