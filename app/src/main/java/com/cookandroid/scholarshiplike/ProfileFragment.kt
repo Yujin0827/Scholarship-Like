@@ -15,15 +15,17 @@ class ProfileFragment : Fragment() {
 
     lateinit var myConChange : LinearLayout
     lateinit var likeContent : LinearLayout
+    lateinit var appInfo : LinearLayout
     lateinit var logout : LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
-        
+
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
-        
+
         myConChange = view.findViewById<LinearLayout>(R.id.myConChange)
         likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
+        appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
         logout = view.findViewById<LinearLayout>(R.id.logout)
 
         return view
@@ -56,6 +58,13 @@ class ProfileFragment : Fragment() {
         likeContent.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, LikeContentActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
+        appInfo.setOnClickListener{
+            activity?.let {
+                val intent = Intent(it, AppInfoActivity::class.java)
                 it?.startActivity(intent)
             }
         }

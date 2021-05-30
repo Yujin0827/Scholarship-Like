@@ -41,6 +41,10 @@
     <string name="extra_national_merit">보훈보상대상자</string>
     <string name="extra_disabled">장애 여부</string>
 
+    <!-- activity_app_info -->
+    <string name="vCode">versionCode : </string>
+    <string name="vName">versionName : </string>
+
     <!-- 로그아웃 페이지 -->
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
     <string name="cancel">취소</string>
