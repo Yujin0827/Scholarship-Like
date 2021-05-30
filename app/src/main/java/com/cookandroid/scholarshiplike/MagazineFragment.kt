@@ -16,21 +16,21 @@ class MagazineFragment : Fragment() {
     lateinit var postlistAdapter: MagazineRecyclerViewAdapter
     private var firestore : FirebaseFirestore? = null // Firestore 인스턴스
     var postList : ArrayList<Post> = arrayListOf()
-    private lateinit var mContext : Context
+    private lateinit var mContext1 : Context
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mContext = context;
+        mContext1 = context;
 
         //파이어스토어 매거진 데이터 불러오기
         firestore = FirebaseFirestore.getInstance() // Firestore 인스턴스 초기화
 
-        firestore?.collection("장학라이크")?.document("매거진")?.collection("금융")?.get()?.addOnSuccessListener { result ->
+        firestore?.collection("장학라이크")?.document("매거진")?.collection("전체")?.get()?.addOnSuccessListener { result ->
             // 성공할 경우
             postList?.clear()
 
             for (document in result) {  // 가져온 문서들은 result에 들어감
-                val item = Post(document["title"] as String)
+                val item = Post(document["title"] as String, document["category"] as String, document["contents"] as String)
                 postList.add(item)
             }
             Log.d("postList", postList.toString())
@@ -53,7 +53,7 @@ class MagazineFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_magazine, container, false)
         Log.v("OnCreateView", "ENTER")
 
-        postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
+        postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext1)
         return view
 
     }

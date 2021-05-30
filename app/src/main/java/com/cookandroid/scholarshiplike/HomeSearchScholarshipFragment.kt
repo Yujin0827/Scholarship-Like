@@ -17,9 +17,11 @@ class HomeSearchScholarshipFragment : Fragment() {
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
+    lateinit var mContext : Context
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        mContext = context
         val sRef = db.collection("장학금")
             .document("교내").collection("강원")
             .document("강원대").collection("학과")
@@ -48,7 +50,7 @@ class HomeSearchScholarshipFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = ScholarshipRecyclerViewAdapter(dataList)
+        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext)
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter

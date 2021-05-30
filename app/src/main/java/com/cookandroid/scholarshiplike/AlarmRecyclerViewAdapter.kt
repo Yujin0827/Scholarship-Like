@@ -22,15 +22,14 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
     // inner class로 ViewHolder 정의
     inner class AlarmItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
-        var category: TextView = itemView!!.findViewById(R.id.alarm_category)
         var title: TextView = itemView!!.findViewById(R.id.alarm_title)
         var date: TextView = itemView!!.findViewById(R.id.alarm_date)
 
         // onBindViewHolder의 역할을 대신한다.
         fun bind(data: Alarm, position: Int) {
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
-            Log.d("ListAdapter", data.title + " " + data.date)
-            category.text = data.category
+            Log.d("ListAdapter", data.title+" "+data.date)
+
             title.text = data.title
             date.text = data.date
 

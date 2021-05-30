@@ -11,9 +11,10 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 
-class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext: Context) : ListAdapter<Post, MagazineRecyclerViewAdapter.MagazineViewHolder>(DiffCallbackMagazine) {
 
-    private var mContext1 : Context = mContext
+class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext1: Context) : ListAdapter<Post, MagazineRecyclerViewAdapter.MagazineViewHolder>(DiffCallbackMagazine) {
+
+    private var mContext : Context = mContext1
 
     //뷰홀더 생성 때 호출
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MagazineViewHolder {
@@ -31,14 +32,18 @@ class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext: C
 
     inner class MagazineViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title = itemView.findViewById<TextView>(R.id.titleText) //타이틀
+        var contents = ""
 
         fun bind(item: Post) {
             title.text = item.title
+            contents = item.contents
+
 
             itemView.setOnClickListener {
                 val intent = Intent(mContext1, MagazineDetailActivity::class.java)
                 intent.apply {
                     this.putExtra("title",title.text.toString())
+                    this.putExtra("contents",contents)
                 }
                 mContext1.startActivity(intent)
             }

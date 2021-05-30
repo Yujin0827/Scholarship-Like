@@ -1,5 +1,7 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +11,11 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>): ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar) {
+class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context): ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar) {
 
+    private var mContext1 : Context = mContext
+
+    //데이터 가져오기
     // inner class로 ViewHolder 정의
     inner class ScholarItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
@@ -25,6 +30,11 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
             data1Text.text = data.title
             data2Text.text = data.text
             data3Text.text = data.date
+
+            itemView.setOnClickListener {
+                val intent = Intent(mContext1, ScholarshipDetailActivity::class.java)
+                mContext1.startActivity(intent)
+            }
         }
     }
 

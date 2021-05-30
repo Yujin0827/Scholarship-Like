@@ -1,5 +1,4 @@
 package com.cookandroid.scholarshiplike
-
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -12,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
+
 
 class LikeContentMagazineFragment : Fragment() {
     private lateinit var listAdapter: MagazineRecyclerViewAdapter
@@ -31,7 +31,7 @@ class LikeContentMagazineFragment : Fragment() {
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Post(document.id)
+                    val item = Post(document.id,".",".")
                     dataList.add(item)
                 }
                 listAdapter.submitList(dataList)

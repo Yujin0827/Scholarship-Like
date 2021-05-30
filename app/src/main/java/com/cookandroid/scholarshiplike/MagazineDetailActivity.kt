@@ -13,6 +13,8 @@ class MagazineDetailActivity : AppCompatActivity() {
 
         //프래그먼트에서 정보전달 및 텍스트뷰에 저장
         val titlename = intent.getStringExtra("title")
+        val contents = intent.getStringExtra("contents")
         titleText.text = titlename
+        contentsText.text = contents
     }
 }

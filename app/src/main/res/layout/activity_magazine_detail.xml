@@ -9,8 +9,9 @@
         android:id="@+id/ScrollView1"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="4dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
@@ -31,12 +32,12 @@
                 android:id="@+id/titleText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="24dp"
                 android:text="매거진 제목"
                 android:textColor="#000000"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/textView4"
+                app:layout_constraintBottom_toTopOf="@+id/contentsText"
                 app:layout_constraintEnd_toStartOf="@+id/like"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
@@ -54,22 +55,26 @@
                 app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
             <TextView
-                android:id="@+id/textView4"
+                android:id="@+id/contentsText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="16dp"
-                android:text="매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용 매거진내용"
+                android:layout_marginStart="24dp"
+                android:layout_marginTop="32dp"
+                android:layout_marginEnd="24dp"
+                android:lineSpacingExtra="8sp"
+                android:text="매거진내용"
+                android:textAlignment="viewStart"
                 android:textSize="18sp"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/titleText" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        >
 
 
-    </ScrollView>>
+    </ScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

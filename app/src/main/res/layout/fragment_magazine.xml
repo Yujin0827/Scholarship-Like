@@ -10,12 +10,14 @@
     <TextView
         android:id="@+id/textView"
         android:layout_width="425dp"
-        android:layout_height="105dp"
+        android:layout_height="140dp"
         android:layout_centerInParent="true"
         android:gravity="center"
         android:text="내 돈 어디에 쓸까?"
         android:textSize="70px"
         android:textStyle="bold"
+        android:background="#a4a6e4"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,8 +25,8 @@
 
     <LinearLayout
         android:id="@+id/linearLayout"
-        android:layout_width="406dp"
-        android:layout_height="46dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/magazinerecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
@@ -32,40 +34,50 @@
         app:layout_constraintTop_toBottomOf="@+id/textView">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/all"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="전체" />
+            android:background="#a4a6e4"
+            android:text="전체"
+            android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/finance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="금융" />
+            android:background="#a4a6e4"
+            android:text="금융"
+            android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/button3"
+            android:id="@+id/life"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="생활" />
+            android:background="#a4a6e4"
+            android:text="생활"
+            android:textColor="#ffffff" />
 
         <Button
-            android:id="@+id/button4"
+            android:id="@+id/etc"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="기타" />
+            android:background="#a4a6e4"
+            android:text="기타"
+            android:textColor="#ffffff" />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/magazinerecyclerView"
-        android:layout_width="410dp"
-        android:layout_height="490dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
 

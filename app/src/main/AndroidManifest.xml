@@ -53,6 +53,12 @@
         <!-- 알림 상세 -->
         <activity android:name=".AlarmDetailActivity" />
 
+        <!-- 매거진 상세 -->
+        <activity android:name=".MagazineDetailActivity" />
+
+        <!-- 장학금 상세 -->
+        <activity android:name=".ScholarshipDetailActivity" />
+
     </application>
 
 </manifest>
