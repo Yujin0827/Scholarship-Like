@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.scholarshiplike">
 
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -11,31 +11,19 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <activity
-            android:name=".MainActivity" >
+        <activity android:name=".AlarmDetailActivity"/>
+        <activity android:name=".MainActivity"
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 검색창 -->
-        <activity android:name=".HomeSearchActivity" />
-
-        <!-- 내 조건 수정 -->
-        <activity android:name=".ProfileMyConChangeActivity" />
-
-        <!-- 알림 -->
-        <activity android:name=".AlarmActivity" />
-
-        <!-- 좋아요 -->
+        </activity> <!-- 검색창 -->
+        <activity android:name=".HomeSearchActivity" /> <!-- 내 조건 수정 -->
+        <activity android:name=".ProfileMyConChangeActivity" /> <!-- 알림 -->
+        <activity android:name=".AlarmActivity" /> <!-- 좋아요 -->
         <activity android:name=".LikeContentActivity" />
-
-        <!-- 매거진 세부 페이지 -->
-        <activity android:name=".MagazineDetailActivity" />
-
     </application>
 
 </manifest>
