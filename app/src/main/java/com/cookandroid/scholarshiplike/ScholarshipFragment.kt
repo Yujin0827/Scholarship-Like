@@ -24,7 +24,6 @@ class ScholarshipFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_scholarship, container, false)
 
-
         like = view.findViewById<ImageView>(R.id.like)              // hometab의 좋아요 버튼 변수 생성
         alarm = view.findViewById<ImageView>(R.id.alarm)            // hometab의 알람 버튼 변수 생성
 
