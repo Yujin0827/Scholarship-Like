@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,22 @@ class ScholarshipFragment : Fragment() {
             }
         })
 
+        like.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, LikeContentActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
+        alarm.setOnClickListener{
+            activity?.let{
+                val intent = Intent(it, AlarmActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
+
+
     }
     private fun setUpViewPager(){ // 뷰페이저 레리아웃 연결 , 생성
         viewPagers = scholar_viewpager
@@ -61,6 +78,8 @@ class ScholarshipFragment : Fragment() {
         viewPagers!!.adapter = adapter
         tabLayouts!!.setupWithViewPager(viewPagers)
     }
+
+
 
     // 프래그먼트 생성시 툴바 hide
     override fun onResume() {

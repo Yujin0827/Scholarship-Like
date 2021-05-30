@@ -13,12 +13,14 @@ class ProfileFragment : Fragment() {
 
     lateinit var myConChange : LinearLayout
     lateinit var likeContent : LinearLayout
+    lateinit var appInfo : LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         myConChange = view.findViewById<LinearLayout>(R.id.myConChange)
         likeContent = view.findViewById<LinearLayout>(R.id.profileList_likePost)
+        appInfo = view.findViewById<LinearLayout>(R.id.profileList_appInfo)
 
         return view
     }
@@ -47,6 +49,13 @@ class ProfileFragment : Fragment() {
         likeContent.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, LikeContentActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
+        appInfo.setOnClickListener{
+            activity?.let {
+                val intent = Intent(it, AppInfoActivity::class.java)
                 it?.startActivity(intent)
             }
         }
