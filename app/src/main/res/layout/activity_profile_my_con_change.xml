@@ -233,10 +233,15 @@
 
                         <Spinner
                             android:id="@+id/myArea"
-                            android:layout_width="wrap_content"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:entries="@array/local"/>
+                            android:layout_marginLeft="10dp" />
+
+                        <Spinner
+                            android:id="@+id/myArea_datails"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp" />
                     </LinearLayout>
 
                     <!-- 직전 학기(이수학점, 성적) Layout -->
