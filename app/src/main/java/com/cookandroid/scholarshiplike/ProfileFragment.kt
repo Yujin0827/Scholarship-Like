@@ -24,8 +24,8 @@ class ProfileFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
         myConChange = view.findViewById<LinearLayout>(R.id.myConChange)
-        likeContent = view.findViewById<LinearLayout>(R.id.profileList_likePost)
-        appInfo = view.findViewById<LinearLayout>(R.id.profileList_appInfo)
+        likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
+        appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
         logout = view.findViewById<LinearLayout>(R.id.logout)
 
         return view
