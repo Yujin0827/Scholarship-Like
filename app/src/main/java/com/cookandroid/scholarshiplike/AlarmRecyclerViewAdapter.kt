@@ -10,20 +10,37 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
 class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(DiffCallbackAlarm){
+    interface OnItemClickListener{
+        fun onItemClick(v:View, data: Alarm, pos : Int)
+    }
+    private var listener : OnItemClickListener? = null
+    fun setOnItemClickListener(listener : OnItemClickListener) {
+        this.listener = listener
+    }
+
+
     // inner class로 ViewHolder 정의
     inner class AlarmItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
-        var data1Text: TextView = itemView!!.findViewById(R.id.data1Text)
-        var data2Text: TextView = itemView!!.findViewById(R.id.data2Text)
-        var data3Text: TextView = itemView!!.findViewById(R.id.data3Text)
+        var category: TextView = itemView!!.findViewById(R.id.alarm_category)
+        var title: TextView = itemView!!.findViewById(R.id.alarm_title)
+        var date: TextView = itemView!!.findViewById(R.id.alarm_date)
 
         // onBindViewHolder의 역할을 대신한다.
         fun bind(data: Alarm, position: Int) {
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
-            Log.d("ListAdapter", data.title+" "+data.date)
-            data1Text.text = data.title
-            data2Text.text = data.text
-            data3Text.text = data.date
+            Log.d("ListAdapter", data.title + " " + data.date)
+            category.text = data.category
+            title.text = data.title
+            date.text = data.date
+
+            val pos = bindingAdapterPosition
+            if(pos!= RecyclerView.NO_POSITION)
+            {
+                itemView.setOnClickListener {
+                    listener?.onItemClick(itemView,data,pos)
+                }
+            }
         }
     }
 
@@ -44,6 +61,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
     }
 }
 
+//데이터 갱신
 object DiffCallbackAlarm : DiffUtil.ItemCallback<Alarm>() {
     override fun areItemsTheSame(
         oldItem: Alarm,

@@ -1,4 +1,5 @@
 package com.cookandroid.scholarshiplike
+
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -12,14 +13,16 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
-
 class LikeContentMagazineFragment : Fragment() {
     private lateinit var listAdapter: MagazineRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: ArrayList<Post> = arrayListOf()
+    private lateinit var mContext : Context
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
+        mContext = context
+
         val sRef = db.collection("장학금")
             .document("교내").collection("강원")
             .document("강원대").collection("학과")
@@ -48,7 +51,7 @@ class LikeContentMagazineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = MagazineRecyclerViewAdapter(dataList)
+        listAdapter = MagazineRecyclerViewAdapter(dataList,mContext)
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter

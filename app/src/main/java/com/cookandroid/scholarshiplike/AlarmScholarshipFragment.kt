@@ -1,6 +1,7 @@
 package com.cookandroid.scholarshiplike
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -54,6 +55,20 @@ class AlarmScholarshipFragment: Fragment() {
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter
+
+        listAdapter.setOnItemClickListener(object : AlarmRecyclerViewAdapter.OnItemClickListener{
+            override fun onItemClick(v: View, data: Alarm, pos : Int) {
+                Intent(requireActivity(), AlarmDetailActivity::class.java).apply {
+                    //putExtra("data", data)
+                    //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }.run { startActivity(this) }
+            }
+
+        })
+        listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        // RecyclerView.adapter에 지정
+        listView.adapter = listAdapter
     }
+
 }
 

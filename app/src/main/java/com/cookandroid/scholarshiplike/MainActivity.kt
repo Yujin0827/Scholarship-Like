@@ -13,8 +13,6 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 open class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener  {
 
-    private val hometab = HomeFragment()
-
     lateinit var tabNav : BottomNavigationView
 
     // onBackPressed 메소드 변수
@@ -22,6 +20,7 @@ open class MainActivity : AppCompatActivity(),
     val FINISH_INTERVAL_TIME = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
@@ -77,6 +76,7 @@ open class MainActivity : AppCompatActivity(),
         transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
         transaction.commit()
         transaction.isAddToBackStackAllowed
+
         return true
     }
 

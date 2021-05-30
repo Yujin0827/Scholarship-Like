@@ -53,8 +53,7 @@
                             android:id="@+id/myIncome"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:entries="@array/incomeList"/>
+                            android:layout_marginLeft="10dp" />
 
                     </LinearLayout>
 
@@ -233,10 +232,15 @@
 
                         <Spinner
                             android:id="@+id/myArea"
-                            android:layout_width="wrap_content"
+                            android:layout_width="120dp"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:entries="@array/local"/>
+                            android:layout_marginLeft="10dp" />
+
+                        <Spinner
+                            android:id="@+id/myArea_datails"
+                            android:layout_width="120dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp" />
                     </LinearLayout>
 
                     <!-- 직전 학기(이수학점, 성적) Layout -->
@@ -251,6 +255,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtMyPreSemester"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/pre_semester" />
@@ -262,6 +267,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/txtMyPreSemGrade"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
@@ -284,6 +290,7 @@
                             android:orientation="horizontal">
 
                             <TextView
+                                android:id="@+id/txtMyPreSemScore"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"

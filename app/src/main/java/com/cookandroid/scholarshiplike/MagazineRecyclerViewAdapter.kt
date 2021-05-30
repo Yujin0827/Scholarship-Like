@@ -1,5 +1,7 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +10,16 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>) : ListAdapter<Post, MagazineRecyclerViewAdapter.MagazineViewHolder>(DiffCallbackMagazine) {
+
+class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext: Context) : ListAdapter<Post, MagazineRecyclerViewAdapter.MagazineViewHolder>(DiffCallbackMagazine) {
+
+    private var mContext1 : Context = mContext
 
     //뷰홀더 생성 때 호출
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MagazineViewHolder {
         //연결 레이아웃 설정
-        val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.item_magazine, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_magazine, parent, false)
+
         return MagazineViewHolder(view)
     }
 
@@ -31,12 +36,13 @@ class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>) : ListAdapter<P
             title.text = item.title
 
             itemView.setOnClickListener {
-
-//                Intent(context, MagazineDetailActivity::class.java).apply {
-//                    putExtra("post", item)
-//                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                }.run { context.startActivity(this) }
+                val intent = Intent(mContext1, MagazineDetailActivity::class.java)
+                intent.apply {
+                    this.putExtra("title",title.text.toString())
+                }
+                mContext1.startActivity(intent)
             }
+
         }
     }
 }

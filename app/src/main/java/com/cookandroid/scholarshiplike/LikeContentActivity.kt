@@ -1,13 +1,12 @@
 package com.cookandroid.scholarshiplike
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.google.android.material.tabs.TabLayoutMediator
-import kotlinx.android.synthetic.main.activity_alarm.*
 import kotlinx.android.synthetic.main.activity_like_content.*
 
 class LikeContentActivity : AppCompatActivity() {
+
     private var tabLayoutTextArray: ArrayList<String> = arrayListOf("매거진", "장학금")
     lateinit var viewAdapter: ViewPageAdapter
 
@@ -15,7 +14,7 @@ class LikeContentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_like_content)
 
-        //어댑터 생성, 연결
+        // 어댑터 생성, 연결
         viewAdapter = ViewPageAdapter(this)
         viewAdapter.addFragment(LikeContentMagazineFragment())
         viewAdapter.addFragment(LikeContentScholarshipFragment())
