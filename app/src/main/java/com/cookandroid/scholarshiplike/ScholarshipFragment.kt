@@ -27,10 +27,6 @@ class ScholarshipFragment : Fragment() {
         like = view.findViewById<ImageView>(R.id.like)              // hometab의 좋아요 버튼 변수 생성
         alarm = view.findViewById<ImageView>(R.id.alarm)            // hometab의 알람 버튼 변수 생성
 
-
-
-
-
         return view
     }
 
@@ -58,7 +54,7 @@ class ScholarshipFragment : Fragment() {
         viewPagers = scholar_viewpager
         tabLayouts = scholar_tabLayout
 
-        var adapter = ScholarshipViewPageAdapter(fragmentManager!!)
+        var adapter = ScholarshipViewPageAdapter(childFragmentManager)
         adapter.addFragment(ScholarshipMyscholarFragment(), "내 장학금")
         adapter.addFragment(ScholarshipAllscholarFragment(), "전체 장학금")
 
