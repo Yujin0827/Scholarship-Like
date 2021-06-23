@@ -88,6 +88,7 @@
                 android:text="OOO님은 \n최대 O건의 장학금을 \n받을 수 있어요!"
                 android:textSize="35sp"
                 android:textStyle="bold"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bannerSlider" />
@@ -95,7 +96,7 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/goWeb"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"
+                android:layout_height="90dp"
                 android:layout_margin="10dp"
                 android:gravity="center"
                 android:orientation="horizontal"
