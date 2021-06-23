@@ -69,18 +69,17 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.denzcoskun.imageslider.ImageSlider
+            <TextView
                 android:id="@+id/bannerSlider"
                 android:layout_width="match_parent"
-                android:layout_height="500dp"
-                app:auto_cycle="true"
-                app:corner_radius="5"
-                app:delay="0"
+                android:layout_height="300dp"
+                android:text="배너"
+                android:gravity="center"
+                android:textSize="40sp"
                 app:layout_constraintBottom_toTopOf="@+id/scholarCnt"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:period="1000" />
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/scholarCnt"
@@ -92,19 +91,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bannerSlider" />
-<!--
-            <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:layout_centerHorizontal="true"
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/scholarCnt" />
--->
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/goWeb"
                 android:layout_width="match_parent"
@@ -148,6 +135,31 @@
                     app:layout_constraintStart_toEndOf="@+id/univWeb" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <TextView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="광 고"
+                android:textSize="40sp"
+                android:gravity="center"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/goWeb"
+                app:layout_constraintBottom_toTopOf="@+id/scholarCal" />
+<!--
+            <com.google.android.gms.ads.AdView
+                xmlns:ads="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/scholarCnt" />
+-->
 
             <CalendarView
                 android:id="@+id/scholarCal"
