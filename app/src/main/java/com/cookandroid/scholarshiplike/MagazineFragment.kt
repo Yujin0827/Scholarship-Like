@@ -8,7 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_magazine.*
 
@@ -62,7 +64,7 @@ class MagazineFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         Log.v("OnViewCreated", "ENTER")
-        magazinerecyclerView.layoutManager = LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false)
+        magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2)
         magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
         magazinerecyclerView.adapter = postlistAdapter
     }
