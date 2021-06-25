@@ -13,6 +13,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
+        <!-- AdMob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8292925275124668~6270528480"/>
+
         <activity
             android:name=".MainActivity"
             android:theme="@style/SplashTheme">

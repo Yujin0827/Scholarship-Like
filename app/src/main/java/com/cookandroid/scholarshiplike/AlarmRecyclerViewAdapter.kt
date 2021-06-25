@@ -14,6 +14,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
         fun onItemClick(v:View, data: Alarm, pos : Int)
     }
     private var listener : OnItemClickListener? = null
+
     fun setOnItemClickListener(listener : OnItemClickListener) {
         this.listener = listener
     }

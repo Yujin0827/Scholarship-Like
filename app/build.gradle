@@ -76,4 +76,7 @@ dependencies {
     // ScholarTab
     // noinspection GradleCompatible
     implementation 'com.android.support:design: 29.0.0'
+
+    // adMob
+    implementation 'com.google.android.gms:play-services-ads:20.2.0'
 }
