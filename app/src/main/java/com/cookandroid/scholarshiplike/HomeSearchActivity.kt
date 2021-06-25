@@ -17,7 +17,6 @@ import kotlinx.android.synthetic.main.activity_like_content.*
 
 class HomeSearchActivity : AppCompatActivity() {
 
-    lateinit var goBack : ImageView             // 뒤로가기 버튼
     lateinit var searchBar: EditText            // 검색창
     lateinit var searchGoBtn : ImageView        // 찾기 버튼
     lateinit var resultList : RecyclerView      // 검색 결과
@@ -54,7 +53,6 @@ class HomeSearchActivity : AppCompatActivity() {
         }
 
 
-
         // 쿼리 수신
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
@@ -62,8 +60,6 @@ class HomeSearchActivity : AppCompatActivity() {
             }
         }
         
-
-
 
     }
 

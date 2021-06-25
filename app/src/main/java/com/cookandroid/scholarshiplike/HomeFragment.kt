@@ -14,16 +14,15 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 
-
 class HomeFragment : Fragment() {
 
     lateinit var scholarCnt : TextView  // 000님은 최대 0건의 장학금을 받을 수 있어요!
     lateinit var like : ImageView       // 좋아요 페이지로 이동 버튼
     lateinit var alarm : ImageView      // 알람 페이지로 이동 버튼
     lateinit var searchWin : ImageView  // 검색창 페이지로 이동 버튼
-    lateinit var kosafWeb : ImageView   // 한국장학재단 사이트로 이동 버튼
-    lateinit var univWeb : ImageView    // 교내 사이트로 이동 버튼
-    lateinit var guessWeb : ImageView   // ? 이동 버튼
+    lateinit var kosafWeb : ImageView   // 한국장학재단 사이트 이동 버튼
+    lateinit var univWeb : ImageView    // 지자체 사이트 이동 버튼
+    lateinit var guessWeb : ImageView   // 교내 사이트 이동 버튼
 
     val scholarshiptab = ScholarshipFragment()   // fragment_scholarship 변수
 
@@ -39,8 +38,8 @@ class HomeFragment : Fragment() {
         alarm = view.findViewById<ImageView>(R.id.alarm)            // hometab의 알람 버튼 변수 생성
         searchWin = view.findViewById<ImageView>(R.id.searchWin)    // hometab의 검색창 버튼 변수 생성
         kosafWeb = view.findViewById<ImageView>(R.id.kosafWeb)      // hometab의 한국장학재단 사이트 이동 버튼 변수 생성
-        univWeb = view.findViewById<ImageView>(R.id.univWeb)        // hometab의 교내 사이트 이동 버튼 변수 생성
-        guessWeb = view.findViewById<ImageView>(R.id.guessWeb)      // hometab의 ? 사이트 이동 버튼 변수 생성
+        univWeb = view.findViewById<ImageView>(R.id.univWeb)        // hometab의 지자체 사이트 이동 버튼 변수 생성
+        guessWeb = view.findViewById<ImageView>(R.id.guessWeb)      // hometab의 교내 사이트 이동 버튼 변수 생성
 
         // 장학금 탭으로 이동
         scholarCnt.setOnClickListener {
@@ -95,14 +94,14 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-        // 교내 웹사이트로 이동
+        // 지자체 웹사이트로 이동
         univWeb.setOnClickListener {
             var uri = Uri.parse("http://www.kosaf.go.kr")
             var intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
-        // ? 웹사이트로 이동
+        // 교내 웹사이트로 이동
         guessWeb.setOnClickListener {
             var uri = Uri.parse("http://www.kosaf.go.kr")
             var intent = Intent(Intent.ACTION_VIEW, uri)
