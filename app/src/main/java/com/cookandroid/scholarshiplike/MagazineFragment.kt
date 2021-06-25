@@ -9,22 +9,23 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_magazine.*
 
 class MagazineFragment : Fragment() {
-    lateinit var postlistAdapter: MagazineRecyclerViewAdapter
+
     private var firestore : FirebaseFirestore? = null // Firestore 인스턴스
-    var postList : ArrayList<Post> = arrayListOf()
-    private lateinit var mContext1 : Context
+    private var postList : ArrayList<Post> = arrayListOf() // 파이어스토어에서 불러온 데이터 저장하는 리스트 (게시물 리스트)
+    private lateinit var postlistAdapter: MagazineRecyclerViewAdapter //매거진 리사이클러뷰 변수 생성
+    private lateinit var mContext : Context // 액티비티 정보 저장 변수
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-        mContext1 = context;
 
-        //파이어스토어 매거진 데이터 불러오기
+        // 액티비티 정보 저장
+        mContext = context;
+
+        // 파이어스토어에서 매거진 데이터 불러오기
         firestore = FirebaseFirestore.getInstance() // Firestore 인스턴스 초기화
 
         firestore?.collection("장학라이크")?.document("매거진")?.collection("전체")?.get()?.addOnSuccessListener { result ->
@@ -44,18 +45,11 @@ class MagazineFragment : Fragment() {
 
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        Log.v("OnCreate", "ENTER")
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_magazine, container, false)
-        Log.v("OnCreateView", "ENTER")
 
-        postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext1)
+        // 어댑터 저장
+        postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
         return view
 
     }
@@ -63,10 +57,10 @@ class MagazineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        Log.v("OnViewCreated", "ENTER")
-        magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2)
+        // 매거진 리사이클러뷰-어댑터 연결
+        magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정
         magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
-        magazinerecyclerView.adapter = postlistAdapter
+        magazinerecyclerView.adapter = postlistAdapter //어댑터 연결
     }
 
     // 프래그먼트 생성시 툴바 hide

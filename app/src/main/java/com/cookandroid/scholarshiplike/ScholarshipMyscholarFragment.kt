@@ -1,6 +1,5 @@
 package com.cookandroid.scholarshiplike
 
-import android.R
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
@@ -19,12 +18,12 @@ class ScholarshipMyscholarFragment : Fragment() {
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
-    private lateinit var mContext1 : Context //프래그먼트의 정보 받아오는 컨텍스트 선언
+    private lateinit var mContext : Context //프래그먼트의 정보 받아오는 컨텍스트 선언
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mContext1 = requireActivity()
+        mContext = requireActivity()
 
         val sRef = db.collection("장학금")
             .document("교내").collection("강원")
@@ -57,7 +56,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext1)
+        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext)
         myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         myrecyclerView.adapter = listAdapter
