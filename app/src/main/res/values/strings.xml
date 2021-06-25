@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">ScholarshipLike</string>
+    <string name="app_name_korean">장학라이크</string>
+
+    <!-- 홈탭 페이지 -->
+    <string name="scholar_cnt">OOO님은 \n최대 O건의 장학금을 \n받을 수 있어요!</string>
+    <string name="scholar__input_name">000</string>
+    <string name="scholar_input">님은 \n최대</string>
+    <string name="scholar_cnt_num">0</string>
+    <string name="scholar_get">건의 \n받을 수 있어요!</string>
+
+    <!-- 검색창 페이지 -->
+    <string name="search">검색어 입력</string>
 
     <!-- 프로필탭 페이지 -->
     <string name="change_profile">프로필 수정</string>
@@ -49,7 +60,7 @@
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
     <string name="cancel">취소</string>
 
-    <!-- 모든 shcolarship.xml에 사용 -->
+    <!-- 모든 scholarship.xml에 사용 -->
     <string name="title_input">입력하신 정보로 장학금을</string>
     <string name="title_max">최대</string>
     <string name="title_num">N</string>
