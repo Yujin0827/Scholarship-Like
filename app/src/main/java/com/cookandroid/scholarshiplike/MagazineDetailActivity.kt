@@ -1,6 +1,7 @@
 package com.cookandroid.scholarshiplike
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_magazine_detail.*
@@ -18,5 +19,11 @@ class MagazineDetailActivity : AppCompatActivity() {
         val contents = intent.getStringExtra("contents")
         titleText.text = titlename
         contentsText.text = contents
+
+        //좋아요 버튼 클릭 유지
+        var likeButton : Button = findViewById(R.id.like)
+        likeButton.setOnClickListener{
+            likeButton.isSelected = likeButton.isSelected != true
+        }
     }
 }
