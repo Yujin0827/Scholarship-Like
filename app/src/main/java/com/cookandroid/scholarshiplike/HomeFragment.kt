@@ -3,13 +3,16 @@ package com.cookandroid.scholarshiplike
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.AdView
+import com.google.android.gms.ads.MobileAds
 
 
 class HomeFragment : Fragment() {
@@ -24,7 +27,11 @@ class HomeFragment : Fragment() {
 
     val scholarshiptab = ScholarshipFragment()   // fragment_scholarship 변수
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         scholarCnt = view.findViewById<TextView>(R.id.scholarCnt)   // hometab의 scholarCnt 변수 생성
@@ -44,6 +51,11 @@ class HomeFragment : Fragment() {
 
         }
 
+        MobileAds.initialize(requireContext()) {}
+
+        val mAdView = view.findViewById(R.id.adView) as AdView
+        val adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
 
         return view
     }
