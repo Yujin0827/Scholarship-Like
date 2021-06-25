@@ -14,7 +14,6 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 
-
 class HomeFragment : Fragment() {
 
     lateinit var scholarCnt : TextView  // 000님은 최대 0건의 장학금을 받을 수 있어요!
