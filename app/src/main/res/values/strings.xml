@@ -56,6 +56,18 @@
     <string name="vCode">versionCode : </string>
     <string name="vName">versionName : </string>
 
+    <!-- activity_profile_change -->
+    <string name="basicInpo">기본 정보</string>
+    <string name="email">이메일</string>
+    <string name="nickname">닉네임</string>
+    <string name="myUniv">소속 대학교</string>
+    <string name="changePw">비밀번호 변경</string>
+    <string name="currentPw">현재 비밀번호</string>
+    <string name="newPw">새 비밀번호</string>
+    <string name="checkNewPw">새 비밀번호 확인</string>
+
+
+
     <!-- 로그아웃 페이지 -->
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
     <string name="cancel">취소</string>

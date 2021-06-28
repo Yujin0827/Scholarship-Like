@@ -17,6 +17,7 @@ class ProfileFragment : Fragment() {
     lateinit var likeContent : LinearLayout
     lateinit var appInfo : LinearLayout
     lateinit var logout : LinearLayout
+    lateinit var profileChange : LinearLayout
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
@@ -27,6 +28,7 @@ class ProfileFragment : Fragment() {
         likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
         appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
         logout = view.findViewById<LinearLayout>(R.id.logout)
+        profileChange = view.findViewById<LinearLayout>(R.id.profileTitleIconLayout)
 
         return view
     }
@@ -54,6 +56,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
+
         // '좋아요 누른 게시물' 클릭 리스너
         likeContent.setOnClickListener {
             activity?.let {
@@ -74,5 +77,13 @@ class ProfileFragment : Fragment() {
             val dialog = ProfileLogoutFragment()
             dialog.show(parentFragmentManager, "logoutFragment")
         }
+
+        profileChange.setOnClickListener{
+            activity?.let {
+                val intent = Intent(it, ProfileChangeActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
     }
+
 }

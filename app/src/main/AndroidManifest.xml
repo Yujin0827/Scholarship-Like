@@ -12,11 +12,11 @@
         android:roundIcon="@drawable/ic_round_button_background"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
-        <!-- AdMob -->
+        <activity android:name=".ProfileChangeActivity"></activity>
+        <activity android:name=".ProfileChagneActivity" /> <!-- AdMob -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-8292925275124668~6270528480"/>
+            android:value="ca-app-pub-8292925275124668~6270528480" />
 
         <activity
             android:name=".MainActivity"
@@ -26,44 +26,28 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 검색창 -->
-        <activity android:name=".HomeSearchActivity" >
+        </activity> <!-- 검색창 -->
+        <activity android:name=".HomeSearchActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
+
+            <meta-data
+                android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-
-        <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
-        <activity android:name=".HomeSearchResultActivity" >
-            <meta-data android:name="android.app.default_searchable"
+        </activity> <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
+        <activity android:name=".HomeSearchResultActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
                 android:value=".HomeSearchActivity" />
-        </activity>
-
-        <!-- 내 조건 수정 -->
-        <activity android:name=".ProfileMyConChangeActivity" />
-
-        <!-- 알림 -->
-        <activity android:name=".AlarmActivity" />
-
-        <!-- 좋아요 -->
-        <activity android:name=".LikeContentActivity" />
-
-        <!-- 앱 정보 -->
-        <activity android:name=".AppInfoActivity"/>
-
-        <!-- 알림 상세 -->
-        <activity android:name=".AlarmDetailActivity" />
-
-        <!-- 매거진 상세 -->
-        <activity android:name=".MagazineDetailActivity" />
-
-        <!-- 장학금 상세 -->
+        </activity> <!-- 내 조건 수정 -->
+        <activity android:name=".ProfileMyConChangeActivity" /> <!-- 알림 -->
+        <activity android:name=".AlarmActivity" /> <!-- 좋아요 -->
+        <activity android:name=".LikeContentActivity" /> <!-- 앱 정보 -->
+        <activity android:name=".AppInfoActivity" /> <!-- 알림 상세 -->
+        <activity android:name=".AlarmDetailActivity" /> <!-- 매거진 상세 -->
+        <activity android:name=".MagazineDetailActivity" /> <!-- 장학금 상세 -->
         <activity android:name=".ScholarshipDetailActivity" />
-
     </application>
 
 </manifest>
