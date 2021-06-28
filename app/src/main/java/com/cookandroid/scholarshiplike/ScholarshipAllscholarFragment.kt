@@ -3,16 +3,22 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
+import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.*
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_recycler.*
 import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
-import android.widget.Button
 import androidx.fragment.app.Fragment
+import kotlinx.android.synthetic.main.activity_profile_my_con_change.*
+import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
+import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
 
 class ScholarshipAllscholarFragment : Fragment() {
 
@@ -23,12 +29,15 @@ class ScholarshipAllscholarFragment : Fragment() {
     private lateinit var RlistAdapter: ScholarshipRecyclerViewAdapter // 리사이클러뷰 어댑터
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
-    private lateinit var mContext: Context //프래그먼트의 정보 받아오는 컨텍스트 선언
+    private lateinit var mContext1: Context //프래그먼트의 정보 받아오는 컨텍스트 선언
+
+
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
-        mContext = requireActivity()
+        mContext1 = requireActivity()
 
         val sRef = db.collection("장학금")
             .document("교내").collection("강원")
@@ -49,6 +58,9 @@ class ScholarshipAllscholarFragment : Fragment() {
                 // 실패할 경우
                 Log.w("MainActivity", "Error getting documents: $exception")
             }
+
+
+
     }
 
     override fun onCreateView(
@@ -57,6 +69,8 @@ class ScholarshipAllscholarFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_scholarship_all_scholar, container, false)
+
+
 
         val koreaScholar: MutableList<String> = ArrayList()
 
@@ -103,9 +117,14 @@ class ScholarshipAllscholarFragment : Fragment() {
         expandableList.setAdapter(listAdapter)
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        RlistAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext)
+        RlistAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext1)
         allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         allrecyclerView.adapter = RlistAdapter
     }
+
+
+
+
+
 }
