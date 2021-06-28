@@ -6,4 +6,5 @@
     <color name="text_black">#000000</color>
     <color name="maincolor">#51B3E0</color>
     <color name="text_red_pink">#FF005E</color>
+    <color name="contour_line">#979797</color>
 </resources>

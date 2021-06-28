@@ -58,6 +58,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
 
+    // firebase authentication
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
     // cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
