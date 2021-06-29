@@ -59,4 +59,23 @@
     <string name="korea_scholar">국가 장학금</string>
     <string name="out_scholar">교외 장학금</string>
     <string name="univ_scholar">교내 장학금</string>
+
+    <!-- 로그인, 회원가입에 사용 -->
+    <string name="email">이메일</string>
+    <string name="password">비밀번호</string>
+    <string name="password_confirm">비밀번호 확인</string>
+    <string name="user_name_input">이름</string>
+    <string name="accept_service">서비스 약관 동의</string>
+    <string name="accept_privacy">개인정보 처리방침 동의</string>
+    <string name="login">로그인</string>
+    <string name="find_password">비밀번호 찾기</string>
+    <string name="signup">회원가입</string>
+    <string name="login_naver">네이버 로그인</string>
+    <string name="login_kakao">카카오 로그인</string>
+    <string name="login_google">구글 로그인</string>
+    <string name="go_back">돌아가기</string>
+    <string name="reset_password">비밀번호 재설정하기</string>
+    <string name="reset_password_explain">가입했던 이메일을 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.</string>
+    <string name="reset_password_result">비밀번호 재설정 메일이 발송되었습니다.\n메일을 확인하세요.</string>
+
 </resources>

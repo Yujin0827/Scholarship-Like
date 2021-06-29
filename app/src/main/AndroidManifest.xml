@@ -23,6 +23,15 @@
             </intent-filter>
         </activity>
 
+        <!-- 로그인 -->
+        <activity android:name=".LoginActivity"/>
+
+        <!-- 비밀번호 재설정 -->
+        <activity android:name=".LoginPasswordResetActivity"/>
+
+        <!-- 회원가입 -->
+        <activity android:name=".SignupActivity"/>
+
         <!-- 검색창 -->
         <activity android:name=".HomeSearchActivity" >
             <intent-filter>

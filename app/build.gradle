@@ -63,9 +63,13 @@ dependencies {
     implementation "androidx.recyclerview:recyclerview-selection:1.1.0"
 
     // firestore
-    implementation platform('com.google.firebase:firebase-bom:27.1.0')
+    implementation platform('com.google.firebase:firebase-bom:28.1.0')
     implementation 'com.google.firebase:firebase-analytics-ktx'
     implementation 'com.google.firebase:firebase-firestore-ktx'
+    implementation 'com.google.android.gms:play-services-auth:19.0.0'
+
+    // firebase authentication
+    implementation 'com.google.firebase:firebase-auth-ktx'
 
     // cardview
     implementation 'androidx.cardview:cardview:1.0.0'
@@ -76,4 +80,5 @@ dependencies {
     // ScholarTab
     // noinspection GradleCompatible
     implementation 'com.android.support:design: 29.0.0'
+
 }

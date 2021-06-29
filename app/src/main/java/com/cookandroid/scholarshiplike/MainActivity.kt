@@ -1,6 +1,8 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -9,6 +11,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import kotlinx.android.synthetic.main.activity_signup.*
 
 open class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener  {
@@ -19,10 +24,30 @@ open class MainActivity : AppCompatActivity(),
     var backPressedTime : Long = 0
     val FINISH_INTERVAL_TIME = 2000
 
+    // firebase auth 리스너 (로그인, 로그아웃 처리)
+    var authStateListener: FirebaseAuth.AuthStateListener? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        // 현재 유저
+        var user = FirebaseAuth.getInstance().currentUser
+        
+        // 유저 확인 후, 로그인 창으로 이동
+        if (user == null) {
+            var iT = Intent(this, LoginActivity::class.java)
+            startActivity(iT)
+            finish()    //현재 activity 제거
+        }
+
+//        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
+//            var user = FirebaseAuth.getInstance().currentUser
+//            if (user == null) {
+//                startActivity(iT)
+//            }
+//        }
 
         // 하단바 변수 생성
         tabNav = findViewById<BottomNavigationView>(R.id.tabNav)
@@ -114,5 +139,4 @@ open class MainActivity : AppCompatActivity(),
 
         updateBottomMenu(tabNav)
     }
-
 }
