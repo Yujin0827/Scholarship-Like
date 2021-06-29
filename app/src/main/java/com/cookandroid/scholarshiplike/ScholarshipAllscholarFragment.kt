@@ -3,22 +3,16 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import android.util.SparseBooleanArray
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
-import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_recycler.*
 import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.activity_profile_my_con_change.*
-import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
-import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
 
 class ScholarshipAllscholarFragment : Fragment() {
 
@@ -82,7 +76,6 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         head.add("서울")
         head.add("강원")
-
 
         body.add(koreaScholar)
         body.add(outScholar)

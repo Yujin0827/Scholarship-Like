@@ -82,4 +82,5 @@
     <string name="korea_scholar">국가 장학금</string>
     <string name="out_scholar">교외 장학금</string>
     <string name="univ_scholar">교내 장학금</string>
+    <string name="msg_token_fmt">토큰 정보</string>
 </resources>

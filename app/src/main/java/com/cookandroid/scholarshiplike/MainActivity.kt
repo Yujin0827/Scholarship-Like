@@ -1,6 +1,7 @@
 package com.cookandroid.scholarshiplike
 
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -8,7 +9,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.messaging.FirebaseMessaging
 
 open class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener  {
@@ -39,6 +42,21 @@ open class MainActivity : AppCompatActivity(),
 
         // 하단바 연결
         tabNav.setOnNavigationItemSelectedListener(this)
+
+        /*
+        FCM 토큰 확인시 필요
+        FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
+            if (!task.isSuccessful) {
+                Log.w("FCM Test", "Fetching FCM registration token failed", task.exception)
+                return@OnCompleteListener
+            }
+
+            // Get new FCM registration token
+            val token = task.result
+
+            Log.d("FCM Test", token)
+        })
+        */
     }
 
     // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거
