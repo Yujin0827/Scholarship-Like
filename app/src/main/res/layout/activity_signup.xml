@@ -33,7 +33,11 @@
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/ic_sinup_edittext_background"/>
+                android:background="@drawable/ic_sinup_edittext_background"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -51,7 +55,11 @@
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/ic_sinup_edittext_background"/>
+                android:background="@drawable/ic_sinup_edittext_background"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -69,7 +77,11 @@
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/ic_sinup_edittext_background"/>
+                android:background="@drawable/ic_sinup_edittext_background"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -87,7 +99,11 @@
                 android:layout_width="250dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="5dp"
-                android:background="@drawable/ic_sinup_edittext_background"/>
+                android:background="@drawable/ic_sinup_edittext_background"
+                android:singleLine="true"
+                android:textSize="16sp"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -140,10 +156,10 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="20dp">
             <Button
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_goto_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="돌아가기"
+                android:text="@string/go_back"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"/>
 
@@ -151,9 +167,11 @@
                 android:id="@+id/btn_signup"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="회원가입"
+                android:text="@string/signup"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"/>
+                android:layout_marginRight="10dp"
+                android:background="@color/maincolor"
+                android:textColor="#ffffff"/>
         </LinearLayout>
     </LinearLayout>
 

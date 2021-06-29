@@ -35,11 +35,12 @@ open class MainActivity : AppCompatActivity(),
 
         // 현재 유저
         var user = FirebaseAuth.getInstance().currentUser
-        var iT = Intent(this, SignupActivity::class.java)
         
-        // 회원가입 창으로 이동
+        // 유저 확인 후, 로그인 창으로 이동
         if (user == null) {
+            var iT = Intent(this, LoginActivity::class.java)
             startActivity(iT)
+            finish()    //현재 activity 제거
         }
 
 //        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->

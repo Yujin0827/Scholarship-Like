@@ -5,6 +5,7 @@ import android.app.AlertDialog
 import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -18,6 +19,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.DialogFragment
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileLogoutBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import java.security.AccessControlContext
 
 class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
@@ -36,8 +39,16 @@ class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
 
         // 로그아웃 버튼 클릭 리스너
         binding.btnLogout.setOnClickListener {
-            FirebaseAuth.getInstance().signOut()    // 로그아웃
+            Firebase.auth.signOut() // 로그아웃
+            activity?.let {
+                val iT = Intent(context, LoginActivity::class.java)
+                iT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                iT.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                iT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                startActivity(iT)
+            }
         }
+
         // 취소 버튼 클릭 리스너
         binding.btnCancel.setOnClickListener {
             dismiss()   // 대화상자 닫기
