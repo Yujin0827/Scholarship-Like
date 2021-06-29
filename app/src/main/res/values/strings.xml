@@ -58,7 +58,6 @@
 
     <!-- activity_profile_change -->
     <string name="basicInpo">기본 정보</string>
-    <string name="email">이메일</string>
     <string name="nickname">닉네임</string>
     <string name="myUniv">소속 대학교</string>
     <string name="changePw">비밀번호 변경</string>
