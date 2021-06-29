@@ -100,14 +100,14 @@
                 android:textSize="14sp"
                 android:textColor="#312E2E"
                 android:layout_gravity="center"/>
+
             <EditText
-                android:id="@+id/univInput"
+                android:id="@+id/univeInput"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
                 android:layout_marginLeft="20dp"
-                android:layout_marginRight="80dp"
-                android:backgroundTint = "#777470"
-                />
+                android:layout_marginRight="80dp" />
+
 
         </LinearLayout>
 
@@ -145,6 +145,12 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/currentPwCheckMessage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"/>
+
         <LinearLayout
             android:id="@+id/newPwLayout"
             android:layout_width="match_parent"
@@ -164,7 +170,7 @@
                 android:id="@+id/newPwInput"
                 android:layout_width="match_parent"
                 android:layout_height="35dp"
-                android:layout_marginLeft="30dp"
+                android:layout_marginLeft="46dp"
                 android:layout_marginRight="50dp"
                 android:backgroundTint = "#777470"/>
 
@@ -196,6 +202,13 @@
 
         </LinearLayout>
 
+        <TextView
+            android:id="@+id/newPwCheckMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="50dp" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -204,10 +217,12 @@
             android:layout_marginTop="100dp">
 
             <Button
+                android:id="@+id/save"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/save"/>
             <Button
+                android:id="@+id/cancel"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cancel"/>

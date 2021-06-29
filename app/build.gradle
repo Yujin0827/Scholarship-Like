@@ -80,4 +80,11 @@ dependencies {
 
     // adMob
     implementation 'com.google.android.gms:play-services-ads:20.2.0'
+
+    //noinspection GradleCompatible
+    implementation "com.android.support:support-compat:28.0.0"
+
+    // alarm channel
+    implementation 'com.kyleduo.switchbutton:library:2.0.0'
 }
+

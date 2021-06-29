@@ -68,8 +68,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         val koreaScholar: MutableList<String> = ArrayList()
 
-        val outScholar: MutableList<String> = ArrayList()
-        outScholar.add("춘천시")
+
 
 
         val univScholar: MutableList<String> = ArrayList()
@@ -78,7 +77,7 @@ class ScholarshipAllscholarFragment : Fragment() {
         head.add("강원")
 
         body.add(koreaScholar)
-        body.add(outScholar)
+
         body.add(univScholar)
 
         val outScholarBt: Button = view.findViewById(R.id.outScholarBt) // 교외 장학금 버튼

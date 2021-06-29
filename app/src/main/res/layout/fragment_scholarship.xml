@@ -109,11 +109,13 @@
     </LinearLayout>
 
     <!-- 내 장학금, 전체 장학금 탭 & 뷰페이저 -->
+
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/scholar_tabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/title_layout"
         app:tabIndicatorColor="@color/colorPrimaryDark">

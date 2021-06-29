@@ -162,7 +162,9 @@
                     android:padding="10dp">
 
                     <!-- 알림설정 - 앱 전체 -->
+
                     <Switch
+                        android:id="@+id/allAlarmSwitch"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
