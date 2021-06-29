@@ -8,10 +8,41 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"
-        android:label="장학라이크"
+        android:label="@string/app_name_korean"
         android:roundIcon="@drawable/ic_round_button_background"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+            See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_notifications_black_24dp" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/noti" />
+
+        <!--
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="@string/default_notification_channel_id" />
+        -->
+
+        <!-- AdMob -->
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="ca-app-pub-8292925275124668~6270528480" />
+        <activity android:name=".ProfileChangeActivity"/>
 
         <activity
             android:name=".MainActivity"
@@ -37,13 +68,14 @@
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
 
-        <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
-        <activity android:name=".HomeSearchResultActivity" >
-            <meta-data android:name="android.app.default_searchable"
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity> <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
+        <activity android:name=".HomeSearchResultActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
                 android:value=".HomeSearchActivity" />
         </activity>
 
@@ -67,7 +99,6 @@
 
         <!-- 장학금 상세 -->
         <activity android:name=".ScholarshipDetailActivity" />
-
     </application>
 
 </manifest>

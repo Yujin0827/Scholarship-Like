@@ -7,4 +7,5 @@
     <color name="maincolor">#3399ff</color>
     <color name="text_red_pink">#FF005E</color>
     <color name="contour_line">#979797</color>
+    <color name="noti">#FFC800</color>
 </resources>

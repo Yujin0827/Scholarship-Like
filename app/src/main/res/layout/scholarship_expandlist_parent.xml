@@ -9,19 +9,13 @@
 
     <TextView
         android:id="@+id/expandlist_parent"
-        android:layout_width="0dp"
-        android:layout_weight="4"
+        android:layout_width="match_parent"
         android:layout_height="35dp"
         android:gravity="center"
         android:textColor="#000000"
         android:textSize="12sp"/>
 
-    <ImageView
-        android:id="@+id/scholar_image"
-        android:layout_width="13dp"
-        android:layout_height="13dp"
-        android:layout_gravity="center"
-        android:src="@drawable/ic_scholarshiplist"/>
+
 
 
 

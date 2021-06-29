@@ -1,12 +1,19 @@
 package com.cookandroid.scholarshiplike
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
@@ -17,6 +24,8 @@ class ProfileFragment : Fragment() {
     lateinit var likeContent : LinearLayout
     lateinit var appInfo : LinearLayout
     lateinit var logout : LinearLayout
+    lateinit var profileChange : LinearLayout
+    lateinit var allAlarmSwitch : Switch
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
@@ -27,6 +36,11 @@ class ProfileFragment : Fragment() {
         likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
         appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
         logout = view.findViewById<LinearLayout>(R.id.logout)
+        profileChange = view.findViewById<LinearLayout>(R.id.profileTitleIconLayout)
+
+
+
+
 
         return view
     }
@@ -54,6 +68,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
+
         // '좋아요 누른 게시물' 클릭 리스너
         likeContent.setOnClickListener {
             activity?.let {
@@ -74,5 +89,13 @@ class ProfileFragment : Fragment() {
             val dialog = ProfileLogoutFragment()
             dialog.show(parentFragmentManager, "logoutFragment")
         }
+
+        profileChange.setOnClickListener{
+            activity?.let {
+                val intent = Intent(it, ProfileChangeActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
     }
+
 }

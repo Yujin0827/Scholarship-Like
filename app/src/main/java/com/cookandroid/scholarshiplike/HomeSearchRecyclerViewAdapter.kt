@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-
 class HomeSearchRecyclerViewAdapter (private var list: MutableList<Search>): ListAdapter<Search, HomeSearchRecyclerViewAdapter.SearchItemViewHolder>(DiffCallbackSearch){
 
     // inner class로 ViewHolder 정의
