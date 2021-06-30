@@ -26,9 +26,6 @@ open class MainActivity : AppCompatActivity(),
     var backPressedTime : Long = 0
     val FINISH_INTERVAL_TIME = 2000
 
-    // firebase auth 리스너 (로그인, 로그아웃 처리)
-    var authStateListener: FirebaseAuth.AuthStateListener? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -43,13 +40,6 @@ open class MainActivity : AppCompatActivity(),
             startActivity(iT)
             finish()    //현재 activity 제거
         }
-
-//        authStateListener = FirebaseAuth.AuthStateListener { firebaseAuth ->
-//            var user = FirebaseAuth.getInstance().currentUser
-//            if (user == null) {
-//                startActivity(iT)
-//            }
-//        }
 
         // 하단바 변수 생성
         tabNav = findViewById<BottomNavigationView>(R.id.tabNav)

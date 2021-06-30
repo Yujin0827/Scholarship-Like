@@ -13,10 +13,10 @@ class LoginPasswordResetActivity : AppCompatActivity(){
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_password_reset)
 
-        btnClick()
+        btnClick()  // 버튼 클릭을 통합 처리
     }
 
-    // 버킅 클릭 통합 처리
+    // 버튼 클릭 통합 처리
     fun btnClick() {
         // X 아이콘 클릭 시
         btn_close_password.setOnClickListener {

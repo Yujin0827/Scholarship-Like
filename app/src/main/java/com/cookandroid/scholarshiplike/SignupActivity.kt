@@ -14,7 +14,6 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_profile_logout.*
 
 class SignupActivity :AppCompatActivity() {
-//    private val RC_SIGN_IN = 9001
     var authStateListener: FirebaseAuth.AuthStateListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -70,9 +69,6 @@ class SignupActivity :AppCompatActivity() {
 
         // 돌아가기 버튼 클릭 시
         btn_goto_back.setOnClickListener() {
-//            var iT = Intent(this, LoginActivity::class.java)
-//            iT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // 로그인 화면이 스택에 중복으로 쌓이는것 방지
-//            startActivity(iT)
             finish()    // 현재 액티비티 제거
         }
     }
