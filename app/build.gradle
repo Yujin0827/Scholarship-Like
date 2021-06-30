@@ -90,4 +90,6 @@ dependencies {
 
     // alarm channel
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+
 }

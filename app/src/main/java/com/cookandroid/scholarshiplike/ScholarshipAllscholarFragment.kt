@@ -19,7 +19,7 @@ class ScholarshipAllscholarFragment : Fragment() {
     val head: MutableList<String> = ArrayList() // expandableList의 부모 리스트
     val body: MutableList<MutableList<String>> = ArrayList() // expandableList의 자식 리스트
 
-    lateinit var listAdapter: ScholarshipExpandableListAdapter // expandableList 어댑터 선언
+    lateinit var listAdapter: ScholarshipExpandableLisviewtAdapter // expandableList 어댑터 선언
     private lateinit var RlistAdapter: ScholarshipRecyclerViewAdapter // 리사이클러뷰 어댑터
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
@@ -65,12 +65,7 @@ class ScholarshipAllscholarFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_scholarship_all_scholar, container, false)
 
 
-
         val koreaScholar: MutableList<String> = ArrayList()
-
-
-
-
         val univScholar: MutableList<String> = ArrayList()
 
         head.add("서울")
@@ -105,7 +100,7 @@ class ScholarshipAllscholarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // expandableList 어탭터 연결
-        listAdapter = ScholarshipExpandableListAdapter(this, head, body)
+        listAdapter = ScholarshipExpandableLisviewtAdapter(this, head, body)
         expandableList.setAdapter(listAdapter)
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
