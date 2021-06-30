@@ -45,16 +45,24 @@ class LoginActivity :AppCompatActivity(){
             var txtEmail : String = login_txt_email.text.toString()
             var txtPassword : String = login_txt_password.text.toString()
 
-            FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
-                .addOnCompleteListener(this) { task ->
-                    if(task.isSuccessful) {
-                        Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
-                        var iT = Intent(this, MainActivity::class.java)
-                        startActivity(iT)
+            if (!txtEmail.isEmpty() && !txtPassword.isEmpty()) {
+                FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
+                    .addOnCompleteListener(this) { task ->
+                        if(task.isSuccessful) {
+                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
+                            var iT = Intent(this, MainActivity::class.java)
+                            startActivity(iT)
+                        }
+                        else {
+                            Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
+                        }
                     }
-                    else {
-                        Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
-                    }
+            }
+            else if (txtEmail.isEmpty()){
+                Toast.makeText(this, "이메일을 입력하세요", Toast.LENGTH_SHORT).show()
+            }
+            else if (txtPassword.isEmpty()) {
+                Toast.makeText(this, "비밀번호를 입력하세요", Toast.LENGTH_SHORT).show()
             }
         }
 
