@@ -1,11 +1,15 @@
 package com.cookandroid.scholarshiplike
 
+import android.R
 import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +17,11 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
+
 class HomeSearchMagazineFragment : Fragment() {
+    private lateinit var editText: EditText
+    private lateinit var fragmentListener: FragmentListener
+
     private lateinit var listAdapter: MagazineRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: ArrayList<Post> = arrayListOf()
@@ -45,6 +53,11 @@ class HomeSearchMagazineFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recycler, container, false)
+
+        val view: View = inflater.inflate(R.layout.fragment_b, container, false)
+        editText = view.findViewById<View>(R.id.input)
+        return view
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -55,5 +68,18 @@ class HomeSearchMagazineFragment : Fragment() {
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter
 
+        editText.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {}
+            override fun afterTextChanged(s: Editable) {
+                if (fragmentListener != null) {
+                    fragmentListener.onTextChange(s.toString())
+                }
+            }
+        })
+    }
+
+    fun setFragmentListener(listener: FragmentListener?) {
+        fragmentListener = listener!!
     }
 }

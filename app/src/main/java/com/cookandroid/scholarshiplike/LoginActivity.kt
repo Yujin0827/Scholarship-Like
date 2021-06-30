@@ -3,6 +3,8 @@ package com.cookandroid.scholarshiplike
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -14,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+
 
 class LoginActivity :AppCompatActivity(){
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -39,7 +42,7 @@ class LoginActivity :AppCompatActivity(){
     }
 
     // 버튼 클릭 통합 처리
-    fun btnClick() {
+    private fun btnClick() {
         // 로그인 버튼 클릭 시
         btn_login.setOnClickListener() {
             var txtEmail : String = login_txt_email.text.toString()
@@ -81,6 +84,17 @@ class LoginActivity :AppCompatActivity(){
         //구글 로그인
         login_google.setOnClickListener {
             signIn()    // 구글 로그인
+        }
+
+        //엔터 입력 시 키보드 내리기
+        login_txt_password.setOnKeyListener { v, keyCode, event ->
+            //Enter key Action
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(login_txt_password.getWindowToken(), 0) //hide keyboard
+                true
+            } else false
         }
     }
 
@@ -141,4 +155,5 @@ class LoginActivity :AppCompatActivity(){
                 }
             }
     }
+
 }

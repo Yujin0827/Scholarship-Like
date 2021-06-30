@@ -8,12 +8,9 @@ import kotlinx.android.synthetic.main.activity_home_search.*
 import androidx.recyclerview.widget.RecyclerView
 import android.app.SearchManager
 import android.content.Intent
-import android.view.SearchEvent
 import android.view.View
 import android.widget.EditText
-import androidx.core.view.isVisible
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.activity_like_content.*
 
 class HomeSearchActivity : AppCompatActivity() {
 

@@ -36,6 +36,7 @@
                     android:text="@string/email"/>
                 <EditText
                     android:id="@+id/login_txt_email"
+                    android:inputType="textEmailAddress"
                     android:layout_width="220dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_sinup_edittext_background"
@@ -55,6 +56,7 @@
                     android:text="@string/password"/>
                 <EditText
                     android:id="@+id/login_txt_password"
+                    android:inputType="textPassword"
                     android:layout_width="220dp"
                     android:layout_height="30dp"
                     android:background="@drawable/ic_sinup_edittext_background"
@@ -62,7 +64,7 @@
                     android:textSize="16sp"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
-                    android:inputType="textPassword"/>
+                    />
             </LinearLayout>
         </LinearLayout>
 
