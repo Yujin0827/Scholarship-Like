@@ -57,8 +57,8 @@ open class MainActivity : AppCompatActivity(),
         // 하단바 연결
         tabNav.setOnNavigationItemSelectedListener(this)
 
-        /*
-        FCM 토큰 확인시 필요
+
+        //FCM 토큰 확인시 필요
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM Test", "Fetching FCM registration token failed", task.exception)
@@ -70,7 +70,7 @@ open class MainActivity : AppCompatActivity(),
 
             Log.d("FCM Test", token)
         })
-        */
+
     }
 
     // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거

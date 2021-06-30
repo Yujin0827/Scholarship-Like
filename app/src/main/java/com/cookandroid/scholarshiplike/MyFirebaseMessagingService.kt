@@ -3,60 +3,65 @@ package com.cookandroid.scholarshiplike
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
-import android.content.Context
 import android.content.Intent
 import android.media.RingtoneManager
 import android.os.Build
-import android.util.Log
+import android.widget.RemoteViews
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
+
 class MyFirebaseMessagingService : FirebaseMessagingService() {
-    private val TAG: String = this.javaClass.simpleName
-
-    override fun onMessageReceived(remoteMessage: RemoteMessage)
-    {
-        super.onMessageReceived(remoteMessage)
-        if (remoteMessage.notification != null)
-        {
-            sendNotification(remoteMessage.notification?.title, remoteMessage.notification!!.body!!)
+    override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        if (remoteMessage.data.size > 0) {
+            showNotification(remoteMessage.data["title"], remoteMessage.data["message"])
+        }
+        if (remoteMessage.notification != null) {
+            showNotification(
+                remoteMessage.notification!!.title, remoteMessage.notification!!
+                    .body
+            )
         }
     }
 
-    override fun onNewToken(token: String)
-    {
-        Log.d(TAG, "Refreshed token : $token")
-        super.onNewToken(token)
+    private fun getCustomDesign(title: String?, message: String?): RemoteViews {
+        val remoteViews = RemoteViews(applicationContext.packageName, R.layout.notification)
+        remoteViews.setTextViewText(R.id.noti_title, title)
+        remoteViews.setTextViewText(R.id.noti_message, message)
+        remoteViews.setImageViewResource(R.id.noti_icon, R.mipmap.ic_launcher)
+        return remoteViews
     }
 
-    // 받은 알림을 기기에 표시하는 메서드
-    private fun sendNotification(title: String?, body: String)
-    {
+    private fun showNotification(title: String?, message: String?) {
         val intent = Intent(this, MainActivity::class.java)
+        val channel_id = "channel"
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        val pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
-            PendingIntent.FLAG_ONE_SHOT)
-
-        val channelId = "my_channel"
-        val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-        val notificationBuilder = NotificationCompat.Builder(this, channelId)
-            .setContentTitle(title)
-            .setContentText(body)
+        val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val uri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
+        var builder = NotificationCompat.Builder(
+            applicationContext, channel_id
+        )
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .setSound(uri)
             .setAutoCancel(true)
-            .setSound(defaultSoundUri)
+            .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
+            .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
-
-        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-
-        // 오레오 버전 예외처리
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val channel = NotificationChannel(channelId,
-                "Channel human readable title",
-                NotificationManager.IMPORTANCE_DEFAULT)
-            notificationManager.createNotificationChannel(channel)
+        builder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+            builder.setContent(getCustomDesign(title, message))
+        } else {
+            builder.setContentTitle(title)
+                .setContentText(message)
+                .setSmallIcon(R.mipmap.ic_launcher)
         }
-
-        notificationManager.notify(0 /* ID of notification */, notificationBuilder.build())
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val notificationChannel =
+                NotificationChannel(channel_id, "web_app", NotificationManager.IMPORTANCE_HIGH)
+            notificationChannel.setSound(uri, null)
+            notificationManager.createNotificationChannel(notificationChannel)
+        }
+        notificationManager.notify(0, builder.build())
     }
 }
