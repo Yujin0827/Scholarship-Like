@@ -17,6 +17,11 @@ import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_profile_change.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
@@ -26,6 +31,10 @@ class ProfileFragment : Fragment() {
     lateinit var logout : LinearLayout
     lateinit var profileChange : LinearLayout
     lateinit var allAlarmSwitch : Switch
+    lateinit var userUid: String
+
+    var userName = Firebase.auth.currentUser // 사용자 닉네임 가져오기
+    private var db = Firebase.firestore
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
@@ -38,9 +47,7 @@ class ProfileFragment : Fragment() {
         logout = view.findViewById<LinearLayout>(R.id.logout)
         profileChange = view.findViewById<LinearLayout>(R.id.profileTitleIconLayout)
 
-
-
-
+        getUserInfo() // 사용자 이름
 
         return view
     }
@@ -98,4 +105,23 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    //사용자 이름 가져오기
+    fun getUserInfo(){
+        //User Email
+        userName?.let {
+            userUid = userName!!.uid
+        }
+
+        //User 필드 값
+        db.collection("Users")
+            .document(userUid)
+            .get()
+            .addOnSuccessListener{ document ->
+                if (document != null){
+                    if(document.getString("userName") != null){
+                        btnProfileUserName.text = document.getString("userName")
+                    }
+                }
+            }
+    }
 }

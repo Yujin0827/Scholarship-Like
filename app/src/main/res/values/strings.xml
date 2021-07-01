@@ -15,7 +15,7 @@
     <!-- 프로필탭 페이지 -->
     <string name="change_profile">프로필 수정</string>
     <string name="user_name">홍길동</string>
-    <string name="user_hello">님, 반갑습니다!</string>
+    <string name="user_hello"> 님, 반갑습니다!</string>
     <string name="change_my_condition">내 조건 수정</string>
     <string name="set_alarm">알림설정 (장학금 관련)</string>
     <string name="alarm_app_all">앱 전체</string>
@@ -60,10 +60,10 @@
     <string name="basicInpo">기본 정보</string>
     <string name="nickname">닉네임</string>
     <string name="myUniv">소속 대학교</string>
-    <string name="changePw">비밀번호 변경</string>
-    <string name="currentPw">현재 비밀번호</string>
-    <string name="newPw">새 비밀번호</string>
-    <string name="checkNewPw">새 비밀번호 확인</string>
+    <string name="changePw">비밀번호 재설정</string>
+    <string name="reSetPwBt">이메일 보내기</string>
+
+
 
 
 

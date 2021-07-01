@@ -1,6 +1,8 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -14,6 +16,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
+
 
 class LoginActivity :AppCompatActivity(){
     private lateinit var googleSignInClient: GoogleSignInClient
@@ -82,6 +85,9 @@ class LoginActivity :AppCompatActivity(){
         login_google.setOnClickListener {
             signIn()    // 구글 로그인
         }
+
+
+
     }
 
     // Google 로그인
