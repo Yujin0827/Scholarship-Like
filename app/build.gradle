@@ -70,13 +70,16 @@ dependencies {
     // firebase authentication
     implementation 'com.google.firebase:firebase-auth-ktx'
 
+    implementation 'com.google.firebase:firebase-database:18.0.1'
+    implementation 'com.github.ivbaranov:materiallettericon:0.2.3'
+
     // cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // tab
-    //noinspection GradleCompatible
+    // noinspection GradleCompatible
 
-    // ScholarTab
+    // Scholarship Tab
     // noinspection GradleCompatible
     implementation 'com.android.support:design: 29.0.0'
 
@@ -91,3 +94,5 @@ dependencies {
 
 
 }
+
+apply plugin: 'com.google.gms.google-services'

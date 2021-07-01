@@ -49,6 +49,7 @@ open class MainActivity : AppCompatActivity(),
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // 처음 화면 - 홈탭
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.nav, HomeFragment(), "homeTab")

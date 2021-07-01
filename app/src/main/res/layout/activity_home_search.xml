@@ -16,17 +16,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" >
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/searchBar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginLeft="15dp"
             android:layout_marginRight="55dp"
             android:inputType="text"
-            android:singleLine="true"
+            android:maxLines="1"
+            android:hint="@string/search"
             android:textSize="20sp"
             android:background="@null"
-            android:hint="@string/search" />
+            android:imeOptions="actionSearch" />
 
         <ImageView
             android:id="@+id/searchGoBtn"
