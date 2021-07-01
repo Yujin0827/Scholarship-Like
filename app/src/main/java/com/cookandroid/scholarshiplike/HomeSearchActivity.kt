@@ -1,18 +1,18 @@
 package com.cookandroid.scholarshiplike
 
-import android.app.SearchManager
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.MotionEvent
-import android.view.View
+import android.util.Log
 import android.widget.EditText
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_home_search.*
 
 
@@ -22,12 +22,14 @@ class HomeSearchActivity : AppCompatActivity() {
     lateinit var searchGoBtn : ImageView        // 찾기 버튼
     lateinit var resultList : RecyclerView      // 검색 결과
     lateinit var search_tabLayout : TabLayout   // 검색 결과 탭 - 장학금, 매거진
+    lateinit var searchMagazinFrag: HomeSearchMagazineFragment
+    lateinit var searchScholarFrag: HomeSearchScholarshipFragment
 
-    internal var textlength = 0     // EditText 글자 수
 
     // 검색결과 탭
     private var tabLayoutTextArray: ArrayList<String> = arrayListOf("장학금", "매거진")
     lateinit var viewAdapter: ViewPageAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,9 +38,9 @@ class HomeSearchActivity : AppCompatActivity() {
         searchBar = findViewById<EditText>(R.id.searchBar)                  // 검색창
         searchGoBtn = findViewById<ImageView>(R.id.searchGoBtn)             // 찾기 버튼
         search_tabLayout = findViewById<TabLayout>(R.id.search_tabLayout)   // 검색 결과 탭
-//        resultList = findViewById<RecyclerView>(R.id.toolbar)             // 검색 결과
-
-        search_tabLayout.visibility = View.INVISIBLE
+        //resultList = findViewById<RecyclerView>(R.id.toolbar)             // 검색 결과
+        searchMagazinFrag = HomeSearchMagazineFragment()
+        searchScholarFrag = HomeSearchScholarshipFragment()
 
         // 어댑터 생성, 연결
         viewAdapter = ViewPageAdapter(this)
@@ -46,50 +48,36 @@ class HomeSearchActivity : AppCompatActivity() {
         viewAdapter.addFragment(HomeSearchMagazineFragment())
         search_viewpager.adapter = viewAdapter
 
+        search_viewpager.registerOnPageChangeCallback(object: ViewPager2.OnPageChangeCallback(){
+            override fun onPageSelected(position: Int) {
+                super.onPageSelected(position)
+                Log.e("page num", "page ${position+1}")
+            }
+        })
+
+
         // 탭 레이아웃 이름 연결
-        TabLayoutMediator(search_tabLayout, search_viewpager){ tab, position->
+        TabLayoutMediator(search_tabLayout, search_viewpager) { tab, position ->
             tab.text = tabLayoutTextArray[position]
         }.attach()
 
-        // 탭 생성
-        searchBar.setOnTouchListener(object : View.OnTouchListener {
-            override fun onTouch(v: View?, event: MotionEvent?): Boolean {
-                when(event?.action) {
-                    MotionEvent.ACTION_DOWN -> search_tabLayout.visibility = View.VISIBLE
-                }
-
-                return v?.onTouchEvent(event) ?: true
-            }
-        })
-
-        // 검색창 입력 감지
         searchBar.addTextChangedListener(object: TextWatcher{
-            override fun afterTextChanged(edit: Editable?) {
-
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
 
-            override fun beforeTextChanged(charSequence: CharSequence?, start: Int, count: Int, after: Int) {
-
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             }
 
-            override fun onTextChanged(charSequence: CharSequence?, start: Int, before: Int, count: Int) {
-                textlength = searchBar.text.length
+            override fun afterTextChanged(s: Editable?) {
+                Log.w("TextWatcher", s.toString())
+                searchMagazinFrag.update(s.toString())
+                searchScholarFrag.update(s.toString())
+
+                viewAdapter.notifyDataSetChanged()
             }
         })
-
-        // 쿼리 수신
-        if (Intent.ACTION_SEARCH == intent.action) {
-            intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                doMySearch(query)
-            }
-        }
-        
-
     }
-
-    private fun doMySearch(query: String) {
-
-    }
-
 
 }
+
+
