@@ -24,7 +24,6 @@ class HomeSearchActivity : AppCompatActivity() {
     lateinit var search_tabLayout : TabLayout   // 검색 결과 탭 - 장학금, 매거진
 
     internal var textlength = 0     // EditText 글자 수
-    //var searchList = arrayListOf
 
     // 검색결과 탭
     private var tabLayoutTextArray: ArrayList<String> = arrayListOf("장학금", "매거진")
