@@ -49,20 +49,24 @@
                 android:textColor="#312E2E"
                 android:layout_gravity="center"/>
 
-            <EditText
+            <TextView
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="35dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="80dp"
-            android:backgroundTint = "#777470" />
+            android:backgroundTint = "#777470"
+                android:gravity="center"
+                android:textColor="#4A4A4A"/>
+
+
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/nickNameLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
 
@@ -74,23 +78,28 @@
                 android:textSize="14sp"
                 android:textColor="#312E2E"
                 android:layout_gravity="center"/>
+
             <EditText
                 android:id="@+id/nickNameInput"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="30dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="bottom"
+                android:layout_marginLeft="50dp"
                 android:layout_marginRight="80dp"
-                android:backgroundTint = "#777470"
+                android:backgroundTint="#777470"
+                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
-                android:imeOptions="actionDone"/>
+                android:textSize="14sp"
+                android:textColorHint="#4A4A4A"
+                android:textColor="#4A4A4A"/>
 
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/univLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:orientation="horizontal"
             android:layout_marginLeft="10dp">
 
@@ -106,172 +115,69 @@
             <AutoCompleteTextView
                 android:id="@+id/univeInput"
                 android:layout_width="match_parent"
-                android:layout_height="35dp"
+                android:layout_height="match_parent"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="80dp"
                 android:completionThreshold="1"
+                android:imeOptions="actionDone"
                 android:inputType="text"
                 android:maxLines="1"
-                android:imeOptions="actionDone"/>
+                android:textSize="14sp"
+                android:layout_gravity="bottom"
+                android:textColorHint="#4A4A4A"
+                android:textColor="#4A4A4A"
+                android:dropDownHeight="88dp"/>
 
-            </LinearLayout>
+        </LinearLayout>
 
 
         <!-- 대학 리스트 -->
-        <LinearLayout
-            android:id="@+id/univList"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginLeft="100dp"
-            android:layout_marginRight="80dp"
-            android:visibility="gone">
 
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="50dp"
+            android:gravity="center">
+        
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/reSetPasswordText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/changePw"
+                android:textSize="18sp"
+                android:textColor="#312E2E"
+                android:layout_gravity="center"/>
+            
+            <Button
+                android:id="@+id/reSetPwBt"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="@string/checkNewPw"/>
-
-
+                android:text="@string/reSetPwBt"
+                android:layout_marginLeft="60dp"/>
+            
+            
+            
         </LinearLayout>
-
         <TextView
-            android:id="@+id/passwordText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginTop="30dp"
-            android:text="@string/changePw"
-            android:textSize="18sp"
-            android:textColor="#312E2E"/>
-
-        <LinearLayout
-            android:id="@+id/currnetPwLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-
-            <TextView
-                android:id="@+id/currentPwText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/currentPw"
-                android:textSize="14sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
-
-            <EditText
-                android:id="@+id/currentPwInput"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="32dp"
-                android:layout_marginRight="50dp"
-                android:backgroundTint="#777470"
-                android:nextFocusDown="@id/newPwInput"
-                android:singleLine="true" />
-
-
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/currentPwCheckMessage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"/>
-
-        <LinearLayout
-            android:id="@+id/newPwLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-
-            <TextView
-                android:id="@+id/newPwText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/newPw"
-                android:textSize="14sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
-            <EditText
-                android:id="@+id/newPwInput"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="46dp"
-                android:layout_marginRight="50dp"
-                android:backgroundTint = "#777470"
-                android:nextFocusDown="@id/checkPwInput"
-                android:singleLine="true" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/changePwLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-
-            <TextView
-                android:id="@+id/checkPwText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/checkNewPw"
-                android:textSize="14sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
-            <EditText
-                android:id="@+id/checkPwInput"
-                android:layout_width="match_parent"
-                android:layout_height="35dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="50dp"
-                android:backgroundTint = "#777470"
-                android:textColor="#312E2E"
-                android:inputType="text"
-                android:maxLines="1"
-                android:imeOptions="actionDone"/>
-
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/newPwCheckMessage"
+            android:id="@+id/sendMailResultText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginLeft="50dp" />
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/reset_password_result"
+            android:visibility="invisible"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/save"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center"
-            android:layout_marginTop="100dp">
-
-            <Button
-                android:id="@+id/save"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/save"/>
-            <Button
-                android:id="@+id/cancel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/cancel"/>
-
-        </LinearLayout>
-
-
-
-
+            android:text="@string/save"
+            android:layout_gravity="center"
+            android:layout_marginTop="100dp"/>
+        
     </LinearLayout>
-
-
-
-
-
+    
 </androidx.constraintlayout.widget.ConstraintLayout>
