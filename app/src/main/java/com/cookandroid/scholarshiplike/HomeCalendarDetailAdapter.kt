@@ -9,8 +9,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_home_calendar_item_list.view.*
+import kotlinx.android.synthetic.main.fragment_home_calendar_popup.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -176,6 +178,15 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
 
                 val alertDialog = AlertDialog.Builder(context)
                     .setTitle(date.toString()+"일").create()
+
+                val List = arrayListOf(
+                    Scheduel("국가장학금 1차","2020.04.6","2020.05.12")
+                    ,Scheduel("국가장학금 2차","2020.08.10","2020.09.27")
+                )
+
+                view.popupRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+                view.popupRecyclerView.setHasFixedSize(true)
+                view.popupRecyclerView.adapter = HomeCalendarPopupAdapter(List, context)
 
                 alertDialog.setView(view)
                 alertDialog.show()

@@ -57,6 +57,7 @@ class HomeCalendarDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val gridLayoutManager = GridLayoutManager(mContext,7)
+
         calendar_view.layoutManager = gridLayoutManager
         calendar_view.adapter = HomeCalendarDetailAdapter(mContext,calendar_layout,currentDate,pageIndex)
     }
