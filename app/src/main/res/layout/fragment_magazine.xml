@@ -13,7 +13,7 @@
         android:layout_height="140dp"
         android:layout_centerInParent="true"
         android:gravity="center"
-        android:text="내 돈 어디에 쓸까?"
+        android:text="@string/m_announcement"
         android:textSize="70px"
         android:textStyle="bold"
         android:background="#a4a6e4"
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#a4a6e4"
-            android:text="전체"
+            android:text="@string/all"
             android:textColor="#ffffff" />
 
         <Button
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#a4a6e4"
-            android:text="금융"
+            android:text="@string/finance"
             android:textColor="#ffffff" />
 
         <Button
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#a4a6e4"
-            android:text="생활"
+            android:text="@string/life"
             android:textColor="#ffffff" />
 
         <Button
@@ -66,7 +66,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="#a4a6e4"
-            android:text="기타"
+            android:text="@string/etc"
             android:textColor="#ffffff" />
 
     </LinearLayout>
