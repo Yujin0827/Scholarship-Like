@@ -12,9 +12,8 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 
-class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext1: Context) : ListAdapter<Post, MagazineRecyclerViewAdapter.MagazineViewHolder>(DiffCallbackMagazine) {
+class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext: Context) : ListAdapter<Post, MagazineRecyclerViewAdapter.MagazineViewHolder>(DiffCallbackMagazine) {
 
-    private var mContext : Context = mContext1
 
     //뷰홀더 생성 때 호출
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MagazineViewHolder {
@@ -40,12 +39,12 @@ class MagazineRecyclerViewAdapter(val postlist: ArrayList<Post>, val mContext1: 
 
 
             itemView.setOnClickListener {
-                val intent = Intent(mContext1, MagazineDetailActivity::class.java)
+                val intent = Intent(mContext, MagazineDetailActivity::class.java)
                 intent.apply {
                     this.putExtra("title",title.text.toString())
                     this.putExtra("contents",contents)
                 }
-                mContext1.startActivity(intent)
+                mContext.startActivity(intent)
             }
 
         }

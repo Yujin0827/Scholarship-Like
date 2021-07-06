@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context): ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar) {
 
-    private var mContext1 : Context = mContext
 
     //데이터 가져오기
     // inner class로 ViewHolder 정의
@@ -32,8 +31,8 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
             data3Text.text = data.date
 
             itemView.setOnClickListener {
-                val intent = Intent(mContext1, ScholarshipDetailActivity::class.java)
-                mContext1.startActivity(intent)
+                val intent = Intent(mContext, ScholarshipDetailActivity::class.java)
+                mContext.startActivity(intent)
             }
         }
     }
