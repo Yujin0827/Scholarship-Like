@@ -1,8 +1,6 @@
 package com.cookandroid.scholarshiplike
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.KeyEvent
@@ -46,15 +44,15 @@ class LoginActivity :AppCompatActivity(){
     private fun btnClick() {
         // 로그인 버튼 클릭 시
         btn_login.setOnClickListener() {
-            var txtEmail : String = login_txt_email.text.toString()
-            var txtPassword : String = login_txt_password.text.toString()
+            val txtEmail : String = login_txt_email.text.toString()
+            val txtPassword : String = login_txt_password.text.toString()
 
-            if (!txtEmail.isEmpty() && !txtPassword.isEmpty()) {
+            if (txtEmail.isNotEmpty() && txtPassword.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
                     .addOnCompleteListener(this) { task ->
                         if(task.isSuccessful) {
                             Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
-                            var iT = Intent(this, MainActivity::class.java)
+                            val iT = Intent(this, MainActivity::class.java)
                             startActivity(iT)
                         }
                         else {
@@ -72,13 +70,13 @@ class LoginActivity :AppCompatActivity(){
 
         // 비밀번호 찾기 클릭 시
         goto_findPw.setOnClickListener {
-            var iT = Intent(this, LoginPasswordResetActivity::class.java)
+            val iT = Intent(this, LoginPasswordResetActivity::class.java)
             startActivity(iT)
         }
 
         // 회원가입 클릭 시
         goto_signup.setOnClickListener {
-            var iT = Intent(this, SignupActivity::class.java)
+            val iT = Intent(this, SignupActivity::class.java)
             startActivity(iT)
         }
 
@@ -88,12 +86,12 @@ class LoginActivity :AppCompatActivity(){
         }
 
         //엔터 입력 시 키보드 내리기
-        login_txt_password.setOnKeyListener { v, keyCode, event ->
+        login_txt_password.setOnKeyListener { _, keyCode, event ->
             //Enter key Action
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
                 val imm: InputMethodManager =
                     getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(login_txt_password.getWindowToken(), 0) //hide keyboard
+                imm.hideSoftInputFromWindow(login_txt_password.windowToken, 0) //hide keyboard
                 true
             } else false
         }
@@ -115,7 +113,7 @@ class LoginActivity :AppCompatActivity(){
     }
 
     // MainActivity로 이동
-    fun toMainActivity(user: FirebaseUser?) {
+    private fun toMainActivity(user: FirebaseUser?) {
         if(user !=null) { // MainActivity 로 이동
             startActivity(Intent(this, MainActivity::class.java))
             finish()
@@ -132,7 +130,7 @@ class LoginActivity :AppCompatActivity(){
                 // Google Sign In was successful, authenticate with Firebase
                 val account = task.getResult(ApiException::class.java)!!
                 Log.d(TAG, "firebaseAuthWithGoogle:" + account.id)
-                firebaseAuthWithGoogle(account!!)
+                firebaseAuthWithGoogle(account)
             } catch (e: ApiException) {
                 // Google Sign In failed, update UI appropriately
                 Log.w(TAG, "Google sign in failed", e)
@@ -149,7 +147,7 @@ class LoginActivity :AppCompatActivity(){
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.w(TAG, "firebaseAuthWithGoogle 성공", task.exception)
-                    toMainActivity(firebaseAuth?.currentUser)
+                    toMainActivity(firebaseAuth.currentUser)
                 } else {
                     Log.w(TAG, "firebaseAuthWithGoogle 실패", task.exception)
                     Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
