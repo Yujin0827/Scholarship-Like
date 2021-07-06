@@ -11,7 +11,7 @@
         android:label="@string/app_name_korean"
         android:roundIcon="@drawable/ic_round_button_background"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
 
         <service
             android:name=".MyFirebaseMessagingService"
@@ -37,6 +37,14 @@
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
         -->
+
+        <!-- search -->
+        <provider
+            android:name="br.com.mauker.materialsearchview.db.HistoryProvider"
+            android:authorities="br.com.mauker.materialsearchview.searchhistorydatabase"
+            android:exported="false"
+            android:protectionLevel="signature"
+            android:syncable="true"/>
 
         <!-- AdMob -->
         <meta-data

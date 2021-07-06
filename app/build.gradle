@@ -70,14 +70,14 @@ dependencies {
     // firebase authentication
     implementation 'com.google.firebase:firebase-auth-ktx'
 
-    implementation 'com.google.firebase:firebase-database:18.0.1'
-    implementation 'com.github.ivbaranov:materiallettericon:0.2.3'
-
     // cardview
     implementation 'androidx.cardview:cardview:1.0.0'
 
     // tab
     // noinspection GradleCompatible
+
+    // search
+    implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
 
     // Scholarship Tab
     // noinspection GradleCompatible
