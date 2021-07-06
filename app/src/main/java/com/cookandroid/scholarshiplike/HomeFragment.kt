@@ -10,9 +10,11 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.viewpager2.widget.ViewPager2
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
@@ -109,6 +111,21 @@ class HomeFragment : Fragment() {
         }
 
         super.onActivityCreated(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initView()
+    }
+
+    fun initView() {
+        val homeCalnederAdapter = HomeCalendarAdapter(requireActivity())
+
+        calendarViewPager.adapter = homeCalnederAdapter
+        calendarViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        homeCalnederAdapter.apply {
+            calendarViewPager.setCurrentItem(this.firstFragmentPosition, false)
+        }
     }
 
     // 프래그먼트 생성시 툴바 hide
