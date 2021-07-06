@@ -76,9 +76,6 @@ dependencies {
     // tab
     // noinspection GradleCompatible
 
-    // search
-    implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
-
     // Scholarship Tab
     // noinspection GradleCompatible
     implementation 'com.android.support:design: 29.0.0'

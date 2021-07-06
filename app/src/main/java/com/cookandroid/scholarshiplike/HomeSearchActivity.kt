@@ -55,12 +55,16 @@ class HomeSearchActivity : AppCompatActivity() {
         }
 
         // 검색 버튼 클릭 (키보드)
-        searchField.setOnKeyListener { v, keyCode, event ->
-            if(event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
-                click()
+        searchField.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                    click()
+
+                    return true
+                }
+                return false
             }
-            true
-        }
+        })
 
 
     }
