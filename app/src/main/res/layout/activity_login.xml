@@ -68,7 +68,7 @@
 
         <Button
             android:id="@+id/btn_login"
-            android:layout_width="250dp"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:text="@string/login"
             android:layout_gravity="center_horizontal"
@@ -81,8 +81,8 @@
             android:background="@color/contour_line"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"/>
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,7 +93,7 @@
                 android:id="@+id/goto_findPw"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/find_password"/>
+                android:text="@string/login_reset_password"/>
             <LinearLayout
                 android:layout_width="2dp"
                 android:layout_height="match_parent"

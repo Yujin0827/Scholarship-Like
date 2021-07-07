@@ -14,13 +14,18 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
 import com.google.firebase.messaging.FirebaseMessaging
 
 open class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener  {
 
+    var authStateListener: FirebaseAuth.AuthStateListener? = null
+    val db = Firebase.firestore
     lateinit var tabNav : BottomNavigationView
+    val TAG = "MainActivity"
 
     // onBackPressed 메소드 변수
     var backPressedTime : Long = 0
@@ -31,15 +36,8 @@ open class MainActivity : AppCompatActivity(),
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // 현재 유저
-        var user = FirebaseAuth.getInstance().currentUser
-
-        // 유저 확인 후, 로그인 창으로 이동
-        if (user == null) {
-            var iT = Intent(this, LoginActivity::class.java)
-            startActivity(iT)
-            finish()    //현재 activity 제거
-        }
+        // 현재 유저 확인
+        confirmUser()
 
         // 하단바 변수 생성
         tabNav = findViewById<BottomNavigationView>(R.id.tabNav)
@@ -71,6 +69,34 @@ open class MainActivity : AppCompatActivity(),
             Log.d("FCM Test", token)
         })
 
+    }
+
+    // 현재 유저 확인
+    fun confirmUser() {
+        Log.e("LLPP", "로그인")
+        var user = Firebase.auth.currentUser
+        if (user != null) { //  유저가 존재하면
+            Log.d(TAG, "Current user exist!")
+            val dd = db.collection("Users").document(user.uid)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        if (!document.exists()) {   // 유저 DB가 존재하지 않으면
+                            Log.d(TAG, "User's db doesn't exist!")
+                            var iT = Intent(this, SignupProfileInfoActivity::class.java)
+                            startActivity(iT)
+                            finish()
+                        }
+                    }
+                }
+        }
+        else {  // 유저가 존재하지 않으면
+            Log.d(TAG, "Current user doesn't exist!")
+            var iT = Intent(this, LoginActivity::class.java)
+            startActivity(iT)
+            finish()    //현재 activity 제거
+        }
     }
 
     // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거

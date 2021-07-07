@@ -42,8 +42,8 @@
     <string name="high_school_type">종류</string>
     <string name="high_school_area_rural">농어촌</string>
     <string name="high_school_area_etc">해당 없음</string>
-    <string name="pre_semester_grade">이수 학점</string>
-    <string name="pre_semester_score">성적</string>
+    <string name="pre_semester_grade">직전학기 이수 학점</string>
+    <string name="pre_semester_score">직전학기 성적</string>
     <string name="area">거주지</string>
     <string name="country">국적</string>
     <string name="country_local">내국인</string>
@@ -92,7 +92,7 @@
     <string name="accept_service">서비스 약관 동의</string>
     <string name="accept_privacy">개인정보 처리방침 동의</string>
     <string name="login">로그인</string>
-    <string name="find_password">비밀번호 찾기</string>
+    <string name="login_reset_password">비밀번호 재설정</string>
     <string name="signup">회원가입</string>
     <string name="login_naver">네이버 로그인</string>
     <string name="login_kakao">카카오 로그인</string>
