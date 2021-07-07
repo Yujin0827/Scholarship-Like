@@ -1,25 +1,19 @@
 package com.cookandroid.scholarshiplike
 
-import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.activity_home_search.*
-
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 
 class HomeSearchActivity : AppCompatActivity() {
 
@@ -31,12 +25,30 @@ class HomeSearchActivity : AppCompatActivity() {
     lateinit var search_result_m : RecyclerView         // 검색 결과 - 매거진
 
     internal var textlength = 0     // EditText 글자 수
+    private val db = Firebase.firestore
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_search)
         Log.d("tag", "onCreate: started")
 
+        val sRef = db.collection("장학금")
+            .document("교내").collection("강원")
+            .document("강원대").collection("학과")
+
+        sRef // 작업할 문서
+            .get()      // 문서 가져오기
+            .addOnSuccessListener { result ->
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+                    val item = Alarm("1", document.id, "asdfadf")
+                }
+                Log.w("MainActivity", "Error aaaaaaa: ")
+
+            }
+            .addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w("MainActivity", "Error getting documents: $exception")
+            }
 
         searchField = findViewById<EditText>(R.id.searchField)          // 검색창
         searchBtn = findViewById<ImageView>(R.id.searchBtn)     // 찾기 버튼
@@ -55,12 +67,16 @@ class HomeSearchActivity : AppCompatActivity() {
         }
 
         // 검색 버튼 클릭 (키보드)
-        searchField.setOnKeyListener { v, keyCode, event ->
-            if(event.getAction() == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
-                click()
+        searchField.setOnKeyListener(object : View.OnKeyListener {
+            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                    click()
+
+                    return true
+                }
+                return false
             }
-            true
-        }
+        })
 
 
     }
@@ -79,8 +95,5 @@ class HomeSearchActivity : AppCompatActivity() {
         imm.hideSoftInputFromWindow(searchField.windowToken, 0)
     }
 
-    private fun firebaseSearch() {
-
-    }
 
 }
