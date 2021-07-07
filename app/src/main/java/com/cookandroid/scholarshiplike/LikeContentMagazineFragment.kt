@@ -35,9 +35,9 @@ class LikeContentMagazineFragment : Fragment() {
             ref.document(user.uid).get().
             addOnSuccessListener { document ->
                 if (document.data != null){
-                    if (document.data!!.get("좋아요") != null) {
-                        val data = document.data!!["좋아요"] as Map<String, String>
-                        magazineList = data["매거진"] as ArrayList<String>
+                    if (document.data!!.get("likeContent") != null) {
+                        val data = document.data!!["likeContent"] as Map<String, String>
+                        magazineList = data["magazine"] as ArrayList<String>
                     }
 
                     Log.w(TAG, magazineList.toString())
