@@ -15,7 +15,7 @@
     <!-- 프로필탭 페이지 -->
     <string name="change_profile">프로필 수정</string>
     <string name="user_name">홍길동</string>
-    <string name="user_hello">님, 반갑습니다!</string>
+    <string name="user_hello"> 님, 반갑습니다!</string>
     <string name="change_my_condition">내 조건 수정</string>
     <string name="set_alarm">알림설정 (장학금 관련)</string>
     <string name="alarm_app_all">앱 전체</string>
@@ -60,10 +60,10 @@
     <string name="basicInpo">기본 정보</string>
     <string name="nickname">닉네임</string>
     <string name="myUniv">소속 대학교</string>
-    <string name="changePw">비밀번호 변경</string>
-    <string name="currentPw">현재 비밀번호</string>
-    <string name="newPw">새 비밀번호</string>
-    <string name="checkNewPw">새 비밀번호 확인</string>
+    <string name="changePw">비밀번호 재설정</string>
+    <string name="reSetPwBt">이메일 보내기</string>
+
+
 
 
 
@@ -106,5 +106,39 @@
     <string name="signup_profile_essen">* 모두 필수항목입니다.</string>
     <string name="next">다음</string>
     <string name="start">시작하기</string>
+
+    <!-- 매거진 관련 -->
+    <string name="m_title">매거진 제목</string>
+    <string name="m_contents">매거진 내용</string>
+    <string name="m_announcement">내 돈 어디에 쓸까?</string>
+    <string name="all">전체</string>
+    <string name="finance">금융</string>
+    <string name="life">생활</string>
+    <string name="etc">기타</string>
+
+
+    <!-- 캘린더 관련-->
+    <string name="calendar_year_month_format">yyyy년 MM월</string>
+    <string name="sun">일</string>
+    <string name="mon">월</string>
+    <string name="tue">화</string>
+    <string name="wed">수</string>
+    <string name="thu">목</string>
+    <string name="fri">금</string>
+    <string name="sat">토</string>
+    <string name="scheduelTitle">일정 제목</string>
+    <string name="scheduelDate">xx.xx</string>
+    <string name="tilde">~</string>
+
+    <!-- 장학금 세부페이지 관련-->
+    <string name="scholarName">장학금 이름</string>
+    <string name="movetoWebpage">웹페이지로 이동</string>
+    <string name="contents">내용</string>
+    <string name="paymentInstitution">지급기관</string>
+    <string name="period">신청기간</string>
+    <string name="maxMoney">최대금액</string>
+    <string name="paymentType">지급유형</string>
+    <string name="condition">조건</string>
+    <string name="note">비고</string>
 
 </resources>

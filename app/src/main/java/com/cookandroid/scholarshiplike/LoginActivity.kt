@@ -3,6 +3,8 @@ package com.cookandroid.scholarshiplike
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -11,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -50,18 +53,18 @@ class LoginActivity :AppCompatActivity(){
     }
 
     // 버튼 클릭 통합 처리
-    fun btnClick() {
+    private fun btnClick() {
         // 로그인 버튼 클릭 시
         btn_login.setOnClickListener() {
-            var txtEmail : String = login_txt_email.text.toString()
-            var txtPassword : String = login_txt_password.text.toString()
+            val txtEmail : String = login_txt_email.text.toString()
+            val txtPassword : String = login_txt_password.text.toString()
 
-            if (!txtEmail.isEmpty() && !txtPassword.isEmpty()) {
+            if (txtEmail.isNotEmpty() && txtPassword.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
                     .addOnCompleteListener(this) { task ->
                         if(task.isSuccessful) {
                             Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
-                            var iT = Intent(this, MainActivity::class.java)
+                            val iT = Intent(this, MainActivity::class.java)
                             startActivity(iT)
                             finish()
                         }
@@ -80,13 +83,13 @@ class LoginActivity :AppCompatActivity(){
 
         // 비밀번호 찾기 클릭 시
         goto_findPw.setOnClickListener {
-            var iT = Intent(this, LoginPasswordResetActivity::class.java)
+            val iT = Intent(this, LoginPasswordResetActivity::class.java)
             startActivity(iT)
         }
 
         // 회원가입 클릭 시
         goto_signup.setOnClickListener {
-            var iT = Intent(this, SignupActivity::class.java)
+            val iT = Intent(this, SignupActivity::class.java)
             startActivity(iT)
         }
 
@@ -102,6 +105,17 @@ class LoginActivity :AppCompatActivity(){
 
             signIn()    // 구글 로그인
         }
+
+        //엔터 입력 시 키보드 내리기
+        login_txt_password.setOnKeyListener { _, keyCode, event ->
+            //Enter key Action
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(login_txt_password.windowToken, 0) //hide keyboard
+                true
+            } else false
+        }
     }
 
     // Google 로그인
@@ -110,13 +124,13 @@ class LoginActivity :AppCompatActivity(){
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
     // MainActivity로 이동
-    fun toMainActivity() {
+    private fun toMainActivity() {
         startActivity(Intent(this, MainActivity::class.java))
         finish()
     }
 
     // SignupProfileInfoActivity로 이동
-    fun toSignupProfileInfoActivity() {
+    private fun toSignupProfileInfoActivity() {
         startActivity(Intent(this, SignupProfileInfoActivity::class.java))
         finish()
     }
