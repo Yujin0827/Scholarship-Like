@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.fragment_magazine.*
 import kotlinx.android.synthetic.main.fragment_magazine.view.*
 
@@ -37,11 +38,11 @@ class MagazineFragment : Fragment() {
             postList.clear()
 
             for (document in result) {  // 가져온 문서들은 result에 들어감
-                val item = Post(document["제목"] as String, document["카테고리"] as String, document["내용"] as String)
+                val item = document.toObject<Post>()
                 postList.add(item)
 
                 //카테고리 분류
-                if(document["카테고리"]=="금융") postfinanceList.add(item) else if(document["카테고리"]=="생활")  postlifeList.add(item) else  postetcList.add(item)
+                if(document["cartegory"]=="금융") postfinanceList.add(item) else if(document["cartegory"]=="생활")  postlifeList.add(item) else  postetcList.add(item)
             }
             Log.d("postList", postList.toString())
             postlistAdapter.submitList(postList)
