@@ -27,14 +27,14 @@ class MagazineFragment : Fragment() {
         super.onAttach(context)
 
         // 액티비티 정보 저장
-        mContext = context;
+        mContext = context
 
         // 파이어스토어에서 매거진 데이터 불러오기
         firestore = FirebaseFirestore.getInstance() // Firestore 인스턴스 초기화
 
         firestore?.collection("매거진")?.get()?.addOnSuccessListener { result ->
             // 성공할 경우
-            postList?.clear()
+            postList.clear()
 
             for (document in result) {  // 가져온 문서들은 result에 들어감
                 val item = Post(document["제목"] as String, document["카테고리"] as String, document["내용"] as String)
