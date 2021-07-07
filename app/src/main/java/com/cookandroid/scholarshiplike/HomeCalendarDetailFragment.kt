@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeCalendarDetailFragment : Fragment() {
-
+    @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
     lateinit var mContext: Context
 

@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_like_content.*
 class LikeContentActivity : AppCompatActivity() {
 
     private var tabLayoutTextArray: ArrayList<String> = arrayListOf("매거진", "장학금")
-    lateinit var viewAdapter: ViewPageAdapter
+    private lateinit var viewAdapter: ViewPageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

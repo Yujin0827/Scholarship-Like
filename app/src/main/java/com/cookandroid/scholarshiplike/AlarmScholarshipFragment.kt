@@ -15,6 +15,8 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 class AlarmScholarshipFragment: Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
     private var db = Firebase.firestore
     private lateinit var listAdapter: AlarmRecyclerViewAdapter
     var dataList: ArrayList<Alarm> = arrayListOf()
@@ -33,11 +35,11 @@ class AlarmScholarshipFragment: Fragment() {
                     dataList.add(item)
                 }
                 listAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w(TAG, "Error aaaaaaa: ")
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
     }
 

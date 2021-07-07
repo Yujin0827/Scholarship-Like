@@ -7,7 +7,6 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,10 +15,11 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 class AlarmAllFragment: Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
     private lateinit var listAdapter: AlarmRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: MutableList<Alarm> = arrayListOf()
-    private lateinit var text: TextView
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -30,17 +30,17 @@ class AlarmAllFragment: Fragment() {
         sRef // 작업할 문서
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Alarm("1", document.id, "asdfadf")
+                for (document in result) {  // 가져온 문서들은 result 에 들어감
+                    val item = Alarm("1", document.id, "alarm")
                     dataList.add(item)
                 }
                 listAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w(TAG, "Success")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
     }
 
@@ -50,7 +50,7 @@ class AlarmAllFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
+        // Fragment 에서 전달받은 list 를 넘기면서 ListAdapter 생성
         listAdapter = AlarmRecyclerViewAdapter(dataList)
 
         // item 클릭시 새 activity 호출
@@ -65,7 +65,7 @@ class AlarmAllFragment: Fragment() {
         })
 
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        // RecyclerView.adapter에 지정
+        // RecyclerView.adapter 에 지정
         listView.adapter = listAdapter
 
     }

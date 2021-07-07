@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.fragment_magazine.*
 import kotlinx.android.synthetic.main.fragment_magazine.view.*
 
 class MagazineFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     private var firestore : FirebaseFirestore? = null // Firestore 인스턴스
     private var postList : ArrayList<Post> = arrayListOf() // 파이어스토어에서 불러온 데이터 전체 저장하는 리스트 (게시물 리스트)
@@ -48,7 +50,7 @@ class MagazineFragment : Fragment() {
             postlistAdapter.submitList(postList)
         }?.addOnFailureListener { exception ->
             // 실패할 경우
-            Log.w("MagazineFragment", "Error getting documents: $exception")
+            Log.w(TAG, "Error getting documents: $exception")
         }
 
     }

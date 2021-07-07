@@ -16,6 +16,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class HomeSearchActivity : AppCompatActivity() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     lateinit var searchField: EditText            // 검색창
     lateinit var searchBtn : ImageView        // 찾기 버튼
@@ -30,7 +32,7 @@ class HomeSearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home_search)
-        Log.d("tag", "onCreate: started")
+        Log.d(TAG, "onCreate: started")
 
         val sRef = db.collection("장학금")
             .document("교내").collection("강원")
@@ -42,12 +44,12 @@ class HomeSearchActivity : AppCompatActivity() {
                 for (document in result) {  // 가져온 문서들은 result에 들어감
                     val item = Alarm("1", document.id, "asdfadf")
                 }
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w(TAG, "Error aaaaaaa: ")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
 
         searchField = findViewById<EditText>(R.id.searchField)          // 검색창

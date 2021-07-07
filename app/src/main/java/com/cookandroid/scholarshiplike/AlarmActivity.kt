@@ -8,7 +8,7 @@ import kotlinx.android.synthetic.main.activity_alarm.*
 
 class AlarmActivity : AppCompatActivity() {
     private var tabLayoutTextArray: ArrayList<String> = arrayListOf("전체", "장학금")
-    lateinit var viewAdapter: ViewPageAdapter
+    private lateinit var viewAdapter: ViewPageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

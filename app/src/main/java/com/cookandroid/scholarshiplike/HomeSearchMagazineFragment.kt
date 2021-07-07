@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
 class HomeSearchMagazineFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     private var  dataList: ArrayList<Post> = arrayListOf()
     private var searchDataList: ArrayList<Post> = arrayListOf()
@@ -41,7 +43,7 @@ class HomeSearchMagazineFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
 
         mContext = context as Activity

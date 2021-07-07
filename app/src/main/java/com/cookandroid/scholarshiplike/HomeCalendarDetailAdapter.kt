@@ -19,7 +19,7 @@ import java.util.*
 // 높이를 구하는데 필요한 LinearLayout과 HomeCalendarDateCalculate를 사용할 때 필요한 date를 받는다.
 class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date, val pageindex: Int) :
     RecyclerView.Adapter<HomeCalendarDetailAdapter.CalendarItemHolder>() {
-
+    @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
     var dataList: ArrayList<Int> = arrayListOf()
 

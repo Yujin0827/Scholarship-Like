@@ -20,16 +20,16 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
     }
 
 
-    // inner class로 ViewHolder 정의
+    // inner class 로 ViewHolder 정의
     inner class AlarmItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
         var title: TextView = itemView!!.findViewById(R.id.alarm_title)
-        var date: TextView = itemView!!.findViewById(R.id.alarm_date)
+        private var date: TextView = itemView!!.findViewById(R.id.alarm_date)
 
-        // onBindViewHolder의 역할을 대신한다.
+        // onBindViewHolder 의 역할을 대신한다.
         fun bind(data: Alarm, position: Int) {
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
-            Log.d("ListAdapter", data.title+" "+data.date)
+            Log.d("ListAdapter", data.title + " " + data.date + " " + position)
 
             title.text = data.title
             date.text = data.date
@@ -44,7 +44,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
         }
     }
 
-    // ViewHolder에게 item을 보여줄 View로 쓰일 item_data_list.xml를 넘기면서 ViewHolder 생성
+    // ViewHolder 에게 item 을 보여줄 View 로 쓰일 item_data_list.xml 를 넘기면서 ViewHolder 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_alarm, parent, false)
         return AlarmItemViewHolder(view)
@@ -54,7 +54,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
         return list.count()
     }
 
-    // ViewHolder의 bind 메소드를 호출한다.
+    // ViewHolder 의 bind 메소드를 호출한다.
     override fun onBindViewHolder(holder: AlarmRecyclerViewAdapter.AlarmItemViewHolder, position: Int) {
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
         holder.bind(list[position], position)

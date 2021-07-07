@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
     defaultConfig {
         applicationId "com.cookandroid.scholarshiplike"
-        minSdkVersion 26
+        minSdkVersion 28
         targetSdkVersion 29
         versionCode 1
         versionName "v0.1.0-alpha"
@@ -74,13 +74,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-perf-ktx'
     implementation 'com.google.firebase:firebase-auth-ktx'
     implementation 'com.google.android.gms:play-services-ads:20.2.0'
-
-    // Scholarship Tab
-    // noinspection GradleCompatible
-    implementation 'com.android.support:design: 29.0.0'
-
-    //noinspection GradleCompatible
-    implementation "com.android.support:support-compat:28.0.0"
 
     // alarm channel
     implementation 'com.kyleduo.switchbutton:library:2.0.0'

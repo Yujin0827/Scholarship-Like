@@ -11,11 +11,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
+
 class LikeContentScholarshipFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
+
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
     private var scholarList: ArrayList<String> = arrayListOf()
@@ -23,21 +26,19 @@ class LikeContentScholarshipFragment : Fragment() {
     private lateinit var mContext : Context
     private val user = Firebase.auth.currentUser
 
-    private val TAG = "LikeScholarFragment"
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
 
-        var ref = db.collection("Users")
+        val ref = db.collection("Users")
 
         Log.w(TAG, "Load Firestore")
         if (user != null) {
             ref.document(user.uid).get().
             addOnSuccessListener { document ->
                 if (document.data != null){
-                    if (document.data!!.get("likeContent") != null) {
-                        val data = document.data!!["likeContent"] as Map<String, String>
+                    if (document.data!!["likeContent"] != null) {
+                        val data = document.data!!["likeContent"] as Map<*, *>
                         scholarList = data["scholarship"] as ArrayList<String>
                     }
 
@@ -49,7 +50,7 @@ class LikeContentScholarshipFragment : Fragment() {
                                 Log.w(TAG, document.id)
                                 for(title in scholarList){
                                     if(document.id == title){
-                                        scholar.add(Scholarship(document.id,"adfadsf","adfasdf",true))
+                                        scholar.add(Scholarship(document.id,"list","list",true))
                                     }
                                 }
 
@@ -74,10 +75,10 @@ class LikeContentScholarshipFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
+        // Fragment 에서 전달받은 list 를 넘기면서 ListAdapter 생성
         listAdapter = ScholarshipRecyclerViewAdapter(scholar,mContext)
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        // RecyclerView.adapter에 지정
+        // RecyclerView.adapter 에 지정
         listView.adapter = listAdapter
 
     }

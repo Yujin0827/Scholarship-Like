@@ -16,6 +16,8 @@ import kotlinx.android.synthetic.main.activity_profile_my_con_change.*
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
 
 class ScholarshipMyscholarFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
@@ -48,12 +50,12 @@ class ScholarshipMyscholarFragment : Fragment() {
                     dataList.add(item)
                 }
                 listAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w(TAG, "Error aaaaaaa: ")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
 
 

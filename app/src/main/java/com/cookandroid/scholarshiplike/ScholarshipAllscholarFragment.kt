@@ -15,6 +15,8 @@ import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
 import androidx.fragment.app.Fragment
 
 class ScholarshipAllscholarFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     val head: MutableList<String> = ArrayList() // expandableList의 부모 리스트
     val body: MutableList<MutableList<String>> = ArrayList() // expandableList의 자식 리스트
@@ -45,12 +47,12 @@ class ScholarshipAllscholarFragment : Fragment() {
                     dataList.add(item)
                 }
                 RlistAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w(TAG, "Error aaaaaaa: ")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
 
 
