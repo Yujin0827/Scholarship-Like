@@ -54,7 +54,7 @@ class SignupConditionInfoActivity :AppCompatActivity() {
             // 스피너의 레이아웃 구체화
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
-            init_myIncome.adapter = adapter
+            init_myIncome1.adapter = adapter
         }
 
         //'이수 학기' 스피너의 ArrayAdapter
@@ -66,7 +66,7 @@ class SignupConditionInfoActivity :AppCompatActivity() {
             // 스피너의 레이아웃 구체화
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
-            init_mySemester.adapter = adapter
+            init_mySemester1.adapter = adapter
         }
 
         //'거주지' 스피너의 ArrayAdapter
@@ -78,19 +78,19 @@ class SignupConditionInfoActivity :AppCompatActivity() {
             // 스피너의 레이아웃 구체화
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
-            init_myArea.adapter = adapter
+            init_myArea1.adapter = adapter
         }
 
 
         //'이수학기' 스피너 선택 리스너
-        init_mySemester.onItemSelectedListener =
+        init_mySemester1.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     TODO("Not yet implemented")
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    when(init_mySemester.getItemAtPosition(position).toString()) {
+                    when(init_mySemester1.getItemAtPosition(position).toString()) {
                         "0" -> {  //이수학기 0일 때 : '직전 학기' Layout 비활성화
                             disabledPreSemester()
                         }
@@ -104,29 +104,29 @@ class SignupConditionInfoActivity :AppCompatActivity() {
 
     //'직전학기' 레이아웃 비활성화 함수
     fun disabledPreSemester() {
-        txt_init_myPreSemGrade.alpha = 0.3F
-        txt_init_myPreSemScore.alpha = 0.3F
-        et_init_myPreSemGrade.isEnabled = false
-        et_init_myPreSemScore.isEnabled = false
+        txt_init_myPreSemGrade1.alpha = 0.3F
+        txt_init_myPreSemScore1.alpha = 0.3F
+        et_init_myPreSemGrade1.isEnabled = false
+        et_init_myPreSemScore1.isEnabled = false
     }
 
     //'직전학기' 레이아웃 활성화 함수
     fun abledPreSemester() {
-        txt_init_myPreSemGrade.alpha = 1F
-        txt_init_myPreSemScore.alpha = 1F
-        et_init_myPreSemGrade.isEnabled = true
-        et_init_myPreSemScore.isEnabled = true
+        txt_init_myPreSemGrade1.alpha = 1F
+        txt_init_myPreSemScore1.alpha = 1F
+        et_init_myPreSemGrade1.isEnabled = true
+        et_init_myPreSemScore1.isEnabled = true
     }
 
     // 버튼 클릭 통합 처리
     fun btnClick() {
         // '돌아가기' 버튼 클릭 리스너
-        btn_condition_goback.setOnClickListener() {
+        btn_condition_goback1.setOnClickListener() {
             finish()    // 현재 액티비티 종료, '초기 프로필 입력' 페이지로 이동
         }
 
         // '시작하기' 버튼 클릭 리스너
-        btn_start.setOnClickListener() {
+        btn_start1.setOnClickListener() {
             setInputData()
             updateUserDB()
         }
@@ -142,57 +142,57 @@ class SignupConditionInfoActivity :AppCompatActivity() {
         userUniversity = intent.getStringExtra("univ")
 
         // 학자금 지원 구간
-        if (init_myIncome.isSelected) {
-            userIncome = init_myIncome.getItemAtPosition(init_myIncome.selectedItemPosition).toString()
+        if (init_myIncome1.isSelected) {
+            userIncome = init_myIncome1.getItemAtPosition(init_myIncome1.selectedItemPosition).toString()
         }
 
         // 가족관계
-        if (cb_init_dad.isChecked) {    // 부
+        if (cb_init_dad1.isChecked) {    // 부
             userDad = true
         }
-        if (cb_init_mom.isChecked) {    // 모
+        if (cb_init_mom1.isChecked) {    // 모
             userMom = true
         }
 
         //형제자매
-        if ((et_init_childAll.text.toString() != null) && (et_init_childMe.text.toString() != null)) {
-            userChildAll = et_init_childAll.text.toString().toInt()
-            userChildMe = et_init_childMe.text.toString().toInt()
+        if ((et_init_childAll1.text.toString() != null) && (et_init_childMe1.text.toString() != null)) {
+            userChildAll = et_init_childAll1.text.toString().toInt()
+            userChildMe = et_init_childMe1.text.toString().toInt()
         }
 
         // 이수학기
-        userSemester = init_mySemester.getItemAtPosition(init_mySemester.selectedItemPosition).toString().toInt()
+        userSemester = init_mySemester1.getItemAtPosition(init_mySemester1.selectedItemPosition).toString().toInt()
 
         // 직전학기 이수학점 & 성적
         if (userSemester!! >= 1) {
-            if(et_init_myPreSemGrade.text.toString() != null) {
-                userPreSemGrade = et_init_myPreSemGrade.text.toString().toInt()
+            if(et_init_myPreSemGrade1.text.toString() != null) {
+                userPreSemGrade = et_init_myPreSemGrade1.text.toString().toInt()
             }
-            if (et_init_myPreSemScore.text.toString() != null) {
-                userPreSemScore = et_init_myPreSemScore.text.toString().toDouble()
+            if (et_init_myPreSemScore1.text.toString() != null) {
+                userPreSemScore = et_init_myPreSemScore1.text.toString().toDouble()
             }
         }
 
         // 거주지
-        userArea = init_myArea.getItemAtPosition(init_myArea.selectedItemPosition).toString()
+        userArea = init_myArea1.getItemAtPosition(init_myArea1.selectedItemPosition).toString()
 
         // 국적
-        when (rg_init_country.checkedRadioButtonId) {
-            R.id.rb_init_country_in -> {
+        when (rg_init_country1.checkedRadioButtonId) {
+            R.id.rb_init_country_in1 -> {
                 userCountry = "내국인"
             }
-            R.id.rb_init_country_out -> {
+            R.id.rb_init_country_out1 -> {
                 userCountry = "외국인"
             }
         }
 
         // 보훈 보상 대상자
-        if (cb_init_nationalMerit.isChecked) {
+        if (cb_init_nationalMerit1.isChecked) {
             userNationalMerit = true
         }
 
         // 장애 여부
-        if (cb_init_disabled.isChecked) {
+        if (cb_init_disabled1.isChecked) {
             userDisabled = true
         }
     }

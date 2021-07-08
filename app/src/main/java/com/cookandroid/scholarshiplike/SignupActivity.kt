@@ -87,10 +87,17 @@ class SignupActivity :AppCompatActivity() {
     // 유저 DB 저장
     fun updateUserDB() {
         val uId = auth.currentUser?.uid
-        val userProfileSet = hashMapOf(
-            "닉네임" to txtNickname,
-            "소속 대학교" to txtUniv
+        var userProfileSet :HashMap<String, Any> = hashMapOf(
+            "nickname" to txtNickname,
+            "univ" to txtUniv
         )
+
+        val userLikeContentSet = hashMapOf(
+            "scholarship" to arrayListOf<String>(),
+            "magazine" to arrayListOf<String>()
+        )
+
+        userProfileSet["likeContent"] = userLikeContentSet
 
         db.collection("Users").document(uId!!)
             .set(userProfileSet)

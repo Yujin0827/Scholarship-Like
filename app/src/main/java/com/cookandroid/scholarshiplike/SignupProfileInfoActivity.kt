@@ -14,8 +14,8 @@ class SignupProfileInfoActivity :AppCompatActivity() {
     val auth = Firebase.auth
     val db = Firebase.firestore
 
-    var txtNickname :String? = null
-    var txtUniv :String? = null
+    lateinit var txtNickname :String
+    lateinit var txtUniv :String
 
     val TAG = "SigupProfileInfoActivity"
 
@@ -54,14 +54,21 @@ class SignupProfileInfoActivity :AppCompatActivity() {
     // 유저 DB 업데이트
     private fun updateUserDB() {
         val user = auth.currentUser
-        val profileSet = hashMapOf(
-            "닉네임" to txtNickname,
-            "소속 대학교" to txtUniv
+        var userProfileSet :HashMap<String, Any> = hashMapOf(
+            "nickname" to txtNickname,
+            "univ" to txtUniv
         )
+
+        val userLikeContentSet = hashMapOf(
+            "scholarship" to arrayListOf<String>(),
+            "magazine" to arrayListOf<String>()
+        )
+
+        userProfileSet["likeContent"] = userLikeContentSet
 
         if(user != null) {
             db.collection("Users").document(user.uid)
-                .set(profileSet)
+                .set(userProfileSet)
                 .addOnSuccessListener {
                     Log.d(TAG, "Success update user profile db!")
                     startActivity(Intent(this, MainActivity::class.java))

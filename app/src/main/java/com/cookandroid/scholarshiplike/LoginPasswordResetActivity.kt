@@ -20,9 +20,6 @@ class LoginPasswordResetActivity : AppCompatActivity(){
     fun btnClick() {
         // X 아이콘 클릭 시
         btn_close_password.setOnClickListener {
-            var iT = Intent(this, LoginActivity::class.java)
-            iT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP) // 로그인 화면이 스택에 중복으로 쌓이는 것 방지
-            startActivity(iT)
             finish()
         }
 

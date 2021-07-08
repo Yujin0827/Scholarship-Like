@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/signup_con_title"
+        android:id="@+id/signup_con_title1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -18,14 +18,14 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView_condition"/>
+        app:layout_constraintBottom_toTopOf="@+id/scrollView_condition1"/>
 
     <ScrollView
-        android:id="@+id/scrollView_condition"
+        android:id="@+id/scrollView_condition1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/signup_con_btn"
-        app:layout_constraintTop_toBottomOf="@+id/signup_con_title">
+        app:layout_constraintBottom_toTopOf="@+id/signup_con_btn1"
+        app:layout_constraintTop_toBottomOf="@+id/signup_con_title1">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -47,7 +47,7 @@
                     android:textColor="@color/text_black" />
 
                 <Spinner
-                    android:id="@+id/init_myIncome"
+                    android:id="@+id/init_myIncome1"
                     android:layout_width="100dp"
                     android:layout_height="25dp" />
             </LinearLayout>
@@ -76,14 +76,14 @@
                         android:orientation="horizontal">
 
                         <CheckBox
-                            android:id="@+id/cb_init_dad"
+                            android:id="@+id/cb_init_dad1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="20dp"
                             android:text="@string/family_rel_dad" />
 
                         <CheckBox
-                            android:id="@+id/cb_init_mom"
+                            android:id="@+id/cb_init_mom1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/family_rel_mom" />
@@ -97,11 +97,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="형제자매"
+                            android:text="@string/child_all"
                             android:textColor="@color/text_black" />
 
                         <EditText
-                            android:id="@+id/et_init_childAll"
+                            android:id="@+id/et_init_childAll1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="2"
@@ -111,11 +111,11 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="째 중"
+                            android:text="@string/child_me"
                             android:textColor="@color/text_black" />
 
                         <EditText
-                            android:id="@+id/et_init_childMe"
+                            android:id="@+id/et_init_childMe1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="2"
@@ -144,7 +144,7 @@
                     android:orientation="vertical">
 
                     <Spinner
-                        android:id="@+id/init_mySemester"
+                        android:id="@+id/init_mySemester1"
                         android:layout_width="80dp"
                         android:layout_height="wrap_content" />
 
@@ -154,7 +154,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/txt_init_myPreSemGrade"
+                            android:id="@+id/txt_init_myPreSemGrade1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -162,7 +162,7 @@
                             android:textColor="@color/text_black" />
 
                         <EditText
-                            android:id="@+id/et_init_myPreSemGrade"
+                            android:id="@+id/et_init_myPreSemGrade1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="2"
@@ -176,7 +176,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/txt_init_myPreSemScore"
+                            android:id="@+id/txt_init_myPreSemScore1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
@@ -184,7 +184,7 @@
                             android:textColor="@color/text_black" />
 
                         <EditText
-                            android:id="@+id/et_init_myPreSemScore"
+                            android:id="@+id/et_init_myPreSemScore1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:ems="3"
@@ -208,7 +208,7 @@
                     android:textColor="@color/text_black" />
 
                 <Spinner
-                    android:id="@+id/init_myArea"
+                    android:id="@+id/init_myArea1"
                     android:layout_width="120dp"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -227,19 +227,19 @@
                     android:textColor="@color/text_black" />
 
                 <RadioGroup
-                    android:id="@+id/rg_init_country"
+                    android:id="@+id/rg_init_country1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
                     <RadioButton
-                        android:id="@+id/rb_init_country_in"
+                        android:id="@+id/rb_init_country_in1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/country_local" />
 
                     <RadioButton
-                        android:id="@+id/rb_init_country_out"
+                        android:id="@+id/rb_init_country_out1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/country_foreigner" />
@@ -265,14 +265,14 @@
                     android:orientation="vertical">
                     <!-- 국가유공자 -->
                     <CheckBox
-                        android:id="@+id/cb_init_nationalMerit"
+                        android:id="@+id/cb_init_nationalMerit1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/extra_national_merit" />
 
                     <!-- 장애 여부 -->
                     <CheckBox
-                        android:id="@+id/cb_init_disabled"
+                        android:id="@+id/cb_init_disabled1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@string/extra_disabled" />
@@ -283,26 +283,26 @@
     </ScrollView>
 
     <LinearLayout
-        android:id="@+id/signup_con_btn"
+        android:id="@+id/signup_con_btn1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="30dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView_condition"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView_condition1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
 
         <Button
-            android:id="@+id/btn_condition_goback"
+            android:id="@+id/btn_condition_goback1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="20dp"
             android:text="@string/go_back" />
 
         <Button
-            android:id="@+id/btn_start"
+            android:id="@+id/btn_start1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/maincolor"

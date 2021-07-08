@@ -6,29 +6,20 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import kotlinx.android.synthetic.main.activity_profile_my_con_change.*
+import kotlinx.android.synthetic.main.activity_signup_condition_info.*
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
-    private lateinit var myIncome : Spinner
-    private lateinit var mySemester : Spinner
-    private lateinit var myArea : Spinner
-    private lateinit var myArea_datails : Spinner
-    private lateinit var myPreSemesterLayout : LinearLayout
-
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_my_con_change)
 
-        myIncome = findViewById(R.id.myIncome)
-        mySemester = findViewById(R.id.mySemester)
-        myArea = findViewById(R.id.myArea)
-        myArea_datails = findViewById(R.id.myArea_datails)
-        myPreSemesterLayout = findViewById(R.id.myPreSemesterLayout)
-
         //화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setSpinner()
+        btnClick()
     }
 
     //스피너 초기화 & 리스너
@@ -88,79 +79,40 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
                     }
                 }
             }
-
-        //'거주지' 스피너 선택 리스너
-        myArea.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
-
-                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    //서울, 강원만 구현.
-                    //나머지는 추후에.
-                    setSpinnerMyAreaDatails(myArea.getItemAtPosition(position).toString())
-                }
-            }
     }
 
     //'직전학기' 레이아웃 비활성화 함수
     fun disabledPreSemester() {
-        findViewById<TextView>(R.id.txtMyPreSemester).alpha = 0.5F
-        findViewById<TextView>(R.id.txtMyPreSemGrade).alpha = 0.3F
-        findViewById<TextView>(R.id.txtMyPreSemScore).alpha = 0.3F
-        findViewById<EditText>(R.id.myPreGrade).isEnabled = false
-        findViewById<EditText>(R.id.myScore).isEnabled = false
+        txt_myPreSemGrade.alpha = 0.3F
+        txt_myPreSemScore.alpha = 0.3F
+        myPreSemGrade.isEnabled = false
+        myPreSemScore.isEnabled = false
     }
 
     //'직전학기' 레이아웃 활성화 함수
     fun abledPreSemester() {
-        findViewById<TextView>(R.id.txtMyPreSemester).alpha = 1F
-        findViewById<TextView>(R.id.txtMyPreSemGrade).alpha = 1F
-        findViewById<TextView>(R.id.txtMyPreSemScore).alpha = 1F
-        findViewById<EditText>(R.id.myPreGrade).isEnabled = true
-        findViewById<EditText>(R.id.myScore).isEnabled = true
+        txt_myPreSemGrade.alpha = 1F
+        txt_myPreSemScore.alpha = 1F
+        myPreSemGrade.isEnabled = true
+        myPreSemScore.isEnabled = true
     }
 
-    //'거주지 디테일' 스피너 설정
-    fun setSpinnerMyAreaDatails(area : String) {
-        when (area) {
-            "서울" -> {
-                ArrayAdapter.createFromResource(
-                    this,
-                    R.array.local_seoul,
-                    android.R.layout.simple_spinner_item
-                ).also { adapter ->
-                    // 스피너의 레이아웃 구체화
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    // 스피너에 어뎁터 적용
-                    myArea_datails.adapter = adapter
-                }
-            }
-            "강원도" -> {
-                ArrayAdapter.createFromResource(
-                    this,
-                    R.array.local_gangwon,
-                    android.R.layout.simple_spinner_item
-                ).also { adapter ->
-                    // 스피너의 레이아웃 구체화
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    // 스피너에 어뎁터 적용
-                    myArea_datails.adapter = adapter
-                }
-            }
-            else -> {
-                ArrayAdapter.createFromResource(
-                    this,
-                    R.array.local_temp,
-                    android.R.layout.simple_spinner_item
-                ).also { adapter ->
-                    // 스피너의 레이아웃 구체화
-                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                    // 스피너에 어뎁터 적용
-                    myArea_datails.adapter = adapter
-                }
-            }
+    // 버튼 클릭 통합 처리
+    fun btnClick() {
+        // '시작하기' 버튼 클릭 리스너
+        btn_save.setOnClickListener() {
+//            updateUserConditionData()
         }
     }
+
+//    // 유저 조건 데이터 업데이트
+//    private fun updateUserConditionData() {
+//        val pref = this.getPreferences(0)
+//        val editor=pref.edit()
+//
+//        // 키와 밸류를 쌍으로 저장하고 apply한다
+//        editor.putInt("KEY_HEIGHT",height)
+//            .putInt("KEY_WEIGHT",weight)
+//            .apply()
+//    }
 }
