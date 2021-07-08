@@ -10,9 +10,9 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.adapter.ScholarshipRecyclerViewAdapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_profile_my_con_change.*
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
 
 class ScholarshipMyscholarFragment : Fragment() {
@@ -78,7 +78,11 @@ class ScholarshipMyscholarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext)
+        listAdapter =
+            ScholarshipRecyclerViewAdapter(
+                dataList,
+                mContext
+            )
         myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         myrecyclerView.adapter = listAdapter

@@ -13,6 +13,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
 import androidx.fragment.app.Fragment
+import com.cookandroid.scholarshiplike.adapter.ScholarshipExpandableLisviewtAdapter
+import com.cookandroid.scholarshiplike.adapter.ScholarshipRecyclerViewAdapter
 
 class ScholarshipAllscholarFragment : Fragment() {
 
@@ -100,11 +102,20 @@ class ScholarshipAllscholarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // expandableList 어탭터 연결
-        listAdapter = ScholarshipExpandableLisviewtAdapter(this, head, body)
+        listAdapter =
+            ScholarshipExpandableLisviewtAdapter(
+                this,
+                head,
+                body
+            )
         expandableList.setAdapter(listAdapter)
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        RlistAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext1)
+        RlistAdapter =
+            ScholarshipRecyclerViewAdapter(
+                dataList,
+                mContext1
+            )
         allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         allrecyclerView.adapter = RlistAdapter

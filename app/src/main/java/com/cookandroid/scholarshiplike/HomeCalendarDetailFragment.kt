@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.adapter.HomeCalendarDetailAdapter
 import kotlinx.android.synthetic.main.fragment_home_calendar_detail.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -59,7 +60,13 @@ class HomeCalendarDetailFragment : Fragment() {
         val gridLayoutManager = GridLayoutManager(mContext,7)
 
         calendar_view.layoutManager = gridLayoutManager
-        calendar_view.adapter = HomeCalendarDetailAdapter(mContext,calendar_layout,currentDate,pageIndex)
+        calendar_view.adapter =
+            HomeCalendarDetailAdapter(
+                mContext,
+                calendar_layout,
+                currentDate,
+                pageIndex
+            )
     }
 
     fun initView(view: View) {

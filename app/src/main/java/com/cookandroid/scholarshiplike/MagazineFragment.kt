@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import com.google.firebase.firestore.*
 import kotlinx.android.synthetic.main.fragment_magazine.*
 
@@ -49,7 +50,11 @@ class MagazineFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_magazine, container, false)
 
         // 어댑터 저장
-        postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
+        postlistAdapter =
+            MagazineRecyclerViewAdapter(
+                postList,
+                mContext
+            )
         return view
 
     }

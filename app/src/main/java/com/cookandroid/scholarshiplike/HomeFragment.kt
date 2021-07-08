@@ -11,6 +11,7 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -119,7 +120,10 @@ class HomeFragment : Fragment() {
     }
 
     fun initView() {
-        val homeCalnederAdapter = HomeCalendarAdapter(requireActivity())
+        val homeCalnederAdapter =
+            HomeCalendarAdapter(
+                requireActivity()
+            )
 
         calendarViewPager.adapter = homeCalnederAdapter
         calendarViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL

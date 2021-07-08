@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
@@ -50,7 +51,11 @@ class HomeSearchMagazineFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = MagazineRecyclerViewAdapter(dataList,mContext)
+        listAdapter =
+            MagazineRecyclerViewAdapter(
+                dataList,
+                mContext
+            )
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter

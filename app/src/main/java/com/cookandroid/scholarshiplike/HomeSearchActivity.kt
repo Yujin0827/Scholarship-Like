@@ -1,78 +1,55 @@
 package com.cookandroid.scholarshiplike
 
-import android.app.SearchManager
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
-import android.view.MotionEvent
 import android.view.View
-import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.ImageView
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.cookandroid.scholarshiplike.adapter.HomeSearchScholarshipRecyclerViewAdapter
+import com.cookandroid.scholarshiplike.databinding.ActivityHomeSearchBinding
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home_search.*
-
 
 class HomeSearchActivity : AppCompatActivity() {
 
-    lateinit var searchField: EditText            // 검색창
-    lateinit var searchBtn : ImageView        // 찾기 버튼
-    lateinit var search_result_field_s : LinearLayout   // 검색 결과필드 - 장학금
-    lateinit var search_result_field_m : LinearLayout   // 검색 결과필드 - 매거진
-    lateinit var search_result_s : RecyclerView         // 검색 결과 - 장학금
-    lateinit var search_result_m : RecyclerView         // 검색 결과 - 매거진
-
-    internal var textlength = 0     // EditText 글자 수
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home_search)
-        Log.d("tag", "onCreate: started")
+    private var mBinding : ActivityHomeSearchBinding? = null    // 바인딩 객체
+    private val binding get() = mBinding!!                      // 바인딩 변수 재선언(매번 null 체크x)
+    private val db = FirebaseFirestore.getInstance()                // FireStore 인스턴스
+    private val scholarshipList = arrayListOf<SearchScholarship>()  // 리스트 아이템 배열
+    private val scholarshipadapter = HomeSearchScholarshipRecyclerViewAdapter(
+            scholarshipList
+        )     // RecyclerView 어댑터
 
 
-        searchField = findViewById<EditText>(R.id.searchField)          // 검색창
-        searchBtn = findViewById<ImageView>(R.id.searchBtn)     // 찾기 버튼
-        search_result_field_s = findViewById<LinearLayout>(R.id.search_result_field_s)      // 검색 결과필드 - 장학금
-        search_result_field_m = findViewById<LinearLayout>(R.id.search_result_field_m)      // 검색 결과필드 - 매거진
-        search_result_s = findViewById<RecyclerView>(R.id.search_result_s)      // 검색 결과 - 장학금
-        search_result_m = findViewById<RecyclerView>(R.id.search_result_m)      // 검색 결과 - 매거진
+   override fun onCreate(savedInstanceState: Bundle?) {
+       super.onCreate(savedInstanceState)
+       mBinding = ActivityHomeSearchBinding.inflate(layoutInflater)  // 액티비티에서 사용할 바인딩 클래스의 인스턴스 생성
+       setContentView(binding.root)
 
+       // 검색 버튼 클릭 (아이콘)
+       binding.searchBtn.setOnClickListener {
+           click()
+       }
 
-        search_result_field_s.visibility = View.INVISIBLE
-        search_result_field_m.visibility = View.INVISIBLE
+       // 검색 버튼 클릭 (키보드)
+       binding.searchField.setOnKeyListener(object : View.OnKeyListener {
+           override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
+               if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
+                   click()
+                   return true
+               }
+               return false
+           }
+       })
 
-        // 검색 버튼 클릭 (돋보기)
-        searchBtn.setOnClickListener {
-            click()
-        }
+   }
 
-        // 검색 버튼 클릭 (키보드)
-        searchField.setOnKeyListener(object : View.OnKeyListener {
-            override fun onKey(v: View?, keyCode: Int, event: KeyEvent): Boolean {
-                if (event.action == KeyEvent.ACTION_DOWN && keyCode == KEYCODE_ENTER) {
-                    click()
-
-                    return true
-                }
-                return false
-            }
-        })
-
-
-    }
 
     // 검색 버튼 클릭했을 때 동작
     private fun click() {
-        search_result_field_s.visibility = View.VISIBLE
-        search_result_field_m.visibility = View.VISIBLE
 
         hideKeyboard()
     }
@@ -80,11 +57,15 @@ class HomeSearchActivity : AppCompatActivity() {
     // 키보드 제어
     private fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-        imm.hideSoftInputFromWindow(searchField.windowToken, 0)
+        imm.hideSoftInputFromWindow(binding.searchField.windowToken, 0)
     }
 
-    private fun firebaseSearch() {
 
+    // 액티비티 파괴
+    override fun onDestroy() {
+        // onDestroy 에서 binding class 인스턴스 참조를 정리해주어야 한다.
+        mBinding = null
+        super.onDestroy()
     }
 
 }

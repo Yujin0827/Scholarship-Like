@@ -1,4 +1,4 @@
-package com.cookandroid.scholarshiplike
+package com.cookandroid.scholarshiplike.adapter
 
 import android.app.AlertDialog
 import android.content.Context
@@ -11,6 +11,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.HomeCalendarDateCalculate
+import com.cookandroid.scholarshiplike.R
+import com.cookandroid.scholarshiplike.Scheduel
 import kotlinx.android.synthetic.main.fragment_home_calendar_item_list.view.*
 import kotlinx.android.synthetic.main.fragment_home_calendar_popup.view.*
 import java.text.SimpleDateFormat
@@ -24,7 +27,8 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
     var dataList: ArrayList<Int> = arrayListOf()
 
     // HomeCalendarDateCalculate을 이용하여 날짜 리스트 세팅
-    var calculatedDate: HomeCalendarDateCalculate = HomeCalendarDateCalculate(date)
+    var calculatedDate: HomeCalendarDateCalculate =
+        HomeCalendarDateCalculate(date)
     init {
         calculatedDate.initBaseCalendar()
         dataList = calculatedDate.dateList
@@ -180,13 +184,26 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
                     .setTitle(date.toString()+"일").create()
 
                 val List = arrayListOf(
-                    Scheduel("국가장학금 1차","2020.04.6","2020.05.12")
-                    ,Scheduel("국가장학금 2차","2020.08.10","2020.09.27")
+                    Scheduel(
+                        "국가장학금 1차",
+                        "2020.04.6",
+                        "2020.05.12"
+                    )
+                    ,
+                    Scheduel(
+                        "국가장학금 2차",
+                        "2020.08.10",
+                        "2020.09.27"
+                    )
                 )
 
                 view.popupRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
                 view.popupRecyclerView.setHasFixedSize(true)
-                view.popupRecyclerView.adapter = HomeCalendarPopupAdapter(List, context)
+                view.popupRecyclerView.adapter =
+                    HomeCalendarPopupAdapter(
+                        List,
+                        context
+                    )
 
                 alertDialog.setView(view)
                 alertDialog.show()
