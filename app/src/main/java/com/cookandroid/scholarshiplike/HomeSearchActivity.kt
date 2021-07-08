@@ -19,9 +19,7 @@ class HomeSearchActivity : AppCompatActivity() {
     private val binding get() = mBinding!!                      // 바인딩 변수 재선언(매번 null 체크x)
     private val db = FirebaseFirestore.getInstance()                // FireStore 인스턴스
     private val scholarshipList = arrayListOf<SearchScholarship>()  // 리스트 아이템 배열
-    private val scholarshipadapter = HomeSearchScholarshipRecyclerViewAdapter(
-            scholarshipList
-        )     // RecyclerView 어댑터
+    private val scholarshipadapter = HomeSearchScholarshipRecyclerViewAdapter(scholarshipList)     // RecyclerView 어댑터
 
 
    override fun onCreate(savedInstanceState: Bundle?) {
