@@ -16,6 +16,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="홈페이지로 이동"
+            tools:layout_editor_absoluteX="100dp"
+            tools:layout_editor_absoluteY="686dp" />
+
         <androidx.appcompat.widget.AppCompatImageButton
             android:id="@+id/share"
             android:layout_width="35dp"
@@ -37,14 +45,6 @@
             android:padding="5dp"
             tools:layout_editor_absoluteX="355dp"
             tools:layout_editor_absoluteY="16dp" />
-
-        <TextView
-            android:id="@+id/scholarname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="15dp"
-            android:text="장학금 이름"
-            android:textSize="20sp" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
-                android:text="장학금 이름"
+                android:text="@string/scholarName"
                 android:textColor="#000000"
                 android:textSize="30sp" />
 
@@ -81,7 +81,7 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
-                android:text="내용"
+                android:text="@string/contents"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -92,7 +92,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="내용" />
+                android:text="@string/contents" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -102,7 +102,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
-                android:text="지원기간"
+                android:text="@string/paymentInstitution"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -113,7 +113,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="내용" />
+                android:text="@string/contents" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -123,7 +123,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
-                android:text="제출서류"
+                android:text="@string/period"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -134,7 +134,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="내용" />
+                android:text="@string/contents" />
 
             <TextView
                 android:id="@+id/textView11"
@@ -144,7 +144,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
-                android:text="제출서류"
+                android:text="@string/maxMoney"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -155,7 +155,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="내용" />
+                android:text="@string/contents" />
 
             <TextView
                 android:id="@+id/textView13"
@@ -165,7 +165,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
-                android:text="비고"
+                android:text="@string/paymentType"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -176,7 +176,7 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="내용" />
+                android:text="@string/contents" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -186,7 +186,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
-                android:text="웹사이트"
+                android:text="@string/condition"
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
@@ -197,7 +197,27 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="내용" />
+                android:text="@string/contents" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/ic_scholarship_detail_background"
+                android:padding="3dp"
+                android:textColor="#000000"
+                android:textSize="18sp"
+                android:text="@string/note"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="16dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="16dp"
+                android:text="@string/contents" />
+
         </LinearLayout>
     </ScrollView>
 

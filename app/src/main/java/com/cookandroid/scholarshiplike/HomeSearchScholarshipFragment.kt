@@ -19,6 +19,7 @@ class HomeSearchScholarshipFragment : Fragment() {
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
     lateinit var mContext : Context
+    lateinit var searchData: String
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -60,5 +61,9 @@ class HomeSearchScholarshipFragment : Fragment() {
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter
 
+    }
+
+    fun update(s: String){
+        searchData = s
     }
 }

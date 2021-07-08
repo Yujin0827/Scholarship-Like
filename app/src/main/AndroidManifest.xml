@@ -63,21 +63,20 @@
         <!-- 회원가입 -->
         <activity android:name=".SignupActivity"/>
 
-        <!-- 검색창 ( 검색어 HomeSearchResultActivity에 전달 ) -->
+        <!-- 검색창 -->
         <activity android:name=".HomeSearchActivity" >
-            <meta-data
-                android:name="android.app.default_searchable"
-                android:value=".HomeSearchActivity" />
-        </activity>
-
-        <!-- 검색 결과  -->
-        <activity android:name=".HomeSearchResultActivity">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
 
-            <meta-data android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable" />
+        </activity> <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
+        <activity android:name=".HomeSearchResultActivity">
+            <meta-data
+                android:name="android.app.default_searchable"
+                android:value=".HomeSearchActivity" />
         </activity>
 
         <!-- 내 조건 수정 -->

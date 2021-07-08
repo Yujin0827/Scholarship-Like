@@ -27,6 +27,10 @@ android {
         enabled = true
     }
 
+    dataBinding {
+        enabled = true
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -75,6 +79,9 @@ dependencies {
 
     // tab
     // noinspection GradleCompatible
+
+    // search
+    implementation 'br.com.mauker.materialsearchview:materialsearchview:1.2.3'
 
     // Scholarship Tab
     // noinspection GradleCompatible

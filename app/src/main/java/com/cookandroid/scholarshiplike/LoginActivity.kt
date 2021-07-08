@@ -1,10 +1,10 @@
 package com.cookandroid.scholarshiplike
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.KeyEvent
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -15,46 +15,58 @@ import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
-
 
 class LoginActivity :AppCompatActivity(){
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
+    private lateinit var db :FirebaseFirestore
     private val RC_SIGN_IN = 99
     private val TAG = "LoginActivity"
+
+    // onBackPressed 메소드 변수
+    var backPressedTime : Long = 0
+    val FINISH_INTERVAL_TIME = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        // Google 로그인 옵션 구성 (requestIdToken, Email 요청)
-        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
-
-        googleSignInClient = GoogleSignIn.getClient(this, gso)
         firebaseAuth = FirebaseAuth.getInstance()   // firebase auth 객체
+        db = Firebase.firestore
 
         // 버튼 클릭을 통합 처리
         btnClick()
+
+        // 약관 동의 팝업 띄우기
+        showTerms()
+    }
+
+    // 약관 동의 팝업 띄우기
+    fun showTerms() {
+        val dialog = LoginTermsFragment()
+        dialog.show(supportFragmentManager, "LoginTermsFragment")
     }
 
     // 버튼 클릭 통합 처리
-    fun btnClick() {
+    private fun btnClick() {
         // 로그인 버튼 클릭 시
         btn_login.setOnClickListener() {
-            var txtEmail : String = login_txt_email.text.toString()
-            var txtPassword : String = login_txt_password.text.toString()
+            val txtEmail : String = login_txt_email.text.toString()
+            val txtPassword : String = login_txt_password.text.toString()
 
-            if (!txtEmail.isEmpty() && !txtPassword.isEmpty()) {
+            if (txtEmail.isNotEmpty() && txtPassword.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
                     .addOnCompleteListener(this) { task ->
                         if(task.isSuccessful) {
                             Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
-                            var iT = Intent(this, MainActivity::class.java)
+                            val iT = Intent(this, MainActivity::class.java)
                             startActivity(iT)
+                            finish()
                         }
                         else {
                             Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
@@ -71,23 +83,39 @@ class LoginActivity :AppCompatActivity(){
 
         // 비밀번호 찾기 클릭 시
         goto_findPw.setOnClickListener {
-            var iT = Intent(this, LoginPasswordResetActivity::class.java)
+            val iT = Intent(this, LoginPasswordResetActivity::class.java)
             startActivity(iT)
         }
 
         // 회원가입 클릭 시
         goto_signup.setOnClickListener {
-            var iT = Intent(this, SignupActivity::class.java)
+            val iT = Intent(this, SignupActivity::class.java)
             startActivity(iT)
         }
 
         //구글 로그인
         login_google.setOnClickListener {
+            // Google 로그인 옵션 구성 (requestIdToken, Email 요청)
+            val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
+
+            googleSignInClient = GoogleSignIn.getClient(this, gso)
+
             signIn()    // 구글 로그인
         }
 
-
-
+        //엔터 입력 시 키보드 내리기
+        login_txt_password.setOnKeyListener { _, keyCode, event ->
+            //Enter key Action
+            if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+                val imm: InputMethodManager =
+                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.hideSoftInputFromWindow(login_txt_password.windowToken, 0) //hide keyboard
+                true
+            } else false
+        }
     }
 
     // Google 로그인
@@ -95,22 +123,16 @@ class LoginActivity :AppCompatActivity(){
         val signInIntent = googleSignInClient.signInIntent
         startActivityForResult(signInIntent, RC_SIGN_IN)
     }
-
-    // 활동 초기화 시 유저가 앱에 이미 구글 로그인을 했는지 확인
-    override fun onStart() {
-        super.onStart()
-        val account = GoogleSignIn.getLastSignedInAccount(this)
-        if(account!=null){ // 이미 로그인 되어있을시 바로 메인 액티비티로 이동
-            toMainActivity(firebaseAuth.currentUser)
-        }
+    // MainActivity로 이동
+    private fun toMainActivity() {
+        startActivity(Intent(this, MainActivity::class.java))
+        finish()
     }
 
-    // MainActivity로 이동
-    fun toMainActivity(user: FirebaseUser?) {
-        if(user !=null) { // MainActivity 로 이동
-            startActivity(Intent(this, MainActivity::class.java))
-            finish()
-        }
+    // SignupProfileInfoActivity로 이동
+    private fun toSignupProfileInfoActivity() {
+        startActivity(Intent(this, SignupProfileInfoActivity::class.java))
+        finish()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -140,11 +162,49 @@ class LoginActivity :AppCompatActivity(){
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Log.w(TAG, "firebaseAuthWithGoogle 성공", task.exception)
-                    toMainActivity(firebaseAuth?.currentUser)
+                    confirmUserDB()
                 } else {
                     Log.w(TAG, "firebaseAuthWithGoogle 실패", task.exception)
                     Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
+    }
+
+    // 유저 DB 존재 유무 확인
+    private fun confirmUserDB() {
+        var user = Firebase.auth.currentUser
+        val dd = db.collection("Users").document(user!!.uid)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    val document = task.result
+                    if (!document.exists()) {   // 유저 DB가 존재하지 않을 때
+                        Log.d(TAG, "User's db doesn't exist!")
+                        toSignupProfileInfoActivity()
+                    }
+                    else {  // 유저 DB가 존재할 때
+                        toMainActivity()
+                    }
+                }
+            }
+    }
+
+    // back 버튼 클릭 리스너 재정의
+    override fun onBackPressed() {
+        if(supportFragmentManager.backStackEntryCount == 0) {
+            val tempTime = System.currentTimeMillis()
+            val intervalTime = tempTime - backPressedTime
+
+            if (!(0 > intervalTime || FINISH_INTERVAL_TIME < intervalTime)) {
+                finishAffinity()
+                System.runFinalization()
+                System.exit(0)
+            } else {
+                backPressedTime = tempTime
+                Toast.makeText(this, "'뒤로' 버튼을 한 번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show()
+                return
+            }
+        }
+        super.onBackPressed()
     }
 }
