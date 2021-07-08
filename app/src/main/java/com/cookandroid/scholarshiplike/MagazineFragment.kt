@@ -9,8 +9,11 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import com.google.firebase.firestore.*
+import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.fragment_magazine.*
+import kotlinx.android.synthetic.main.fragment_magazine.view.*
 
 class MagazineFragment : Fragment() {
 
