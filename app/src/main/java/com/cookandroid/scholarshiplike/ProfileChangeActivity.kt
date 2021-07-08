@@ -65,7 +65,6 @@ class ProfileChangeActivity : AppCompatActivity() {
     }
 
 
-
     //UserNikname 가져오기
     fun getUserInfo(){
         //User Email
@@ -81,11 +80,11 @@ class ProfileChangeActivity : AppCompatActivity() {
             .get()
             .addOnSuccessListener{ document ->
                 if (document != null){
-                    if(document.getString("userName") != null){
-                        nickNameInput.hint = document.getString("userName")!!
+                    if(document.getString("nickname") != null){
+                        nickNameInput.hint = document.getString("nickname")!!
                     }
-                    if(document.getString("userUniv") != null){
-                        univeInput.hint = document.getString("userUniv")
+                    if(document.getString("univ") != null){
+                        univeInput.hint = document.getString("univ")
 
 
                     }
@@ -96,8 +95,8 @@ class ProfileChangeActivity : AppCompatActivity() {
 
     fun univSearch(){ // 대학교 자동완성
         // 대학교 리스트 가져오기
-        val sRef = db.collection("장학금")
-            .document("교내").collection("강원")
+        val sRef = db.collection("교내")
+
 
         sRef.get().addOnSuccessListener { snapshots ->
             val num: Int = snapshots?.documents!!.size
