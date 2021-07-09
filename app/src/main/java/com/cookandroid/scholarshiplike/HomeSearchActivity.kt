@@ -1,11 +1,13 @@
 package com.cookandroid.scholarshiplike
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cookandroid.scholarshiplike.adapter.HomeSearchScholarshipRecyclerViewAdapter
