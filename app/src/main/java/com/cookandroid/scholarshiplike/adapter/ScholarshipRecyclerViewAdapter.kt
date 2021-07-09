@@ -1,4 +1,4 @@
-package com.cookandroid.scholarshiplike.adapter
+package com.cookandroid.scholarshiplike
 
 import android.content.Context
 import android.content.Intent
@@ -10,14 +10,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.cookandroid.scholarshiplike.R
-import com.cookandroid.scholarshiplike.Scholarship
-import com.cookandroid.scholarshiplike.ScholarshipDetailActivity
 
-class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context): ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(
-    DiffCallbackScholar
-) {
+class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context): ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar) {
 
+    private var mContext1 : Context = mContext
 
     //데이터 가져오기
     // inner class로 ViewHolder 정의
@@ -36,8 +32,8 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
             data3Text.text = data.date
 
             itemView.setOnClickListener {
-                val intent = Intent(mContext, ScholarshipDetailActivity::class.java)
-                mContext.startActivity(intent)
+                val intent = Intent(mContext1, ScholarshipDetailActivity::class.java)
+                mContext1.startActivity(intent)
             }
         }
     }
@@ -53,7 +49,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
     }
 
     // ViewHolder의 bind 메소드를 호출한다.
-    override fun onBindViewHolder(holder: ScholarItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ScholarshipRecyclerViewAdapter.ScholarItemViewHolder, position: Int) {
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
         holder.bind(list[position], position)
     }

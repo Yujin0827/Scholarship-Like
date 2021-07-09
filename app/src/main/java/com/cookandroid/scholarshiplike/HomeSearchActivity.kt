@@ -1,15 +1,14 @@
 package com.cookandroid.scholarshiplike
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.cookandroid.scholarshiplike.adapter.HomeSearchScholarshipRecyclerViewAdapter
 import com.cookandroid.scholarshiplike.databinding.ActivityHomeSearchBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_home_search.*
@@ -45,6 +44,7 @@ class HomeSearchActivity : AppCompatActivity() {
        })
 
    }
+
 
     // 검색 버튼 클릭했을 때 동작
     private fun click() {
