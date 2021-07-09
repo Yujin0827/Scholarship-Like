@@ -13,9 +13,7 @@ class HomeSearchScholarshipRecyclerViewAdapter(val scholarshipList: ArrayList<Se
     // ViewHolder에게 item을 보여줄 View로 쓰일 item_scholarship.xml를 넘기면서 ViewHolder 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_scholarship, parent, false)
-        return SearchItemViewHolder(
-            view
-        )
+        return SearchItemViewHolder(view)
     }
 
     override fun getItemCount(): Int {
