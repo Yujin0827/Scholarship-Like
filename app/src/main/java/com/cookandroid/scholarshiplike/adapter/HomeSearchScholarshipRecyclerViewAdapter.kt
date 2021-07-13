@@ -23,14 +23,16 @@ class HomeSearchScholarshipRecyclerViewAdapter(val scholarshipList: ArrayList<Se
     // ViewHolder의 bind 메소드를 호출
     override fun onBindViewHolder(holder: SearchItemViewHolder, position: Int) {
         holder.title.text = scholarshipList[position].title
-        holder.period.text = scholarshipList[position].period
+        holder.period_start.text = scholarshipList[position].period_start
+        holder.period_end.text = scholarshipList[position].period_end
         holder.institution.text = scholarshipList[position].institution
     }
 
     // ViewHolder 정의
     class SearchItemViewHolder(scholarshipView: View): RecyclerView.ViewHolder(scholarshipView) {
-        var title: TextView = scholarshipView.findViewById(R.id.scholar_name)
-        var period: TextView = scholarshipView.findViewById(R.id.scholar_period)
+        var title: TextView = scholarshipView.findViewById(R.id.scholar_title)
+        var period_start: TextView = scholarshipView.findViewById(R.id.scholar_period_start)
+        var period_end: TextView = scholarshipView.findViewById(R.id.scholar_period_end)
         var institution: TextView = scholarshipView.findViewById(R.id.scholar_institution)
     }
 

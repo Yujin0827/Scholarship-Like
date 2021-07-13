@@ -29,11 +29,7 @@ class HomeFragment : Fragment() {
 
     val scholarshiptab = ScholarshipFragment()   // fragment_scholarship 변수
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
         scholarCnt = view.findViewById<TextView>(R.id.scholarCnt)   // hometab의 scholarCnt 변수 생성
@@ -49,8 +45,6 @@ class HomeFragment : Fragment() {
             activity?.getSupportFragmentManager()?.beginTransaction()
                 ?.replace(R.id.nav, scholarshiptab, "scholarshipTab")
                 ?.commit()
-
-
         }
 
         // AdMob
@@ -61,6 +55,7 @@ class HomeFragment : Fragment() {
         mAdView.loadAd(adRequest)
 
         return view
+
     }
 
     // fragment -> activity 화면 이동

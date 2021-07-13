@@ -77,11 +77,7 @@ class HomeSearchActivity : AppCompatActivity() {
 
     // 키보드 제어 - show
     fun showKeyboard(view: View) {
-        imm?.showSoftInput(search_field, 0)
-    }
-
-    private fun firebaseSearch() {
-
+        imm?.showSoftInput(binding.searchField, 0)
     }
 
     // 액티비티 파괴
