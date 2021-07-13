@@ -118,8 +118,8 @@ class ProfileFragment : Fragment() {
             .get()
             .addOnSuccessListener{ document ->
                 if (document != null){
-                    if(document.getString("userName") != null){
-                        btnProfileUserName.text = document.getString("userName")
+                    if(document.getString("nickname") != null){
+                        btnProfileUserName.text = document.getString("nickname")
                     }
                 }
             }

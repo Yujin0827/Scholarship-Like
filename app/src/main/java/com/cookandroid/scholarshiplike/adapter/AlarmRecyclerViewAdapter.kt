@@ -1,4 +1,4 @@
-package com.cookandroid.scholarshiplike
+package com.cookandroid.scholarshiplike.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.Alarm
+import com.cookandroid.scholarshiplike.R
 
-class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(DiffCallbackAlarm){
+class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(
+    DiffCallbackAlarm
+){
     interface OnItemClickListener{
         fun onItemClick(v:View, data: Alarm, pos : Int)
     }
@@ -55,7 +59,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
     }
 
     // ViewHolder의 bind 메소드를 호출한다.
-    override fun onBindViewHolder(holder: AlarmRecyclerViewAdapter.AlarmItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: AlarmItemViewHolder, position: Int) {
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
         holder.bind(list[position], position)
     }
