@@ -13,6 +13,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.adapter.HomeCalendarPopupAdapter
 import kotlinx.android.synthetic.main.fragment_home_calendar_item_list.view.*
 import kotlinx.android.synthetic.main.fragment_home_calendar_popup.view.*
 import java.text.SimpleDateFormat
@@ -80,8 +81,8 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
             // 날짜 표시
             itemCalendarDateText.setText(data.toString())
 
-            var dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)
-            var dateInt = dateString.toInt()
+            val dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)
+            val dateInt = dateString.toInt()
 
             //오늘 날짜
             if (dataList[position] == dateInt && pageindex == 0) {
@@ -113,23 +114,23 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
             }
 
 
-            var monthFormat = SimpleDateFormat("MM")
-            var dateFormat = SimpleDateFormat("dd")
+            val monthFormat = SimpleDateFormat("MM")
+            val dateFormat = SimpleDateFormat("dd")
 
             //현재 달
-            var cur = System.currentTimeMillis()
-            var curMonth = monthFormat.format(cur).toInt()
+            val cur = System.currentTimeMillis()
+            val curMonth = monthFormat.format(cur).toInt()
 
 
             Log.e(TAG, "장학금 리스트: $scholarList")
             for (item in scholarList) {
 
-                var tmpstartdate = dateFormat.format(item.startdate).toInt()
-                var tmpstartmonth = monthFormat.format(item.startdate).toInt() - curMonth
-                var tmpenddate = dateFormat.format(item.enddate).toInt()
-                var tmpendmonth = monthFormat.format(item.enddate).toInt() - curMonth
-                var tmptext = item.title
-                var tmpbgcol = "#DEDEDE"
+                val tmpstartdate = dateFormat.format(item.startdate).toInt()
+                val tmpstartmonth = monthFormat.format(item.startdate).toInt() - curMonth
+                val tmpenddate = dateFormat.format(item.enddate).toInt()
+                val tmpendmonth = monthFormat.format(item.enddate).toInt() - curMonth
+                val tmptext = item.title
+                val tmpbgcol = "#DEDEDE"
 
                 Log.e(TAG, "$tmptext: $tmpstartmonth/$tmpstartdate ~ $tmpendmonth/$tmpenddate")
 
@@ -186,8 +187,8 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
 
             //1.단일 일정
             //임시날짜(계산필요)
-            var date = 10;
-            var month = 1;
+            val date = 10;
+            val month = 1;
 
             if (dataList[position] == date && pageindex == month && position > firstDateIndex && position < lastDateIndex) {
                 addView("민지생일♥","#ffc0cc","#000000")

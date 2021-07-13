@@ -122,7 +122,7 @@ class ScholarshipAllscholarFragment : Fragment() {
                 dataList.clear() // 리스트 리셋
 
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                   val item = Scholarship(document.id, "", "", false)
+                   val item = Scholarship(document.id, "", "","",false)
                     dataList.add(item)
                     allDataList.add(item)
                 }
@@ -164,7 +164,7 @@ class ScholarshipAllscholarFragment : Fragment() {
                         dataList.clear()
 
                         for (document in result) {  // 가져온 문서들은 result에 들어감
-                            val item = Scholarship(document.id, "", "", false)
+                            val item = Scholarship(document.id, "", "", "",false)
                             dataList.add(item)
                         }
                         RlistAdapter.submitList(dataList)
@@ -212,7 +212,7 @@ class ScholarshipAllscholarFragment : Fragment() {
                 dataList.clear()
 
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Scholarship(document.id, "", "", false)
+                    val item = Scholarship(document.id, "", "","", false)
                     dataList.add(item)
                 }
                 RlistAdapter.submitList(dataList)
