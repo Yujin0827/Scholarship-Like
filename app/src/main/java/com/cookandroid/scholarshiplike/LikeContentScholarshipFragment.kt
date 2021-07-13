@@ -49,7 +49,7 @@ class LikeContentScholarshipFragment : Fragment() {
                                 Log.w(TAG, document.id)
                                 for(title in scholarList){
                                     if(document.id == title){
-                                        scholar.add(Scholarship(document.id,"adfadsf","adfasdf",true))
+                                        scholar.add(Scholarship(document.id,"adfadsf","adfasdf","adfasdf",true))
                                     }
                                 }
 

@@ -28,7 +28,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
             Log.d("ListAdapter", data.title)
             data1Text.text = data.title
             data2Text.text = data.text
-            data3Text.text = data.date
+            data3Text.text = data.startdate
 
             itemView.setOnClickListener {
                 val intent = Intent(mContext, ScholarshipDetailActivity::class.java)

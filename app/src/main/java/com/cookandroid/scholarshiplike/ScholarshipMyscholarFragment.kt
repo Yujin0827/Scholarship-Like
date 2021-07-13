@@ -44,7 +44,7 @@ class ScholarshipMyscholarFragment : Fragment() {
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Scholarship(document.id, "", "", false)
+                    val item = Scholarship(document.id, "", "", "",false)
                     dataList.add(item)
                 }
                 listAdapter.submitList(dataList)
