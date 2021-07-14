@@ -8,10 +8,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.R
-import com.cookandroid.scholarshiplike.Scheduel
+import com.cookandroid.scholarshiplike.Schedule
 import com.cookandroid.scholarshiplike.ScholarshipDetailActivity
 
-class HomeCalendarPopupAdapter(val arraylist: ArrayList<Scheduel>, val mContext: Context) : RecyclerView.Adapter<HomeCalendarPopupAdapter.mViewholder>() {
+class HomeCalendarPopupAdapter(val arraylist: ArrayList<Schedule>, val mContext: Context) : RecyclerView.Adapter<HomeCalendarPopupAdapter.mViewholder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): mViewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_calendar_popup, parent, false)
@@ -34,7 +34,7 @@ class HomeCalendarPopupAdapter(val arraylist: ArrayList<Scheduel>, val mContext:
         val start = itemView.findViewById<TextView>(R.id.start)
         val end = itemView.findViewById<TextView>(R.id.end)
 
-        fun bind(item: Scheduel, context: Context) {
+        fun bind(item: Schedule, context: Context) {
             popup_name.text = item.name
             start.text = item.start
             end.text = item.end

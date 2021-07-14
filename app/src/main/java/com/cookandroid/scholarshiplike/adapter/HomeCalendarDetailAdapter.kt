@@ -203,8 +203,8 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
                     .setTitle(date.toString() + "일").create()
 
                 val List = arrayListOf(
-                    Scheduel("국가장학금 1차", "2020.04.6", "2020.05.12")
-                    , Scheduel("국가장학금 2차", "2020.08.10", "2020.09.27")
+                    Schedule("국가장학금 1차", "2020.04.6", "2020.05.12")
+                    , Schedule("국가장학금 2차", "2020.08.10", "2020.09.27")
                 )
 
                 view.popupRecyclerView.layoutManager =
