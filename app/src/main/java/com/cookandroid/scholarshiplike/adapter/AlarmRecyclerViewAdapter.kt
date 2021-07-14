@@ -1,4 +1,4 @@
-package com.cookandroid.scholarshiplike
+package com.cookandroid.scholarshiplike.adapter
 
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,8 +8,12 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.Alarm
+import com.cookandroid.scholarshiplike.R
 
-class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(DiffCallbackAlarm){
+class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(
+    DiffCallbackAlarm
+){
     interface OnItemClickListener{
         fun onItemClick(v:View, data: Alarm, pos : Int)
     }
@@ -20,16 +24,16 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
     }
 
 
-    // inner class 로 ViewHolder 정의
+    // inner class로 ViewHolder 정의
     inner class AlarmItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
         var title: TextView = itemView!!.findViewById(R.id.alarm_title)
-        private var date: TextView = itemView!!.findViewById(R.id.alarm_date)
+        var date: TextView = itemView!!.findViewById(R.id.alarm_date)
 
-        // onBindViewHolder 의 역할을 대신한다.
+        // onBindViewHolder의 역할을 대신한다.
         fun bind(data: Alarm, position: Int) {
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
-            Log.d("ListAdapter", data.title + " " + data.date + " " + position)
+            Log.d("ListAdapter", data.title+" "+data.date)
 
             title.text = data.title
             date.text = data.date
@@ -44,7 +48,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
         }
     }
 
-    // ViewHolder 에게 item 을 보여줄 View 로 쓰일 item_data_list.xml 를 넘기면서 ViewHolder 생성
+    // ViewHolder에게 item을 보여줄 View로 쓰일 item_data_list.xml를 넘기면서 ViewHolder 생성
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AlarmItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_alarm, parent, false)
         return AlarmItemViewHolder(view)
@@ -54,8 +58,8 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
         return list.count()
     }
 
-    // ViewHolder 의 bind 메소드를 호출한다.
-    override fun onBindViewHolder(holder: AlarmRecyclerViewAdapter.AlarmItemViewHolder, position: Int) {
+    // ViewHolder의 bind 메소드를 호출한다.
+    override fun onBindViewHolder(holder: AlarmItemViewHolder, position: Int) {
         Log.d("ListAdapter", "===== ===== ===== ===== onBindViewHolder ===== ===== ===== =====")
         holder.bind(list[position], position)
     }

@@ -21,7 +21,6 @@ class HomeSearchScholarshipFragment : Fragment() {
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
     lateinit var mContext : Context
-    lateinit var searchData: String
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -34,7 +33,7 @@ class HomeSearchScholarshipFragment : Fragment() {
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Scholarship(document.id, "", "", false)
+                    val item = Scholarship(document.id, "", "", "",false)
                     dataList.add(item)
                 }
                 listAdapter.submitList(dataList)
@@ -59,9 +58,5 @@ class HomeSearchScholarshipFragment : Fragment() {
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter
 
-    }
-
-    fun update(s: String){
-        searchData = s
     }
 }

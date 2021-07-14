@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.toObject
 import kotlinx.android.synthetic.main.fragment_magazine.*
@@ -52,7 +53,6 @@ class MagazineFragment : Fragment() {
             // 실패할 경우
             Log.w(TAG, "Error getting documents: $exception")
         }
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -64,13 +64,6 @@ class MagazineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        // 매거진 리사이클러뷰-어댑터 연결
-        fun Mconnect() {
-            magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정
-            magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
-            magazinerecyclerView.adapter = postlistAdapter //어댑터 연결
-        }
 
         // 어댑터 저장 (최초 1회)
         postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
@@ -90,6 +83,13 @@ class MagazineFragment : Fragment() {
             postlistAdapter = MagazineRecyclerViewAdapter(postetcList,mContext)
             Mconnect()}
 
+    }
+
+    // 매거진 리사이클러뷰-어댑터 연결
+    fun Mconnect() {
+        magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정
+        magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
+        magazinerecyclerView.adapter = postlistAdapter //어댑터 연결
     }
 
     // 프래그먼트 생성시 툴바 hide

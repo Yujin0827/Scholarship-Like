@@ -1,4 +1,4 @@
-package com.cookandroid.scholarshiplike
+package com.cookandroid.scholarshiplike.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity

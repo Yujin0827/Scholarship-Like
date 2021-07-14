@@ -2,6 +2,7 @@ package com.cookandroid.scholarshiplike
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.cookandroid.scholarshiplike.adapter.ViewPageAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_alarm.*
 
@@ -15,7 +16,8 @@ class AlarmActivity : AppCompatActivity() {
         setContentView(R.layout.activity_alarm)
 
         //어댑터 생성, 연결
-        viewAdapter = ViewPageAdapter(this)
+        viewAdapter =
+            ViewPageAdapter(this)
         viewAdapter.addFragment(AlarmAllFragment())
         viewAdapter.addFragment(AlarmScholarshipFragment())
         alarm_viewpager.adapter = viewAdapter
