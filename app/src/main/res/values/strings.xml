@@ -32,17 +32,14 @@
     <string name="family_rel">가족관계</string>
     <string name="family_rel_dad">부</string>
     <string name="family_rel_mom">모</string>
+    <string name="child_all">형제자매</string>
+    <string name="child_me">째 중</string>
     <string name="school_att_leav">재학 여부</string>
     <string name="school_attending">재학</string>
     <string name="school_leaving">휴학</string>
     <string name="semester">이수 학기</string>
-    <string name="high_school">출신 고등학교</string>
     <string name="pre_semester">직전 학기</string>
-    <string name="high_school_area">지역</string>
-    <string name="high_school_type">종류</string>
-    <string name="high_school_area_rural">농어촌</string>
-    <string name="high_school_area_etc">해당 없음</string>
-    <string name="pre_semester_grade">직전학기 이수 학점</string>
+    <string name="pre_semester_class">직전학기 이수 학점</string>
     <string name="pre_semester_score">직전학기 성적</string>
     <string name="area">거주지</string>
     <string name="country">국적</string>
@@ -84,7 +81,7 @@
     <string name="univ_scholar">교내 장학금</string>
     <string name="msg_token_fmt">토큰 정보</string>
 
-    <!-- 로그인, 회원가입에 사용 -->
+    <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
     <string name="password">비밀번호</string>
     <string name="password_confirm">비밀번호 확인</string>
@@ -96,7 +93,6 @@
     <string name="signup">회원가입</string>
     <string name="login_naver">네이버 로그인</string>
     <string name="login_kakao">카카오 로그인</string>
-    <string name="login_google">구글 로그인</string>
     <string name="go_back">돌아가기</string>
     <string name="reset_password">비밀번호 재설정하기</string>
     <string name="reset_password_explain">가입했던 이메일을 입력해주세요.\n비밀번호 재설정 메일을 보내드립니다.</string>
@@ -106,6 +102,9 @@
     <string name="signup_profile_essen">* 모두 필수항목입니다.</string>
     <string name="next">다음</string>
     <string name="start">시작하기</string>
+    <string name="welcome">장학라이크에 오신 것을 환영합니다.</string>
+    <string name="see">보기</string>
+    <string name="confirm">확인</string>
 
     <!-- 매거진 관련 -->
     <string name="m_title">매거진 제목</string>

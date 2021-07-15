@@ -137,7 +137,7 @@
                             android:layout_width="60dp"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:text="@string/pre_semester_grade"
+                            android:text="@string/pre_semester_class"
                             android:textColor="@color/text_black" />
 
                         <EditText

@@ -6,15 +6,22 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.Switch
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.getField
 import androidx.fragment.app.FragmentManager
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
 import com.google.firebase.auth.ktx.auth
@@ -32,6 +39,7 @@ class ProfileFragment : Fragment() {
     lateinit var profileChange : LinearLayout
     lateinit var allAlarmSwitch : Switch
     lateinit var userUid: String
+    lateinit var userNickname : TextView
 
     var userName = Firebase.auth.currentUser // 사용자 닉네임 가져오기
     private var db = Firebase.firestore
@@ -46,6 +54,7 @@ class ProfileFragment : Fragment() {
         appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
         logout = view.findViewById<LinearLayout>(R.id.logout)
         profileChange = view.findViewById<LinearLayout>(R.id.profileTitleIconLayout)
+        userNickname = view.findViewById(R.id.btnProfileUserName)
 
         getUserInfo() // 사용자 이름
 
@@ -84,6 +93,7 @@ class ProfileFragment : Fragment() {
             }
         }
 
+        // '앱 정보' 클릭 리스너
         appInfo.setOnClickListener{
             activity?.let {
                 val intent = Intent(it, AppInfoActivity::class.java)
@@ -97,8 +107,17 @@ class ProfileFragment : Fragment() {
             dialog.show(parentFragmentManager, "logoutFragment")
         }
 
+        // '프로필 수정' 클릭 리스너
         profileChange.setOnClickListener{
             activity?.let {
+                val intent = Intent(it, ProfileChangeActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
+        // '닉네임' 클릭 리스너
+        userNickname.setOnClickListener {
+            activity?. let {
                 val intent = Intent(it, ProfileChangeActivity::class.java)
                 it?.startActivity(intent)
             }
@@ -119,7 +138,7 @@ class ProfileFragment : Fragment() {
             .addOnSuccessListener{ document ->
                 if (document != null){
                     if(document.getString("userName") != null){
-                        btnProfileUserName.text = document.getString("userName")
+                        userNickname.text = document.getString("userName")
                     }
                 }
             }

@@ -14,7 +14,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장학라이크"
+            android:text="@string/app_name_korean"
             android:layout_gravity="center"
             android:textColor="@color/maincolor"
             android:textSize="20sp"
@@ -22,7 +22,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="장학라이크에 오신 것을 환영합니다."
+            android:text="@string/welcome"
             android:layout_gravity="center"
             android:textColor="@color/text_black"/>
     </LinearLayout>
@@ -59,7 +59,7 @@
                     android:id="@+id/btn_show_terms_servcice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="보기" />
+                    android:text="@string/see" />
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_terms_service"
@@ -94,7 +94,7 @@
                     android:id="@+id/btn_show_terms_privacy"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="보기" />
+                    android:text="@string/see" />
             </LinearLayout>
             <TextView
                 android:id="@+id/tv_terms_privacy"
@@ -116,7 +116,7 @@
             android:id="@+id/btn_login_terms_OK"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="확인"
+            android:text="@string/confirm"
             android:layout_gravity="center"
             android:backgroundTint="@color/maincolor"
             android:textColor="#ffffff"/>
