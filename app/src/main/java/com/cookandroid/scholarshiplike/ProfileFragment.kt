@@ -1,40 +1,30 @@
 package com.cookandroid.scholarshiplike
 
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import android.widget.Switch
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.app.NotificationCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : Fragment() {
 
-    lateinit var userNickname : TextView
     lateinit var myConChange : LinearLayout
     lateinit var likeContent : LinearLayout
     lateinit var appInfo : LinearLayout
     lateinit var logout : LinearLayout
     lateinit var profileChange : LinearLayout
+    lateinit var userNickname : TextView
 
     val TAG = "ProfileFragment"
 
@@ -47,12 +37,12 @@ class ProfileFragment : Fragment() {
 
         val view = inflater.inflate(R.layout.fragment_profile, container, false)
 
-        userNickname = view.findViewById(R.id.btnProfileUserName)
         myConChange = view.findViewById<LinearLayout>(R.id.myConChange)
         likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
         appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
         logout = view.findViewById<LinearLayout>(R.id.logout)
         profileChange = view.findViewById<LinearLayout>(R.id.profileTitleIconLayout)
+        userNickname = view.findViewById(R.id.btnProfileUserName)
 
         // Firebase
         auth = Firebase.auth
@@ -115,6 +105,14 @@ class ProfileFragment : Fragment() {
                 it?.startActivity(intent)
             }
         }
+
+        // '닉네임' 클릭 리스너
+        userNickname.setOnClickListener {
+            activity?. let {
+                val intent = Intent(it, ProfileChangeActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
     }
 
     // 유저 닉네임 가져오기
@@ -125,7 +123,6 @@ class ProfileFragment : Fragment() {
             db.collection("Users").document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
-                    // !!구현해야함!!
                     userNickname.text = result.getField<String>("nickname")
                 }
                 .addOnFailureListener() {exception ->

@@ -39,7 +39,7 @@
     <string name="school_leaving">휴학</string>
     <string name="semester">이수 학기</string>
     <string name="pre_semester">직전 학기</string>
-    <string name="pre_semester_grade">직전학기 이수 학점</string>
+    <string name="pre_semester_class">직전학기 이수 학점</string>
     <string name="pre_semester_score">직전학기 성적</string>
     <string name="area">거주지</string>
     <string name="country">국적</string>

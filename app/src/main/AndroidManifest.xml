@@ -66,9 +66,6 @@
         <!-- 초기 프로필 정보 입력 -->
         <activity android:name=".SignupProfileInfoActivity"/>
 
-        <!-- 초기 내 조건 입력 -->
-        <activity android:name=".SignupConditionInfoActivity"/>
-
         <!-- 검색창 -->
         <activity android:name=".HomeSearchActivity" >
             <intent-filter>
