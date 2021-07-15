@@ -21,11 +21,12 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 open class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener  {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     var authStateListener: FirebaseAuth.AuthStateListener? = null
     val db = Firebase.firestore
     lateinit var tabNav : BottomNavigationView
-    val TAG = "MainActivity"
 
     // onBackPressed 메소드 변수
     var backPressedTime : Long = 0

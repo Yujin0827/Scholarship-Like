@@ -10,12 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
 class HomeSearchMagazineFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     private var  dataList: ArrayList<Post> = arrayListOf()
     private var searchDataList: ArrayList<Post> = arrayListOf()
@@ -31,7 +34,6 @@ class HomeSearchMagazineFragment : Fragment() {
         sRef // 작업할 문서
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
-                dataList.clear()
                 for (document in result) {  // 가져온 문서들은 result에 들어감
                     val item = Post(document.id,".",".")
                     dataList.add(item)
@@ -41,7 +43,7 @@ class HomeSearchMagazineFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w(TAG, "Error getting documents: $exception")
             }
 
         mContext = context as Activity
@@ -77,5 +79,4 @@ class HomeSearchMagazineFragment : Fragment() {
         if(::listAdapter.isInitialized)
             listAdapter.notifyDataSetChanged()
     }
-
 }

@@ -22,11 +22,14 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity :AppCompatActivity(){
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
+
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var db :FirebaseFirestore
     private val RC_SIGN_IN = 99
-    private val TAG = "LoginActivity"
+
 
     // onBackPressed 메소드 변수
     var backPressedTime : Long = 0

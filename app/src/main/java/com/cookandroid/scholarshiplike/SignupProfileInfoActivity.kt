@@ -17,7 +17,8 @@ class SignupProfileInfoActivity :AppCompatActivity() {
     lateinit var txtNickname :String
     lateinit var txtUniv :String
 
-    val TAG = "SigupProfileInfoActivity"
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     // onBackPressed 메소드 변수
     var backPressedTime : Long = 0

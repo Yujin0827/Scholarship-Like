@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.GridLayoutManager
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
@@ -15,6 +16,9 @@ import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
 class LikeContentMagazineFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
+
     private lateinit var listAdapter: MagazineRecyclerViewAdapter
     private var db = Firebase.firestore
     private var magazineList: ArrayList<String> = arrayListOf()
@@ -22,21 +26,20 @@ class LikeContentMagazineFragment : Fragment() {
     private lateinit var mContext : Context
     private val user = Firebase.auth.currentUser
 
-    val TAG = "LikeContentMagazine"
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
 
-        var ref = db.collection("Users")
+        val ref = db.collection("Users")
 
         Log.w(TAG, "Load Firestore")
         if (user != null) {
             ref.document(user.uid).get().
             addOnSuccessListener { document ->
                 if (document.data != null){
-                    if (document.data!!.get("likeContent") != null) {
-                        val data = document.data!!["likeContent"] as Map<String, String>
+                    if (document.data!!["likeContent"] != null) {
+                        val data = document.data!!["likeContent"] as Map<*, *>
+                        @Suppress("UNCHECKED_CAST")
                         magazineList = data["magazine"] as ArrayList<String>
                     }
 
@@ -68,7 +71,7 @@ class LikeContentMagazineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
+        // Fragment 에서 전달받은 list 를 넘기면서 ListAdapter 생성
         listAdapter = MagazineRecyclerViewAdapter(magazine, mContext)
 
         listView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정

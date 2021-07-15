@@ -9,6 +9,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
+import com.cookandroid.scholarshiplike.adapter.ScholarshipViewPageAdapter
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_scholarship.*
 
@@ -72,7 +73,10 @@ class ScholarshipFragment : Fragment() {
         viewPagers = scholar_viewpager
         tabLayouts = scholar_tabLayout
 
-        var adapter = ScholarshipViewPageAdapter(childFragmentManager)
+        var adapter =
+            ScholarshipViewPageAdapter(
+                childFragmentManager
+            )
         adapter.addFragment(ScholarshipMyscholarFragment(), "내 장학금")
         adapter.addFragment(ScholarshipAllscholarFragment(), "전체 장학금")
 

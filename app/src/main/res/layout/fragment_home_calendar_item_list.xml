@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:gravity="center_horizontal|top"
         android:text="1"
-        android:textSize="20sp" />
+        android:textSize="15dp" />
 
     <LinearLayout
         android:id="@+id/item_calendar_contents"
