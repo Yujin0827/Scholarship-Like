@@ -8,10 +8,11 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.R
-import com.cookandroid.scholarshiplike.Schedule
 import com.cookandroid.scholarshiplike.ScholarshipDetailActivity
+import com.cookandroid.scholarshiplike.tmpScholarship
+import java.text.SimpleDateFormat
 
-class HomeCalendarPopupAdapter(val arraylist: ArrayList<Schedule>, val mContext: Context) : RecyclerView.Adapter<HomeCalendarPopupAdapter.mViewholder>() {
+class HomeCalendarPopupAdapter(val arraylist: ArrayList<tmpScholarship>, val mContext: Context) : RecyclerView.Adapter<HomeCalendarPopupAdapter.mViewholder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): mViewholder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_calendar_popup, parent, false)
@@ -34,10 +35,12 @@ class HomeCalendarPopupAdapter(val arraylist: ArrayList<Schedule>, val mContext:
         val start = itemView.findViewById<TextView>(R.id.start)
         val end = itemView.findViewById<TextView>(R.id.end)
 
-        fun bind(item: Schedule, context: Context) {
-            popup_name.text = item.name
-            start.text = item.start
-            end.text = item.end
+        val format = SimpleDateFormat("yyyy.MM.dd")
+
+        fun bind(item: tmpScholarship, context: Context) {
+            popup_name.text = item.title
+            start.text = format.format(item.startdate).toString()
+            end.text = format.format(item.enddate).toString()
 
             itemView.setOnClickListener {
                 val intent = Intent(context, ScholarshipDetailActivity::class.java)
