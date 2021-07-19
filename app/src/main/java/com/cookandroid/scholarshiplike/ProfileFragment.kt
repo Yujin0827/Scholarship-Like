@@ -10,6 +10,8 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -19,30 +21,24 @@ import com.google.firebase.ktx.Firebase
 
 class ProfileFragment : Fragment() {
 
-    lateinit var myConChange : LinearLayout
-    lateinit var likeContent : LinearLayout
-    lateinit var appInfo : LinearLayout
-    lateinit var logout : LinearLayout
-    lateinit var profileChange : LinearLayout
-    lateinit var userNickname : TextView
+    private var _binding: FragmentProfileBinding? = null
+    private val binding get() = _binding!!
 
     val TAG = "ProfileFragment"
 
     // Firebase
-    lateinit var auth : FirebaseAuth
-    lateinit var db : FirebaseFirestore
+    lateinit var auth: FirebaseAuth
+    lateinit var db: FirebaseFirestore
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
 
-        val view = inflater.inflate(R.layout.fragment_profile, container, false)
-
-        myConChange = view.findViewById<LinearLayout>(R.id.myConChange)
-        likeContent = view.findViewById<LinearLayout>(R.id.likeContent)
-        appInfo = view.findViewById<LinearLayout>(R.id.appInfo)
-        logout = view.findViewById<LinearLayout>(R.id.logout)
-        profileChange = view.findViewById<LinearLayout>(R.id.profileTitleIconLayout)
-        userNickname = view.findViewById(R.id.btnProfileUserName)
+        _binding = FragmentProfileBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         // Firebase
         auth = Firebase.auth
@@ -69,7 +65,7 @@ class ProfileFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         // '내 조건 수정' 클릭 리스너
-        myConChange.setOnClickListener {
+        binding.myConChange.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, ProfileMyConChangeActivity::class.java)
                 it?.startActivity(intent)
@@ -77,29 +73,15 @@ class ProfileFragment : Fragment() {
         }
 
         // '좋아요 누른 게시물' 클릭 리스너
-        likeContent.setOnClickListener {
+        binding.likeContent.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, LikeContentActivity::class.java)
                 it?.startActivity(intent)
             }
         }
 
-        // '앱 정보' 클릭 리스너
-        appInfo.setOnClickListener{
-            activity?.let {
-                val intent = Intent(it, AppInfoActivity::class.java)
-                it?.startActivity(intent)
-            }
-        }
-
-        // '로그아웃' 클릭 리스너
-        logout.setOnClickListener {
-            val dialog = ProfileLogoutFragment()
-            dialog.show(parentFragmentManager, "logoutFragment")
-        }
-
         // '프로필 수정' 클릭 리스너
-        profileChange.setOnClickListener{
+        binding.profileTitleIconLayout.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, ProfileChangeActivity::class.java)
                 it?.startActivity(intent)
@@ -107,11 +89,19 @@ class ProfileFragment : Fragment() {
         }
 
         // '닉네임' 클릭 리스너
-        userNickname.setOnClickListener {
-            activity?. let {
+        binding.btnProfileUserName.setOnClickListener {
+            activity?.let {
                 val intent = Intent(it, ProfileChangeActivity::class.java)
                 it?.startActivity(intent)
             }
+        }
+
+        // '기타' 클릭 리스너
+        binding.profileEtc.setOnClickListener {
+            activity?.getSupportFragmentManager()?.beginTransaction()
+                ?.replace(R.id.nav, ProfileEtcFragment(), "profileTab")
+                ?.addToBackStack("profileFragment")
+                ?.commit()
         }
     }
 
@@ -119,13 +109,13 @@ class ProfileFragment : Fragment() {
     private fun setUserNickname() {
         val user = auth.currentUser
 
-        if(user != null) {
+        if (user != null) {
             db.collection("Users").document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
-                    userNickname.text = result.getField<String>("nickname")
+                    binding.btnProfileUserName.text = result.getField<String>("nickname")
                 }
-                .addOnFailureListener() {exception ->
+                .addOnFailureListener() { exception ->
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }

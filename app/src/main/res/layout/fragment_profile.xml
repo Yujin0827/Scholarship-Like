@@ -1,103 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
     android:layout_width="match_parent"
-    android:orientation="vertical"
-    tools:context=".ProfileFragment" >
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:orientation="vertical"
+    <!-- 상단 프로필 사진, "홍길동님, 반갑습니다!" Horizontal Layout-->
+    <LinearLayout
+        android:id="@+id/profileTitleLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:background="@color/maincolor_background"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@id/scrollVIew_profile"
+        app:layout_constraintHeight_percent="0.14"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
-        <!-- 상단 프로필 사진, "홍길동님, 반갑습니다!" Horizontal Layout-->
+        <!-- 프로필 사진, "프로필 수정" Vertical Layout -->
         <LinearLayout
-            android:id="@+id/profileTitleLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:background="#CAE5FF"
-            android:orientation="horizontal"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintHeight_percent="0.14"
-            app:layout_constraintTop_toTopOf="parent">
+            android:id="@+id/profileTitleIconLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="20dp"
+            android:orientation="vertical"
+            android:padding="10dp">
 
-            <!-- 프로필 사진, "프로필 수정" Vertical Layout -->
-            <LinearLayout
-                android:id="@+id/profileTitleIconLayout"
+            <ImageView
+                android:id="@+id/btnProfileIcon"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:padding="10dp"
-                android:orientation="vertical">
+                android:layout_height="44dp"
+                android:layout_gravity="center"
+                android:layout_weight="2.5"
+                android:adjustViewBounds="true"
+                android:src="@drawable/ic_profile_user" />
 
-                <ImageView
-                    android:id="@+id/btnProfileIcon"
-                    android:layout_width="wrap_content"
-                    android:layout_height="44dp"
-                    android:layout_gravity="center"
-                    android:layout_weight="2.5"
-                    android:adjustViewBounds="true"
-                    android:src="@drawable/ic_profile_user" />
-
-                <TextView
-                    android:id="@+id/txtProfileChange"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:text="@string/change_profile"
-                    android:paddingTop="6dp"
-                    android:autoSizeTextType="uniform"
-                    android:autoSizeMinTextSize="10sp"
-                    android:autoSizeMaxTextSize="100sp"
-                    android:autoSizeStepGranularity="2sp"/>
-
-            </LinearLayout>
-
-            <!-- "홍길동님, 반갑습니다!" Horizontal Layout -->
-            <LinearLayout
-                android:id="@+id/profileTitleHelloLayout"
+            <TextView
+                android:id="@+id/txtProfileChange"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:autoSizeMaxTextSize="100sp"
+                android:autoSizeMinTextSize="10sp"
+                android:autoSizeStepGranularity="2sp"
+                android:autoSizeTextType="uniform"
                 android:gravity="center"
-                android:layout_marginLeft="10dp"
+                android:paddingTop="6dp"
+                android:text="@string/change_profile" />
+
+        </LinearLayout>
+
+        <!-- "홍길동님, 반갑습니다!" Horizontal Layout -->
+        <LinearLayout
+            android:id="@+id/profileTitleHelloLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:orientation="horizontal">
 
-                <LinearLayout
+                <!-- "홍길동" -->
+                <TextView
+                    android:id="@+id/btnProfileUserName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_gravity="center">
+                    android:layout_gravity="bottom"
+                    android:layout_weight="0.3"
+                    android:textColor="@color/text_black"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
 
-                    <!-- "홍길동" -->
-                    <TextView
-                        android:id="@+id/btnProfileUserName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="0.3"
-                        android:textStyle="bold"
-                        android:textSize="24sp"
-                        android:textColor="@color/text_black"
-                        android:layout_gravity="bottom"/>
-
-                    <!-- "님, 반갑습니다!" -->
-                    <TextView
-                        android:id="@+id/txtProfileHello"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/user_hello"
-                        android:textColor="@color/text_black"
-                        android:textSize="20sp"
-                        android:layout_gravity="bottom"/>
-
-                </LinearLayout>
+                <!-- "님, 반갑습니다!" -->
+                <TextView
+                    android:id="@+id/txtProfileHello"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:text="@string/user_hello"
+                    android:textColor="@color/text_black"
+                    android:textSize="20sp" />
 
             </LinearLayout>
 
         </LinearLayout>
+
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scrollVIew_profile"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintHeight_percent="0.86"
+        app:layout_constraintTop_toBottomOf="@id/profileTitleLayout">
 
         <!-- 내정보  리스트 -->
         <LinearLayout
@@ -226,9 +229,9 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-            <!-- 앱 정보 -->
+            <!-- 기타 -->
             <LinearLayout
-                android:id="@+id/appInfo"
+                android:id="@+id/profile_etc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="6dp"
@@ -243,60 +246,16 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/app_info"
+                    android:text="@string/etc"
                     android:textSize="18sp"
                     android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- 문의 -->
-            <LinearLayout
-                android:id="@+id/profileList_inquiry"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:background="@drawable/ic_profile_list_background"
-                android:gravity="left|center_vertical"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="15dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/inquiry"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
-            </LinearLayout>
-
-            <!-- 로그아웃 -->
-            <LinearLayout
-                android:id="@+id/logout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:background="@drawable/ic_profile_list_background"
-                android:gravity="left|center_vertical"
-                android:orientation="vertical"
-                android:paddingLeft="30dp"
-                android:paddingTop="15dp"
-                android:paddingRight="30dp"
-                android:paddingBottom="15dp">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/logout"
-                    android:textSize="18sp"
-                    android:textStyle="bold" />
-
             </LinearLayout>
 
         </LinearLayout>
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
-</ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--</ScrollView>-->
