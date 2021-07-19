@@ -2,13 +2,18 @@ package com.cookandroid.scholarshiplike
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileLogoutBinding
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.messaging.FirebaseMessaging
 
 class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
     private var _binding: FragmentProfileLogoutBinding? = null
@@ -43,7 +48,6 @@ class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
     }
 
     override fun onClick(v: View?) {
