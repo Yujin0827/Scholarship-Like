@@ -14,6 +14,9 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 class LikeContentScholarshipFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
+
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf()
@@ -45,6 +48,7 @@ class LikeContentScholarshipFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        Log.w(TAG, "create view")
         return inflater.inflate(R.layout.fragment_recycler, container, false)
     }
 
@@ -56,5 +60,15 @@ class LikeContentScholarshipFragment : Fragment() {
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter
 
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.w(TAG, "create")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.w(TAG, "destroy")
     }
 }

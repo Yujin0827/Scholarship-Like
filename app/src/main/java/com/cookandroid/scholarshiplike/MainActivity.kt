@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -58,7 +60,7 @@ open class MainActivity : AppCompatActivity(),
         tabNav.setOnNavigationItemSelectedListener(this)
 
 
-        //FCM 토큰 확인시 필요
+        //DB에 FCM 토큰 추가
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM Test", "Fetching FCM registration token failed", task.exception)
@@ -69,6 +71,9 @@ open class MainActivity : AppCompatActivity(),
             val token = task.result
 
             Log.d("FCM Test", token)
+
+            val db = Firebase.firestore.collection("Users").document("TOKEN")
+            db.update("FCM", FieldValue.arrayUnion(token))
         })
 
     }
