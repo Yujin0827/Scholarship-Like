@@ -99,121 +99,38 @@ class ScholarshipAllscholarFragment : Fragment() {
 
             when (groupPosition) {
                 0 -> {  // 국가 장학금 클릭 시
-                    koreaScholarData() // 데이터 불러옴
+                    getData("Nation", "소득연계형") // 데이터 불러옴
                 }
                 2 -> { // 교내 장학금 클릭 시
-                    univScholarData() // 데이터 불러옴
-                }
+                    //User Email
+                    user?.let {
+                        userUid  = user!!.uid
+                    }
+
+                    //User 필드 값
+                    db.collection("Users")
+                        .document(userUid)
+                        .get()
+                        .addOnSuccessListener{ document ->
+                            if (document != null){
+                                if(document.getString("univ") != null){
+                                    userUniv = document.getString("univ")!!
+                                } }
+                    getData("UnivScholar",userUniv) // 데이터 불러옴
+                }}
             }
             false
         }
 
         expandableList.setOnChildClickListener {  // childList 클릭 시 장학금 가져오기
                 head, view, groupPosition, childPosition : Int, l ->
+            val areaText = outScholar[childPosition]
 
-            areaScholar(childPosition)
+            getData("OutScholar",areaText)
             false
         }
-
-
-
-
-
-    }
-    private fun koreaScholarData() { // 국가 장학금 데이터 가져오기
-
-        db.collection("Scholarship").document("Nation")
-            .collection("소득연계형")
-            .get()// 문서 가져오기
-            .addOnSuccessListener { result ->
-
-                RlistAdapter.notifyDataSetChanged()
-                dataList.clear() // 리스트 리셋
-
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-
-                    //필드값 가져오기
-                    val period = document["period"] as Map<String, Timestamp>
-                    val startdate = period["startDate"]?.toDate()
-                    val enddate = period["endDate"]?.toDate()
-                    val institution = document["paymentInstitution"] as String
-
-                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
-
-                    val item = Scholarship(document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                    dataList.add(item)
-                    allDataList.add(item)
-                }
-                RlistAdapter.submitList(dataList)
-                Log.w("ScholarshipAllscholarFragment", "Nation Scholar Data")
-
-            }
-            .addOnFailureListener { exception ->
-                // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting Nation Scholar documents: $exception")
-            }
     }
 
-    // 교내 장학금 데이터 가져오기
-    private fun univScholarData(){
-        //User Email
-        user?.let {
-           userUid  = user!!.uid
-        }
-
-        //User 필드 값
-        db.collection("Users")
-            .document(userUid)
-            .get()
-            .addOnSuccessListener{ document ->
-                if (document != null){
-                    if(document.getString("univ") != null){
-                        userUniv = document.getString("univ")!!
-                    } }
-
-                // 작업할 문서
-                db.collection("Scholarship")
-                    .document("UnivScholar")
-                    .collection(userUniv)
-                    .get()      // 문서 가져오기
-                    .addOnSuccessListener { result ->
-
-                        RlistAdapter.notifyDataSetChanged()
-                        dataList.clear()
-
-                        for (document in result) {  // 가져온 문서들은 result에 들어감
-
-
-                            //필드값 가져오기
-                            val period = document["period"] as Map<String, Timestamp>
-                            val startdate = period.get("startDate")?.toDate()
-                            val enddate = period.get("endDate")?.toDate()
-                            val institution = document["paymentInstitution"] as String
-
-
-
-                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
-
-                            if(startdate == null && enddate == null){
-                                val item = Scholarship(document.id, "자동 신청", "", institution)
-                                dataList.add(item)
-                            }
-                            else{
-                                val item = Scholarship(document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                                dataList.add(item)
-                            }
-                        }
-                        RlistAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
-
-                    }
-                    .addOnFailureListener { exception ->
-                        // 실패할 경우
-                        Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
-                    }
-
-            }
-    }
 
     private fun area(){ // 지역 리스트 가져오기
         db.collection("Scholarship").document("OutScholar")
@@ -235,42 +152,44 @@ class ScholarshipAllscholarFragment : Fragment() {
             }
     }
 
-    private fun areaScholar(num: Int) { // 지역 장학금 가져오기
-        val areaText = outScholar[num]
+    private fun getData( kind : String, etc : String){
         // 작업할 문서
         db.collection("Scholarship")
-            .document("OutScholar")
-            .collection(areaText)
+            .document(kind)
+            .collection(etc)
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
 
                 RlistAdapter.notifyDataSetChanged()
                 dataList.clear()
 
-                for (document in result) {  //필드값 가져오기
+                for (document in result) {  // 가져온 문서들은 result에 들어감
+
+                    //필드값 가져오기
                     val period = document["period"] as Map<String, Timestamp>
-                    val startdate = period["startDate"]?.toDate()
-                    val enddate = period["endDate"]?.toDate()
-                    val institution = document["paymentInstitution"].toString()
+                    val startdate = period.get("startDate")?.toDate()
+                    val enddate = period.get("endDate")?.toDate()
+                    val institution = document["paymentInstitution"] as String
 
                     val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                    val item = Scholarship(document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                    dataList.add(item)
+                    if(startdate == null && enddate == null){
+                        val item = Scholarship(document.id, "자동 신청", "", institution)
+                        dataList.add(item)
+                    }
+                    else{
+                        val item = Scholarship(document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                        dataList.add(item)
+                    }
                 }
                 RlistAdapter.submitList(dataList)
-                Log.w("ScholarshipAllscholarFragment", "OutScholar() data")
+                Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting OutScholar documents: $exception")
+                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
             }
-    }
-
-    private fun getData( kind : String, etc : String){
-
-
 
     }
 
