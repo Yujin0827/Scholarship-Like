@@ -25,15 +25,15 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         myArea_datails = findViewById(R.id.myArea_datails)
         myPreSemesterLayout = findViewById(R.id.myPreSemesterLayout)
 
-        //화면 전환 방지 (세로로 고정)
+        // 화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         setSpinner()
     }
 
-    //스피너 초기화 & 리스너
+    // 스피너 초기화 & 리스너
     fun setSpinner() {
-        //'학자금 지원구간' 스피너의 ArrayAdapter
+        // '학자금 지원구간' 스피너의 ArrayAdapter
         ArrayAdapter.createFromResource(
             this,
             R.array.incomeList,
@@ -45,7 +45,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             myIncome.adapter = adapter
         }
 
-        //'이수 학기' 스피너의 ArrayAdapter
+        // '이수 학기' 스피너의 ArrayAdapter
         ArrayAdapter.createFromResource(
             this,
             R.array.semester,
@@ -57,7 +57,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             mySemester.adapter = adapter
         }
 
-        //'거주지' 스피너의 ArrayAdapter
+        // '거주지' 스피너의 ArrayAdapter
         ArrayAdapter.createFromResource(
             this,
             R.array.local,
@@ -70,7 +70,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         }
 
 
-        //'이수학기' 스피너 선택 리스너
+        // '이수학기' 스피너 선택 리스너
         mySemester.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -89,7 +89,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
                 }
             }
 
-        //'거주지' 스피너 선택 리스너
+        // '거주지' 스피너 선택 리스너
         myArea.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -104,7 +104,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             }
     }
 
-    //'직전학기' 레이아웃 비활성화 함수
+    // '직전학기' 레이아웃 비활성화 함수
     fun disabledPreSemester() {
         findViewById<TextView>(R.id.txtMyPreSemester).alpha = 0.5F
         findViewById<TextView>(R.id.txtMyPreSemGrade).alpha = 0.3F
@@ -113,7 +113,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.myScore).isEnabled = false
     }
 
-    //'직전학기' 레이아웃 활성화 함수
+    // '직전학기' 레이아웃 활성화 함수
     fun abledPreSemester() {
         findViewById<TextView>(R.id.txtMyPreSemester).alpha = 1F
         findViewById<TextView>(R.id.txtMyPreSemGrade).alpha = 1F
@@ -122,7 +122,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         findViewById<EditText>(R.id.myScore).isEnabled = true
     }
 
-    //'거주지 디테일' 스피너 설정
+    // '거주지 디테일' 스피너 설정
     fun setSpinnerMyAreaDatails(area : String) {
         when (area) {
             "서울" -> {

@@ -1,6 +1,8 @@
 package com.cookandroid.scholarshiplike
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -31,6 +33,7 @@ open class MainActivity : AppCompatActivity(),
     var backPressedTime : Long = 0
     val FINISH_INTERVAL_TIME = 2000
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -56,6 +59,8 @@ open class MainActivity : AppCompatActivity(),
         // 하단바 연결
         tabNav.setOnNavigationItemSelectedListener(this)
 
+        // 화면 전환 방지 (세로로 고정)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         //FCM 토큰 확인시 필요
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -76,7 +81,7 @@ open class MainActivity : AppCompatActivity(),
     fun confirmUser() {
         Log.e("LLPP", "로그인")
         var user = Firebase.auth.currentUser
-        if (user != null) { //  유저가 존재하면
+        if (user != null) { // 유저가 존재하면
             Log.d(TAG, "Current user exist!")
             val dd = db.collection("Users").document(user.uid)
                 .get()

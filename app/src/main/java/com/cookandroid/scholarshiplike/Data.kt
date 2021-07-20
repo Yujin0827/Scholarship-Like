@@ -5,5 +5,5 @@ data class Scholarship(val title: String, val text: String, val date: String, va
 data class Alarm(val category: String, val title: String, val date: String)
 data class Scheduel(val name: String, val start:String, val end:String)
 
-// Search Activity - Scholarship
+// Search - Scholarship
 data class SearchScholarship(val title: String, val period_start: String, val period_end: String, val institution: String)

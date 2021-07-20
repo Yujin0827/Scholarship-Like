@@ -44,7 +44,7 @@
             android:src="@drawable/ic_alarm" />
 
         <ImageView
-            android:id="@+id/searchWin"
+            android:id="@+id/searchAll"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="right|center"
@@ -123,10 +123,10 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/kosafWeb"
-                    app:layout_constraintEnd_toStartOf="@+id/guessWeb" />
+                    app:layout_constraintEnd_toStartOf="@+id/profileChange" />
 
                 <ImageView
-                    android:id="@+id/guessWeb"
+                    android:id="@+id/profileChange"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/ic_round_button_background"
