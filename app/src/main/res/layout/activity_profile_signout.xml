@@ -56,15 +56,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="정말 탈퇴하시겠어요?"
-                android:textColor="@color/text_black"
+                android:text="@string/signout_really"
+                android:textColor="@color/maincolor"
                 android:textSize="20sp"
-                android:layout_marginBottom="5dp"/>
+                android:layout_marginBottom="5dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="장학라이크를 탈퇴하시려는 이유를 선택해주세요. 어플 개선에 많은 도움이 됩니다."
+                android:text="@string/signout_req_reason"
                 android:textColor="@color/text_black"
                 android:textSize="18sp"/>
 
@@ -80,37 +80,75 @@
                     android:id="@+id/cb_rsn_Info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="정보가 부족하다"
+                    android:text="@string/rsn_info"
                     android:textSize="16sp"
                     android:layout_marginBottom="5dp"/>
                 <CheckBox
                     android:id="@+id/cb_rsn_uncom"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="어플 이용이 불편하다"
+                    android:text="@string/rsn_uncom"
                     android:textSize="16sp"
                     android:layout_marginBottom="5dp"/>
                 <CheckBox
                     android:id="@+id/cb_rsn_better"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="더 좋은 서비스가 존재한다"
+                    android:text="@string/rsn_better"
                     android:textSize="16sp"
                     android:layout_marginBottom="5dp"/>
                 <CheckBox
                     android:id="@+id/cb_rsn_useless"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="사용 빈도가 낮다"
+                    android:text="@string/rsn_useless"
                     android:textSize="16sp"
                     android:layout_marginBottom="5dp"/>
                 <CheckBox
                     android:id="@+id/cb_rsn_etc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="기타"
+                    android:text="@string/etc"
                     android:textSize="16sp"
                     android:layout_marginBottom="5dp"/>
+                <EditText
+                    android:id="@+id/edittxt_signout_etc_add"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ic_edittext_box_background"
+                    android:layout_marginLeft="28dp"
+                    android:padding="4dp"
+                    android:hint="기타 이유를 작성 해 주세요."
+                    android:inputType="textMultiLine"
+                    android:lines="2"
+                    android:textSize="16sp"
+                    android:gravity="start"
+                    android:visibility="gone"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginBottom="20dp"
+                android:layout_marginLeft="10dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/password_confirm"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"/>
+
+                <EditText
+                    android:id="@+id/edittxt_signout_pw"
+                    android:layout_width="260dp"
+                    android:layout_height="40dp"
+                    android:paddingLeft="4dp"
+                    android:paddingRight="4dp"
+                    android:inputType="textPassword"
+                    android:singleLine="true"/>
 
             </LinearLayout>
 

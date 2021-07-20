@@ -52,7 +52,7 @@
                     android:id="@+id/txt_nickname1"
                     android:layout_width="200dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/ic_sinup_edittext_background"
+                    android:background="@drawable/ic_edittext_box_background"
                     android:maxLength="10"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
@@ -75,7 +75,7 @@
                     android:id="@+id/txt_univ1"
                     android:layout_width="200dp"
                     android:layout_height="35dp"
-                    android:background="@drawable/ic_sinup_edittext_background"
+                    android:background="@drawable/ic_edittext_box_background"
                     android:paddingLeft="2dp"
                     android:paddingRight="2dp"
                     android:singleLine="true" />

@@ -108,4 +108,12 @@
     <string name="see">보기</string>
     <string name="confirm">확인</string>
 
+    <!-- 탈퇴하기 -->
+    <string name="signout_really">정말 탈퇴하시겠어요?</string>
+    <string name="signout_req_reason">장학라이크를 탈퇴하시려는 이유를 선택해주세요. 어플 개선에 많은 도움이 됩니다.</string>
+    <string name="rsn_info">정보가 부족하다</string>
+    <string name="rsn_uncom">어플 이용이 불편하다</string>
+    <string name="rsn_better">더 좋은 서비스가 존재한다</string>
+    <string name="rsn_useless">사용 빈도가 낮다</string>
+
 </resources>
