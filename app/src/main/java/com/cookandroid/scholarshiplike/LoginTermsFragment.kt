@@ -13,7 +13,6 @@ import kotlinx.android.synthetic.main.fragment_login_terms.*
 class LoginTermsFragment : DialogFragment(){
     private var _binding: FragmentLoginTermsBinding? = null
     private val binding get() = _binding!!
-    private lateinit var callback: OnBackPressedCallback
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         isCancelable = false    // 화면 밖 또는 뒤로가기 버튼 클릭시에도 다이얼로그 dismiss 안됨.

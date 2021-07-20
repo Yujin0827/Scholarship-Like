@@ -69,7 +69,8 @@
                     android:singleLine="true"
                     android:textSize="16sp"
                     android:paddingLeft="2dp"
-                    android:paddingRight="2dp"/>
+                    android:paddingRight="2dp"
+                    android:inputType="textPassword"/>
             </LinearLayout>
 
             <LinearLayout
@@ -89,7 +90,8 @@
                     android:singleLine="true"
                     android:textSize="16sp"
                     android:paddingLeft="2dp"
-                    android:paddingRight="2dp"/>
+                    android:paddingRight="2dp"
+                    android:inputType="textPassword"/>
             </LinearLayout>
 
             <LinearLayout

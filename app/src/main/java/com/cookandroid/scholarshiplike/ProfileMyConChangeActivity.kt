@@ -6,27 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import com.cookandroid.scholarshiplike.databinding.ActivityProfileMyConChangeBinding
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
 
-    // xml 뷰 변수
-    lateinit var spinnerIncome :Spinner
-    lateinit var cbDad :CheckBox
-    lateinit var cbMom :CheckBox
-    lateinit var edittxtChildAll :EditText
-    lateinit var edittxtChildMe :EditText
-    lateinit var spinnerSemester :Spinner
-    lateinit var txtPreSemClass :TextView
-    lateinit var txtPreSemScore :TextView
-    lateinit var edittxtPreSemClass :EditText
-    lateinit var edittxtPreSemScore :EditText
-    lateinit var spinnerArea :Spinner
-    lateinit var rgCountry :RadioGroup
-    lateinit var rbtnCountryIn :RadioButton
-    lateinit var rbtnCountryOut :RadioButton
-    lateinit var cbNationalMerit :CheckBox
-    lateinit var cbDisabled :CheckBox
-    lateinit var btnSave :Button
+    private lateinit var binding: ActivityProfileMyConChangeBinding
 
     // 조건 저장 변수
     var userIncome :String? = null  // 학자금 지원구간
@@ -45,37 +29,14 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_profile_my_con_change)
-
-        // xml 뷰 변수 초기화
-        setXmlView()
+        binding = ActivityProfileMyConChangeBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         initSetCondition()
         btnClick()
-    }
-
-    // xml 뷰 변수 초기화
-    private fun setXmlView() {
-        spinnerIncome = findViewById(R.id.myIncome)
-        cbDad = findViewById(R.id.myDad)
-        cbMom = findViewById(R.id.myMom)
-        edittxtChildAll = findViewById(R.id.myChildAll)
-        edittxtChildMe = findViewById(R.id.myChildMe)
-        spinnerSemester = findViewById(R.id.mySemester)
-        txtPreSemClass = findViewById(R.id.txt_myPreSemClass)
-        txtPreSemScore = findViewById(R.id.txt_myPreSemScore)
-        edittxtPreSemClass = findViewById(R.id.myPreSemClass)
-        edittxtPreSemScore = findViewById(R.id.myPreSemScore)
-        spinnerArea = findViewById(R.id.myArea)
-        rgCountry = findViewById(R.id.rg_myCountry)
-        rbtnCountryIn = findViewById(R.id.myCountry_in)
-        rbtnCountryOut = findViewById(R.id.myCountry_out)
-        cbNationalMerit = findViewById(R.id.myNationalMerit)
-        cbDisabled = findViewById(R.id.myDisabled)
-        btnSave = findViewById(R.id.btn_save)
     }
 
     // 초기 조건 데이터 set
@@ -114,25 +75,25 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             // 스피너의 레이아웃 구체화
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
-            spinnerIncome.adapter = adapter
+            binding.myIncome.adapter = adapter
 
             // 변수에 저장된 데이터가 있으면 초기값으로 설정
             if (userIncome != null) {
-                spinnerIncome.setSelection(adapter.getPosition(userIncome))
+                binding.myIncome.setSelection(adapter.getPosition(userIncome))
             }
         }
 
         // '가족 관계' 설정
-        cbDad.isChecked = userDad!!
-        cbMom.isChecked = userMom!!
+        binding.myDad.isChecked = userDad!!
+        binding.myMom.isChecked = userMom!!
 
         if (userChildAll == -5 && userChildMe == -5) {
-            edittxtChildAll.setText("")
-            edittxtChildMe.setText("")
+            binding.myChildAll.setText("")
+            binding.myChildMe.setText("")
         }
         else {
-            edittxtChildAll.setText(userChildAll!!.toString())
-            edittxtChildMe.setText(userChildMe!!.toString())
+            binding.myChildAll.setText(userChildAll!!.toString())
+            binding.myChildMe.setText(userChildMe!!.toString())
         }
 
         //'이수 학기' 스피너 설정
@@ -144,23 +105,23 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             // 스피너의 레이아웃 구체화
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
-            spinnerSemester.adapter = adapter
+            binding.mySemester.adapter = adapter
 
             // 변수에 저장된 데이터가 있으면 초기값으로 설정
             if (userSemester!! >= 0) {
-                spinnerSemester.setSelection(userSemester!!)
+                binding.mySemester.setSelection(userSemester!!)
             }
         }
 
         //'이수학기' 스피너 선택 리스너
-        spinnerSemester.onItemSelectedListener =
+        binding.mySemester.onItemSelectedListener =
             object : AdapterView.OnItemSelectedListener {
                 override fun onNothingSelected(parent: AdapterView<*>?) {
                     TODO("Not yet implemented")
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                    when(spinnerSemester.getItemAtPosition(position).toString()) {
+                    when(binding.mySemester.getItemAtPosition(position).toString()) {
                         "0" -> {  //이수학기 0일 때 : '직전 학기' Layout 비활성화
                             disabledPreSemester()
                         }
@@ -180,64 +141,64 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             // 스피너의 레이아웃 구체화
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
-            spinnerArea.adapter = adapter
+            binding.myArea.adapter = adapter
 
             // 변수에 저장된 데이터가 있으면 초기값으로 설정
             if (userArea != null) {
-                spinnerArea.setSelection(adapter.getPosition(userArea))
+                binding.myArea.setSelection(adapter.getPosition(userArea))
             }
         }
 
         // '국적' 라디오버튼 설정
         if (userCountry.equals("내국인")) {
-            rbtnCountryIn.isChecked = true
+            binding.myCountryIn.isChecked = true
         }
         else if (userCountry.equals("외국인")) {
-            rbtnCountryOut.isChecked = true
+            binding.myCountryOut.isChecked = true
         }
 
         // '추가사항' 설정
-        cbNationalMerit.isChecked = userNationalMerit!!
-        cbDisabled.isChecked = userDisabled!!
+        binding.myNationalMerit.isChecked = userNationalMerit!!
+        binding.myDisabled.isChecked = userDisabled!!
     }
 
     //'직전학기' 레이아웃 비활성화 함수
     fun disabledPreSemester() {
-        txtPreSemClass.alpha = 0.3F
-        txtPreSemScore.alpha = 0.3F
-        edittxtPreSemClass.isEnabled = false
-        edittxtPreSemScore.isEnabled = false
+        binding.txtMyPreSemClass.alpha = 0.3F
+        binding.txtMyPreSemScore.alpha = 0.3F
+        binding.myPreSemClass.isEnabled = false
+        binding.myPreSemScore.isEnabled = false
 
-        edittxtPreSemClass.setText("")
-        edittxtPreSemScore.setText("")
+        binding.myPreSemClass.setText("")
+        binding.myPreSemScore.setText("")
     }
 
     //'직전학기' 레이아웃 활성화 함수
     fun abledPreSemester() {
-        txtPreSemClass.alpha = 1F
-        txtPreSemScore.alpha = 1F
-        edittxtPreSemClass.isEnabled = true
-        edittxtPreSemScore.isEnabled = true
+        binding.txtMyPreSemClass.alpha = 1F
+        binding.txtMyPreSemScore.alpha = 1F
+        binding.myPreSemClass.isEnabled = true
+        binding.myPreSemScore.isEnabled = true
 
         if (userPreSemClass == -5) {
-            edittxtPreSemClass.setText("")
+            binding.myPreSemClass.setText("")
         }
         else {
-            edittxtPreSemClass.setText(userPreSemClass.toString())
+            binding.myPreSemClass.setText(userPreSemClass.toString())
         }
 
         if (userPreSemScore == -5.0f) {
-            edittxtPreSemScore.setText("")
+            binding.myPreSemScore.setText("")
         }
         else {
-            edittxtPreSemScore.setText(userPreSemScore.toString())
+            binding.myPreSemScore.setText(userPreSemScore.toString())
         }
     }
 
     // 버튼 클릭 통합 처리
     fun btnClick() {
         // '시작하기' 버튼 클릭 리스너
-        btnSave.setOnClickListener() {
+        binding.btnSave.setOnClickListener() {
             setUserConditioinData()
             saveUserConditionData()
             finish()
@@ -247,16 +208,16 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
     // 유저 조건 데이터 변수 저장
     private fun setUserConditioinData() {
         // 학자금 지원 구간
-        userIncome = spinnerIncome.getItemAtPosition(spinnerIncome.selectedItemPosition).toString()
+        userIncome = binding.myIncome.getItemAtPosition(binding.myIncome.selectedItemPosition).toString()
 
         // 가족관계
-        userDad = cbDad.isChecked   // 부
-        userMom = cbMom.isChecked   // 모
+        userDad = binding.myDad.isChecked   // 부
+        userMom = binding.myMom.isChecked   // 모
 
         //형제자매
-        if (edittxtChildAll.text.toString() != "" && edittxtChildMe.text.toString() != "") {
-            val intChildAll = edittxtChildAll.text.toString().toInt()
-            val intChildMe = edittxtChildMe.text.toString().toInt()
+        if (binding.myChildAll.text.toString() != "" && binding.myChildMe.text.toString() != "") {
+            val intChildAll = binding.myChildAll.text.toString().toInt()
+            val intChildMe = binding.myChildMe.text.toString().toInt()
 
             if ((intChildAll > 0) && (intChildMe > 0 && intChildMe <= intChildAll)) {
                 userChildAll = intChildAll
@@ -273,12 +234,12 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         }
 
         // 이수학기
-        userSemester = spinnerSemester.getItemAtPosition(spinnerSemester.selectedItemPosition).toString().toInt()
+        userSemester = binding.mySemester.getItemAtPosition(binding.mySemester.selectedItemPosition).toString().toInt()
 
         // 직전학기 이수학점 & 성적
         if (userSemester!! >= 1) {
-            val stringClass = edittxtPreSemClass.text.toString()
-            val stringScore = edittxtPreSemScore.text.toString()
+            val stringClass = binding.myPreSemClass.text.toString()
+            val stringScore = binding.myPreSemScore.text.toString()
 
             if (stringClass != "" && stringClass.toInt() > 0) {
                 userPreSemClass = stringClass.toInt()
@@ -301,10 +262,10 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         }
 
         // 거주지
-        userArea = spinnerArea.getItemAtPosition(spinnerArea.selectedItemPosition).toString()
+        userArea = binding.myArea.getItemAtPosition(binding.myArea.selectedItemPosition).toString()
 
         // 국적
-        when (rgCountry.checkedRadioButtonId) {
+        when (binding.rgMyCountry.checkedRadioButtonId) {
             R.id.myCountry_in -> {
                 userCountry = "내국인"
             }
@@ -314,10 +275,10 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         }
 
         // 보훈 보상 대상자
-        userNationalMerit = cbNationalMerit.isChecked
+        userNationalMerit = binding.myNationalMerit.isChecked
 
         // 장애 여부
-        userDisabled = cbDisabled.isChecked
+        userDisabled = binding.myDisabled.isChecked
     }
 
     // 데이터 파일에 유저 조건 데이터 저장
