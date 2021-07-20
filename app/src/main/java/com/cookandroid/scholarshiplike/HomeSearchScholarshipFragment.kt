@@ -14,12 +14,9 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 class HomeSearchScholarshipFragment : Fragment() {
-    @Suppress("PrivatePropertyName")
-    private val TAG = javaClass.simpleName
-
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
-    private var db = Firebase.firestore
-    var dataList: MutableList<Scholarship> = arrayListOf()
+    private var db = Firebase.firestore                             // Firestore 인스턴스 선언
+    var dataList: MutableList<SearchScholarship> = arrayListOf()    // 리스트 아이템 배열
     lateinit var mContext : Context
 
     override fun onAttach(context: Context) {
@@ -29,20 +26,21 @@ class HomeSearchScholarshipFragment : Fragment() {
             .document("교내").collection("강원")
             .document("강원대").collection("학과")
 
-        sRef // 작업할 문서
+        db.collection("Scholarship") // 작업할 컬렉션
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
+
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Scholarship(document.id, "", "", "",false)
+                    val item = SearchScholarship(document["title"] as String, document["period_start"] as String, document["period_end"] as String, document["institution"] as String)
                     dataList.add(item)
                 }
-                listAdapter.submitList(dataList)
-                Log.w(TAG, "Error aaaaaaa: ")
+                //listAdapter.submitList(dataList)
+                Log.w("MainActivity", "Error aaaaaaa: ")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w(TAG, "Error getting documents: $exception")
+                Log.w("MainActivity", "Error getting documents: $exception")
             }
     }
 
@@ -53,7 +51,7 @@ class HomeSearchScholarshipFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext)
+        //listAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext)
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         listView.adapter = listAdapter
