@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:onClick="hideKeyboard"
     tools:context=".HomeSearchActivity" >
 
     <androidx.appcompat.widget.Toolbar
@@ -27,7 +28,8 @@
             android:hint="@string/search"
             android:textSize="20sp"
             android:background="@null"
-            android:imeOptions="actionSearch" />
+            android:imeOptions="actionSearch"
+            android:onClick="showKeyboard" />
 
         <ImageView
             android:id="@+id/search_btn"
@@ -36,7 +38,7 @@
             android:layout_gravity="right|center"
             android:layout_marginRight="5dp"
             android:padding="10dp"
-            android:src="@drawable/ic_searchwin" />
+            android:src="@drawable/ic_search" />
 
     </androidx.appcompat.widget.Toolbar>
 
