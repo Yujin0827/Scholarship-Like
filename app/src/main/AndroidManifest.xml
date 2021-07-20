@@ -102,6 +102,9 @@
 
         <!-- 장학금 상세 -->
         <activity android:name=".ScholarshipDetailActivity" />
+
+        <!-- 탈퇴하기 -->
+        <activity android:name=".ProfileSignoutActivity"/>
     </application>
 
 </manifest>

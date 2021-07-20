@@ -42,5 +42,13 @@ class ProfileEtcFragment : Fragment() {
             val dialog = ProfileLogoutFragment()
             dialog.show(parentFragmentManager, "logoutFragment")
         }
+
+        // '탈퇴하기' 클릭 리스너
+        binding.etcSignout.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileSignoutActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
     }
 }

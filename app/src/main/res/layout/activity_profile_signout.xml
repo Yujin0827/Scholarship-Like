@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 타이틀 -->
+    <FrameLayout
+        android:id="@+id/view_etc_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/maincolor_background"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/scrollView_signout"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_signout_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="20dp"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/signout"
+            android:textColor="@color/text_black"
+            android:textSize="20sp"
+            android:layout_gravity="center_horizontal"/>
+
+    </FrameLayout>
+
+    <!-- 스크롤뷰 -->
+    <ScrollView
+        android:id="@+id/scrollView_signout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view_etc_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:paddingBottom="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="정말 탈퇴하시겠어요?"
+                android:textColor="@color/text_black"
+                android:textSize="20sp"
+                android:layout_marginBottom="5dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="장학라이크를 탈퇴하시려는 이유를 선택해주세요. 어플 개선에 많은 도움이 됩니다."
+                android:textColor="@color/text_black"
+                android:textSize="18sp"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp"
+                android:layout_marginBottom="20dp"
+                android:padding="10dp">
+
+                <CheckBox
+                    android:id="@+id/cb_rsn_Info"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="정보가 부족하다"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_rsn_uncom"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="어플 이용이 불편하다"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_rsn_better"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="더 좋은 서비스가 존재한다"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_rsn_useless"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="사용 빈도가 낮다"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
+                <CheckBox
+                    android:id="@+id/cb_rsn_etc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="기타"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="5dp"/>
+
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/btn_signout"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:text="@string/signout"
+                android:background="#D5D32929"
+                android:textColor="#ffffff"
+                android:layout_gravity="right"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

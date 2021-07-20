@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
 import androidx.fragment.app.DialogFragment
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileLogoutBinding
 import com.google.firebase.auth.ktx.auth
@@ -27,10 +28,8 @@ class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
         // 로그아웃 버튼 클릭 리스너
         binding.btnLogout.setOnClickListener {
             Firebase.auth.signOut() // 로그아웃
+            activity?.finishAffinity()
             val iT = Intent(context, LoginActivity::class.java)
-            iT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-            iT.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            iT.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             startActivity(iT)
         }
 
