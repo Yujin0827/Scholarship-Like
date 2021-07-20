@@ -88,9 +88,7 @@ class HomeFragment : Fragment() {
 
         // 교내 웹사이트로 이동
         binding.univWeb.setOnClickListener {
-            UnivWebSite.get()
-                .addOnSuccessListener { document ->
-                }
+
             val uri = Uri.parse("http://www.kosaf.go.kr")
             val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
