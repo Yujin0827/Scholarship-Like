@@ -13,7 +13,13 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
 import androidx.fragment.app.Fragment
 import com.cookandroid.scholarshiplike.adapter.ScholarshipExpandableLisviewtAdapter
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
+import kotlinx.android.synthetic.main.item_calendar_popup.*
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
+
 
 class ScholarshipAllscholarFragment : Fragment() {
 
@@ -113,26 +119,38 @@ class ScholarshipAllscholarFragment : Fragment() {
     }
     private fun koreaScholarData() { // 국가 장학금 데이터 가져오기
 
-        val sRef = db.collection("국가")
-        sRef // 작업할 문서
-            .get()      // 문서 가져오기
+        db.collection("Scholarship").document("Nation")
+            .collection("소득연계형")
+            .get()// 문서 가져오기
             .addOnSuccessListener { result ->
 
                 RlistAdapter.notifyDataSetChanged()
                 dataList.clear() // 리스트 리셋
 
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                   val item = Scholarship(document.id, "", "","",false)
+
+                    //필드값 가져오기
+                    var period = document["period"] as Map<String, Timestamp>
+                    var startdate = period.get("startDate")?.toDate()
+                    var enddate = period.get("endDate")?.toDate()
+                    var institution = document["paymentInstitution"] as String
+
+                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+                    val start = date.format(startdate)
+                    val end = date.format(enddate)
+
+                    val item = Scholarship(document.id, start, end, institution)
                     dataList.add(item)
                     allDataList.add(item)
                 }
                 RlistAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w("ScholarshipAllscholarFragment", "Nation Scholar Data")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w("ScholarshipAllscholarFragment", "Error getting Nation Scholar documents: $exception")
             }
 
     }
@@ -164,8 +182,8 @@ class ScholarshipAllscholarFragment : Fragment() {
                         dataList.clear()
 
                         for (document in result) {  // 가져온 문서들은 result에 들어감
-                            val item = Scholarship(document.id, "", "", "",false)
-                            dataList.add(item)
+//                            val item = Scholarship(document.id, "", "", "")
+//                            dataList.add(item)
                         }
                         RlistAdapter.submitList(dataList)
                         Log.w("MainActivity", "Error aaaaaaa: ")
@@ -212,16 +230,16 @@ class ScholarshipAllscholarFragment : Fragment() {
                 dataList.clear()
 
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Scholarship(document.id, "", "","", false)
-                    dataList.add(item)
+//                    val item = Scholarship(document.id, "", "","")
+//                    dataList.add(item)
                 }
                 RlistAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
+                Log.w("ScholarshipAllscholarFragment", "areaScholoar() data")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
+                Log.w("ScholarshiptAllscholarFragment", "Error getting documents: $exception")
             }
     }
 

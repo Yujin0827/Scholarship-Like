@@ -137,5 +137,7 @@
     <string name="paymentType">지급유형</string>
     <string name="condition">조건</string>
     <string name="note">비고</string>
+    <string name="to">~</string>
+
 
 </resources>
