@@ -1,62 +1,44 @@
 package com.cookandroid.scholarshiplike
 
-import android.content.ContentValues.TAG
-import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
+import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
-import com.google.firebase.auth.ktx.auth
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_home.*
+import com.google.firebase.firestore.FirebaseFirestore
+
 
 class HomeFragment : Fragment() {
 
-    lateinit var scholarCnt : TextView  // 000님은 최대 0건의 장학금을 받을 수 있어요!
-    lateinit var like : ImageView       // 좋아요 페이지로 이동 버튼
-    lateinit var alarm : ImageView      // 알람 페이지로 이동 버튼
-    lateinit var searchWin : ImageView  // 검색창 페이지로 이동 버튼
-    lateinit var kosafWeb : ImageView   // 한국장학재단 사이트 이동 버튼
-    lateinit var univWeb : ImageView    // 지자체 사이트 이동 버튼
-    lateinit var guessWeb : ImageView   // 교내 사이트 이동 버튼
+    private var mBinding: FragmentHomeBinding? = null   // 바인딩 객체
+    private val binding get() = mBinding!!              // 바인딩 변수 재선언(매번 null 체크x)
 
-    val scholarshiptab = ScholarshipFragment()   // fragment_scholarship 변수
+    private val db = FirebaseFirestore.getInstance()    // FireStore 인스턴스
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    val scholarshiptab = ScholarshipFragment()          // fragment_scholarship 변수
+    val UnivWebSite = db.collection("Scholarship")
 
-        scholarCnt = view.findViewById<TextView>(R.id.scholarCnt)   // hometab의 scholarCnt 변수 생성
-        like = view.findViewById<ImageView>(R.id.like)              // hometab의 좋아요 버튼 변수 생성
-        alarm = view.findViewById<ImageView>(R.id.alarm)            // hometab의 알람 버튼 변수 생성
-        searchWin = view.findViewById<ImageView>(R.id.searchWin)    // hometab의 검색창 버튼 변수 생성
-        kosafWeb = view.findViewById<ImageView>(R.id.kosafWeb)      // hometab의 한국장학재단 사이트 이동 버튼 변수 생성
-        univWeb = view.findViewById<ImageView>(R.id.univWeb)        // hometab의 지자체 사이트 이동 버튼 변수 생성
-        guessWeb = view.findViewById<ImageView>(R.id.guessWeb)      // hometab의 교내 사이트 이동 버튼 변수 생성
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         // 장학금 탭으로 이동
-        scholarCnt.setOnClickListener {
+        binding.scholarCnt.setOnClickListener {
             activity?.getSupportFragmentManager()?.beginTransaction()
                 ?.replace(R.id.nav, scholarshiptab, "scholarshipTab")
                 ?.commit()
-
-
         }
 
         // AdMob
@@ -67,13 +49,14 @@ class HomeFragment : Fragment() {
         mAdView.loadAd(adRequest)
 
         return view
+
     }
 
     // fragment -> activity 화면 이동
     override fun onActivityCreated(savedInstanceState: Bundle?) {
 
-        // 좋아요 누른 게시물 페이지(LikeActivity)로 이동
-        like.setOnClickListener {
+        // 좋아요 게시물 페이지(LikeContentActivity)로 이동
+        binding.like.setOnClickListener {
             activity?.let {
                 val intent = Intent(context, LikeContentActivity::class.java)
                 startActivity(intent)
@@ -81,15 +64,15 @@ class HomeFragment : Fragment() {
         }
 
         // 알림 페이지(AlarmActivity)로 이동
-        alarm.setOnClickListener {
+        binding.alarm.setOnClickListener {
             activity?.let {
                 val intent = Intent(context, AlarmActivity::class.java)
                 startActivity(intent)
             }
         }
 
-        // 검색창(SearchWinActivity)으로 이동
-        searchWin.setOnClickListener {
+        // 검색창(HomeSearchActivity)으로 이동
+        binding.searchAll.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, HomeSearchActivity::class.java)
                 it?.startActivity(intent)
@@ -97,24 +80,26 @@ class HomeFragment : Fragment() {
         }
 
         // 한국장학재단 웹사이트로 이동
-        kosafWeb.setOnClickListener {
-            var uri = Uri.parse("http://www.kosaf.go.kr")
-            var intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
-        }
-
-        // 지자체 웹사이트로 이동
-        univWeb.setOnClickListener {
-            var uri = Uri.parse("http://www.kosaf.go.kr")
-            var intent = Intent(Intent.ACTION_VIEW, uri)
+        binding.kosafWeb.setOnClickListener {
+            val uri = Uri.parse("http://www.kosaf.go.kr")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
         // 교내 웹사이트로 이동
-        guessWeb.setOnClickListener {
-            var uri = Uri.parse("http://www.kosaf.go.kr")
-            var intent = Intent(Intent.ACTION_VIEW, uri)
+        binding.univWeb.setOnClickListener {
+
+            val uri = Uri.parse("http://www.kosaf.go.kr")
+            val intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
+        }
+
+        // 내조건 수정 페이지로 이동
+        binding.profileChange.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileMyConChangeActivity::class.java)
+                it?.startActivity(intent)
+            }
         }
 
         super.onActivityCreated(savedInstanceState)
@@ -126,15 +111,12 @@ class HomeFragment : Fragment() {
     }
 
     fun initView() {
-        val homeCalnederAdapter =
-            HomeCalendarAdapter(
-                requireActivity()
-            )
+        val homeCalnederAdapter = HomeCalendarAdapter(requireActivity())
 
-        calendarViewPager.adapter = homeCalnederAdapter
-        calendarViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+        binding.calendarViewPager.adapter = homeCalnederAdapter
+        binding.calendarViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
         homeCalnederAdapter.apply {
-            calendarViewPager.setCurrentItem(this.firstFragmentPosition, false)
+            binding.calendarViewPager.setCurrentItem(this.firstFragmentPosition, false)
         }
     }
 
@@ -148,6 +130,12 @@ class HomeFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
+
+    // 프레그먼트 파괴
+    override fun onDestroyView() {
+        mBinding = null
+        super.onDestroyView()
     }
 }
 

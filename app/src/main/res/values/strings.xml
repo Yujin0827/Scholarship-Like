@@ -60,11 +60,6 @@
     <string name="changePw">비밀번호 재설정</string>
     <string name="reSetPwBt">이메일 보내기</string>
 
-
-
-
-
-
     <!-- 로그아웃 페이지 -->
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
     <string name="cancel">취소</string>
@@ -80,6 +75,7 @@
     <string name="out_scholar">교외 장학금</string>
     <string name="univ_scholar">교내 장학금</string>
     <string name="msg_token_fmt">토큰 정보</string>
+    <string name="period_middle">~</string>
 
     <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
