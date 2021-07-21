@@ -96,7 +96,7 @@ class ProfileSignoutActivity : AppCompatActivity() {
 
         if (user != null) {
             val userEmail: String? = user?.email
-            val userPW = binding.edittxtSignoutPw.toString()
+            val userPW = binding.edittxtSignoutPw.text.toString()
 
             if (userEmail != null && userPW != null) {
                 val credential = EmailAuthProvider
@@ -108,7 +108,7 @@ class ProfileSignoutActivity : AppCompatActivity() {
                         deleteUserDB(user)  // 유저 DB 삭제
                     }
                     ?.addOnFailureListener { it ->
-                        Log.d(TAG, "Fail to user re-authenticate")
+                        Log.w(TAG, "Fail to user re-authenticate", it)
                         Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
                         binding.edittxtSignoutPw.requestFocus() // 비밀번호 입력 포커스 주기
                         // 키보드 보이기
