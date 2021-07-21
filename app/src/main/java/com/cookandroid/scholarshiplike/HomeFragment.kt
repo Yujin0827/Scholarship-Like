@@ -1,12 +1,13 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil.setContentView
@@ -17,7 +18,10 @@ import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_profile_change.*
 
 
 class HomeFragment : Fragment() {
@@ -25,10 +29,13 @@ class HomeFragment : Fragment() {
     private var mBinding: FragmentHomeBinding? = null   // 바인딩 객체
     private val binding get() = mBinding!!              // 바인딩 변수 재선언(매번 null 체크x)
 
-    private val db = FirebaseFirestore.getInstance()    // FireStore 인스턴스
+    private var db = FirebaseFirestore.getInstance()    // FireStore 인스턴스
+    var user = Firebase.auth.currentUser                // user
+    lateinit var userUid: String                        // user id
+    lateinit var userUniv: String                       // user 대학교
+    lateinit var univWebSite: String                    // user 대학교 사이트
 
     val scholarshiptab = ScholarshipFragment()          // fragment_scholarship 변수
-    val UnivWebSite = db.collection("Scholarship")
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -58,7 +65,7 @@ class HomeFragment : Fragment() {
         // 좋아요 게시물 페이지(LikeContentActivity)로 이동
         binding.like.setOnClickListener {
             activity?.let {
-                val intent = Intent(context, LikeContentActivity::class.java)
+                var intent = Intent(context, LikeContentActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -66,7 +73,7 @@ class HomeFragment : Fragment() {
         // 알림 페이지(AlarmActivity)로 이동
         binding.alarm.setOnClickListener {
             activity?.let {
-                val intent = Intent(context, AlarmActivity::class.java)
+                var intent = Intent(context, AlarmActivity::class.java)
                 startActivity(intent)
             }
         }
@@ -74,30 +81,52 @@ class HomeFragment : Fragment() {
         // 검색창(HomeSearchActivity)으로 이동
         binding.searchAll.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, HomeSearchActivity::class.java)
+                var intent = Intent(it, HomeSearchActivity::class.java)
                 it?.startActivity(intent)
             }
         }
 
         // 한국장학재단 웹사이트로 이동
         binding.kosafWeb.setOnClickListener {
-            val uri = Uri.parse("http://www.kosaf.go.kr")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
+            var uri = Uri.parse("http://www.kosaf.go.kr")
+            var intent = Intent(Intent.ACTION_VIEW, uri)
             startActivity(intent)
         }
 
         // 교내 웹사이트로 이동
         binding.univWeb.setOnClickListener {
+            user?.let {
+                userUid = user!!.uid
+            }
 
-            val uri = Uri.parse("http://www.kosaf.go.kr")
-            val intent = Intent(Intent.ACTION_VIEW, uri)
-            startActivity(intent)
+            db.collection("Users")
+                .document(userUid)
+                .get()
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        if (document.getString("univ") != null) {
+                            userUniv = document.getString("univ")!!
+                        }
+                    }
+
+                    db.collection("UnivScholar")
+                        .document(userUniv)
+                        .get()
+                        .addOnSuccessListener{ document ->
+                            univWebSite = document.getString("URL")!!
+
+                            var uri = Uri.parse(univWebSite)
+                            var intent = Intent(Intent.ACTION_VIEW, uri)
+                            startActivity(intent)
+                        }
+                }
+
         }
 
-        // 내조건 수정 페이지로 이동
+        // 내 조건 수정 페이지로 이동
         binding.profileChange.setOnClickListener {
             activity?.let {
-                val intent = Intent(it, ProfileMyConChangeActivity::class.java)
+                var intent = Intent(it, ProfileMyConChangeActivity::class.java)
                 it?.startActivity(intent)
             }
         }
@@ -105,11 +134,13 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
+    // calendar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         initView()
     }
 
+    // calendar
     fun initView() {
         val homeCalnederAdapter = HomeCalendarAdapter(requireActivity())
 
@@ -132,7 +163,7 @@ class HomeFragment : Fragment() {
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
     }
 
-    // 프레그먼트 파괴
+    // 프래그먼트 파괴
     override fun onDestroyView() {
         mBinding = null
         super.onDestroyView()

@@ -12,7 +12,7 @@ class LikeContentActivity : AppCompatActivity() {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
-    private var tabLayoutTextArray: ArrayList<String> = arrayListOf("매거진", "장학금")
+    private var tabLayoutTextArray: ArrayList<String> = arrayListOf("장학금", "매거진")
     private lateinit var viewAdapter: ViewPageAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -21,8 +21,8 @@ class LikeContentActivity : AppCompatActivity() {
 
         // 어댑터 생성, 연결
         viewAdapter = ViewPageAdapter(this)
-        viewAdapter.addFragment(LikeContentMagazineFragment())
         viewAdapter.addFragment(LikeContentScholarshipFragment())
+        viewAdapter.addFragment(LikeContentMagazineFragment())
         like_viewpager.adapter = viewAdapter
 
         // 탭 레이아웃 이름 연결

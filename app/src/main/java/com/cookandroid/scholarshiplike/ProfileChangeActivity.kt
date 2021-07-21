@@ -1,9 +1,5 @@
 package com.cookandroid.scholarshiplike
 
-
-
-
-
 import android.content.Context
 import android.os.Bundle
 import android.text.Editable
@@ -29,23 +25,16 @@ class ProfileChangeActivity : AppCompatActivity() {
     lateinit var userEmail: String
     lateinit var userUid: String
 
-
-
     var user = Firebase.auth.currentUser // 사용자 가져오기
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile_change)
 
-
         emailText = findViewById(R.id.emailInput)
 
-
-
-        getUserInfo() // User 정보 가져오기
-        univSearch() // 대학교 검색 자동완성
-
+        getUserInfo()   // User 정보 가져오기
+        univSearch()    // 대학교 검색 자동완성
 
         // 이메일 보내기 버튼 클릭 시
         reSetPwBt.setOnClickListener {
@@ -64,8 +53,7 @@ class ProfileChangeActivity : AppCompatActivity() {
         }
     }
 
-
-    //UserNikname 가져오기
+    // User Nickname 가져오기
     fun getUserInfo(){
         //User Email
         user?.let {
@@ -85,18 +73,15 @@ class ProfileChangeActivity : AppCompatActivity() {
                     }
                     if(document.getString("univ") != null){
                         univeInput.hint = document.getString("univ")
-
-
                     }
                 }
-
             }
     }
 
-    fun univSearch(){ // 대학교 자동완성
+    // 대학교 자동완성
+    fun univSearch(){
         // 대학교 리스트 가져오기
         val sRef = db.collection("교내")
-
 
         sRef.get().addOnSuccessListener { snapshots ->
             val num: Int = snapshots?.documents!!.size
@@ -105,6 +90,7 @@ class ProfileChangeActivity : AppCompatActivity() {
                 univList.add(univName)
             }
         }
+
         // 자동완성 리스트
         var edit = findViewById<View>(R.id.univeInput) as AutoCompleteTextView
 
@@ -114,14 +100,7 @@ class ProfileChangeActivity : AppCompatActivity() {
                 R.layout.dropdown_size,R.id.dropdown_size, univList
             )
         )
-
     }
 
 }
-
-
-
-
-
-
 

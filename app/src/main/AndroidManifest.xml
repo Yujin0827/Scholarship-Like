@@ -113,8 +113,6 @@
         <!-- 장학금 상세 -->
         <activity android:name=".ScholarshipDetailActivity" />
 
-
-
     </application>
 
 </manifest>
