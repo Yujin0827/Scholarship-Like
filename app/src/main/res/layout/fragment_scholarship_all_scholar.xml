@@ -18,7 +18,7 @@
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:orientation="vertical"
-            android:background="#E9E9F8">
+            android:background="@color/maincolor_background">
 
 
             <!-- 버튼 클릭시 가시되는 레이아웃(expandableList) -->

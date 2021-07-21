@@ -31,8 +31,8 @@ class HomeSearchScholarshipRecyclerViewAdapter(val scholarshipList: ArrayList<Se
     // ViewHolder 정의
     class SearchItemViewHolder(scholarshipView: View): RecyclerView.ViewHolder(scholarshipView) {
         var title: TextView = scholarshipView.findViewById(R.id.scholar_title)
-        var period_start: TextView = scholarshipView.findViewById(R.id.scholar_period_start)
-        var period_end: TextView = scholarshipView.findViewById(R.id.scholar_period_end)
+        var period_start: TextView = scholarshipView.findViewById(R.id.scholar_startDate)
+        var period_end: TextView = scholarshipView.findViewById(R.id.scholar_endDate)
         var institution: TextView = scholarshipView.findViewById(R.id.scholar_institution)
     }
 

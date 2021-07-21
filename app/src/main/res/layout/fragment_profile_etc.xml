@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- 타이틀 -->
+    <LinearLayout
+        android:id="@+id/view_etc_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/maincolor_background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/scrollView_etc"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/etc"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <!-- 스크롤뷰 -->
+    <ScrollView
+        android:id="@+id/scrollView_etc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view_etc_title">
+
+        <!-- 목록 리스트 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- 앱 정보 -->
+            <LinearLayout
+                android:id="@+id/etc_appInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_profile_list_background"
+                android:gravity="left|center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="15dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_info"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- 문의 -->
+            <LinearLayout
+                android:id="@+id/etc_inquiry"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_profile_list_background"
+                android:gravity="left|center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="15dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/inquiry"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- 로그아웃 -->
+            <LinearLayout
+                android:id="@+id/etc_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_profile_list_background"
+                android:gravity="left|center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="15dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/logout"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- 로그아웃 -->
+            <LinearLayout
+                android:id="@+id/etc_signout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_profile_list_background"
+                android:gravity="left|center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="15dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signout"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

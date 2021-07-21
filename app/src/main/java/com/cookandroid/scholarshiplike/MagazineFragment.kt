@@ -36,7 +36,7 @@ class MagazineFragment : Fragment() {
         // 파이어스토어에서 매거진 데이터 불러오기
         firestore = FirebaseFirestore.getInstance() // Firestore 인스턴스 초기화
 
-        firestore?.collection("매거진")?.get()?.addOnSuccessListener { result ->
+        firestore?.collection("Magazine")?.get()?.addOnSuccessListener { result ->
             // 성공할 경우
             postList.clear()
 
