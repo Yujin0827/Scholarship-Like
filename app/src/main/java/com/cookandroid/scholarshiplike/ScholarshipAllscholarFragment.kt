@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -15,7 +16,9 @@ import androidx.fragment.app.Fragment
 import com.cookandroid.scholarshiplike.adapter.ScholarshipExpandableLisviewtAdapter
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentSnapshot
 import kotlinx.android.synthetic.main.item_calendar_popup.*
+import kotlinx.android.synthetic.main.item_scholarship.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -96,133 +99,64 @@ class ScholarshipAllscholarFragment : Fragment() {
 
             when (groupPosition) {
                 0 -> {  // 국가 장학금 클릭 시
-                    koreaScholarData() // 데이터 불러옴
+                    getData("Nation", "소득연계형") // 데이터 불러옴
                 }
                 2 -> { // 교내 장학금 클릭 시
-                    univScholarData() // 데이터 불러옴
-                }
+                    //User Email
+                    user?.let {
+                        userUid  = user!!.uid
+                    }
+
+                    //User 필드 값
+                    db.collection("Users")
+                        .document(userUid)
+                        .get()
+                        .addOnSuccessListener{ document ->
+                            if (document != null){
+                                if(document.getString("univ") != null){
+                                    userUniv = document.getString("univ")!!
+                                } }
+                    getData("UnivScholar",userUniv) // 데이터 불러옴
+                }}
             }
             false
         }
 
         expandableList.setOnChildClickListener {  // childList 클릭 시 장학금 가져오기
                 head, view, groupPosition, childPosition : Int, l ->
+            val areaText = outScholar[childPosition]
 
-            areaScholar(childPosition)
+            getData("OutScholar",areaText)
             false
         }
-
-
-
-
-
-    }
-    private fun koreaScholarData() { // 국가 장학금 데이터 가져오기
-
-        db.collection("Scholarship").document("Nation")
-            .collection("소득연계형")
-            .get()// 문서 가져오기
-            .addOnSuccessListener { result ->
-
-                RlistAdapter.notifyDataSetChanged()
-                dataList.clear() // 리스트 리셋
-
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-
-                    //필드값 가져오기
-                    var period = document["period"] as Map<String, Timestamp>
-                    var startdate = period.get("startDate")?.toDate()
-                    var enddate = period.get("endDate")?.toDate()
-                    var institution = document["paymentInstitution"] as String
-
-                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
-
-                    val start = date.format(startdate)
-                    val end = date.format(enddate)
-
-                    val item = Scholarship(document.id, start, end, institution)
-                    dataList.add(item)
-                    allDataList.add(item)
-                }
-                RlistAdapter.submitList(dataList)
-                Log.w("ScholarshipAllscholarFragment", "Nation Scholar Data")
-
-            }
-            .addOnFailureListener { exception ->
-                // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting Nation Scholar documents: $exception")
-            }
-
-    }
-    // 교내 장학금 데이터 가져오기
-    private fun univScholarData(){
-        //User Email
-        user?.let {
-           userUid  = user!!.uid
-        }
-
-        //User 필드 값
-        db.collection("Users")
-            .document(userUid)
-            .get()
-            .addOnSuccessListener{ document ->
-                if (document != null){
-                    if(document.getString("univ") != null){
-                        userUniv = document.getString("univ")!!
-                    } }
-
-                // 작업할 문서
-                db.collection("교내")
-                    .document(userUniv)
-                    .collection("장학금")
-                    .get()      // 문서 가져오기
-                    .addOnSuccessListener { result ->
-
-                        RlistAdapter.notifyDataSetChanged()
-                        dataList.clear()
-
-                        for (document in result) {  // 가져온 문서들은 result에 들어감
-//                            val item = Scholarship(document.id, "", "", "")
-//                            dataList.add(item)
-                        }
-                        RlistAdapter.submitList(dataList)
-                        Log.w("MainActivity", "Error aaaaaaa: ")
-
-                    }
-                    .addOnFailureListener { exception ->
-                        // 실패할 경우
-                        Log.w("MainActivity", "Error getting documents: $exception")
-                    }
-
-            }
     }
 
 
     private fun area(){ // 지역 리스트 가져오기
-        val sRef = db.collection("교외")
-
-        sRef.get().addOnSuccessListener { snapshots ->
-            val num: Int = snapshots?.documents!!.size
-            for (i in 0 until num) {
-                val city = snapshots.documents[i]?.id.toString()
-                if(city == "전국")
-                    outScholar.add(city)
+        db.collection("Scholarship").document("OutScholar")
+            .get().addOnSuccessListener { document ->
+                if (document != null) {
+                    val city = document.get("area") as MutableList<String>
+                    for(i in 0 until city.size-1){
+                        if(city[i] == "전국"){
+                            outScholar.add(city[i])
+                        }
+                    }
+                    for(i in 0 until city.size-1){
+                        if(city[i] != "전국"){
+                            outScholar.add(city[i])
+                        }
+                    }
+                    Log.w("ScholarshipAllscholarFragment", outScholar.toString())
+                }
             }
-            for (i in 0 until num) {
-                val city = snapshots.documents[i]?.id.toString()
-                if(city != "전국")
-                    outScholar.add(city)
-            }
-        }
-
-
     }
-    private fun areaScholar(num: Int) { // 지역 장학금 가져오기
-        val areaText = outScholar[num]
+
+    private fun getData( kind : String, etc : String){
         // 작업할 문서
-        db.collection("교외")
-            .document(areaText)
-            .collection("장학금")
+        db.collection("Scholarship")
+            .document(kind)
+            .collection(etc)
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
 
@@ -230,20 +164,32 @@ class ScholarshipAllscholarFragment : Fragment() {
                 dataList.clear()
 
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-//                    val item = Scholarship(document.id, "", "","")
-//                    dataList.add(item)
+
+                    //필드값 가져오기
+                    val period = document["period"] as Map<String, Timestamp>
+                    val startdate = period.get("startDate")?.toDate()
+                    val enddate = period.get("endDate")?.toDate()
+                    val institution = document["paymentInstitution"] as String
+
+                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+                    if(startdate == null && enddate == null){
+                        val item = Scholarship(document.id, "자동 신청", "", institution)
+                        dataList.add(item)
+                    }
+                    else{
+                        val item = Scholarship(document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                        dataList.add(item)
+                    }
                 }
                 RlistAdapter.submitList(dataList)
-                Log.w("ScholarshipAllscholarFragment", "areaScholoar() data")
+                Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
 
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("ScholarshiptAllscholarFragment", "Error getting documents: $exception")
+                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
             }
-    }
-
-    private fun allData(){
 
     }
 

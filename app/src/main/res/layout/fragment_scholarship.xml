@@ -38,75 +38,8 @@
     </androidx.appcompat.widget.Toolbar>
 
     <!-- 장학금 상단 타이틀 -->
-    <TextView
-        android:id="@+id/scholarTitle_input"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="#A0ACE0"
-        android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/topBar"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:text="@string/title_input"
-        android:textColor="#ffffff"
-        android:textSize="25sp" />
 
-    <LinearLayout
-        android:id="@+id/title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#A0ACE0"
-        android:orientation="horizontal"
-        tools:ignore="MissingConstraints"
-        app:layout_constraintTop_toBottomOf="@+id/scholarTitle_input"
-        android:weightSum="10">
 
-        <TextView
-            android:id="@+id/scholarTitle_max"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="2"
-            android:background="#A0ACE0"
-            android:gravity="center"
-            android:text="@string/title_max"
-            android:layout_marginLeft="10dp"
-            android:textColor="#ffffff"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topBar"
-            tools:ignore="DuplicateIds" />
-
-        <TextView
-            android:id="@+id/scholarTitle_num"
-            android:layout_width="0dp"
-            android:layout_height="50dp"
-            android:layout_weight="1"
-            android:background="#A0ACE0"
-            android:gravity="center"
-            android:text="@string/title_num"
-            android:textColor="#ffffff"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topBar" />
-        s<TextView
-            android:id="@+id/scholarTitle_get"
-            android:layout_width="0dp"
-            android:layout_weight="7"
-            android:layout_height="50dp"
-            android:background="#A0ACE0"
-            android:gravity="center"
-            android:text="@string/title_get"
-            android:layout_marginRight="10dp"
-            android:textColor="#ffffff"
-            android:textSize="25sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/topBar"
-            tools:ignore="DuplicateIds" />
-
-    </LinearLayout>
 
     <!-- 내 장학금, 전체 장학금 탭 & 뷰페이저 -->
 
@@ -117,8 +50,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title_layout"
-        app:tabIndicatorColor="@color/colorPrimaryDark">
+        app:layout_constraintTop_toBottomOf="@+id/topBar"
+        app:tabIndicatorColor="@color/colorPrimaryDark"
+        app:tabBackground="@drawable/tab_background">
 
         <com.google.android.material.tabs.TabItem
             android:layout_width="wrap_content"

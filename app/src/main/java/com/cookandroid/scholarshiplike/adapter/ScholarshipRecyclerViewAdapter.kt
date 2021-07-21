@@ -7,8 +7,11 @@ import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.constraintlayout.solver.GoalRow
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -28,36 +31,25 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
         var scholar_startDate: TextView = itemView!!.findViewById(R.id.scholar_startDate)
         var scholar_endDate: TextView = itemView!!.findViewById(R.id.scholar_endDate)
         var scholar_institution: TextView = itemView!!.findViewById(R.id.scholar_institution)
-        var scholar_like : TextView = itemView!!.findViewById(R.id.scholar_like)
+        var startToend : TextView = itemView.findViewById(R.id.startDateToEndDate)
+
+
 
         // onBindViewHolder의 역할을 대신한다.
         fun bind(data: Scholarship, position: Int) {
-
-
-            fun getDate(time : Date?) : String {
-                val formatter: String = SimpleDateFormat("dd-MM-yyyy").format(time!!)
-                return formatter
-            }
-
-
-
-
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
             Log.d("ListAdapter", data.title)
+
             scholar_title.text = data.title
-            scholar_startDate.text = data.startdate.toString()
-            scholar_endDate.text = data.enddate.toString()
             scholar_institution.text = data.institution
 
+            if(data.enddate == ""){ // 기간이 없을 때 '~' 숨기기
+                startToend.visibility = GONE
+            }
 
+                scholar_startDate.text = data.startdate
+                scholar_endDate.text = data.enddate
 
-//            itemView.setOnClickListener {
-//                val intent = Intent(mContext, MagazineDetailActivity::class.java)
-//                intent.apply {
-//                    this.putExtra("title",title.text.toString())
-//                    this.putExtra("contents",contents)
-//                }
-//                mContext.startActivity(intent)
 
             itemView.setOnClickListener {
                 val intent = Intent(mContext1, ScholarshipDetailActivity::class.java)

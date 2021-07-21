@@ -53,10 +53,10 @@
                 android:layout_marginRight="3dp"/>
 
             <TextView
-                android:id="@+id/to"
+                android:id="@+id/startDateToEndDate"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:text="@string/to"/>
+                android:text="@string/to" />
 
             <TextView
                 android:id="@+id/scholar_endDate"
