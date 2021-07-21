@@ -31,7 +31,6 @@ class HomeCalendarDetailFragment : Fragment() {
     lateinit var calendar_layout: LinearLayout
     lateinit var calendar_view: RecyclerView
 
-    private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
     private var scholarList: ArrayList<String> = arrayListOf()
     private var scholar: ArrayList<tmpScholarship> = arrayListOf()
@@ -76,10 +75,10 @@ class HomeCalendarDetailFragment : Fragment() {
             ref.document(user.uid).get().
             addOnSuccessListener { document ->
                 if (document.data != null){
-                    if (document.data!!.get("likeContent") != null) {
-                        val data = document.data!!["likeContent"] as Map<String, String>
-                        scholarList = data["scholarship"] as ArrayList<String> //장학금 이름을 리스트에 넣음
-                    }
+                        if (document.data!!.get("likeContent") != null) {
+                            val data = document.data!!["likeContent"] as Map<String, String>
+                            scholarList = data["scholarship"] as ArrayList<String> //장학금 이름을 리스트에 넣음
+                        }
 
                     Log.w(TAG, scholarList.toString())
 
@@ -90,7 +89,6 @@ class HomeCalendarDetailFragment : Fragment() {
                                 for(title in scholarList){
                                     if(document.id == title){
                                         //날짜가져오기
-
                                         var period = document["period"] as Map<String,Timestamp>
                                         var startdate : Timestamp? = period.get("startdate")
                                         var enddate : Timestamp? = period.get("enddate")
@@ -102,7 +100,7 @@ class HomeCalendarDetailFragment : Fragment() {
 
                                 Log.w(TAG, scholar.toString())
                                 calendar_view.layoutManager = gridLayoutManager
-                                calendar_view.adapter = HomeCalendarDetailAdapter(mContext,calendar_layout,currentDate,pageIndex,scholar)
+                                calendar_view.adapter = HomeCalendarDetailAdapter(this,mContext,calendar_layout,currentDate,pageIndex,scholar)
 
                             }
                         }.addOnFailureListener { exception ->
@@ -114,7 +112,7 @@ class HomeCalendarDetailFragment : Fragment() {
                 Log.w(TAG, "Error getting documents: $exception")
             }
         }
-    }
+}
 
     fun initView(view: View) {
         pageIndex -= (Int.MAX_VALUE / 2)

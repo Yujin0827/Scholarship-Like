@@ -29,7 +29,6 @@ class HomeSearchScholarshipFragment : Fragment() {
         db.collection("Scholarship") // 작업할 컬렉션
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
-
                 for (document in result) {  // 가져온 문서들은 result에 들어감
                     val item = SearchScholarship(document["title"] as String, document["period_start"] as String, document["period_end"] as String, document["institution"] as String)
                     dataList.add(item)
