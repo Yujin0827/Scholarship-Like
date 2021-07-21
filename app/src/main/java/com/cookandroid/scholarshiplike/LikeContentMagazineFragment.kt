@@ -1,47 +1,63 @@
 package com.cookandroid.scholarshiplike
+import android.content.ComponentName
 import android.content.Context
+import android.content.Intent
+import android.content.ServiceConnection
 import android.os.Bundle
+import android.os.Handler
+import android.os.IBinder
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.ktx.Firebase
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
+import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_recycler.*
 
 
 class LikeContentMagazineFragment : Fragment() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
+
     private lateinit var listAdapter: MagazineRecyclerViewAdapter
-    private var db = Firebase.firestore
-    var dataList: ArrayList<Post> = arrayListOf()
     private lateinit var mContext : Context
+    private lateinit var magazine: ArrayList<Post>
+
+    // 서비스 연결
+    private lateinit var mService: DataService
+    private var mBound: Boolean = false
+
+    /** Defines callbacks for service binding, passed to bindService()  */
+    private val connection = object : ServiceConnection {
+
+        override fun onServiceConnected(className: ComponentName, service: IBinder) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            val binder = service as DataService.DataLocalBinder
+            mService = binder.getService()
+            Log.w(TAG, "Service connected")
+            mBound = true
+        }
+
+        override fun onServiceDisconnected(arg0: ComponentName) {
+            Log.w(TAG, "Service disconnected")
+            mBound = false
+        }
+    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = context
+    }
 
-        val sRef = db.collection("장학금")
-            .document("교내").collection("강원")
-            .document("강원대").collection("학과")
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        sRef // 작업할 문서
-            .get()      // 문서 가져오기
-            .addOnSuccessListener { result ->
-                for (document in result) {  // 가져온 문서들은 result에 들어감
-                    val item = Post(document.id,".",".")
-                    dataList.add(item)
-                }
-                listAdapter.submitList(dataList)
-                Log.w("MainActivity", "Error aaaaaaa: ")
-
-            }
-            .addOnFailureListener { exception ->
-                // 실패할 경우
-                Log.w("MainActivity", "Error getting documents: $exception")
-            }
+        // Bind to LocalService
+        Intent(mContext, DataService::class.java).also { intent ->
+            mContext.bindService(intent, connection, Context.BIND_AUTO_CREATE)
+            Log.w(TAG, "Service active")
+        }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,11 +66,25 @@ class LikeContentMagazineFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = MagazineRecyclerViewAdapter(dataList,mContext)
-        listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
-        // RecyclerView.adapter에 지정
-        listView.adapter = listAdapter
 
+        // 2초 딜레이 후 코드 시작
+        Handler().postDelayed({
+            // 서비스의 데이터와 연결
+            magazine = mService.magazine
+
+            // Fragment 에서 전달받은 list 를 넘기면서 ListAdapter 생성
+            listAdapter = MagazineRecyclerViewAdapter(magazine, mContext)
+            listView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정
+            listView.adapter = listAdapter //어댑터 연결
+        }, 2000) // <-- ms로 조절
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.w(TAG, "destroy")
+
+        mContext.unbindService(connection)
+        Log.w(TAG, "Service deactivate")
+        mBound = false
     }
 }

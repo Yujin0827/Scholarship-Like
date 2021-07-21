@@ -1,11 +1,15 @@
-package com.cookandroid.scholarshiplike
+package com.cookandroid.scholarshiplike.adapter
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.adapter.FragmentViewHolder
+import kotlinx.android.synthetic.main.activity_profile_change.*
 
 class ViewPageAdapter(frags: FragmentActivity): FragmentStateAdapter(frags) {
-    private val fragmentList = ArrayList<Fragment>()
+
+    var fragmentList = ArrayList<Fragment>()
 
     override fun getItemCount(): Int {
         return fragmentList.size
@@ -19,4 +23,5 @@ class ViewPageAdapter(frags: FragmentActivity): FragmentStateAdapter(frags) {
         fragmentList.add(fragment)
         notifyItemInserted(fragmentList.size-1)
     }
+
 }

@@ -1,6 +1,8 @@
 package com.cookandroid.scholarshiplike
 
+import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.ActivityInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -14,6 +16,8 @@ import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -21,16 +25,18 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 open class MainActivity : AppCompatActivity(),
     BottomNavigationView.OnNavigationItemSelectedListener  {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
 
     var authStateListener: FirebaseAuth.AuthStateListener? = null
     val db = Firebase.firestore
     lateinit var tabNav : BottomNavigationView
-    val TAG = "MainActivity"
 
     // onBackPressed 메소드 변수
     var backPressedTime : Long = 0
     val FINISH_INTERVAL_TIME = 2000
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
@@ -47,6 +53,7 @@ open class MainActivity : AppCompatActivity(),
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
+        // 처음 화면 - 홈탭
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.nav, HomeFragment(), "homeTab")
@@ -55,8 +62,10 @@ open class MainActivity : AppCompatActivity(),
         // 하단바 연결
         tabNav.setOnNavigationItemSelectedListener(this)
 
+        // 화면 전환 방지 (세로로 고정)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        //FCM 토큰 확인시 필요
+        //DB에 FCM 토큰 추가
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM Test", "Fetching FCM registration token failed", task.exception)
@@ -67,6 +76,9 @@ open class MainActivity : AppCompatActivity(),
             val token = task.result
 
             Log.d("FCM Test", token)
+
+            val db = Firebase.firestore.collection("Users").document("TOKEN")
+            db.update("FCM", FieldValue.arrayUnion(token))
         })
 
     }
@@ -75,7 +87,7 @@ open class MainActivity : AppCompatActivity(),
     fun confirmUser() {
         Log.e("LLPP", "로그인")
         var user = Firebase.auth.currentUser
-        if (user != null) { //  유저가 존재하면
+        if (user != null) { // 유저가 존재하면
             Log.d(TAG, "Current user exist!")
             val dd = db.collection("Users").document(user.uid)
                 .get()

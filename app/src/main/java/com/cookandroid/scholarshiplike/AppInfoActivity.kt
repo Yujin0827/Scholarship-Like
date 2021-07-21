@@ -19,8 +19,8 @@ class AppInfoActivity : AppCompatActivity() {
         versionCode.text = getVersionCode(this)
     }
 
-    // build.gradle에서 versionName 호출
-    fun getVersionName(context: Context): String{
+    // build.gradle 에서 versionName 호출
+    private fun getVersionName(context: Context): String{
         lateinit var versionName: String
         try{
             val pm = context.packageManager.getPackageInfo(context.packageName, 0)
@@ -30,12 +30,12 @@ class AppInfoActivity : AppCompatActivity() {
         return versionName
     }
 
-    // build.gradle에서 versionCode 호출
-    fun getVersionCode(context: Context): String{
+    // build.gradle 에서 versionCode 호출
+    private fun getVersionCode(context: Context): String{
         lateinit var versionCode: String
         try{
             val pm = context.packageManager.getPackageInfo(context.packageName, 0)
-            versionCode = pm.versionCode.toString()
+            versionCode = pm.longVersionCode.toString()
         } catch (e : Exception){}
 
         return versionCode

@@ -17,6 +17,9 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.fragment_profile_logout.*
 
 class SignupActivity :AppCompatActivity() {
+    @Suppress("PrivatePropertyName")
+    private val TAG = javaClass.simpleName
+
     private var _binding: ActivitySignupBinding? = null
     private val binding get() = _binding!!
     val auth = Firebase.auth
@@ -28,7 +31,7 @@ class SignupActivity :AppCompatActivity() {
     lateinit var txtNickname:String
     lateinit var txtUniv:String
 
-    val TAG = "SignupActivity"
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

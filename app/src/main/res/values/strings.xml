@@ -15,14 +15,13 @@
     <!-- 프로필탭 페이지 -->
     <string name="change_profile">프로필 수정</string>
     <string name="user_name">홍길동</string>
-    <string name="user_hello">님, 반갑습니다!</string>
+    <string name="user_hello"> 님, 반갑습니다!</string>
     <string name="change_my_condition">내 조건 수정</string>
     <string name="set_alarm">알림설정 (장학금 관련)</string>
     <string name="alarm_app_all">앱 전체</string>
     <string name="alarm_scholarship">장학금</string>
     <string name="alarm_magazine">매거진</string>
     <string name="heart_post">좋아요 누른 게시물</string>
-    <string name="etc">기타</string>
     <string name="app_info">앱 정보</string>
     <string name="inquiry">문의</string>
     <string name="logout">로그아웃</string>
@@ -59,21 +58,15 @@
     <string name="basicInpo">기본 정보</string>
     <string name="nickname">닉네임</string>
     <string name="myUniv">소속 대학교</string>
-    <string name="changePw">비밀번호 변경</string>
-    <string name="currentPw">현재 비밀번호</string>
-    <string name="newPw">새 비밀번호</string>
-    <string name="checkNewPw">새 비밀번호 확인</string>
-
-
-
+    <string name="changePw">비밀번호 재설정</string>
+    <string name="reSetPwBt">이메일 보내기</string>
 
     <!-- 로그아웃 페이지 -->
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
     <string name="cancel">취소</string>
 
     <!-- 모든 scholarship.xml에 사용 -->
-    <string name="title_input">입력하신 정보로 장학금을</string>
-    <string name="title_max">최대</string>
+    <string name="title_input">장학금을 최대</string>
     <string name="title_num">N</string>
     <string name="title_get">건을 받을 수 있습니다.</string>
     <string name="my_scholarship">내 장학금</string>
@@ -82,6 +75,7 @@
     <string name="out_scholar">교외 장학금</string>
     <string name="univ_scholar">교내 장학금</string>
     <string name="msg_token_fmt">토큰 정보</string>
+    <string name="period_middle">~</string>
 
     <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
@@ -107,6 +101,42 @@
     <string name="welcome">장학라이크에 오신 것을 환영합니다.</string>
     <string name="see">보기</string>
     <string name="confirm">확인</string>
+
+    <!-- 매거진 관련 -->
+    <string name="m_title">매거진 제목</string>
+    <string name="m_contents">매거진 내용</string>
+    <string name="m_announcement">내 돈 어디에 쓸까?</string>
+    <string name="all">전체</string>
+    <string name="finance">금융</string>
+    <string name="life">생활</string>
+    <string name="etc">기타</string>
+
+
+    <!-- 캘린더 관련-->
+    <string name="calendar_year_month_format">yyyy년 MM월</string>
+    <string name="calendar_month_format">MM</string>
+    <string name="sun">일</string>
+    <string name="mon">월</string>
+    <string name="tue">화</string>
+    <string name="wed">수</string>
+    <string name="thu">목</string>
+    <string name="fri">금</string>
+    <string name="sat">토</string>
+    <string name="scheduelTitle">일정 제목</string>
+    <string name="scheduelDate">xx.xx</string>
+    <string name="tilde">~</string>
+
+    <!-- 장학금 세부페이지 관련-->
+    <string name="scholarName">장학금 이름</string>
+    <string name="movetoWebpage">웹페이지로 이동</string>
+    <string name="contents">내용</string>
+    <string name="paymentInstitution">지급기관</string>
+    <string name="period">신청기간</string>
+    <string name="maxMoney">최대금액</string>
+    <string name="paymentType">지급유형</string>
+    <string name="condition">조건</string>
+    <string name="note">비고</string>
+    <string name="to">~</string>
 
     <!-- 탈퇴하기 -->
     <string name="signout_really">정말 탈퇴하시겠어요?</string>

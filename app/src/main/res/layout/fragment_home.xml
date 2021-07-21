@@ -44,13 +44,13 @@
             android:src="@drawable/ic_alarm" />
 
         <ImageView
-            android:id="@+id/searchWin"
+            android:id="@+id/searchAll"
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="right|center"
             android:layout_marginLeft="5dp"
             android:padding="5dp"
-            android:src="@drawable/ic_searchwin" />
+            android:src="@drawable/ic_search" />
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -88,6 +88,7 @@
                 android:text="@string/scholar_cnt"
                 android:textSize="35sp"
                 android:textStyle="bold"
+                android:gravity="center"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bannerSlider" />
@@ -122,10 +123,10 @@
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/kosafWeb"
-                    app:layout_constraintEnd_toStartOf="@+id/guessWeb" />
+                    app:layout_constraintEnd_toStartOf="@+id/profileChange" />
 
                 <ImageView
-                    android:id="@+id/guessWeb"
+                    android:id="@+id/profileChange"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:background="@drawable/ic_round_button_background"
@@ -137,25 +138,30 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.google.android.gms.ads.AdView
-                xmlns:ads="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/adView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toTopOf="@id/scholarCal"
+                app:adSize="SMART_BANNER"
+                app:adUnitId="ca-app-pub-3940256099942544/6300978111"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/goWeb"
-                ads:adSize="SMART_BANNER"
-                ads:adUnitId="ca-app-pub-3940256099942544/6300978111"/>
+                app:layout_constraintTop_toBottomOf="@+id/goWeb" />
 
-            <CalendarView
-                android:id="@+id/scholarCal"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:showWeekNumber="false"
-                app:layout_constraintBottom_toBottomOf="parent"
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="600dp"
+                android:orientation="vertical"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/adView"
+                tools:context=".ViewPagerFragment">
+
+                <androidx.viewpager2.widget.ViewPager2
+                    android:id="@+id/calendarViewPager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
