@@ -25,6 +25,7 @@
     <string name="app_info">앱 정보</string>
     <string name="inquiry">문의</string>
     <string name="logout">로그아웃</string>
+    <string name="signout">탈퇴하기</string>
 
     <!-- 내조건수정 페이지 -->
     <string name="save">저장</string>
@@ -65,8 +66,7 @@
     <string name="cancel">취소</string>
 
     <!-- 모든 scholarship.xml에 사용 -->
-    <string name="title_input">입력하신 정보로 장학금을</string>
-    <string name="title_max">최대</string>
+    <string name="title_input">장학금을 최대</string>
     <string name="title_num">N</string>
     <string name="title_get">건을 받을 수 있습니다.</string>
     <string name="my_scholarship">내 장학금</string>
@@ -136,5 +136,7 @@
     <string name="paymentType">지급유형</string>
     <string name="condition">조건</string>
     <string name="note">비고</string>
+    <string name="to">~</string>
+
 
 </resources>
