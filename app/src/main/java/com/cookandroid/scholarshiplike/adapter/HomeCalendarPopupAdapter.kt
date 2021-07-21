@@ -44,6 +44,9 @@ class HomeCalendarPopupAdapter(val arraylist: ArrayList<tmpScholarship>, val mCo
 
             itemView.setOnClickListener {
                 val intent = Intent(context, ScholarshipDetailActivity::class.java)
+                intent.apply {
+                    this.putExtra("title",popup_name.text.toString())
+                }
                 context.startActivity(intent)
             }
         }

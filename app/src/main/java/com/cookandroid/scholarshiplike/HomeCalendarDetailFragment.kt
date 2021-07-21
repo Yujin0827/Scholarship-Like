@@ -31,7 +31,6 @@ class HomeCalendarDetailFragment : Fragment() {
     lateinit var calendar_layout: LinearLayout
     lateinit var calendar_view: RecyclerView
 
-    private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
     private var db = Firebase.firestore
     private var scholarList: ArrayList<String> = arrayListOf()
     private var scholar: ArrayList<tmpScholarship> = arrayListOf()
@@ -101,7 +100,7 @@ class HomeCalendarDetailFragment : Fragment() {
 
                                 Log.w(TAG, scholar.toString())
                                 calendar_view.layoutManager = gridLayoutManager
-                                calendar_view.adapter = HomeCalendarDetailAdapter(mContext,calendar_layout,currentDate,pageIndex,scholar)
+                                calendar_view.adapter = HomeCalendarDetailAdapter(this,mContext,calendar_layout,currentDate,pageIndex,scholar)
 
                             }
                         }.addOnFailureListener { exception ->

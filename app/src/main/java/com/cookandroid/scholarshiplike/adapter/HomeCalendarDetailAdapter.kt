@@ -1,14 +1,19 @@
 package com.cookandroid.scholarshiplike
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.os.Bundle
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.fragment_home_calendar_item_list.view.*
 import java.text.SimpleDateFormat
@@ -16,13 +21,12 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 // 높이를 구하는데 필요한 LinearLayout과 HomeCalendarDateCalculate를 사용할 때 필요한 date를 받는다.
-class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: LinearLayout, val date: Date, val pageindex: Int, scholar:ArrayList<tmpScholarship>) :
+class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, val calendarLayout: LinearLayout, val date: Date, val pageindex: Int, scholar:ArrayList<tmpScholarship>) :
     RecyclerView.Adapter<HomeCalendarDetailAdapter.CalendarItemHolder>() {
 
     private val TAG = javaClass.simpleName
     private var dataList: ArrayList<Int> = arrayListOf() //날짜 데이터 리스트
     private var scholarList: ArrayList<tmpScholarship> = scholar //장학금 리스트
-    private var todayscholarList: ArrayList<tmpScholarship> = scholar //장학금 리스트
 
     // HomeCalendarDateCalculate을 이용하여 날짜 리스트 세팅
     var calculatedDate: HomeCalendarDateCalculate = HomeCalendarDateCalculate(date)
@@ -77,6 +81,11 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
             val dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)
             val dateInt = dateString.toInt()
 
+            //현재 달
+            val monthFormat = SimpleDateFormat("MM")
+            val cur = System.currentTimeMillis()
+            val curMonth = pageindex+monthFormat.format(cur).toInt()
+
             // 날짜 표시
             itemCalendarDateText.setText(data.toString())
 
@@ -88,7 +97,7 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
 
             }
 
-            // 현재 월의 1일 이전, 현재 월의 마지막일 이후 값 처리(마무리)
+            // 현재 월의 1일 이전, 현재 월의 마지막일 이후 값 처리
             if (position < firstDateIndex || position > lastDateIndex) {
                 itemCalendarDateText.setTextColor(Color.parseColor("#DEDEDE"))
             }
@@ -98,8 +107,13 @@ class HomeCalendarDetailAdapter(val context: Context, val calendarLayout: Linear
                 addScheduel(item, position, firstDateIndex, lastDateIndex, itemCalendarContents)
             }
 
+            //클릭 시 팝업창
             itemCalendar.setOnClickListener {
 
+                var Month = curMonth
+                if(position < firstDateIndex) Month = curMonth-1 else if (position > lastDateIndex) Month = curMonth+1
+
+                HomeCalendarPopupFragment(scholarList, context, curMonth, dataList[position]).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
             }
         }
     }
