@@ -8,7 +8,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="401dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -17,7 +17,7 @@
         app:layout_constraintTop_toBottomOf="@+id/scrollView2">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/movetoweb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="홈페이지로 이동"
@@ -30,10 +30,10 @@
             android:layout_height="35dp"
             android:layout_gravity="right"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/ic_share"
             android:padding="5dp"
-            tools:layout_editor_absoluteX="355dp"
-            tools:layout_editor_absoluteY="16dp" />
+            />
 
         <Button
             android:id="@+id/like"
@@ -64,21 +64,21 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
                 android:gravity="center"
                 android:text="@string/scholarName"
                 android:textColor="#000000"
-                android:textSize="30sp" />
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/textView5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="45dp"
                 android:background="@drawable/ic_scholarship_detail_background"
                 android:padding="3dp"
                 android:text="@string/contents"
@@ -86,7 +86,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView6"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -107,7 +107,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView8"
+                android:id="@+id/paymentInstitution"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -128,7 +128,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/period"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -149,7 +149,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView12"
+                android:id="@+id/maxmoney"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -170,7 +170,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView14"
+                android:id="@+id/paymenttype"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -191,7 +191,7 @@
                 android:textSize="18sp" />
 
             <TextView
-                android:id="@+id/textView16"
+                android:id="@+id/condition"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"
@@ -211,6 +211,7 @@
                 android:text="@string/note"/>
 
             <TextView
+                android:id="@+id/note"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="16dp"

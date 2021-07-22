@@ -113,7 +113,7 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
                 var Month = curMonth
                 if(position < firstDateIndex) Month = curMonth-1 else if (position > lastDateIndex) Month = curMonth+1
 
-                HomeCalendarPopupFragment(scholarList, context, curMonth, dataList[position]).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
+                HomeCalendarPopupFragment(scholarList, context, curMonth, dataList[position], position, firstDateIndex, lastDateIndex).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
             }
         }
     }

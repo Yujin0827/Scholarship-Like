@@ -17,7 +17,7 @@ import com.cookandroid.scholarshiplike.databinding.FragmentHomeCalendarPopupBind
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 
-class HomeCalendarPopupFragment(val scholar:ArrayList<tmpScholarship>, val mContext: Context, val Month:Int, val Date:Int) : DialogFragment() {
+class HomeCalendarPopupFragment(val scholar:ArrayList<tmpScholarship>, val mContext: Context, val Month:Int, val Date:Int, val position:Int, val fisrt:Int, val last:Int) : DialogFragment() {
 
     private lateinit var binding: FragmentHomeCalendarPopupBinding
 
@@ -36,7 +36,7 @@ class HomeCalendarPopupFragment(val scholar:ArrayList<tmpScholarship>, val mCont
             val start = format.format(item.startdate).toInt()
             val end = format.format(item.enddate).toInt()
 
-            if(selectedDate in start..end) visibleList.add(item)
+            if(selectedDate in start..end && position >= fisrt && position <= last) visibleList.add(item)
         }
     }
 

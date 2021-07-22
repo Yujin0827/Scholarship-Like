@@ -68,7 +68,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:layout_width="401dp"
+        android:layout_width="0dp"
         android:layout_height="50dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -82,10 +82,10 @@
             android:layout_height="35dp"
             android:layout_gravity="right"
             android:layout_marginLeft="10dp"
+            android:layout_marginRight="15dp"
             android:background="@drawable/ic_share"
             android:padding="5dp"
-            tools:layout_editor_absoluteX="355dp"
-            tools:layout_editor_absoluteY="16dp" />
+             />
 
         <Button
             android:id="@+id/like"
