@@ -13,14 +13,11 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
-import com.denzcoskun.imageslider.constants.ScaleTypes
-import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
 
 
@@ -34,7 +31,7 @@ class HomeFragment : Fragment() {
     private lateinit var userUid: String                            // user id
     private lateinit var userUniv: String                           // user 대학교
     private lateinit var univWebSite: String                        // user 대학교 사이트
-    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
+//    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
     val scholarshiptab = ScholarshipFragment()          // fragment_scholarship 변수
 
@@ -48,10 +45,10 @@ class HomeFragment : Fragment() {
             .addOnSuccessListener { documents ->
                 for (document in documents) {
                     if (document.getString("URL") != null) {
-                        banner_list.add(SlideModel(document.getString("URL")))
+//                        banner_list.add(SlideModel(document.getString("URL")))
                     }
                 }
-                binding.bannerSlider.setImageList(banner_list, ScaleTypes.FIT)
+//                binding.bannerSlider.setImageList(banner_list, ScaleTypes.FIT)
             }
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)

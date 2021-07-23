@@ -69,18 +69,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical" >
 
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/banner_slider"
-                android:layout_width="wrap_content"
-                android:layout_height="300dp"
-                app:iss_auto_cycle="true"
-                app:iss_period="2500"
-                app:iss_delay="0"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
             <TextView
                 android:id="@+id/scholar_cnt"
                 android:layout_width="wrap_content"
@@ -92,7 +80,6 @@
                 android:layout_margin="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/banner_slider"
                 app:layout_constraintBottom_toTopOf="@+id/go_web" />
 
             <androidx.constraintlayout.widget.ConstraintLayout
