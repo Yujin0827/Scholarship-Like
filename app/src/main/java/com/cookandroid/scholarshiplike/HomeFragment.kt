@@ -8,20 +8,20 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_profile_change.*
 
 
 class HomeFragment : Fragment() {
@@ -29,17 +29,33 @@ class HomeFragment : Fragment() {
     private var mBinding: FragmentHomeBinding? = null   // 바인딩 객체
     private val binding get() = mBinding!!              // 바인딩 변수 재선언(매번 null 체크x)
 
-    private var db = FirebaseFirestore.getInstance()    // FireStore 인스턴스
-    var user = Firebase.auth.currentUser                // user
-    lateinit var userUid: String                        // user id
-    lateinit var userUniv: String                       // user 대학교
-    lateinit var univWebSite: String                    // user 대학교 사이트
+    private var db = FirebaseFirestore.getInstance()                // FireStore 인스턴스
+    private var user = Firebase.auth.currentUser                    // user
+    private lateinit var userUid: String                            // user id
+    private lateinit var userUniv: String                           // user 대학교
+    private lateinit var univWebSite: String                        // user 대학교 사이트
+    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
     val scholarshiptab = ScholarshipFragment()          // fragment_scholarship 변수
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        // Banner
+        db.collection("Banner")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    if (document.getString("URL") != null) {
+                        banner_list.add(SlideModel(document.getString("URL")))
+                    }
+                }
+                binding.bannerSlider.setImageList(banner_list, ScaleTypes.FIT)
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
 
         // 장학금 탭으로 이동
         binding.scholarCnt.setOnClickListener {
@@ -109,18 +125,21 @@ class HomeFragment : Fragment() {
                         }
                     }
 
-                    db.collection("UnivScholar")
-                        .document(userUniv)
+                    db.collection("Scholarship")
+                        .document("UnivScholar")
                         .get()
-                        .addOnSuccessListener{ document ->
-                            univWebSite = document.getString("URL")!!
+                        .addOnSuccessListener { document ->
+                            if (document != null) {
+                                if (document.getString(userUniv) != null) {
+                                    univWebSite = document.getString(userUniv)!!
 
-                            var uri = Uri.parse(univWebSite)
-                            var intent = Intent(Intent.ACTION_VIEW, uri)
-                            startActivity(intent)
+                                    var uri = Uri.parse(univWebSite)
+                                    var intent = Intent(Intent.ACTION_VIEW, uri)
+                                    startActivity(intent)
+                                }
+                            }
                         }
                 }
-
         }
 
         // 내 조건 수정 페이지로 이동
@@ -169,5 +188,3 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
     }
 }
-
-

@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.scholarshiplike">
 
+    <!-- internet 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -48,10 +49,10 @@
             android:name="com.google.android.gms.ads.APPLICATION_ID"
             android:value="ca-app-pub-8292925275124668~6270528480" />
 
-        <activity android:name=".ProfileChangeActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme"
+            android:windowSoftInputMode="adjustResize" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -60,16 +61,24 @@
         </activity>
 
         <!-- 로그인 -->
-        <activity android:name=".LoginActivity"/>
+        <activity
+            android:name=".LoginActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 비밀번호 재설정 -->
-        <activity android:name=".LoginPasswordResetActivity"/>
+        <activity
+            android:name=".LoginPasswordResetActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 회원가입 -->
-        <activity android:name=".SignupActivity"/>
+        <activity
+            android:name=".SignupActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 초기 프로필 정보 입력 -->
-        <activity android:name=".SignupProfileInfoActivity"/>
+        <activity
+            android:name=".SignupProfileInfoActivity"
+            android:windowSoftInputMode="adjustResize" />
 
         <!-- 검색창 -->
         <activity
@@ -86,26 +95,33 @@
         </activity>
 
         <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
-        <activity android:name=".HomeSearchResultActivity">
+        <activity
+            android:name=".HomeSearchResultActivity"
+            android:windowSoftInputMode="adjustResize" >
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".HomeSearchActivity" />
         </activity>
 
-        <!-- 내 조건 수정 -->
-        <activity android:name=".ProfileMyConChangeActivity" />
-
         <!-- 알림 -->
         <activity android:name=".AlarmActivity" />
+
+        <!-- 알림 상세 -->
+        <activity android:name=".AlarmDetailActivity" />
 
         <!-- 좋아요 -->
         <activity android:name=".LikeContentActivity" />
 
+        <!-- 프로필 수정 -->
+        <activity android:name=".ProfileChangeActivity" />
+
+        <!-- 내 조건 수정 -->
+        <activity
+            android:name=".ProfileMyConChangeActivity"
+            android:windowSoftInputMode="adjustResize" />
+
         <!-- 앱 정보 -->
         <activity android:name=".AppInfoActivity"/>
-
-        <!-- 알림 상세 -->
-        <activity android:name=".AlarmDetailActivity" />
 
         <!-- 매거진 상세 -->
         <activity android:name=".MagazineDetailActivity" />
@@ -114,7 +130,9 @@
         <activity android:name=".ScholarshipDetailActivity" />
 
         <!-- 탈퇴하기 -->
-        <activity android:name=".ProfileSignoutActivity"/>
+        <activity
+            android:name=".ProfileSignoutActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
