@@ -165,6 +165,7 @@ class HomeFragment : Fragment() {
 
         binding.calendarViewPager.adapter = homeCalnederAdapter
         binding.calendarViewPager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
         homeCalnederAdapter.apply {
             binding.calendarViewPager.setCurrentItem(this.firstFragmentPosition, false)
         }
