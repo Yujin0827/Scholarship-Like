@@ -85,6 +85,7 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
             val monthFormat = SimpleDateFormat("MM")
             val cur = System.currentTimeMillis()
             val curMonth = pageindex+monthFormat.format(cur).toInt()
+            var givemonth = curMonth
 
             // 날짜 표시
             itemCalendarDateText.setText(data.toString())
@@ -104,16 +105,15 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
 
             //일정 추가
             for (item in scholarList) {
-                addScheduel("#DEDEDE",item, position, firstDateIndex, lastDateIndex, itemCalendarContents)
+                addScheduel("#AFEEEE",item, position, firstDateIndex, lastDateIndex, itemCalendarContents)
             }
+
+            if(position < firstDateIndex) givemonth = curMonth-1
+            else if (position > lastDateIndex) givemonth = curMonth+1
 
             //클릭 시 팝업창
             itemCalendar.setOnClickListener {
-
-                var Month = curMonth
-                if(position < firstDateIndex) Month = curMonth-1 else if (position > lastDateIndex) Month = curMonth+1
-
-                HomeCalendarPopupFragment(scholarList, context, curMonth, dataList[position], position, firstDateIndex, lastDateIndex).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
+                HomeCalendarPopupFragment(scholarList, context, givemonth, dataList[position], position, firstDateIndex, lastDateIndex).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
             }
         }
     }
