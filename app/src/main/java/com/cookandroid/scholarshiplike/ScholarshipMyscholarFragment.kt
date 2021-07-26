@@ -10,13 +10,14 @@ import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_profile_my_con_change.*
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
+import java.text.SimpleDateFormat
 
 class ScholarshipMyscholarFragment : Fragment() {
-    @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
@@ -27,10 +28,6 @@ class ScholarshipMyscholarFragment : Fragment() {
     private lateinit var myIncome : Spinner
     private lateinit var mySemester : Spinner
     private lateinit var myArea : Spinner
-    private lateinit var myArea_datails : Spinner
-
-
-
 
 
     override fun onAttach(context: Context) {
@@ -38,28 +35,73 @@ class ScholarshipMyscholarFragment : Fragment() {
 
         mContext = requireActivity()
 
-        val sRef = db.collection("장학금")
-            .document("교내").collection("강원")
-            .document("강원대").collection("학과")
-
-        sRef // 작업할 문서
+        // 작업할 문서
+        db.collection("Scholarship")
+            .document("Nation")
+            .collection("소득연계형")
             .get()      // 문서 가져오기
             .addOnSuccessListener { result ->
+
                 for (document in result) {  // 가져온 문서들은 result에 들어감
-//                    val item = Scholarship(document.id, "", "", "",false)
-//                    dataList.add(item)
+
+                    //필드값 가져오기
+                    val paymentType = document["paymentType"].toString()
+                    val period = document["period"] as Map<String, Timestamp>
+                    val startdate = period.get("startDate")?.toDate()
+                    val enddate = period.get("endDate")?.toDate()
+                    val institution = document["paymentInstitution"].toString()
+
+                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+                    if(startdate == null && enddate == null){
+                        val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                        dataList.add(item)
+                    }
+                    else{
+                        val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                        dataList.add(item)
+                    }
                 }
                 listAdapter.submitList(dataList)
-                Log.w(TAG, "Error aaaaaaa: ")
-
+                Log.w("ScholarshipAllscholarFragment", "all Data")
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w(TAG, "Error getting documents: $exception")
+                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
             }
+        db.collection("Scholarship")
+            .document("UnivScholar")
+            .collection("한림대학교")
+            .get()      // 문서 가져오기
+            .addOnSuccessListener { result ->
 
+                for (document in result) {  // 가져온 문서들은 result에 들어감
 
+                    //필드값 가져오기
+                    val paymentType = document["paymentType"].toString()
+                    val period = document["period"] as Map<String, Timestamp>
+                    val startdate = period.get("startDate")?.toDate()
+                    val enddate = period.get("endDate")?.toDate()
+                    val institution = document["paymentInstitution"] as String
 
+                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+                    if(startdate == null && enddate == null){
+                        val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                        dataList.add(item)
+                    }
+                    else{
+                        val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                        dataList.add(item)
+                    }
+                }
+                listAdapter.submitList(dataList)
+                Log.w("ScholarshipAllscholarFragment", "all Data")
+            }
+            .addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
+            }
     }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,11 +111,7 @@ class ScholarshipMyscholarFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_scholarship_my_scholar, container, false)
 
 
-
-
-
         return view
-
 
     }
 
@@ -88,14 +126,14 @@ class ScholarshipMyscholarFragment : Fragment() {
         myIncome = view.findViewById(R.id.incomeSpinner)
         mySemester = view.findViewById(R.id.semesterSpinner)
         myArea = view.findViewById(R.id.areaSpinner)
-        myArea_datails = view.findViewById(R.id.inAreaSpinner)
+
 
         setSpinner()
 
     }
 
     //스피너 초기화 & 리스너
-    fun setSpinner() {
+    private fun setSpinner() {
         //'학자금 지원구간' 스피너의 ArrayAdapter
         ArrayAdapter.createFromResource(
             context!!,
@@ -173,66 +211,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                 }
             }
 
-        //'거주지' 스피너 선택 리스너
-        myArea.onItemSelectedListener =
-            object : AdapterView.OnItemSelectedListener {
-                override fun onNothingSelected(parent: AdapterView<*>?) {
-                    TODO("Not yet implemented")
-                }
 
-                override fun onItemSelected(
-                    parent: AdapterView<*>?,
-                    view: View?,
-                    position: Int,
-                    id: Long
-                ) {
-                    //서울, 강원만 구현.
-                    //나머지는 추후에.
-                    setSpinnerMyAreaDatails(areaSpinner.getItemAtPosition(position).toString())
-                }
-
-                private fun setSpinnerMyAreaDatails(area : String) {
-                    when (area) {
-                        "서울" -> {
-                            ArrayAdapter.createFromResource(
-                                context!!,
-                                R.array.local_seoul,
-                                android.R.layout.simple_spinner_item
-                            ).also { adapter ->
-                                // 스피너의 레이아웃 구체화
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                                // 스피너에 어뎁터 적용
-                                myArea_datails.adapter = adapter
-                            }
-                        }
-                        "강원도" -> {
-                            ArrayAdapter.createFromResource(
-                                context!!,
-                                R.array.local_gangwon,
-                                android.R.layout.simple_spinner_item
-                            ).also { adapter ->
-                                // 스피너의 레이아웃 구체화
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                                // 스피너에 어뎁터 적용
-                                myArea_datails.adapter = adapter
-                            }
-                        }
-                        else -> {
-                            ArrayAdapter.createFromResource(
-                                context!!,
-                                R.array.local_temp,
-                                android.R.layout.simple_spinner_item
-                            ).also { adapter ->
-                                // 스피너의 레이아웃 구체화
-                                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-                                // 스피너에 어뎁터 적용
-                                myArea_datails.adapter = adapter
-                            }
-                        }
-                    }
-
-                }
-            }
 
     }
 }
