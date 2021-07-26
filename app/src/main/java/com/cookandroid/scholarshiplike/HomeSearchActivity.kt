@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
@@ -51,7 +50,6 @@ class HomeSearchActivity : AppCompatActivity() {
        })
 
    }
-
 
     // 검색 버튼 클릭했을 때 동작
     private fun click() {

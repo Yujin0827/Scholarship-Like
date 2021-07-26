@@ -165,7 +165,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                 for (document in result) {  // 가져온 문서들은 result에 들어감
 
-                    //필드값 가져오기
+                    //  필드값 가져오기
                     val period = document["period"] as Map<String, Timestamp>
                     val startdate = period.get("startDate")?.toDate()
                     val enddate = period.get("endDate")?.toDate()

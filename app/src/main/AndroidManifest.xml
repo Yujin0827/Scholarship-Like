@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.scholarshiplike">
 
+    <!-- internet 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
@@ -114,7 +115,9 @@
         <activity android:name=".ScholarshipDetailActivity" />
 
         <!-- 탈퇴하기 -->
-        <activity android:name=".ProfileSignoutActivity"/>
+        <activity
+            android:name=".ProfileSignoutActivity"
+            android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>
