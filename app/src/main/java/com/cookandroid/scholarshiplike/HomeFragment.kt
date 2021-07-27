@@ -6,10 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
@@ -18,9 +21,10 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
 
@@ -36,7 +40,8 @@ class HomeFragment : Fragment() {
     private lateinit var univWebSite: String                        // user 대학교 사이트
     private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
-    val scholarshiptab = ScholarshipFragment()          // fragment_scholarship 변수
+    private val scholarshipTab = ScholarshipFragment()              // fragment_scholarship 변수
+    lateinit var tabNav: BottomNavigationView                       // 하단바 (MainActivity)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -57,10 +62,14 @@ class HomeFragment : Fragment() {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
 
-        // 장학금 탭으로 이동
+        // 장학금 최대 건수 ( scholarship 탭으로 이동 )
+        setUserName()
         binding.scholarCnt.setOnClickListener {
+            tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
+            tabNav.menu.findItem(R.id.scholarshipTab).isChecked = true
+
             activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.replace(R.id.nav, scholarshiptab, "scholarshipTab")
+                ?.replace(R.id.nav, scholarshipTab, "scholarshipTab")
                 ?.commit()
         }
 
@@ -153,6 +162,21 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
+    // 유저 닉네임 가져오기
+    private fun setUserName() {
+        if (user != null) {
+            db.collection("Users")
+                .document(user!!.uid)
+                .get()
+                .addOnSuccessListener { result ->
+                    binding.scholarName.text = result.getField<String>("nickname")
+                }
+                .addOnFailureListener() { exception ->
+                    Log.e(TAG, "Fail to get user nickname from DB!", exception)
+                }
+        }
+    }
+
     // calendar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -189,5 +213,3 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
     }
 }
-
-

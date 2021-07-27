@@ -23,7 +23,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
 
     private var mContext1 : Context = mContext
 
-    //데이터 가져오기
+    // 데이터 가져오기
     // inner class로 ViewHolder 정의
     inner class ScholarItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -32,8 +32,6 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
         var scholar_endDate: TextView = itemView!!.findViewById(R.id.scholar_endDate)
         var scholar_institution: TextView = itemView!!.findViewById(R.id.scholar_institution)
         var startToend : TextView = itemView.findViewById(R.id.startDateToEndDate)
-
-
 
         // onBindViewHolder의 역할을 대신한다.
         fun bind(data: Scholarship, position: Int) {
@@ -78,6 +76,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
     }
 
 }
+
 object DiffCallbackScholar : DiffUtil.ItemCallback<Scholarship>() {
     override fun areItemsTheSame(
         oldItem: Scholarship,
