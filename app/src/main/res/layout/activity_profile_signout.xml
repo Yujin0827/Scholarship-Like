@@ -118,7 +118,7 @@
                     android:background="@drawable/ic_edittext_box_background"
                     android:layout_marginLeft="28dp"
                     android:padding="4dp"
-                    android:hint="기타 이유를 작성 해 주세요."
+                    android:hint="@string/write_rsn"
                     android:inputType="textMultiLine"
                     android:lines="2"
                     android:textSize="16sp"

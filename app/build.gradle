@@ -101,4 +101,7 @@ dependencies {
 
     // alarm channel
     implementation 'com.kyleduo.switchbutton:library:2.0.0'
+
+    // coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.4.2'
 }

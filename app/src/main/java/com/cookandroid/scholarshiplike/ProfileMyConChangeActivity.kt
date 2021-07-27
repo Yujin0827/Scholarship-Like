@@ -197,7 +197,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
     // 버튼 클릭 통합 처리
     fun btnClick() {
-        // '시작하기' 버튼 클릭 리스너
+        // '저장' 버튼 클릭 리스너
         binding.btnSave.setOnClickListener() {
             setUserConditioinData()
             saveUserConditionData()

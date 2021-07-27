@@ -115,6 +115,9 @@
 
         <!-- 탈퇴하기 -->
         <activity android:name=".ProfileSignoutActivity"/>
+
+        <!-- 문의 -->
+        <activity android:name=".ProfileQuestionsActivity"/>
     </application>
 
 </manifest>

@@ -37,6 +37,14 @@ class ProfileEtcFragment : Fragment() {
             }
         }
 
+        // '문의' 클릭 리스너
+        binding.etcQuestions.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileQuestionsActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
         // '로그아웃' 클릭 리스너
         binding.etcLogout.setOnClickListener {
             val dialog = ProfileLogoutFragment()
