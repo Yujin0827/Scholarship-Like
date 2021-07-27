@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
 
-        // 장학금 최대 건수 ( scholarship 탭으로 이동 )
+        // 장학금 최대 건수 ( home 탭 -> scholarship 탭 )
         setUserName()
         binding.scholarCnt.setOnClickListener {
             tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
