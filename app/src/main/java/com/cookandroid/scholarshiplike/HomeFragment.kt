@@ -220,4 +220,5 @@ class HomeFragment : Fragment() {
         mBinding = null
         super.onDestroyView()
     }
+
 }
