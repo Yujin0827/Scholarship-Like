@@ -19,8 +19,10 @@ import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
@@ -30,8 +32,9 @@ class HomeFragment : Fragment() {
     private var mBinding: FragmentHomeBinding? = null   // 바인딩 객체
     private val binding get() = mBinding!!              // 바인딩 변수 재선언(매번 null 체크x)
 
-    private var db = FirebaseFirestore.getInstance()                // FireStore 인스턴스
-    private var user = Firebase.auth.currentUser                    // user
+    // Firebase
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     private lateinit var userUid: String                            // user id
     private lateinit var userUniv: String                           // user 대학교
     private lateinit var univWebSite: String                        // user 대학교 사이트
@@ -43,6 +46,10 @@ class HomeFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         mBinding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        // Firebase
+        auth = Firebase.auth
+        db = Firebase.firestore
 
         // Banner
         db.collection("Banner")
@@ -117,8 +124,10 @@ class HomeFragment : Fragment() {
 
         // 교내 웹사이트로 이동
         binding.univWeb.setOnClickListener {
+            val user = auth.currentUser
+
             user?.let {
-                userUid = user!!.uid
+                userUid = user.uid
             }
 
             db.collection("Users")
@@ -161,9 +170,11 @@ class HomeFragment : Fragment() {
 
     // 유저 닉네임 가져오기
     private fun setUserName() {
+        val user = auth.currentUser
+
         if (user != null) {
             db.collection("Users")
-                .document(user!!.uid)
+                .document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
                     binding.scholarName.text = result.getField<String>("nickname")
