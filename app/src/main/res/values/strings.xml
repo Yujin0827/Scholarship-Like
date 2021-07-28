@@ -23,7 +23,7 @@
     <string name="alarm_magazine">매거진</string>
     <string name="heart_post">좋아요 누른 게시물</string>
     <string name="app_info">앱 정보</string>
-    <string name="inquiry">문의</string>
+    <string name="questions">문의</string>
     <string name="logout">로그아웃</string>
     <string name="signout">탈퇴하기</string>
 
@@ -138,5 +138,21 @@
     <string name="note">비고</string>
     <string name="to">~</string>
 
+    <!-- 탈퇴하기 -->
+    <string name="signout_really">정말 탈퇴하시겠어요?</string>
+    <string name="signout_req_reason">장학라이크를 탈퇴하시려는 이유를 선택해주세요. 어플 개선에 많은 도움이 됩니다.</string>
+    <string name="rsn_info">정보가 부족하다</string>
+    <string name="rsn_uncom">어플 이용이 불편하다</string>
+    <string name="rsn_better">더 좋은 서비스가 존재한다</string>
+    <string name="rsn_useless">사용 빈도가 낮다</string>
+    <string name="write_rsn">기타 이유를 작성 해 주세요.</string>
+    
+    <!-- 문의 -->
+    <string name="sender">보낸사람</string>
+    <string name="receiver">받는사람</string>
+    <string name="write_questions">문의 내용을 작성 해 주세요.</string>
+    <string name="send_mail">메일 보내기</string>
+    <string name="send_mail_result">답변은 보내신 메일 주소로 수신됩니다.\n2~3일 정도 소요될 수 있습니다.</string>
+    <string name="questions_subtitle">장학라이크로 문의 메일 보내기</string>
 
 </resources>

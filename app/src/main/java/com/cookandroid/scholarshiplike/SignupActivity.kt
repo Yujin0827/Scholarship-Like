@@ -6,6 +6,7 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cookandroid.scholarshiplike.databinding.ActivitySignupBinding
 import com.cookandroid.scholarshiplike.databinding.FragmentLoginTermsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -19,6 +20,8 @@ class SignupActivity :AppCompatActivity() {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
+    private var _binding: ActivitySignupBinding? = null
+    private val binding get() = _binding!!
     val auth = Firebase.auth
     val db = Firebase.firestore
 
@@ -31,7 +34,8 @@ class SignupActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+        _binding = ActivitySignupBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
         //버튼 클릭을 통합 처리
         btnClick()
@@ -44,11 +48,11 @@ class SignupActivity :AppCompatActivity() {
 
         //회원가입 버튼을 클릭하였을 때
         btn_signup.setOnClickListener() {
-            txtEmail = txt_email.text.toString()
-            txtPassword = txt_password.text.toString()
-            txtPasswordConfirm = txt_password_confirm.text.toString()
-            txtNickname = txt_nickname.text.toString()
-            txtUniv = txt_univ.text.toString()
+            txtEmail = binding.txtEmail.text.toString()
+            txtPassword = binding.txtPassword.text.toString()
+            txtPasswordConfirm = binding.txtPasswordConfirm.text.toString()
+            txtNickname = binding.txtNickname.text.toString()
+            txtUniv = binding.txtUniv.text.toString()
 
             isExistBlank = txtEmail.isEmpty() || txtPassword.isEmpty() || txtPasswordConfirm.isEmpty() || txtNickname.isEmpty() || txtUniv.isEmpty()
             isPWSame = txtPassword == txtPasswordConfirm

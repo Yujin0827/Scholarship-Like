@@ -118,6 +118,9 @@
         <activity
             android:name=".ProfileSignoutActivity"
             android:windowSoftInputMode="adjustResize" />
+
+        <!-- 문의 -->
+        <activity android:name=".ProfileQuestionsActivity"/>
     </application>
 
 </manifest>
