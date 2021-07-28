@@ -10,17 +10,20 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.viewpager.widget.ViewPager
 import com.cookandroid.scholarshiplike.adapter.ScholarshipViewPageAdapter
+import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipBinding
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_scholarship.*
 
 
 class ScholarshipFragment : Fragment() {
 
+    private var _binding: FragmentScholarshipBinding? = null    // 바인딩 객체
+    private val binding get() = _binding!!                      // 바인딩 변수 재선언(매번 null 체크x)
+
     lateinit var like : ImageView       // 좋아요 페이지로 이동 버튼
     lateinit var alarm : ImageView      // 알람 페이지로 이동 버튼
-    lateinit var viewPagers : ViewPager // 뷰페이저 선언
-    lateinit var tabLayouts : TabLayout // 탭레이아웃 선언
-
+    lateinit var viewPagers : ViewPager // 뷰 페이저 선언
+    lateinit var tabLayouts : TabLayout // 탭 레이아웃 선언
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_scholarship, container, false)
@@ -102,9 +105,10 @@ class ScholarshipFragment : Fragment() {
     }
 
 
-
-
-
+    // 프래그먼트 파괴
+//    override fun onDestroy() {
+//        super.onDestroy()
+//    }
 }
 
 

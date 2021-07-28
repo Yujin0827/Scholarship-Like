@@ -29,8 +29,8 @@ import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
-    private var mBinding: FragmentHomeBinding? = null   // 바인딩 객체
-    private val binding get() = mBinding!!              // 바인딩 변수 재선언(매번 null 체크x)
+    private var _binding: FragmentHomeBinding? = null   // 바인딩 객체
+    private val binding get() = _binding!!              // 바인딩 변수 재선언(매번 null 체크x)
 
     // Firebase
     private lateinit var auth: FirebaseAuth
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     lateinit var tabNav: BottomNavigationView                       // 하단바 (MainActivity)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         // Firebase
@@ -66,7 +66,21 @@ class HomeFragment : Fragment() {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
 
-        // 장학금 최대 건수 ( home 탭 -> scholarship 탭 )
+        binding.bannerSlider.setOnClickListener {
+            db.collection("Banner")
+                .get()
+                .addOnSuccessListener { documents ->
+                    for (document in documents) {
+                        if (document.getString("website") != null) {
+                            val uri = Uri.parse(document.getString("website"))
+                            val intent = Intent(Intent.ACTION_VIEW, uri)
+                            startActivity(intent)
+                        }
+                    }
+                }
+        }
+
+        // 장학금 최대 건수 ( scholarship 탭으로 이동 )
         setUserName()
         binding.scholarCnt.setOnClickListener {
             tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
@@ -217,8 +231,7 @@ class HomeFragment : Fragment() {
 
     // 프래그먼트 파괴
     override fun onDestroyView() {
-        mBinding = null
+        _binding = null
         super.onDestroyView()
     }
-
 }

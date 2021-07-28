@@ -30,11 +30,7 @@ class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -45,6 +41,14 @@ class ProfileFragment : Fragment() {
         db = Firebase.firestore
 
         setUserNickname()
+
+        // '기타' 클릭 리스너
+        binding.profileEtc.setOnClickListener {
+            activity?.getSupportFragmentManager()?.beginTransaction()
+                ?.replace(R.id.nav, ProfileEtcFragment(), "profileTab")
+                ?.addToBackStack("profileFragment")
+                ?.commit()
+        }
 
         return view
     }
@@ -96,13 +100,6 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // '기타' 클릭 리스너
-        binding.profileEtc.setOnClickListener {
-            activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.replace(R.id.nav, ProfileEtcFragment(), "profileTab")
-                ?.addToBackStack("profileFragment")
-                ?.commit()
-        }
     }
 
     // 유저 닉네임 가져오기
@@ -120,6 +117,12 @@ class ProfileFragment : Fragment() {
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }
+    }
+
+    // 프래그먼트 파괴
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 }

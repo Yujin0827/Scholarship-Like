@@ -72,7 +72,7 @@
             <!-- banner -->
             <com.denzcoskun.imageslider.ImageSlider
                 android:id="@+id/banner_slider"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="300dp"
                 app:iss_auto_cycle="true"
                 app:iss_period="2500"
@@ -92,14 +92,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/banner_slider"
                 app:layout_constraintBottom_toTopOf="@+id/go_web" >
-<!--
-                <TextView
-                    android:id="@+id/scholar_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="35sp"
-                    android:textStyle="bold" />
--->
 
                 <!-- 이름 -->
                 <LinearLayout
@@ -117,6 +109,7 @@
                         android:id="@+id/scholar_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="3dp"
                         android:textColor="@color/text_black"
                         android:textSize="33sp"
                         android:textStyle="bold" />
@@ -127,7 +120,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/scholar_input_name"
                         android:textColor="@color/text_black"
-                        android:textSize="33sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -150,15 +143,17 @@
                         android:layout_height="wrap_content"
                         android:text="@string/scholar_cnt_max"
                         android:textColor="@color/text_black"
-                        android:textSize="33sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                     <TextView
                         android:id="@+id/scholar_num"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textColor="@color/text_black"
-                        android:textSize="33sp"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/scholar_num"
+                        android:textColor="@color/maincolor"
+                        android:textSize="35sp"
                         android:textStyle="bold" />
 
                     <TextView
@@ -167,7 +162,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/scholar_cnt_num"
                         android:textColor="@color/text_black"
-                        android:textSize="33sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>
@@ -190,7 +185,7 @@
                         android:layout_height="wrap_content"
                         android:text="@string/scholar_get"
                         android:textColor="@color/text_black"
-                        android:textSize="33sp"
+                        android:textSize="32sp"
                         android:textStyle="bold" />
 
                 </LinearLayout>

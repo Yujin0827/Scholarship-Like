@@ -120,28 +120,28 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
 
         when(p0.itemId){
             R.id.homeTab -> {
-                fm.popBackStack("homeTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)    // BackStack에서 해당 fragment 제거
+//                fm.popBackStack("homeTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)    // BackStack에서 해당 fragment 제거
                 val hometab = HomeFragment()                               // fragment 변수 생성
                 transaction.replace(R.id.nav, hometab, "homeTab")     // fragment 화면 전환
                 transaction.addToBackStack("homeTab")               // fragment 생성하면서 BackStack 생성
             }
             R.id.scholarshipTab -> {
-                fm.popBackStack("scholarshipTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                fm.popBackStack("scholarshipTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 val scholarshiptab = ScholarshipFragment()
                 transaction.replace(R.id.nav, scholarshiptab, "scholarshipTab")
-                transaction.addToBackStack("scholarshipTab")
+//                transaction.addToBackStack("scholarshipTab")
             }
             R.id.magazineTab -> {
-                fm.popBackStack("magazineTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                fm.popBackStack("magazineTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 val magazinetab = MagazineFragment()
                 transaction.replace(R.id.nav, magazinetab, "magazineTab")
-                transaction.addToBackStack("magazineTab")
+//                transaction.addToBackStack("magazineTab")
             }
             R.id.profileTab -> {
-                fm.popBackStack("profileTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+//                fm.popBackStack("profileTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
                 val profiletab = ProfileFragment()
                 transaction.replace(R.id.nav, profiletab, "profileTab")
-                transaction.addToBackStack("profileTab")
+//                transaction.addToBackStack("profileTab")
             }
         }
 
