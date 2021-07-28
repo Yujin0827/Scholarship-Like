@@ -5,6 +5,7 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,20 +18,22 @@ import com.cookandroid.scholarshiplike.databinding.FragmentHomeCalendarPopupBind
 import com.google.firebase.firestore.FirebaseFirestore
 import java.text.SimpleDateFormat
 
-class HomeCalendarPopupFragment(val scholar:ArrayList<tmpScholarship>, val mContext: Context, val Month:Int, val Date:Int) : DialogFragment() {
+class HomeCalendarPopupFragment(val scholar:ArrayList<tmpScholarship>, val mContext: Context, val Month:Int, val Date:Int, val position:Int, val fisrt:Int, val last:Int) : DialogFragment() {
 
     private lateinit var binding: FragmentHomeCalendarPopupBinding
 
     private lateinit var listAdapter: HomeCalendarPopupAdapter //리사이클러뷰 변수 생성
     private var visibleList: ArrayList<tmpScholarship> = arrayListOf()
 
-    val format = SimpleDateFormat("MMdd")
-    val selectedDate = Month*100+Date
+    private val format = SimpleDateFormat("MMdd")
+    private val selectedDate = Month*100+Date
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //false로 설정해 주면 화면밖 혹은 뒤로가기 버튼시 다이얼로그라 dismiss 되지 않는다.
         isCancelable = true
+
+        Log.e("팝업창 인자 Month,selectedDate","$Month,$selectedDate")
 
         for(item in scholar) {
             val start = format.format(item.startdate).toInt()

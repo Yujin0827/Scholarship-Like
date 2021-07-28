@@ -4,7 +4,6 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import android.content.pm.ActivityInfo
 import android.os.Bundle
-import android.util.Log
 import android.view.KeyEvent
 import android.view.KeyEvent.KEYCODE_ENTER
 import android.view.View
@@ -52,10 +51,9 @@ class HomeSearchActivity : AppCompatActivity() {
 
    }
 
-
     // 검색 버튼 클릭했을 때 동작
     private fun click() {
-        val intent = Intent(this, HomeSearchResultActivity::class.java)
+        val resultIntent = Intent(this, HomeSearchResultActivity::class.java)
 
         search_word = binding.searchField.text.toString()
 
@@ -64,8 +62,8 @@ class HomeSearchActivity : AppCompatActivity() {
             null_message.show()
         }
         else {
-            intent.putExtra("search_word", binding.searchField.text.toString())
-            startActivity(intent)       // HomeSearchResultActivity 이동
+            resultIntent.putExtra("search_word", binding.searchField.text.toString())
+            startActivity(resultIntent)       // HomeSearchResultActivity 이동
         }
     }
 

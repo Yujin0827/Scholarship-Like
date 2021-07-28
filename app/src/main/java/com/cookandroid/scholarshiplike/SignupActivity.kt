@@ -32,7 +32,6 @@ class SignupActivity :AppCompatActivity() {
     lateinit var txtUniv:String
 
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivitySignupBinding.inflate(layoutInflater)

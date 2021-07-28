@@ -14,8 +14,8 @@ class SignupProfileInfoActivity :AppCompatActivity() {
     val auth = Firebase.auth
     val db = Firebase.firestore
 
-    lateinit var txtNickname :String
-    lateinit var txtUniv :String
+    lateinit var txtNickname: String
+    lateinit var txtUniv: String
 
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
@@ -38,7 +38,7 @@ class SignupProfileInfoActivity :AppCompatActivity() {
             txtNickname = txt_nickname1.text.toString()
             txtUniv = txt_univ1.text.toString()
 
-            var isExistBlank :Boolean = txtNickname!!.isEmpty() || txtUniv!!.isEmpty()
+            var isExistBlank: Boolean = txtNickname!!.isEmpty() || txtUniv!!.isEmpty()
 
             if (isExistBlank) {
                 Toast.makeText(this, "빈 항목이 있습니다", Toast.LENGTH_SHORT).show()
@@ -55,7 +55,7 @@ class SignupProfileInfoActivity :AppCompatActivity() {
     // 유저 DB 업데이트
     private fun updateUserDB() {
         val user = auth.currentUser
-        var userProfileSet :HashMap<String, Any> = hashMapOf(
+        var userProfileSet: HashMap<String, Any> = hashMapOf(
             "nickname" to txtNickname,
             "univ" to txtUniv
         )

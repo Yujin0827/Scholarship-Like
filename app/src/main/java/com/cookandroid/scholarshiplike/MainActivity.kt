@@ -23,18 +23,20 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_signup.*
 import com.google.firebase.messaging.FirebaseMessaging
 
-open class MainActivity : AppCompatActivity(),
-    BottomNavigationView.OnNavigationItemSelectedListener  {
+open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
+    // firebase
     var authStateListener: FirebaseAuth.AuthStateListener? = null
     val db = Firebase.firestore
+
+    // 하단바
     lateinit var tabNav : BottomNavigationView
 
     // onBackPressed 메소드 변수
-    var backPressedTime : Long = 0
-    val FINISH_INTERVAL_TIME = 2000
+    private var backPressedTime : Long = 0
+    private val FINISH_INTERVAL_TIME = 2000
 
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,8 +46,8 @@ open class MainActivity : AppCompatActivity(),
 
         // 현재 유저 확인
         confirmUser()
-
-        // 하단바 변수 생성
+        
+        // 하단바 설정
         tabNav = findViewById<BottomNavigationView>(R.id.tabNav)
 
         // 툴바 설정
@@ -119,7 +121,7 @@ open class MainActivity : AppCompatActivity(),
         when(p0.itemId){
             R.id.homeTab -> {
                 fm.popBackStack("homeTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)    // BackStack에서 해당 fragment 제거
-                val hometab = HomeFragment()                            // fragment 변수 생성
+                val hometab = HomeFragment()                               // fragment 변수 생성
                 transaction.replace(R.id.nav, hometab, "homeTab")     // fragment 화면 전환
                 transaction.addToBackStack("homeTab")               // fragment 생성하면서 BackStack 생성
             }
@@ -151,7 +153,7 @@ open class MainActivity : AppCompatActivity(),
     }
 
     // fragment 클릭했을 때 자동적으로 하단바 아이콘 변경 ( 뒤로가기 눌렀을 때 호출 )
-    private fun updateBottomMenu(navigation: BottomNavigationView) {
+    fun updateBottomMenu(navigation: BottomNavigationView) {
         val homeTab: Fragment? = supportFragmentManager.findFragmentByTag("homeTab")
         val scholarshipTab: Fragment? = supportFragmentManager.findFragmentByTag("scholarshipTab")
         val magazineTab: Fragment? = supportFragmentManager.findFragmentByTag("magazineTab")
@@ -161,7 +163,6 @@ open class MainActivity : AppCompatActivity(),
         if(scholarshipTab != null && scholarshipTab.isVisible) {navigation.menu.findItem(R.id.scholarshipTab).isChecked = true }
         if(magazineTab != null && magazineTab.isVisible) {navigation.menu.findItem(R.id.magazineTab).isChecked = true }
         if(profileTab != null && profileTab.isVisible) {navigation.menu.findItem(R.id.profileTab).isChecked = true }
-
     }
 
     // back 버튼 클릭 리스너 재정의
@@ -181,7 +182,6 @@ open class MainActivity : AppCompatActivity(),
             }
         }
         super.onBackPressed()
-
         updateBottomMenu(tabNav)
     }
 

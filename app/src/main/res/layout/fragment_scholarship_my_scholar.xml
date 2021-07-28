@@ -18,7 +18,7 @@
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
             android:layout_gravity="center"
-            android:textColor="@color/black"
+            android:textColor="#000000"
             android:text="해당 정보로 최대 N건의 장학금을 받으실 수 있습니다" />
 
     <LinearLayout
@@ -70,40 +70,6 @@
 
                     </Spinner>
 
-                    <TextView
-                        android:id="@+id/attending"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="3dp"
-                        android:text="@string/school_att_leav"
-                        android:textColor="#312E2E"
-                        android:textSize="16sp" />
-
-                    <RadioGroup
-                        android:id="@+id/attendingCheck"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="15dp">
-
-                        <RadioButton
-                            android:id="@+id/inSchool"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="@string/school_attending"
-                            android:textSize="13dp"/>
-
-                        <RadioButton
-                            android:id="@+id/outSchool"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/school_leaving"
-                            android:textSize="13dp"/>
-                    </RadioGroup>
 
                     <LinearLayout
                         android:id="@+id/semesterLayout"
@@ -222,15 +188,6 @@
                             android:layout_marginLeft="10dp">
 
                         </Spinner>
-
-                        <Spinner
-                            android:id="@+id/inAreaSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp">
-
-                        </Spinner>
-
 
                     </LinearLayout>
 

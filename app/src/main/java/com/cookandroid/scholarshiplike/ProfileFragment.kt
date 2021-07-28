@@ -110,7 +110,8 @@ class ProfileFragment : Fragment() {
         val user = auth.currentUser
 
         if (user != null) {
-            db.collection("Users").document(user.uid)
+            db.collection("Users")
+                .document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
                     binding.btnProfileUserName.text = result.getField<String>("nickname")
