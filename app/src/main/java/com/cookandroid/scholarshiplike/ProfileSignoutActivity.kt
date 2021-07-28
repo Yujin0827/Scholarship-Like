@@ -123,6 +123,7 @@ class ProfileSignoutActivity : AppCompatActivity() {
                 user?.reauthenticate(credential)    // 사용자 재인증
                     ?.addOnSuccessListener {
                         Log.d(TAG, "User re-authenticated.")
+                        sendFeedback()  // 사용자 탈퇴 사유 DB에 전송
                         deleteUserDB(user)  // 유저 DB 삭제
                     }
                     ?.addOnFailureListener { it ->
@@ -157,16 +158,7 @@ class ProfileSignoutActivity : AppCompatActivity() {
             .delete()
             .addOnSuccessListener {
                 Log.d(TAG, "[Success] Delete current user DB!")
-                GlobalScope.launch {
-                    if (sendFeedback()) {   // 탈퇴 사유 전송 성공시
-                        Log.d(TAG, "-------- resceive true from sendFeedback()")
-                        deletUserAuth(user) // 유저 계정 삭제
-                    }
-                }
-//                if (rec) {   // 탈퇴 사유 전송 성공시
-//                    Log.d(TAG, "-------- resceive true from sendFeedback()")
-//                    deletUserAuth(user) // 유저 계정 삭제
-//                }
+                deletUserAuth(user) // 유저 계정 삭제
             }
             .addOnFailureListener { it ->
                 Log.d(TAG, it.toString())
@@ -193,150 +185,28 @@ class ProfileSignoutActivity : AppCompatActivity() {
     }
 
     // 탈퇴 사유 DB로 전송
-    private suspend fun sendFeedback(): Boolean {
-        var isSuccess = false
-//        CoroutineScope(Dispatchers.Main).launch {
-////            var isSuccess = false
-//            val temp = CoroutineScope(Dispatchers.IO).async {
-//                for (rsn in reasonList) {
-//                    if (rsn == "etc") { // 기타 사유 저장
-//                        val rsnEtc = binding.edittxtSignoutEtcAdd.text.toString()
-//                        db.collection("Feedback").document("SignoutReason")
-//                            .update(rsn, FieldValue.arrayUnion(rsnEtc))
-//                            .addOnSuccessListener {
-//                                isSuccess = true
-//                                Log.d(TAG, "etc success isSuccess : " + isSuccess.toString())
-//                            }
-//                            .addOnFailureListener { it ->
-//                                Log.e(TAG, "[Fail] update signout etc reason of 'Feedback' DB!", it)
-//                                isSuccess = false
-//                            }
-//                    }
-//                    else {  // 그 외 사유 저장
-//                        db.collection("Feedback").document("SignoutReason")
-//                            .update(rsn, FieldValue.increment(1))
-//                            .addOnSuccessListener {
-//                                isSuccess = true
-//                                Log.d(TAG, "update db success isSuccess : " + isSuccess.toString())
-//                            }
-//                            .addOnFailureListener { it ->
-//                                Log.e(TAG, "[Fail] update signout reason of 'Feedback' DB!", it)
-//                                isSuccess = false
-//                            }
-//                    }
-//                }
-//            }.await()
-//
-//            if (isSuccess) {
-//                Log.d(TAG, "[Success] update signout reason of 'Feedback' DB!")
-//            }
-//
-//            Log.d(TAG, "---------isSucess : " + isSuccess.toString())
-//
-//            return@sendFeedback isSuccess
-//        }
-
-//        for (rsn in reasonList) {
-//            if (rsn == "etc") { // 기타 사유 저장
-//                val rsnEtc = binding.edittxtSignoutEtcAdd.text.toString()
-//                db.collection("Feedback").document("SignoutReason")
-//                    .update(rsn, FieldValue.arrayUnion(rsnEtc))
-//                    .addOnSuccessListener {
-//                        isSuccess = true
-//                        Log.d(TAG, "etc success isSuccess : " + isSuccess.toString())
-//                    }
-//                    .addOnFailureListener { it ->
-//                        Log.e(TAG, "[Fail] update signout etc reason of 'Feedback' DB!", it)
-//                        isSuccess = false
-//                    }
-//            } else {  // 그 외 사유 저장
-//                db.collection("Feedback").document("SignoutReason")
-//                    .update(rsn, FieldValue.increment(1))
-//                    .addOnSuccessListener {
-//                        isSuccess = true
-//                        Log.d(TAG, "update db success isSuccess : " + isSuccess.toString())
-//                    }
-//                    .addOnFailureListener { it ->
-//                        Log.e(TAG, "[Fail] update signout reason of 'Feedback' DB!", it)
-//                        isSuccess = false
-//                    }
-//            }
-//        }
-
-//        for (rsn in reasonList) {
-//            if (rsn == "etc") { // 기타 사유 저장
-//                val rsnEtc = binding.edittxtSignoutEtcAdd.text.toString()
-//                db.collection("Feedback").document("SignoutReason")
-//                    .update(rsn, FieldValue.arrayUnion(rsnEtc))
-//                    .addOnSuccessListener {
-//                        isSuccess = true
-//                        Log.d(TAG, "etc success isSuccess : " + isSuccess.toString())
-//                    }
-//                    .addOnFailureListener { it ->
-//                        Log.e(TAG, "[Fail] update signout etc reason of 'Feedback' DB!", it)
-//                        isSuccess = false
-//                    }
-//            } else {  // 그 외 사유 저장
-//                db.collection("Feedback").document("SignoutReason")
-//                    .update(rsn, FieldValue.increment(1))
-//                    .addOnSuccessListener {
-//                        isSuccess = true
-//                        Log.d(TAG, "update db success isSuccess : " + isSuccess.toString())
-//                    }
-//                    .addOnFailureListener { it ->
-//                        Log.e(TAG, "[Fail] update signout reason of 'Feedback' DB!", it)
-//                        isSuccess = false
-//                    }
-//            }
-//        }
-
-        val bool: Boolean = GlobalScope.async(Dispatchers.IO) {
-            for (rsn in reasonList) {
-                if (rsn == "etc") { // 기타 사유 저장
-                    val rsnEtc = binding.edittxtSignoutEtcAdd.text.toString()
-                    db.collection("Feedback").document("SignoutReason")
-                        .update(rsn, FieldValue.arrayUnion(rsnEtc))
-                        .addOnSuccessListener {
-                            isSuccess = true
-                            Log.d(TAG, "etc success isSuccess : " + isSuccess.toString())
-                        }
-                        .addOnFailureListener { it ->
-                            Log.e(TAG, "[Fail] update signout etc reason of 'Feedback' DB!", it)
-                            isSuccess = false
-                        }
-                } else {  // 그 외 사유 저장
-                    db.collection("Feedback").document("SignoutReason")
-                        .update(rsn, FieldValue.increment(1))
-                        .addOnSuccessListener {
-                            isSuccess = true
-                            Log.d(TAG, "update db success isSuccess : " + isSuccess.toString())
-                        }
-                        .addOnFailureListener { it ->
-                            Log.e(TAG, "[Fail] update signout reason of 'Feedback' DB!", it)
-                            isSuccess = false
-                        }
-                }
+    private fun sendFeedback() {
+        for (rsn in reasonList) {
+            if (rsn == "etc") { // 기타 사유 저장
+                val rsnEtc = binding.edittxtSignoutEtcAdd.text.toString()
+                db.collection("Feedback").document("SignoutReason")
+                    .update(rsn, FieldValue.arrayUnion(rsnEtc))
+                    .addOnSuccessListener {
+                        Log.d(TAG, "[Success] update signout etc feedback!")
+                    }
+                    .addOnFailureListener { it ->
+                        Log.e(TAG, "[Fail] update signout etc feedback!", it)
+                    }
+            } else {  // 그 외 사유 저장
+                db.collection("Feedback").document("SignoutReason")
+                    .update(rsn, FieldValue.increment(1))
+                    .addOnSuccessListener {
+                        Log.d(TAG, "[Success] update signout feedback!")
+                    }
+                    .addOnFailureListener { it ->
+                        Log.e(TAG, "[Fail] update signout feedback!", it)
+                    }
             }
-            isSuccess
-        }.await()
-
-        if (bool) {
-            Log.d(TAG, "[Success] update signout reason of 'Feedback' DB!")
         }
-
-        Log.d(TAG, "---------bool : " + bool.toString())
-
-        return bool
-
-
-//        if (isSuccess) {
-//            Log.d(TAG, "[Success] update signout reason of 'Feedback' DB!")
-//        }
-//
-//        Log.d(TAG, "---------isSucess : " + isSuccess.toString())
-
-
-//        return
-
     }
 }
