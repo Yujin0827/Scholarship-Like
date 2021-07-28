@@ -3,7 +3,6 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
@@ -18,7 +17,6 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.*
 
 class ProfileSignoutActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileSignoutBinding
