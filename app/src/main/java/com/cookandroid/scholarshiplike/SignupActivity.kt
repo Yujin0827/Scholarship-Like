@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivitySignupBinding
 import com.cookandroid.scholarshiplike.databinding.FragmentLoginTermsBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
@@ -84,8 +85,20 @@ class SignupActivity :AppCompatActivity() {
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_LONG).show()
                     updateUserDB()  // 유저 DB 저장
                 }
-                else {
-                    Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                // 예외 토스트 메시지
+                val errorCode = (it as FirebaseAuthException).errorCode
+                when (errorCode) {
+                    "ERROR_INVALID_EMAIL" -> {
+                        Toast.makeText(this, "올바른 이메일 주소의 형식을 입력하세요", Toast.LENGTH_SHORT).show()
+                    }
+                    "ERROR_EMAIL_ALREADY_IN_USE" -> {
+                        Toast.makeText(this, "이미 사용중인 이메일 입니다", Toast.LENGTH_SHORT).show()
+                    }
+                    "ERROR_WEAK_PASSWORD" -> {
+                        Toast.makeText(this, "안정성이 낮은 비밀번호 입니다", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
     }
