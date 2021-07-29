@@ -30,11 +30,7 @@ class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)

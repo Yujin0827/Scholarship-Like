@@ -32,8 +32,8 @@ import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
-    private var mBinding: FragmentHomeBinding? = null   // 바인딩 객체
-    private val binding get() = mBinding!!              // 바인딩 변수 재선언(매번 null 체크x)
+    private var _binding: FragmentHomeBinding? = null   // 바인딩 객체
+    private val binding get() = _binding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
     // Firebase
     private lateinit var auth: FirebaseAuth
@@ -46,8 +46,14 @@ class HomeFragment : Fragment() {
     private val scholarshipTab = ScholarshipFragment()              // fragment_scholarship 변수
     lateinit var tabNav: BottomNavigationView                       // 하단바 (MainActivity)
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        mBinding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val view = binding.root
 
         // Firebase
@@ -183,6 +189,7 @@ class HomeFragment : Fragment() {
                     binding.scholarName.text = result.getField<String>("nickname")
                 }
                 .addOnFailureListener() { exception ->
+                    binding.scholarName.text = " "
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }
@@ -220,7 +227,8 @@ class HomeFragment : Fragment() {
 
     // 프래그먼트 파괴
     override fun onDestroyView() {
-        mBinding = null
         super.onDestroyView()
+        _binding = null
     }
+
 }

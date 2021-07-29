@@ -92,14 +92,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/banner_slider"
                 app:layout_constraintBottom_toTopOf="@+id/go_web" >
-<!--
-                <TextView
-                    android:id="@+id/scholar_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="35sp"
-                    android:textStyle="bold" />
--->
 
                 <!-- 이름 -->
                 <LinearLayout
