@@ -30,7 +30,7 @@ import com.google.firebase.ktx.Firebase
 class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null   // 바인딩 객체
-    private val binding get() = _binding!!              // 바인딩 변수 재선언(매번 null 체크x)
+    private val binding get() = _binding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
     // Firebase
     private lateinit var auth: FirebaseAuth
@@ -65,20 +65,6 @@ class HomeFragment : Fragment() {
             .addOnFailureListener { exception ->
                 Log.w(TAG, "Error getting documents: ", exception)
             }
-
-        binding.bannerSlider.setOnClickListener {
-            db.collection("Banner")
-                .get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        if (document.getString("website") != null) {
-                            val uri = Uri.parse(document.getString("website"))
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            startActivity(intent)
-                        }
-                    }
-                }
-        }
 
         // 장학금 최대 건수 ( scholarship 탭으로 이동 )
         setUserName()
@@ -194,6 +180,7 @@ class HomeFragment : Fragment() {
                     binding.scholarName.text = result.getField<String>("nickname")
                 }
                 .addOnFailureListener() { exception ->
+                    binding.scholarName.text = " "
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }
@@ -231,8 +218,8 @@ class HomeFragment : Fragment() {
 
     // 프래그먼트 파괴
     override fun onDestroyView() {
-        _binding = null
         super.onDestroyView()
+        _binding = null
     }
 
 }
