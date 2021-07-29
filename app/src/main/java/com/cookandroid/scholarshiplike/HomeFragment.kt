@@ -29,6 +29,7 @@ import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
+    // binding
     private var _binding: FragmentHomeBinding? = null   // 바인딩 객체
     private val binding get() = _binding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 

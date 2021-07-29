@@ -23,7 +23,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 
 
-// fragment 변수 생성
+// Fragment 변수 생성
 private const val HomeTab = "Home_fragment"
 private const val ScholarshipTab = "Scholarship_Fragment"
 private const val MagazineTab = "Magazine_Fragment"
