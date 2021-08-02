@@ -63,6 +63,7 @@ class ProfileEtcFragment : Fragment() {
     // 프래그먼트 파괴
     override fun onDestroyView() {
         _binding = null
+
         super.onDestroyView()
     }
 }

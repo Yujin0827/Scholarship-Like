@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
@@ -18,6 +19,10 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
+
+// Fragment 변수 생성
+private const val ProfileTab = "Profile_Fragment"
+private const val ProfileTabEtc = "Profile_Etc_Fragment"
 
 class ProfileFragment : Fragment() {
 
@@ -30,7 +35,14 @@ class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+//    lateinit var fm: FragmentManager
+//    lateinit var transaction: FragmentTransaction
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         super.onCreate(savedInstanceState)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -44,10 +56,18 @@ class ProfileFragment : Fragment() {
 
         // '기타' 클릭 리스너
         binding.profileEtc.setOnClickListener {
-            activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.replace(R.id.nav, ProfileEtcFragment(), "profileTab")
-                ?.addToBackStack("profileFragment")
-                ?.commit()
+            val fm = parentFragmentManager
+            val transaction = fm.beginTransaction()
+            if (fm.findFragmentByTag(ProfileTabEtc) == null) {
+                transaction.add(R.id.nav, ProfileEtcFragment(), ProfileTabEtc)
+            }
+            val profiletab = fm.findFragmentByTag(ProfileTab)
+            val profiletabEtc = fm.findFragmentByTag(ProfileTabEtc)
+            profiletab?.let { it ->  transaction.hide(it)}
+            profiletabEtc?.let { it -> transaction.show(it) }
+            transaction.addToBackStack("ProfileTab")
+            transaction.setReorderingAllowed(true)
+            transaction.commitAllowingStateLoss()
         }
 
         return view

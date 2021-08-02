@@ -28,6 +28,7 @@ private const val HomeTab = "Home_fragment"
 private const val ScholarshipTab = "Scholarship_Fragment"
 private const val MagazineTab = "Magazine_Fragment"
 private const val ProfileTab = "Profile_Fragment"
+private const val ProfileTabEtc = "Profile_Etc_Fragment"
 
 open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
     @Suppress("PrivatePropertyName")
@@ -141,6 +142,8 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         val fm = supportFragmentManager
         val transaction: FragmentTransaction = fm.beginTransaction()
 
+        fm.popBackStack("ProfileTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
         if (fm.findFragmentByTag(tag) == null) {
             transaction.add(R.id.nav, fragment, tag)
         }
@@ -149,6 +152,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         val scholarshiptab = fm.findFragmentByTag(ScholarshipTab)
         val magazinetab = fm.findFragmentByTag(MagazineTab)
         val profiletab = fm.findFragmentByTag(ProfileTab)
+        val profiletabEtc = fm.findFragmentByTag(ProfileTabEtc)
 
         // Hide all Fragment
         if (hometab != null) {
@@ -162,6 +166,9 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
         if (profiletab != null) {
             transaction.hide(profiletab)
+        }
+        if (profiletabEtc != null) {
+            transaction.hide(profiletabEtc)
         }
 
         // Show  current Fragment

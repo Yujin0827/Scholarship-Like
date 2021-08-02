@@ -5,7 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:id="@+id/view_root_profile_fragment">
 
     <!-- 상단 프로필 사진, "홍길동님, 반갑습니다!" Horizontal Layout-->
     <LinearLayout

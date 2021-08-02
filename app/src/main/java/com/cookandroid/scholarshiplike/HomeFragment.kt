@@ -28,6 +28,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
+private const val HomeTab = "Home_fragment"
+private const val ScholarshipTab = "Scholarship_Fragment"
 
 class HomeFragment : Fragment() {
 
@@ -75,9 +77,19 @@ class HomeFragment : Fragment() {
             tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
             tabNav.menu.findItem(R.id.scholarshipTab).isChecked = true
 
-            activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.replace(R.id.nav, scholarshipTab, "scholarshipTab")
-                ?.commit()
+            val fm = parentFragmentManager
+            val transaction = fm.beginTransaction()
+            var scholarshiptab = fm.findFragmentByTag(ScholarshipTab)
+
+            if (scholarshiptab != null) {
+                transaction.remove(scholarshiptab)
+            }
+            transaction.add(R.id.nav, ScholarshipFragment(), ScholarshipTab)
+
+            val hometab = fm.findFragmentByTag(HomeTab)
+            hometab?.let { it ->  transaction.hide(it)}
+            scholarshiptab?.let { it -> transaction.show(it) }
+            transaction.commit()
         }
 
         // AdMob
