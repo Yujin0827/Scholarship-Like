@@ -45,7 +45,9 @@ class ProfileLogoutFragment : DialogFragment(), View.OnClickListener {
         return view
     }
 
+    // 프래그먼트 파괴
     override fun onDestroyView() {
+        _binding = null
         super.onDestroyView()
     }
 

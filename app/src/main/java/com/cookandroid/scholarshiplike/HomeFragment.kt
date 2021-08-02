@@ -9,6 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
@@ -177,7 +179,7 @@ class HomeFragment : Fragment() {
                 .document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
-                    binding.scholarName.text = result.getField<String>("nickname")
+                    binding?.scholarName.text = result.getField<String>("nickname")
                 }
                 .addOnFailureListener() { exception ->
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)

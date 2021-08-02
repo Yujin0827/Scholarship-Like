@@ -31,6 +31,7 @@ class SignupActivity :AppCompatActivity() {
     lateinit var txtPasswordConfirm:String
     lateinit var txtNickname:String
     lateinit var txtUniv:String
+    lateinit var univList: ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,9 +39,29 @@ class SignupActivity :AppCompatActivity() {
         _binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getUnivList()
         //버튼 클릭을 통합 처리
-        btnClick()
+//        btnClick()
     }
+
+    // DB에서 대학교 이름 가져오기
+    private fun getUnivList() {
+        // 대학교 리스트 가져오기
+        val sRef = db.collection("Scholarship").document("UnivScholar")
+        Log.d(TAG, "--------------------------------------------------------------------")
+        sRef.get()
+            .addOnSuccessListener { document ->
+            if (document != null) {
+                Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+            } else {
+                Log.d(TAG, "No such document")
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+    }
+
 
     // 버튼 클릭 통합 처리
     fun btnClick(){

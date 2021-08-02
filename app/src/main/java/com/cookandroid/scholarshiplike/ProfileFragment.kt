@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
@@ -19,7 +20,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
-class ProfileFragment : Fragment() {
+class ProfileFragment: Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -45,6 +46,14 @@ class ProfileFragment : Fragment() {
         db = Firebase.firestore
 
         setUserNickname()
+
+        // '기타' 클릭 리스너
+        binding.profileEtc.setOnClickListener {
+            activity?.getSupportFragmentManager()?.beginTransaction()
+                ?.replace(R.id.nav, ProfileEtcFragment(), "profileTab")
+                ?.addToBackStack("profileFragment")
+                ?.commit()
+        }
 
         return view
     }
@@ -95,14 +104,6 @@ class ProfileFragment : Fragment() {
                 it?.startActivity(intent)
             }
         }
-
-        // '기타' 클릭 리스너
-        binding.profileEtc.setOnClickListener {
-            activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.replace(R.id.nav, ProfileEtcFragment(), "profileTab")
-                ?.addToBackStack("profileFragment")
-                ?.commit()
-        }
     }
 
     // 유저 닉네임 가져오기
@@ -114,12 +115,18 @@ class ProfileFragment : Fragment() {
                 .document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
-                    binding.btnProfileUserName.text = result.getField<String>("nickname")
+                    binding?.btnProfileUserName.text = result.getField<String>("nickname")
                 }
                 .addOnFailureListener() { exception ->
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }
+    }
+
+    // 프래그먼트 파괴
+    override fun onDestroyView() {
+        _binding = null
+        super.onDestroyView()
     }
 
 }
