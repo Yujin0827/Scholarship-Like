@@ -16,6 +16,8 @@ class HomeCalendarDateCalculate(date: Date) {
     var currentMaxDate = 0
 
     var dateList = arrayListOf<Int>()
+    var dateList_2D: ArrayList<MutableList<Int>> = arrayListOf()
+
 
     init {
         calendar.time = date
@@ -58,6 +60,21 @@ class HomeCalendarDateCalculate(date: Date) {
         var date = 1
 
         for (i in 1..nextHead) dateList.add(date++)
+        to2D()
+    }
+
+    private fun to2D() {
+        var list:MutableList<Int> = mutableListOf()
+        var i=0
+        for(item in dateList) {
+            if (i%7==0 && i!=0) {
+                dateList_2D.add(list.toMutableList())
+                list.clear()
+            }
+            list.add(item)
+            i++
+        }
+        dateList_2D.add(list.toMutableList())
     }
 
 }

@@ -12,5 +12,10 @@ data class Alarm(val category: String, val title: String, val date: String)
 // Search Activity - Scholarship
 data class SearchScholarship(val title: String, val period_start: String, val period_end : String,  val institution: String)
 
+// 기간 한 개 장학금
 data class Scholarship(val paymentType: String, val title: String, val startdate: String, val enddate: String, val institution: String)
+
+//기간 두 개 (1차, 2차) 장학금
+data class Scholarship2(val paymentType: String, val title: String, val startdate: String, val enddate: String,
+                        val startdate2 : String, val enddate2 : String, val institution: String)
 
