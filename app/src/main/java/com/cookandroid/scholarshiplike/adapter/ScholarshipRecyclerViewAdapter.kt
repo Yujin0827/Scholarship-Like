@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context):
-    ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar) {
+    ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar){
 
     private var mContext1 : Context = mContext
 
@@ -27,6 +27,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
     // inner class로 ViewHolder 정의
     inner class ScholarItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
+        var scholar_paymentType: TextView = itemView!!.findViewById(R.id.scholar_paymentType)
         var scholar_title: TextView = itemView!!.findViewById(R.id.scholar_title)
         var scholar_startDate: TextView = itemView!!.findViewById(R.id.scholar_startDate)
         var scholar_endDate: TextView = itemView!!.findViewById(R.id.scholar_endDate)
@@ -38,6 +39,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
             Log.d("ListAdapter", "===== ===== ===== ===== bind ===== ===== ===== =====")
             Log.d("ListAdapter", data.title)
 
+            scholar_paymentType.text = data.paymentType
             scholar_title.text = data.title
             scholar_institution.text = data.institution
 
@@ -45,8 +47,8 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
                 startToend.visibility = GONE
             }
 
-                scholar_startDate.text = data.startdate
-                scholar_endDate.text = data.enddate
+            scholar_startDate.text = data.startdate
+            scholar_endDate.text = data.enddate
 
 
             itemView.setOnClickListener {
@@ -66,7 +68,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
     }
 
     override fun getItemCount(): Int {
-        return list.count()
+        return list.size
     }
 
     // ViewHolder의 bind 메소드를 호출한다.

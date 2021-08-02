@@ -65,7 +65,7 @@
                 android:id="@+id/tv_terms_service"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/ic_sinup_edittext_background"
+                android:background="@drawable/ic_edittext_box_background"
                 android:layout_marginLeft="30dp"
                 android:visibility="gone"/>
         </LinearLayout>
@@ -100,7 +100,7 @@
                 android:id="@+id/tv_terms_privacy"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:background="@drawable/ic_sinup_edittext_background"
+                android:background="@drawable/ic_edittext_box_background"
                 android:layout_marginLeft="30dp"
                 android:visibility="gone"/>
         </LinearLayout>

@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!-- 타이틀 -->
+    <FrameLayout
+        android:id="@+id/view_questions_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/maincolor_background"
+        android:orientation="horizontal"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/scrollView_questions"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/btn_questions_back"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/ic_back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/questions"
+            android:textColor="@color/text_black"
+            android:textSize="20sp" />
+
+    </FrameLayout>
+
+    <!-- 스크롤뷰 -->
+    <ScrollView
+        android:id="@+id/scrollView_questions"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/view_questions_title">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:text="@string/questions_subtitle"
+                android:textColor="@color/maincolor"
+                android:textSize="16sp"
+                android:layout_gravity="center_horizontal"/>
+
+            <!-- 문의 내용 작성 -->
+            <EditText
+                android:id="@+id/edittxt_questions_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/ic_edittext_box_background"
+                android:gravity="start"
+                android:hint="@string/write_questions"
+                android:inputType="textMultiLine"
+                android:lines="10"
+                android:padding="15dp"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/txt_result_send_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send_mail_result"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+
+            <Button
+                android:id="@+id/btn_send_mail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/send_mail"
+                android:background="@color/maincolor"
+                android:textColor="#ffffff"
+                android:layout_gravity="right"
+                android:layout_marginRight="10dp"/>
+        </LinearLayout>
+
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

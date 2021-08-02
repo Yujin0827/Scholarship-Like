@@ -3,9 +3,9 @@
     <string name="app_name_korean">장학라이크</string>
 
     <!-- 홈탭 페이지 -->
-    <string name="scholar_cnt_ex">OOO님은 \n최대 O건의 \n장학금을 받을 수 있어요!</string>
-    <string name="scholar_input_name">\t님은</string>
-    <string name="scholar_cnt_max">최대\t</string>
+    <string name="scholar_input_name">님은</string>
+    <string name="scholar_cnt_max">최대</string>
+    <string name="scholar_num">827</string>
     <string name="scholar_cnt_num">건의</string>
     <string name="scholar_get">장학금을 받을 수 있어요!</string>
 
@@ -23,7 +23,7 @@
     <string name="alarm_magazine">매거진</string>
     <string name="heart_post">좋아요 누른 게시물</string>
     <string name="app_info">앱 정보</string>
-    <string name="inquiry">문의</string>
+    <string name="questions">문의</string>
     <string name="logout">로그아웃</string>
     <string name="signout">탈퇴하기</string>
 
@@ -40,8 +40,8 @@
     <string name="school_leaving">휴학</string>
     <string name="semester">이수 학기</string>
     <string name="pre_semester">직전 학기</string>
-    <string name="pre_semester_class">직전학기 이수 학점</string>
-    <string name="pre_semester_score">직전학기 성적</string>
+    <string name="pre_semester_class">이수 학점</string>
+    <string name="pre_semester_score">성적</string>
     <string name="area">거주지</string>
     <string name="country">국적</string>
     <string name="country_local">내국인</string>
@@ -66,9 +66,8 @@
     <string name="cancel">취소</string>
 
     <!-- 모든 scholarship.xml에 사용 -->
-    <string name="title_input">장학금을 최대</string>
-    <string name="title_num">N</string>
-    <string name="title_get">건을 받을 수 있습니다.</string>
+    <string name="title1">해당 정보로 최대 </string>
+    <string name="title2">건의 장학금을 받으실 수 있습니다.</string>
     <string name="my_scholarship">내 장학금</string>
     <string name="all_scholarship">전체 장학금</string>
     <string name="korea_scholar">국가 장학금</string>
@@ -76,6 +75,7 @@
     <string name="univ_scholar">교내 장학금</string>
     <string name="msg_token_fmt">토큰 정보</string>
     <string name="period_middle">~</string>
+    <string name="reset">초기화</string>
 
     <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
@@ -138,5 +138,21 @@
     <string name="note">비고</string>
     <string name="to">~</string>
 
+    <!-- 탈퇴하기 -->
+    <string name="signout_really">정말 탈퇴하시겠어요?</string>
+    <string name="signout_req_reason">장학라이크를 탈퇴하시려는 이유를 선택해주세요. 어플 개선에 많은 도움이 됩니다.</string>
+    <string name="rsn_info">정보가 부족하다</string>
+    <string name="rsn_uncom">어플 이용이 불편하다</string>
+    <string name="rsn_better">더 좋은 서비스가 존재한다</string>
+    <string name="rsn_useless">사용 빈도가 낮다</string>
+    <string name="write_rsn">기타 이유를 작성 해 주세요.</string>
+    
+    <!-- 문의 -->
+    <string name="sender">보낸사람</string>
+    <string name="receiver">받는사람</string>
+    <string name="write_questions">문의 내용을 작성 해 주세요.</string>
+    <string name="send_mail">메일 보내기</string>
+    <string name="send_mail_result">답변은 보내신 메일 주소로 수신됩니다.\n2~3일 정도 소요될 수 있습니다.</string>
+    <string name="questions_subtitle">장학라이크로 문의 메일 보내기</string>
 
 </resources>

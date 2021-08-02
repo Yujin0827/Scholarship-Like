@@ -85,6 +85,7 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
             val monthFormat = SimpleDateFormat("MM")
             val cur = System.currentTimeMillis()
             val curMonth = pageindex+monthFormat.format(cur).toInt()
+            var givemonth = curMonth
 
             // 날짜 표시
             itemCalendarDateText.setText(data.toString())
@@ -104,16 +105,15 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
 
             //일정 추가
             for (item in scholarList) {
-                addScheduel(item, position, firstDateIndex, lastDateIndex, itemCalendarContents)
+                addScheduel("#AFEEEE",item, position, firstDateIndex, lastDateIndex, itemCalendarContents)
             }
+
+            if(position < firstDateIndex) givemonth = curMonth-1
+            else if (position > lastDateIndex) givemonth = curMonth+1
 
             //클릭 시 팝업창
             itemCalendar.setOnClickListener {
-
-                var Month = curMonth
-                if(position < firstDateIndex) Month = curMonth-1 else if (position > lastDateIndex) Month = curMonth+1
-
-                HomeCalendarPopupFragment(scholarList, context, curMonth, dataList[position], position, firstDateIndex, lastDateIndex).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
+                HomeCalendarPopupFragment(scholarList, context, givemonth, dataList[position], position, firstDateIndex, lastDateIndex).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
             }
         }
     }
@@ -134,7 +134,7 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
     }
 
     // <일정 추가 함수>
-    fun addScheduel(item: tmpScholarship, position: Int, firstDateIndex: Int, lastDateIndex: Int, itemCalendarContents: LinearLayout) {
+    fun addScheduel(backgroundcolor: String ,item: tmpScholarship, position: Int, firstDateIndex: Int, lastDateIndex: Int, itemCalendarContents: LinearLayout) {
 
         val monthFormat = SimpleDateFormat("MM")
         val dateFormat = SimpleDateFormat("dd")
@@ -148,53 +148,68 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
         val tmpenddate = dateFormat.format(item.enddate).toInt()
         val tmpendmonth = monthFormat.format(item.enddate).toInt() - curMonth
         val tmptext = item.title
-        val tmpbgcol = "#DEDEDE"
+        val tmpbgcol = backgroundcolor
 
         if (tmpstartmonth == tmpendmonth) { //시작-끝 월 같을 때
 
-            for (i in tmpstartdate..tmpenddate) {
-                if (dataList[position] == i && pageindex == tmpstartmonth && position > firstDateIndex && position < lastDateIndex) {
-
-                    if (i != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
-                    else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
+            if(pageindex == tmpstartmonth) { //해당 달이면
+                if(position in firstDateIndex..lastDateIndex) {
+                    if (dataList[position] in tmpstartdate..tmpenddate) {
+                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
+                        else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
+                    }
                 }
             }
 
         } else { //시작-끝 월 다를 때
-
-            if (pageindex == tmpstartmonth) { //시작 달의 달력일 때
-                for (i in tmpstartdate..42) { //일정 시작부터 달의 끝까지 반복
-
-                    if (dataList[position] == i && position > firstDateIndex) { //해당날짜와 같고 첫번째날의 인덱스보다 크면
-
-                        //일정 이름 처음 한 칸에만 표시
-                        if (i != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
+            //1. 시작 달 달력
+            if (pageindex == tmpstartmonth) {
+                if (position in firstDateIndex..lastDateIndex) {
+                    if (dataList[position] >= tmpstartdate) {
+                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
                         else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
 
                     }
                 }
             }
 
-            if (tmpstartmonth < pageindex && pageindex < tmpendmonth && position > firstDateIndex && position <= lastDateIndex) { //시작달과 끝달 사이일때
-
-                createView(tmptext, tmpbgcol, "#00000000")
+            // 2. 시작-끝 사이 달력
+            if (pageindex in (tmpstartmonth + 1) until tmpendmonth) {
+                if(position in firstDateIndex..lastDateIndex) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
             }
 
-            if (pageindex == tmpendmonth) { //해당 일정의 종료 달의 달력일때
-                for (i in 1..tmpenddate) { //달의 시작부터 일정의 끝까지 반복
+            //3. 끝 달 달력
+            if (pageindex == tmpendmonth) {
+                if(position in firstDateIndex..lastDateIndex) {
+                    if (dataList[position] <= tmpenddate) {
+                        itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
+                    }
+                }
+            }
 
-                    if (dataList[position] == i && position < lastDateIndex) {
-
-                        //일정 이름 처음 한 칸에만 표시
-                        if (i != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
+            //4. 해당 달 앞
+            if(pageindex-1 == tmpstartmonth) {
+                if(position < firstDateIndex) {
+                    if(dataList[position] >= tmpstartdate) {
+                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
                         else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
                     }
                 }
             }
+
+            //5. 해당 달 뒤
+            if(pageindex+1 == tmpendmonth) {
+                if(position > lastDateIndex) {
+                    if(dataList[position] <= tmpenddate) {
+                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
+                        else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
+                    }
+                }
+            }
+
         }
     }
 }
-
 
 //            //단일 일정
 //            //임시날짜(계산필요)

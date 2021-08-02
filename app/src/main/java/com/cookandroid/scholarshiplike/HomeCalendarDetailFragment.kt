@@ -98,7 +98,6 @@ class HomeCalendarDetailFragment : Fragment() {
                                     }
                                 }
 
-                                Log.w(TAG, scholar.toString())
                                 calendar_view.layoutManager = gridLayoutManager
                                 calendar_view.adapter = HomeCalendarDetailAdapter(this,mContext,calendar_layout,currentDate,pageIndex,scholar)
 

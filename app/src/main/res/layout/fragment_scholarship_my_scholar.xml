@@ -12,14 +12,49 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+
+            <TextView
+                android:id="@+id/title1"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="10dp"
-            android:layout_gravity="center"
+            android:gravity="center"
             android:textColor="#000000"
-            android:text="해당 정보로 최대 N건의 장학금을 받으실 수 있습니다" />
+            android:text="@string/title1" />
+
+            <TextView
+                android:id="@+id/scholar_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="3dp"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:textColor="#FF0000"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/title2"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:text="@string/title2" />
+
+
+        </LinearLayout>
+
 
     <LinearLayout
         android:id="@+id/mySchloarshipLaygout"
@@ -59,7 +94,7 @@
                         android:layout_marginBottom="3dp"
                         android:text="@string/income"
                         android:textColor="#312E2E"
-                        android:textSize="16sp" />
+                        android:textSize="13sp" />
 
                     <Spinner
                         android:id="@+id/incomeSpinner"
@@ -70,40 +105,6 @@
 
                     </Spinner>
 
-                    <TextView
-                        android:id="@+id/attending"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="3dp"
-                        android:text="@string/school_att_leav"
-                        android:textColor="#312E2E"
-                        android:textSize="16sp" />
-
-                    <RadioGroup
-                        android:id="@+id/attendingCheck"
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:layout_marginLeft="10dp"
-                        android:orientation="horizontal"
-                        android:layout_marginBottom="15dp">
-
-                        <RadioButton
-                            android:id="@+id/inSchool"
-                            android:layout_width="0dp"
-                            android:layout_height="match_parent"
-                            android:layout_weight="1"
-                            android:text="@string/school_attending"
-                            android:textSize="13dp"/>
-
-                        <RadioButton
-                            android:id="@+id/outSchool"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/school_leaving"
-                            android:textSize="13dp"/>
-                    </RadioGroup>
 
                     <LinearLayout
                         android:id="@+id/semesterLayout"
@@ -122,7 +123,7 @@
                             android:layout_weight="1"
                             android:text="@string/semester"
                             android:textColor="#312E2E"
-                            android:textSize="16sp" />
+                            android:textSize="13sp" />
 
                         <Spinner
                             android:id="@+id/semesterSpinner"
@@ -143,58 +144,63 @@
                         android:layout_marginLeft="10dp"
                         android:text="@string/pre_semester"
                         android:textColor="#312E2E"
-                        android:textSize="16sp" />
+                        android:textSize="13sp" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="33dp"
                         android:layout_marginLeft="20dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/myPreGradeText"
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_gravity="center"
                             android:text="@string/pre_semester_class"
-                            android:textColor="@color/text_black" />
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp"
+                            android:gravity="center"/>
 
                         <EditText
                             android:id="@+id/myPreGrade"
-                            android:layout_width="40dp"
-                            android:layout_height="wrap_content"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
                             android:layout_marginLeft="10dp"
-                            android:ems="2"
+                            android:ems="3"
                             android:inputType="number"
                             android:maxLength="2"
-                            android:textSize="10sp"
+                            android:textSize="12sp"
                             android:hint="18"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            />
                     </LinearLayout>
 
 
                     <LinearLayout
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="33dp"
                         android:layout_marginLeft="20dp"
                         android:layout_marginBottom="15dp"
                         android:orientation="horizontal">
 
                         <TextView
                             android:id="@+id/myPreScoreText"
-                            android:layout_width="60dp"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:gravity="center"
                             android:text="@string/pre_semester_score"
-                            android:textColor="@color/text_black" />
+                            android:textColor="@color/text_black"
+                            android:textSize="12sp"
+                            />
 
                         <EditText
                             android:id="@+id/myPreScore"
-                            android:layout_width="40dp"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="10sp"
-                            android:ems="2"
-                            android:layout_marginLeft="10dp"
+                            android:textSize="12sp"
+                            android:ems="3"
+                            android:layout_marginLeft="35dp"
                             android:inputType="numberDecimal"
                             android:maxLength="3"
                             android:hint="3.5"
@@ -207,7 +213,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
                         android:text="@string/area"
-                        android:textSize="16sp"
+                        android:textSize="13sp"
                         android:textColor="#312E2E"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -223,15 +229,6 @@
 
                         </Spinner>
 
-                        <Spinner
-                            android:id="@+id/inAreaSpinner"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginLeft="10dp">
-
-                        </Spinner>
-
-
                     </LinearLayout>
 
 
@@ -243,7 +240,7 @@
                         android:layout_marginBottom="10dp"
                         android:text="@string/extra"
                         android:textColor="#312E2E"
-                        android:textSize="16sp" />
+                        android:textSize="13sp" />
 
                     <CheckBox
                         android:id="@+id/nationalMerit"
@@ -252,7 +249,8 @@
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="3dp"
                         android:text="@string/extra_national_merit"
-                        android:textColor="#312E2E" />
+                        android:textColor="#312E2E"
+                        android:textSize="12sp"/>
 
                     <CheckBox
                         android:id="@+id/disabled"
@@ -261,12 +259,19 @@
                         android:layout_marginBottom="10dp"
                         android:layout_height="18dp"
                         android:text="@string/extra_disabled"
-                        android:textColor="#312E2E"/>
+                        android:textColor="#312E2E"
+                        android:textSize="12sp"/>
 
                     <Button
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/save"/>
+                        android:id="@+id/reset_bt"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:text="@string/reset"
+                        android:textSize="13sp"
+                        android:background="@color/pointColor"
+                        android:layout_gravity="center"
+                        android:textStyle="bold"
+                        android:layout_marginTop="15dp"/>
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
