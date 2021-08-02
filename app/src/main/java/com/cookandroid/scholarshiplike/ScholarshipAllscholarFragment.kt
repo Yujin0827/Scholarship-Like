@@ -16,9 +16,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scholarship_detail.*
 import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 
 
@@ -31,10 +29,8 @@ class ScholarshipAllscholarFragment : Fragment() {
     private lateinit var RlistAdapter: ScholarshipRecyclerViewAdapter // 리사이클러뷰 어댑터
     private var db = Firebase.firestore
     var dataList: MutableList<Scholarship> = arrayListOf() // 특정 장학금 리스트
-    var allDataList: MutableList<Scholarship> = arrayListOf() // 전체 장학금 리스트
     private lateinit var mContext1: Context //프래그먼트의 정보 받아오는 컨텍스트 선언
 
-    var scholarList = listOf<String>("Nation", "UnivScholar", "OutScholar")
 
     private val koreaScholar : MutableList<String> = ArrayList()
     private val outScholar : MutableList<String> = ArrayList()
@@ -50,7 +46,9 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         mContext1 = requireActivity()
 
-
+        allData("Nation")
+        allData("OutScholar")
+        allData("UnivScholar") // 모든 장학금 불러오기
     }
 
 
@@ -60,8 +58,6 @@ class ScholarshipAllscholarFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_scholarship_all_scholar, container, false)
-
-
 
         area() // 지역 리스트 가져오기
 
@@ -130,7 +126,6 @@ class ScholarshipAllscholarFragment : Fragment() {
 
             getData("OutScholar", "place", areaText)
 
-
             false
         }
     }
@@ -165,12 +160,14 @@ class ScholarshipAllscholarFragment : Fragment() {
             .whereEqualTo(field_key, field_value)
             .get()
             .addOnSuccessListener{ result ->
+
+                RlistAdapter.notifyDataSetChanged()
+                dataList.clear() // 리스트 재정의
+
                 for(document in result){
                     if(document != null){
-                        RlistAdapter.notifyDataSetChanged()
-                        dataList.clear() // 리스트 재정의
 
-                        for (document in result) {  // 가져온 문서들은 result에 들어감
+                          // 가져온 문서들은 result에 들어감
 
                             //  필드값 가져오기
                             val paymentType = document["paymentType"].toString()
@@ -189,12 +186,10 @@ class ScholarshipAllscholarFragment : Fragment() {
                                 val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
                                 dataList.add(item)
                             }
-                        }
+
                         RlistAdapter.submitList(dataList)
                         Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
-
                     }
-
                 }
             }
             .addOnFailureListener { exception ->
@@ -204,20 +199,16 @@ class ScholarshipAllscholarFragment : Fragment() {
 
     }
 
-    private fun allData( kind : String){ // 데이터 가져오기
-
-        // 작업할 문서
-        db.collection("Scholarship")
-            .document(kind)
-            .collection("ScholarshipList")
-            .get()
-            .addOnSuccessListener{ result ->
-                for(document in result){
-                    if(document != null){
-
-
-                        for (document in result) {  // 가져온 문서들은 result에 들어감
-
+    private fun allData(kind : String){ // 데이터 가져오기
+            // 작업할 문서
+            db.collection("Scholarship")
+                .document(kind)
+                .collection("ScholarshipList")
+                .get()
+                .addOnSuccessListener { result ->
+                    for (document in result) {
+                        if (document != null) {
+                            // 가져온 문서들은 result에 들어감
                             //  필드값 가져오기
                             val paymentType = document["paymentType"].toString()
                             val period = document["period"] as Map<String, Timestamp>
@@ -227,26 +218,26 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            if(startdate == null && enddate == null){
+                            if (startdate == null && enddate == null) {
                                 val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
                                 dataList.add(item)
-                            }
-                            else{
+                            } else {
                                 val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
                                 dataList.add(item)
-                            }
+                                }
+
+                            RlistAdapter.submitList(dataList)
+                            Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
                         }
-                        RlistAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
-
                     }
-
                 }
-            }
-            .addOnFailureListener { exception ->
-                // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
-            }
+                .addOnFailureListener { exception ->
+                    // 실패할 경우
+                    Log.w(
+                        "ScholarshipAllscholarFragment",
+                        "Error getting UnivScholar documents: $exception"
+                    )
+                }
 
     }
 

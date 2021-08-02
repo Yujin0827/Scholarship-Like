@@ -16,6 +16,7 @@ class SignupProfileInfoActivity :AppCompatActivity() {
 
     lateinit var txtNickname: String
     lateinit var txtUniv: String
+    lateinit var univList: ArrayList<String>
 
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName

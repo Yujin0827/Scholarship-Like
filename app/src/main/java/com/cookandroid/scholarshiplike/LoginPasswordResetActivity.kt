@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import kotlinx.android.synthetic.main.activity_login_password_reset.*
 
 class LoginPasswordResetActivity : AppCompatActivity(){
@@ -34,7 +35,16 @@ class LoginPasswordResetActivity : AppCompatActivity(){
                             result_send_mail.visibility = View.VISIBLE  // 전송 결과 출력
                         }
                         else {
-                            Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
+                            // 예외 토스트 메시지
+                            val errorCode =  (task.exception as FirebaseAuthException).errorCode
+                            when(errorCode) {
+                                "ERROR_INVALID_EMAIL" -> {
+                                    Toast.makeText(this, "올바른 이메일 주소의 형식을 입력하세요", Toast.LENGTH_SHORT).show()
+                                }
+                                "ERROR_USER_NOT_FOUND" -> {
+                                    Toast.makeText(this, "가입되어 있지 않은 이메일입니다", Toast.LENGTH_SHORT).show()
+                                }
+                            }
                         }
                     }
             }

@@ -13,6 +13,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
@@ -71,8 +72,17 @@ class LoginActivity :AppCompatActivity(){
                             startActivity(iT)
                             finish()
                         }
-                        else {
-                            Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
+                    }
+                    .addOnFailureListener {
+                        // 예외 토스트 메시지
+                        val errorCode = (it as FirebaseAuthException).errorCode
+                        when(errorCode) {
+                            "ERROR_INVALID_EMAIL" -> {
+                                Toast.makeText(this, "올바른 이메일 주소의 형식을 입력하세요", Toast.LENGTH_SHORT).show()
+                            }
+                            "ERROR_USER_NOT_FOUND" -> {
+                                Toast.makeText(this, "가입되어 있지 않은 이메일입니다", Toast.LENGTH_SHORT).show()
+                            }
                         }
                     }
             }

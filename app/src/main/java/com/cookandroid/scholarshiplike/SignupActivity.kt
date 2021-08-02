@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivitySignupBinding
 import com.cookandroid.scholarshiplike.databinding.FragmentLoginTermsBinding
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
@@ -30,6 +31,7 @@ class SignupActivity :AppCompatActivity() {
     lateinit var txtPasswordConfirm:String
     lateinit var txtNickname:String
     lateinit var txtUniv:String
+    lateinit var univList: ArrayList<String>
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -37,9 +39,29 @@ class SignupActivity :AppCompatActivity() {
         _binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getUnivList()
         //버튼 클릭을 통합 처리
-        btnClick()
+//        btnClick()
     }
+
+    // DB에서 대학교 이름 가져오기
+    private fun getUnivList() {
+        // 대학교 리스트 가져오기
+        val sRef = db.collection("Scholarship").document("UnivScholar")
+        Log.d(TAG, "--------------------------------------------------------------------")
+        sRef.get()
+            .addOnSuccessListener { document ->
+            if (document != null) {
+                Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+            } else {
+                Log.d(TAG, "No such document")
+            }
+        }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
+    }
+
 
     // 버튼 클릭 통합 처리
     fun btnClick(){
@@ -84,8 +106,20 @@ class SignupActivity :AppCompatActivity() {
                     Toast.makeText(this, "회원가입 성공", Toast.LENGTH_LONG).show()
                     updateUserDB()  // 유저 DB 저장
                 }
-                else {
-                    Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
+            }
+            .addOnFailureListener {
+                // 예외 토스트 메시지
+                val errorCode = (it as FirebaseAuthException).errorCode
+                when (errorCode) {
+                    "ERROR_INVALID_EMAIL" -> {
+                        Toast.makeText(this, "올바른 이메일 주소의 형식을 입력하세요", Toast.LENGTH_SHORT).show()
+                    }
+                    "ERROR_EMAIL_ALREADY_IN_USE" -> {
+                        Toast.makeText(this, "이미 사용중인 이메일 입니다", Toast.LENGTH_SHORT).show()
+                    }
+                    "ERROR_WEAK_PASSWORD" -> {
+                        Toast.makeText(this, "안정성이 낮은 비밀번호 입니다", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
     }
