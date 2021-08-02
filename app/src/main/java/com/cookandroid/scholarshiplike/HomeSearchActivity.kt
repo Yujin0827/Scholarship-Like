@@ -62,8 +62,8 @@ class HomeSearchActivity : AppCompatActivity() {
             null_message.show()
         }
         else {
-            resultIntent.putExtra("search_word", binding.searchField.text.toString())
-            startActivity(resultIntent)       // HomeSearchResultActivity 이동
+//            resultIntent.putExtra("search_word", binding.searchField.text.toString())
+//            startActivity(resultIntent)       // HomeSearchResultActivity 이동
         }
     }
 
