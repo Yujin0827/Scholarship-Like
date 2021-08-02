@@ -66,6 +66,8 @@ dependencies {
 
     // banner
     implementation 'com.github.denzcoskun:ImageSlideshow:0.0.7'
+//    implementation 'com.github.smarteist:autoimageslider:1.4.0'
+//    implementation 'com.squareup.picasso:picasso:2.71828'
 
     // recyclerview
     implementation 'androidx.recyclerview:recyclerview:1.2.0'

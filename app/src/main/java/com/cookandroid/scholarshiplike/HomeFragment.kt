@@ -6,13 +6,10 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
@@ -32,6 +29,7 @@ import com.google.firebase.ktx.Firebase
 
 class HomeFragment : Fragment() {
 
+    // binding
     private var _binding: FragmentHomeBinding? = null   // 바인딩 객체
     private val binding get() = _binding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
@@ -43,14 +41,8 @@ class HomeFragment : Fragment() {
     private lateinit var univWebSite: String                        // user 대학교 사이트
     private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
-    private val scholarshipTab = ScholarshipFragment()              // fragment_scholarship 변수
+    private val ScholarshipTab = "Scholarship_Fragment"             // fragment_scholarship 변수
     lateinit var tabNav: BottomNavigationView                       // 하단바 (MainActivity)
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -81,9 +73,7 @@ class HomeFragment : Fragment() {
             tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
             tabNav.menu.findItem(R.id.scholarshipTab).isChecked = true
 
-            activity?.getSupportFragmentManager()?.beginTransaction()
-                ?.replace(R.id.nav, scholarshipTab, "scholarshipTab")
-                ?.commit()
+            (activity as MainActivity).setFragment(ScholarshipTab, ScholarshipFragment())
         }
 
         // AdMob

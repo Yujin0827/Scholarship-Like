@@ -24,7 +24,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 
 
 // fragment 변수 생성
-private const val HomeTab = "Home_fragment"
+private const val HomeTab = "Home_Fragment"
 private const val ScholarshipTab = "Scholarship_Fragment"
 private const val MagazineTab = "Magazine_Fragment"
 private const val ProfileTab = "Profile_Fragment"
@@ -36,8 +36,6 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     // firebase
     var authStateListener: FirebaseAuth.AuthStateListener? = null
     val db = Firebase.firestore
-
-
 
     // 하단바
     lateinit var tabNav : BottomNavigationView
@@ -51,8 +49,6 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         setTheme(R.style.AppTheme)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-
 
         // 현재 유저 확인
         confirmUser()
@@ -120,11 +116,8 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거
+    // 하단바 누르면 탭 화면 전환
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-//        val fm = supportFragmentManager
-//        val transaction: FragmentTransaction = fm.beginTransaction()
-
         when(p0.itemId){
             R.id.homeTab -> {
                 setFragment(HomeTab, HomeFragment())
@@ -140,14 +133,11 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             }
         }
 
-//        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-//        transaction.commit()
-//        transaction.isAddToBackStackAllowed
-
         return true
     }
 
-    private fun setFragment(tag: String, fragment: Fragment) {
+    // fragment setting
+    fun setFragment(tag: String, fragment: Fragment) {
         val fm = supportFragmentManager
         val transaction: FragmentTransaction = fm.beginTransaction()
 
