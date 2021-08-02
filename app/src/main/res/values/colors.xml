@@ -10,4 +10,5 @@
     <color name="contour_line">#979797</color>
     <color name="noti">#FFC800</color>
     <color name="lightgray">#DEDEDE</color>
+    <color name="pointColor">#9CCEFF</color>
 </resources>

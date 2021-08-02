@@ -19,7 +19,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context):
-    ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar) {
+    ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar){
 
     private var mContext1 : Context = mContext
 
@@ -68,7 +68,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
     }
 
     override fun getItemCount(): Int {
-        return list.count()
+        return list.size
     }
 
     // ViewHolder의 bind 메소드를 호출한다.

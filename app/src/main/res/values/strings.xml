@@ -40,8 +40,8 @@
     <string name="school_leaving">휴학</string>
     <string name="semester">이수 학기</string>
     <string name="pre_semester">직전 학기</string>
-    <string name="pre_semester_class">직전학기 이수 학점</string>
-    <string name="pre_semester_score">직전학기 성적</string>
+    <string name="pre_semester_class">이수 학점</string>
+    <string name="pre_semester_score">성적</string>
     <string name="area">거주지</string>
     <string name="country">국적</string>
     <string name="country_local">내국인</string>
@@ -66,9 +66,8 @@
     <string name="cancel">취소</string>
 
     <!-- 모든 scholarship.xml에 사용 -->
-    <string name="title_input">장학금을 최대</string>
-    <string name="title_num">N</string>
-    <string name="title_get">건을 받을 수 있습니다.</string>
+    <string name="title1">해당 정보로 최대 </string>
+    <string name="title2">건의 장학금을 받으실 수 있습니다.</string>
     <string name="my_scholarship">내 장학금</string>
     <string name="all_scholarship">전체 장학금</string>
     <string name="korea_scholar">국가 장학금</string>
@@ -76,6 +75,7 @@
     <string name="univ_scholar">교내 장학금</string>
     <string name="msg_token_fmt">토큰 정보</string>
     <string name="period_middle">~</string>
+    <string name="reset">초기화</string>
 
     <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
