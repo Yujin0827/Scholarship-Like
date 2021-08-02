@@ -1,9 +1,13 @@
 package com.cookandroid.scholarshiplike
 
 import android.annotation.SuppressLint
+import android.app.backup.SharedPreferencesBackupHelper
+import android.content.Context
+import android.content.SharedPreferences
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.*
 import com.cookandroid.scholarshiplike.databinding.ActivityProfileMyConChangeBinding
@@ -47,7 +51,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
     // 데이터 파일에서 가져온 데이터를 변수에 저장
     private fun loadAndSetData() {
-        val pref= this.getPreferences(0)
+        val pref : SharedPreferences = getSharedPreferences("SharedData", Context.MODE_PRIVATE)
 
         // key에 해당하는 value 가져오기
         userIncome = pref.getString("KEY_USER_INCOME", null)
@@ -283,7 +287,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
     // 데이터 파일에 유저 조건 데이터 저장
     private fun saveUserConditionData() {
-        val pref = this.getPreferences(0)
+        val pref : SharedPreferences = getSharedPreferences("SharedData", Context.MODE_PRIVATE)
         val editor=pref.edit()
 
         // 키와 밸류를 쌍으로 저장 & apply
@@ -301,5 +305,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         userDisabled?.let { editor.putBoolean("KEY_USER_DISABLED", it) }
 
         editor.apply()
+
+
     }
 }

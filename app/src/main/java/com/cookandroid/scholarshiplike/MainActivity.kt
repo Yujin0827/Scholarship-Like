@@ -20,8 +20,14 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_signup.*
 import com.google.firebase.messaging.FirebaseMessaging
+
+
+// Fragment 변수 생성
+private const val HomeTab = "Home_fragment"
+private const val ScholarshipTab = "Scholarship_Fragment"
+private const val MagazineTab = "Magazine_Fragment"
+private const val ProfileTab = "Profile_Fragment"
 
 open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
     @Suppress("PrivatePropertyName")
@@ -56,10 +62,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         // 처음 화면 - 홈탭
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.nav, HomeFragment(), "homeTab")
-            .commit()
+        setFragment(HomeTab, HomeFragment())
 
         // 하단바 연결
         tabNav.setOnNavigationItemSelectedListener(this)
@@ -67,7 +70,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         // 화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        //DB에 FCM 토큰 추가
+        // DB에 FCM 토큰 추가
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.w("FCM Test", "Fetching FCM registration token failed", task.exception)
@@ -109,47 +112,81 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             Log.d(TAG, "Current user doesn't exist!")
             var iT = Intent(this, LoginActivity::class.java)
             startActivity(iT)
-            finish()    //현재 activity 제거
+            finish()    // 현재 activity 제거
         }
     }
 
     // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
-        val fm = supportFragmentManager
-        val transaction: FragmentTransaction = fm.beginTransaction()
-
         when(p0.itemId){
             R.id.homeTab -> {
-                fm.popBackStack("homeTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)    // BackStack에서 해당 fragment 제거
-                val hometab = HomeFragment()                               // fragment 변수 생성
-                transaction.replace(R.id.nav, hometab, "homeTab")     // fragment 화면 전환
-                transaction.addToBackStack("homeTab")               // fragment 생성하면서 BackStack 생성
+                setFragment(HomeTab, HomeFragment())
             }
             R.id.scholarshipTab -> {
-                fm.popBackStack("scholarshipTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                val scholarshiptab = ScholarshipFragment()
-                transaction.replace(R.id.nav, scholarshiptab, "scholarshipTab")
-                transaction.addToBackStack("scholarshipTab")
+                setFragment(ScholarshipTab, ScholarshipFragment())
             }
             R.id.magazineTab -> {
-                fm.popBackStack("magazineTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                val magazinetab = MagazineFragment()
-                transaction.replace(R.id.nav, magazinetab, "magazineTab")
-                transaction.addToBackStack("magazineTab")
+                setFragment(MagazineTab, MagazineFragment())
             }
             R.id.profileTab -> {
-                fm.popBackStack("profileTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
-                val profiletab = ProfileFragment()
-                transaction.replace(R.id.nav, profiletab, "profileTab")
-                transaction.addToBackStack("profileTab")
+                setFragment(ProfileTab, ProfileFragment())
             }
         }
 
-        transaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-        transaction.commit()
-        transaction.isAddToBackStackAllowed
-
         return true
+    }
+
+    // Tab Fragment show & hide
+    private fun setFragment(tag: String, fragment: Fragment) {
+        val fm = supportFragmentManager
+        val transaction: FragmentTransaction = fm.beginTransaction()
+
+        if (fm.findFragmentByTag(tag) == null) {
+            transaction.add(R.id.nav, fragment, tag)
+        }
+
+        val hometab = fm.findFragmentByTag(HomeTab)
+        val scholarshiptab = fm.findFragmentByTag(ScholarshipTab)
+        val magazinetab = fm.findFragmentByTag(MagazineTab)
+        val profiletab = fm.findFragmentByTag(ProfileTab)
+
+        // Hide all Fragment
+        if (hometab != null) {
+            transaction.hide(hometab)
+        }
+        if (scholarshiptab != null) {
+            transaction.hide(scholarshiptab)
+        }
+        if (magazinetab != null) {
+            transaction.hide(magazinetab)
+        }
+        if (profiletab != null) {
+            transaction.hide(profiletab)
+        }
+
+        // Show  current Fragment
+        if (tag == HomeTab) {
+            if (hometab != null) {
+                transaction.show(hometab)
+            }
+        }
+        if (tag == ScholarshipTab) {
+            if (scholarshiptab != null) {
+                transaction.show(scholarshiptab)
+            }
+        }
+        if (tag == MagazineTab) {
+            if (magazinetab != null) {
+                transaction.show(magazinetab)
+            }
+        }
+        if (tag == ProfileTab) {
+            if (profiletab != null) {
+                transaction.show(profiletab)
+            }
+        }
+
+        transaction.commitAllowingStateLoss()
     }
 
     // fragment 클릭했을 때 자동적으로 하단바 아이콘 변경 ( 뒤로가기 눌렀을 때 호출 )

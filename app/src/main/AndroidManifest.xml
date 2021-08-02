@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.cookandroid.scholarshiplike">
-
     <!-- internet 권한 추가 -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -13,12 +12,12 @@
         android:roundIcon="@drawable/ic_round_button_background"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".MainViewModel"></activity>
 
         <service
             android:name=".DataService"
             android:enabled="true"
-            android:exported="true"/>
-
+            android:exported="true" />
         <service
             android:name=".SLFirebaseMessagingService"
             android:exported="false">
@@ -26,24 +25,25 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-
-        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
-            See README(https://goo.gl/l4GJaQ) for more. -->
+        <!--
+ Set custom default icon. This is used when no icon is set for incoming notification messages.
+            See README(https://goo.gl/l4GJaQ) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_icon"
             android:resource="@drawable/ic_notifications_black_24dp" />
-        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
-             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <!--
+ Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more.
+        -->
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_color"
             android:resource="@color/noti" />
-
         <!--
         <meta-data
             android:name="com.google.firebase.messaging.default_notification_channel_id"
             android:value="@string/default_notification_channel_id" />
         -->
-
         <!-- AdMob -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
@@ -52,31 +52,20 @@
         <activity android:name=".ProfileChangeActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-
-        <!-- 로그인 -->
-        <activity android:name=".LoginActivity"/>
-
-        <!-- 비밀번호 재설정 -->
-        <activity android:name=".LoginPasswordResetActivity"/>
-
-        <!-- 회원가입 -->
-        <activity android:name=".SignupActivity"/>
-
-        <!-- 초기 프로필 정보 입력 -->
-        <activity android:name=".SignupProfileInfoActivity"/>
-
-        <!-- 검색창 -->
+        </activity> <!-- 로그인 -->
+        <activity android:name=".LoginActivity" /> <!-- 비밀번호 재설정 -->
+        <activity android:name=".LoginPasswordResetActivity" /> <!-- 회원가입 -->
+        <activity android:name=".SignupActivity" /> <!-- 초기 프로필 정보 입력 -->
+        <activity android:name=".SignupProfileInfoActivity" /> <!-- 검색창 -->
         <activity
             android:name=".HomeSearchActivity"
-            android:windowSoftInputMode="adjustResize" >
-
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
             </intent-filter>
@@ -84,37 +73,19 @@
             <meta-data
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable" />
-        </activity>
-
-        <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
+        </activity> <!-- 검색 대화상자 표시 & 검색어 HomeSearchActivity에 전달해주는 Activity -->
         <activity android:name=".HomeSearchResultActivity">
             <meta-data
                 android:name="android.app.default_searchable"
                 android:value=".HomeSearchActivity" />
-        </activity>
-
-        <!-- 내 조건 수정 -->
-        <activity android:name=".ProfileMyConChangeActivity" />
-
-        <!-- 알림 -->
-        <activity android:name=".AlarmActivity" />
-
-        <!-- 좋아요 -->
-        <activity android:name=".LikeContentActivity" />
-
-        <!-- 앱 정보 -->
-        <activity android:name=".AppInfoActivity"/>
-
-        <!-- 알림 상세 -->
-        <activity android:name=".AlarmDetailActivity" />
-
-        <!-- 매거진 상세 -->
-        <activity android:name=".MagazineDetailActivity" />
-
-        <!-- 장학금 상세 -->
-        <activity android:name=".ScholarshipDetailActivity" />
-
-        <!-- 탈퇴하기 -->
+        </activity> <!-- 내 조건 수정 -->
+        <activity android:name=".ProfileMyConChangeActivity" /> <!-- 알림 -->
+        <activity android:name=".AlarmActivity" /> <!-- 좋아요 -->
+        <activity android:name=".LikeContentActivity" /> <!-- 앱 정보 -->
+        <activity android:name=".AppInfoActivity" /> <!-- 알림 상세 -->
+        <activity android:name=".AlarmDetailActivity" /> <!-- 매거진 상세 -->
+        <activity android:name=".MagazineDetailActivity" /> <!-- 장학금 상세 -->
+        <activity android:name=".ScholarshipDetailActivity" /> <!-- 탈퇴하기 -->
         <activity
             android:name=".ProfileSignoutActivity"
             android:windowSoftInputMode="adjustResize" />

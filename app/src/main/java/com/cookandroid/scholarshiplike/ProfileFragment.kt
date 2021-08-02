@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
@@ -20,7 +19,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
-class ProfileFragment: Fragment() {
+class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
     private val binding get() = _binding!!
@@ -31,11 +30,7 @@ class ProfileFragment: Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
@@ -104,6 +99,7 @@ class ProfileFragment: Fragment() {
                 it?.startActivity(intent)
             }
         }
+
     }
 
     // 유저 닉네임 가져오기
@@ -115,7 +111,7 @@ class ProfileFragment: Fragment() {
                 .document(user.uid)
                 .get()
                 .addOnSuccessListener { result ->
-                    binding?.btnProfileUserName.text = result.getField<String>("nickname")
+                    binding.btnProfileUserName.text = result.getField<String>("nickname")
                 }
                 .addOnFailureListener() { exception ->
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
