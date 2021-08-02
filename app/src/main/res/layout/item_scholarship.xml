@@ -79,6 +79,41 @@
 
         </LinearLayout>
 
+<!--        <LinearLayout-->
+<!--            android:id="@id/scholar_period2"-->
+<!--            android:orientation="horizontal"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintStart_toStartOf="parent"-->
+<!--            app:layout_constraintEnd_toEndOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/scholar_period"-->
+<!--            app:layout_constraintBottom_toTopOf="@id/scholar_institution">-->
+
+
+
+<!--            <TextView-->
+<!--                android:id="@+id/scholar_startDate2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="12sp"-->
+<!--                android:layout_marginLeft="3dp"-->
+<!--                android:layout_marginRight="3dp"/>-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/startDateToEndDate2"-->
+<!--                android:layout_width="10dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/to" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/scholar_endDate2"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="12sp"-->
+<!--                android:layout_marginLeft="3dp"/>-->
+
+<!--        </LinearLayout>-->
+
 
         <TextView
             android:id="@+id/scholar_institution"
@@ -88,19 +123,8 @@
             android:layout_marginLeft="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scholar_period"
-            app:layout_constraintBottom_toBottomOf="@+id/scholar_like" />
+            app:layout_constraintTop_toBottomOf="@+id/scholar_period"/>
 
-        <TextView
-            android:id="@+id/scholar_like"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="12sp"
-            android:layout_marginLeft="3dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scholar_institution"
-            app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

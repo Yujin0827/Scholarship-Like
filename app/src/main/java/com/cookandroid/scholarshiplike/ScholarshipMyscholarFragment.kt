@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.R.*
 import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipMyScholarBinding
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
@@ -40,7 +41,13 @@ class ScholarshipMyscholarFragment : Fragment() {
     var userNationalMerit :Boolean? = false  //보훈 보상 대상자 여부
     var userDisabled :Boolean? = false   //장애 여부
 
+    var user = Firebase.auth.currentUser // 사용자 가져오기
+    private lateinit var userUid : String
+    private lateinit var userUniv : String
+
     lateinit var listSize : String
+
+
 
 
     override fun onAttach(context: Context) {
@@ -48,15 +55,14 @@ class ScholarshipMyscholarFragment : Fragment() {
 
         mContext = requireActivity()
 
+        getData()
+
         allData(object : MyCallback{
             override fun onCallback(value: MutableList<Scholarship>) {
                 listSize = dataList.size.toString()
                 binding.scholarCount.text = listSize
-                Log.w("콜배배배배배배배배배뱁백", listSize)
             }
         })
-
-
 
 
     }
@@ -68,7 +74,11 @@ class ScholarshipMyscholarFragment : Fragment() {
         binding = FragmentScholarshipMyScholarBinding.inflate(layoutInflater)
 
 
+
+
         initSetCondition()
+
+
 
 
         return binding.root
@@ -235,11 +245,58 @@ class ScholarshipMyscholarFragment : Fragment() {
         }
     }
 
+    private fun getData(){ // 유저 대학 장학금
 
-    private fun allData(
-        myCallback: MyCallback) { // 데이터 가져오기
+
+
         // 작업할 문서
-        val some = listOf("Nation", "OutScholar", "UnivScholar")
+        db.collection("Scholarship")
+            .document("UnivScholar")
+            .collection("ScholarshipList")
+            .whereEqualTo("univ", "한림대학교")
+            .get()
+            .addOnSuccessListener{ result ->
+
+                for(document in result){
+                    if(document != null){
+                        //  필드값 가져오기
+                        val paymentType = document["paymentType"].toString()
+                        val period = document["period"] as Map<String, Timestamp>
+                        val startdate = period.get("startDate")?.toDate()
+                        val enddate = period.get("endDate")?.toDate()
+                        val institution = document["paymentInstitution"].toString()
+
+                        val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+
+                        if(startdate == null && enddate == null){
+                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
+                            dataList.add(item)
+                        }
+                        else if(startdate == enddate){
+                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                            dataList.add(item)
+                        }
+                        else{
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                            dataList.add(item)
+                        }
+
+                        listAdapter.submitList(dataList)
+                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
+            }
+    }
+
+
+    private fun allData(myCallback: MyCallback) { // 데이터 가져오기
+        // 작업할 문서
+        val some = listOf("Nation", "OutScholar")
         for (i in some) {
             db.collection("Scholarship")
                 .document(i)
@@ -248,7 +305,6 @@ class ScholarshipMyscholarFragment : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         if (document != null) {
-                            // 가져온 문서들은 result에 들어감
                             //  필드값 가져오기
                             val paymentType = document["paymentType"].toString()
                             val period = document["period"] as Map<String, Timestamp>
@@ -258,22 +314,23 @@ class ScholarshipMyscholarFragment : Fragment() {
 
                             val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            if (startdate == null && enddate == null) {
-                                val item =
-                                    Scholarship(paymentType, document.id, "자동 신청", "", institution)
+
+
+                            if(startdate == null && enddate == null){
+                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
                                 dataList.add(item)
-                            } else {
-                                val item = Scholarship(
-                                    paymentType,
-                                    document.id,
-                                    date.format(startdate!!),
-                                    date.format(enddate!!),
-                                    institution
-                                )
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
                                 dataList.add(item)
                             }
                             myCallback.onCallback(dataList)
                             listAdapter.submitList(dataList)
+                            Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
                         }
                     }
                 }

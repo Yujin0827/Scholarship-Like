@@ -166,26 +166,29 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                 for(document in result){
                     if(document != null){
+                        //  필드값 가져오기
+                        val paymentType = document["paymentType"].toString()
+                        val period = document["period"] as Map<String, Timestamp>
+                        val startdate = period.get("startDate")?.toDate()
+                        val enddate = period.get("endDate")?.toDate()
+                        val institution = document["paymentInstitution"].toString()
 
-                          // 가져온 문서들은 result에 들어감
+                        val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            //  필드값 가져오기
-                            val paymentType = document["paymentType"].toString()
-                            val period = document["period"] as Map<String, Timestamp>
-                            val startdate = period.get("startDate")?.toDate()
-                            val enddate = period.get("endDate")?.toDate()
-                            val institution = document["paymentInstitution"].toString()
 
-                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            if(startdate == null && enddate == null){
-                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                                dataList.add(item)
-                            }
-                            else{
-                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                                dataList.add(item)
-                            }
+                        if(startdate == null && enddate == null){
+                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
+                            dataList.add(item)
+                        }
+                        else if(startdate == enddate){
+                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                            dataList.add(item)
+                        }
+                        else{
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                            dataList.add(item)
+                        }
 
                         RlistAdapter.submitList(dataList)
                         Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
@@ -208,7 +211,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         if (document != null) {
-                            // 가져온 문서들은 result에 들어감
                             //  필드값 가져오기
                             val paymentType = document["paymentType"].toString()
                             val period = document["period"] as Map<String, Timestamp>
@@ -218,13 +220,19 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            if (startdate == null && enddate == null) {
+
+                            if(startdate == null && enddate == null){
                                 val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
                                 dataList.add(item)
-                            } else {
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
                                 val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
                                 dataList.add(item)
-                                }
+                            }
 
                             RlistAdapter.submitList(dataList)
                             Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
