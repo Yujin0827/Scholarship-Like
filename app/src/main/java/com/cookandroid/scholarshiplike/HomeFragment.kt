@@ -28,8 +28,6 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
 
-private const val HomeTab = "Home_fragment"
-private const val ScholarshipTab = "Scholarship_Fragment"
 
 class HomeFragment : Fragment() {
 
@@ -45,7 +43,8 @@ class HomeFragment : Fragment() {
     private lateinit var univWebSite: String                        // user 대학교 사이트
     private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
-    private val scholarshipTab = ScholarshipFragment()              // fragment_scholarship 변수
+    private val HomeTab = "Home_Fragment"                           // fragment_home 변수
+    private val ScholarshipTab = "Scholarship_Fragment"             // fragment_scholarship 변수
     lateinit var tabNav: BottomNavigationView                       // 하단바 (MainActivity)
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -71,22 +70,25 @@ class HomeFragment : Fragment() {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
 
+        // user 정보 세팅 - 이름, 대학교
+        setUserInfo()
+
         // 장학금 최대 건수 ( scholarship 탭으로 이동 )
-        setUserName()
         binding.scholarCnt.setOnClickListener {
             tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
             tabNav.menu.findItem(R.id.scholarshipTab).isChecked = true
 
-            val fm = parentFragmentManager
-            val transaction = fm.beginTransaction()
-            var scholarshiptab = fm.findFragmentByTag(ScholarshipTab)
+            val transaction = parentFragmentManager.beginTransaction()
+            var scholarshiptab = parentFragmentManager.findFragmentByTag(ScholarshipTab)
 
             if (scholarshiptab != null) {
                 transaction.remove(scholarshiptab)
             }
+
             transaction.add(R.id.nav, ScholarshipFragment(), ScholarshipTab)
 
-            val hometab = fm.findFragmentByTag(HomeTab)
+            var hometab = parentFragmentManager.findFragmentByTag(HomeTab)
+
             hometab?.let { it ->  transaction.hide(it)}
             scholarshiptab?.let { it -> transaction.show(it) }
             transaction.commit()
@@ -139,36 +141,21 @@ class HomeFragment : Fragment() {
 
         // 교내 웹사이트로 이동
         binding.univWeb.setOnClickListener {
-            val user = auth.currentUser
+            userUniv = binding.univText.text.toString()
 
-            user?.let {
-                userUid = user.uid
-            }
-
-            db.collection("Users")
-                .document(userUid)
+            db.collection("Scholarship")
+                .document("UnivScholar")
                 .get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
-                        if (document.getString("univ") != null) {
-                            userUniv = document.getString("univ")!!
+                        if (document.getString(userUniv) != null) {
+                            univWebSite = document.getString(userUniv)!!
+
+                            var uri = Uri.parse(univWebSite)
+                            var intent = Intent(Intent.ACTION_VIEW, uri)
+                            startActivity(intent)
                         }
                     }
-
-                    db.collection("Scholarship")
-                        .document("UnivScholar")
-                        .get()
-                        .addOnSuccessListener { document ->
-                            if (document != null) {
-                                if (document.getString(userUniv) != null) {
-                                    univWebSite = document.getString(userUniv)!!
-
-                                    var uri = Uri.parse(univWebSite)
-                                    var intent = Intent(Intent.ACTION_VIEW, uri)
-                                    startActivity(intent)
-                                }
-                            }
-                        }
                 }
         }
 
@@ -183,19 +170,26 @@ class HomeFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
     }
 
-    // 유저 닉네임 가져오기
-    private fun setUserName() {
+    // 유저 정보 가져오기 - name, univ
+    private fun setUserInfo() {
         val user = auth.currentUser
+
+        user?.let {
+            userUid = user.uid
+        }
 
         if (user != null) {
             db.collection("Users")
-                .document(user.uid)
+                .document(userUid)
                 .get()
-                .addOnSuccessListener { result ->
-                    binding?.scholarName.text = result.getField<String>("nickname")
+                .addOnSuccessListener { document ->
+                    if (document != null) {
+                        binding.userName.text = document.getField<String>("nickname")   // user name
+                        binding.univText.text = document.getString("univ")!!            // user univ
+                    }
                 }
                 .addOnFailureListener() { exception ->
-                    binding.scholarName.text = " "
+                    binding.userName.text = " "
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }

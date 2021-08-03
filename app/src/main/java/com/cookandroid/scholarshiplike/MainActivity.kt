@@ -23,8 +23,8 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 
 
-// Fragment 변수 생성
-private const val HomeTab = "Home_fragment"
+// fragment 변수 생성
+private const val HomeTab = "Home_Fragment"
 private const val ScholarshipTab = "Scholarship_Fragment"
 private const val MagazineTab = "Magazine_Fragment"
 private const val ProfileTab = "Profile_Fragment"
@@ -117,7 +117,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거
+    // 하단바 누르면 탭 화면 전환
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when(p0.itemId){
             R.id.homeTab -> {
@@ -137,8 +137,8 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         return true
     }
 
-    // Tab Fragment show & hide
-    private fun setFragment(tag: String, fragment: Fragment) {
+    // fragment setting
+    fun setFragment(tag: String, fragment: Fragment) {
         val fm = supportFragmentManager
         val transaction: FragmentTransaction = fm.beginTransaction()
 

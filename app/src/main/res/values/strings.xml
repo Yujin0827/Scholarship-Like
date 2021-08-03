@@ -8,6 +8,8 @@
     <string name="scholar_num">827</string>
     <string name="scholar_cnt_num">건의</string>
     <string name="scholar_get">장학금을 받을 수 있어요!</string>
+    <string name="go_nation_web">한국장학재단</string>
+    <string name="go_condition">내조건수정</string>
 
     <!-- 검색창 페이지 -->
     <string name="search">검색어 입력</string>

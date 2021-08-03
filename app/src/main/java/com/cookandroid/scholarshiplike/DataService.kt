@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.*
 import kotlin.properties.Delegates
 
+
 class DataService : Service() {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
@@ -25,7 +26,6 @@ class DataService : Service() {
     private val magazineDb = Firebase.firestore.collection("Magazine")
 
     private val user = Firebase.auth.currentUser!!
-
 
     private var mMagazineList: ArrayList<String> by Delegates.observable(
         arrayListOf(), { _, _, _ ->
@@ -46,7 +46,6 @@ class DataService : Service() {
     }
 
 
-
     override fun onCreate() {
         super.onCreate()
         Log.w(TAG, "onCreate()")
@@ -61,7 +60,6 @@ class DataService : Service() {
             Log.d(TAG, "coroutine dead")
         }
 
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -71,7 +69,6 @@ class DataService : Service() {
 
     override fun onBind(intent: Intent): IBinder {
         Log.w(TAG, "onBind()")
-
         return binder
     }
 
@@ -84,8 +81,6 @@ class DataService : Service() {
         Log.w(TAG, "onDestroy()")
         super.onDestroy()
     }
-
-
 
     @Suppress("UNCHECKED_CAST")
     suspend fun getLikeContent() {
@@ -136,4 +131,5 @@ class DataService : Service() {
                 Log.w(TAG, "Error getting documents: $exception")
             }
     }
+
 }
