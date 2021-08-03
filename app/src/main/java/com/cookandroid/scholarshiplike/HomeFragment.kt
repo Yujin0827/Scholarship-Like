@@ -96,7 +96,6 @@ class HomeFragment : Fragment() {
 
         // AdMob
         MobileAds.initialize(requireContext()) {}
-
         val mAdView = view.findViewById(R.id.adView) as AdView
         val adRequest = AdRequest.Builder().build()
         mAdView.loadAd(adRequest)
