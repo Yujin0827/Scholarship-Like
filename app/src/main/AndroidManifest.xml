@@ -12,7 +12,6 @@
         android:roundIcon="@drawable/ic_round_button_background"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainViewModel"></activity>
 
         <service
             android:name=".DataService"
