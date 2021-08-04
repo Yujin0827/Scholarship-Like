@@ -170,7 +170,7 @@ class HomeFragment : Fragment() {
     }
 
     // 유저 정보 가져오기 - name, univ
-    private fun setUserInfo() {
+    fun setUserInfo() {
         val user = auth.currentUser
 
         user?.let {

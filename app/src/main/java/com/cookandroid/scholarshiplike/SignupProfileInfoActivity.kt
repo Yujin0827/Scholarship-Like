@@ -3,20 +3,22 @@ package com.cookandroid.scholarshiplike
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cookandroid.scholarshiplike.databinding.ActivitySignupProfileInfoBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_signup_profile_info.*
 
 class SignupProfileInfoActivity :AppCompatActivity() {
+    private lateinit var binding: ActivitySignupProfileInfoBinding
     val auth = Firebase.auth
     val db = Firebase.firestore
 
     lateinit var txtNickname: String
     lateinit var txtUniv: String
-    lateinit var univList: ArrayList<String>
+    private var univList: ArrayList<String> = arrayListOf()
 
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
@@ -27,30 +29,62 @@ class SignupProfileInfoActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup_profile_info)
+        binding =  ActivitySignupProfileInfoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        setUnivInput()  // 대학교 입력 자동완성
 
         btnClick()
     }
 
-    // 버튼 클릭 통합 처리
-    fun btnClick() {
-        // '간편로그인' 버튼 클릭 시
-        btn_easy_login.setOnClickListener {
-            txtNickname = txt_nickname1.text.toString()
-            txtUniv = txt_univ1.text.toString()
+    // 대학교 입력시 자동완성
+    private fun setUnivInput() {
+        // 대학교 리스트 가져오기
+        val sRef = db.collection("Scholarship").document("UnivScholar")
 
-            var isExistBlank: Boolean = txtNickname!!.isEmpty() || txtUniv!!.isEmpty()
-
-            if (isExistBlank) {
-                Toast.makeText(this, "빈 항목이 있습니다", Toast.LENGTH_SHORT).show()
-            }
-
-            // 조건 만족시, 다음으로 넘어감
-            if(!isExistBlank) {
-                updateUserDB()
-            }
+        sRef.get().addOnSuccessListener { doc ->
+            val json = doc.data
+            Log.d(TAG, "[Test] Object.keys(doc) : " + json?.keys)
+            json?.keys?.let { univList.addAll(it) }
         }
 
+        binding.txtSignProUniv.setAdapter<ArrayAdapter<String>>(
+            ArrayAdapter<String>(
+                this,
+                R.layout.dropdown_size, R.id.dropdown_size, univList
+            )
+        )
+    }
+
+    // 버튼 클릭 통합 처리
+    fun btnClick() {
+        // '시작하기' 버튼 클릭 시
+        binding.btnSignProStart.setOnClickListener {
+            txtNickname = binding.txtSignProNickname.text.toString()
+            txtUniv = binding.txtSignProUniv.text.toString()
+
+            if(checkInputData()) {  // 사용자의 입력 데이터 확인
+                updateUserDB()  // 유저 DB 업데이트
+            }
+        }
+    }
+
+    // 사용자의 입력 데이터 확인
+    private fun checkInputData(): Boolean {
+        var result = false
+
+        // 빈칸 확인
+        if (txtNickname!!.isEmpty() || txtUniv!!.isEmpty()) {
+            Toast.makeText(this, "빈 항목이 존재합니다", Toast.LENGTH_SHORT).show()
+        }
+        else if (!univList.contains(txtUniv)) {
+            Toast.makeText(this, "대학교를 선택해주세요", Toast.LENGTH_SHORT).show()
+        }
+        else {
+            result = true
+        }
+
+        return result
     }
 
     // 유저 DB 업데이트
