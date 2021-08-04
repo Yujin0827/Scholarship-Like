@@ -23,11 +23,12 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.messaging.FirebaseMessaging
 
 
-// Fragment 변수 생성
-private const val HomeTab = "Home_fragment"
+// fragment 변수 생성
+private const val HomeTab = "Home_Fragment"
 private const val ScholarshipTab = "Scholarship_Fragment"
 private const val MagazineTab = "Magazine_Fragment"
 private const val ProfileTab = "Profile_Fragment"
+private const val ProfileTabEtc = "Profile_Etc_Fragment"
 
 open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigationItemSelectedListener  {
     @Suppress("PrivatePropertyName")
@@ -116,7 +117,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
     }
 
-    // 하단바 누르면 탭 화면 전환 & BackStack 생성 및 제거
+    // 하단바 누르면 탭 화면 전환
     override fun onNavigationItemSelected(p0: MenuItem): Boolean {
         when(p0.itemId){
             R.id.homeTab -> {
@@ -136,10 +137,12 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         return true
     }
 
-    // Tab Fragment show & hide
-    private fun setFragment(tag: String, fragment: Fragment) {
+    // fragment setting
+    fun setFragment(tag: String, fragment: Fragment) {
         val fm = supportFragmentManager
         val transaction: FragmentTransaction = fm.beginTransaction()
+
+        fm.popBackStack("ProfileTab", FragmentManager.POP_BACK_STACK_INCLUSIVE)
 
         if (fm.findFragmentByTag(tag) == null) {
             transaction.add(R.id.nav, fragment, tag)
@@ -149,6 +152,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         val scholarshiptab = fm.findFragmentByTag(ScholarshipTab)
         val magazinetab = fm.findFragmentByTag(MagazineTab)
         val profiletab = fm.findFragmentByTag(ProfileTab)
+        val profiletabEtc = fm.findFragmentByTag(ProfileTabEtc)
 
         // Hide all Fragment
         if (hometab != null) {
@@ -162,6 +166,9 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
         if (profiletab != null) {
             transaction.hide(profiletab)
+        }
+        if (profiletabEtc != null) {
+            transaction.hide(profiletabEtc)
         }
 
         // Show  current Fragment

@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.adapter.ScholarshipExpandableLisviewtAdapter
+import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
+import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipAllScholarBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -21,6 +23,9 @@ import java.text.SimpleDateFormat
 
 
 class ScholarshipAllscholarFragment : Fragment() {
+
+    private var abinding: FragmentScholarshipAllScholarBinding? = null   // 바인딩 객체
+    private val binding get() = abinding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
     private val head: MutableList<String> = ArrayList() // expandableList의 부모 리스트
     private val body: MutableList<MutableList<String>> = ArrayList() // expandableList의 자식 리스트
@@ -46,9 +51,10 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         mContext1 = requireActivity()
 
+        // 모든 장학금 불러오기
         allData("Nation")
         allData("OutScholar")
-        allData("UnivScholar") // 모든 장학금 불러오기
+        allData("UnivScholar")
     }
 
 
@@ -57,7 +63,8 @@ class ScholarshipAllscholarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_scholarship_all_scholar, container, false)
+        abinding = FragmentScholarshipAllScholarBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         area() // 지역 리스트 가져오기
 
@@ -166,26 +173,29 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                 for(document in result){
                     if(document != null){
+                        //  필드값 가져오기
+                        val paymentType = document["paymentType"].toString()
+                        val period = document["period"] as Map<String, Timestamp>
+                        val startdate = period.get("startDate")?.toDate()
+                        val enddate = period.get("endDate")?.toDate()
+                        val institution = document["paymentInstitution"].toString()
 
-                          // 가져온 문서들은 result에 들어감
+                        val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            //  필드값 가져오기
-                            val paymentType = document["paymentType"].toString()
-                            val period = document["period"] as Map<String, Timestamp>
-                            val startdate = period.get("startDate")?.toDate()
-                            val enddate = period.get("endDate")?.toDate()
-                            val institution = document["paymentInstitution"].toString()
 
-                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            if(startdate == null && enddate == null){
-                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                                dataList.add(item)
-                            }
-                            else{
-                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                                dataList.add(item)
-                            }
+                        if(startdate == null && enddate == null){
+                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
+                            dataList.add(item)
+                        }
+                        else if(startdate == enddate){
+                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                            dataList.add(item)
+                        }
+                        else{
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                            dataList.add(item)
+                        }
 
                         RlistAdapter.submitList(dataList)
                         Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
@@ -208,7 +218,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         if (document != null) {
-                            // 가져온 문서들은 result에 들어감
                             //  필드값 가져오기
                             val paymentType = document["paymentType"].toString()
                             val period = document["period"] as Map<String, Timestamp>
@@ -218,13 +227,19 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-                            if (startdate == null && enddate == null) {
+
+                            if(startdate == null && enddate == null){
                                 val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
                                 dataList.add(item)
-                            } else {
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
                                 val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
                                 dataList.add(item)
-                                }
+                            }
 
                             RlistAdapter.submitList(dataList)
                             Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
@@ -239,6 +254,11 @@ class ScholarshipAllscholarFragment : Fragment() {
                     )
                 }
 
+    }
+    // 프래그먼트 파괴
+    override fun onDestroyView() {
+        super.onDestroyView()
+        abinding = null
     }
 
 
