@@ -128,7 +128,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/myUniv"/>
 
-                <EditText
+                <AutoCompleteTextView
                     android:id="@+id/txt_univ"
                     android:layout_width="230dp"
                     android:layout_height="30dp"
@@ -136,7 +136,10 @@
                     android:singleLine="true"
                     android:textSize="16sp"
                     android:paddingLeft="2dp"
-                    android:paddingRight="2dp" />
+                    android:paddingRight="2dp"
+                    android:completionThreshold="1"
+                    android:imeOptions="actionDone"
+                    android:inputType="text"/>
             </LinearLayout>
         </LinearLayout>
 

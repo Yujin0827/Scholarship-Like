@@ -11,7 +11,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
-class SignupProfileInfoActivity :AppCompatActivity() {
+class SignupProfileInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupProfileInfoBinding
     val auth = Firebase.auth
     val db = Firebase.firestore
@@ -24,12 +24,12 @@ class SignupProfileInfoActivity :AppCompatActivity() {
     private val TAG = javaClass.simpleName
 
     // onBackPressed 메소드 변수
-    var backPressedTime : Long = 0
+    var backPressedTime: Long = 0
     val FINISH_INTERVAL_TIME = 2000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding =  ActivitySignupProfileInfoBinding.inflate(layoutInflater)
+        binding = ActivitySignupProfileInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setUnivInput()  // 대학교 입력 자동완성
@@ -42,11 +42,18 @@ class SignupProfileInfoActivity :AppCompatActivity() {
         // 대학교 리스트 가져오기
         val sRef = db.collection("Scholarship").document("UnivScholar")
 
-        sRef.get().addOnSuccessListener { doc ->
-            val json = doc.data
-            Log.d(TAG, "[Test] Object.keys(doc) : " + json?.keys)
-            json?.keys?.let { univList.addAll(it) }
-        }
+        sRef.get()
+            .addOnSuccessListener { doc ->
+                if (doc != null) {
+                    val json = doc.data
+                    json?.keys?.let { univList.addAll(it) }
+                } else {
+                    Log.d(TAG, "No such document")
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.d(TAG, "get failed with ", exception)
+            }
 
         binding.txtSignProUniv.setAdapter<ArrayAdapter<String>>(
             ArrayAdapter<String>(
@@ -63,7 +70,7 @@ class SignupProfileInfoActivity :AppCompatActivity() {
             txtNickname = binding.txtSignProNickname.text.toString()
             txtUniv = binding.txtSignProUniv.text.toString()
 
-            if(checkInputData()) {  // 사용자의 입력 데이터 확인
+            if (checkInputData()) {  // 사용자의 입력 데이터 확인
                 updateUserDB()  // 유저 DB 업데이트
             }
         }
@@ -76,11 +83,9 @@ class SignupProfileInfoActivity :AppCompatActivity() {
         // 빈칸 확인
         if (txtNickname!!.isEmpty() || txtUniv!!.isEmpty()) {
             Toast.makeText(this, "빈 항목이 존재합니다", Toast.LENGTH_SHORT).show()
-        }
-        else if (!univList.contains(txtUniv)) {
+        } else if (!univList.contains(txtUniv)) {
             Toast.makeText(this, "대학교를 선택해주세요", Toast.LENGTH_SHORT).show()
-        }
-        else {
+        } else {
             result = true
         }
 
@@ -96,13 +101,13 @@ class SignupProfileInfoActivity :AppCompatActivity() {
         )
 
         val userLikeContentSet = hashMapOf(
-            "scholarship" to arrayListOf<String>(),
-            "magazine" to arrayListOf<String>()
+            "scholarship" to arrayListOf<String?>(null),
+            "magazine" to arrayListOf<String?>(null)
         )
 
         userProfileSet["likeContent"] = userLikeContentSet
 
-        if(user != null) {
+        if (user != null) {
             db.collection("Users").document(user.uid)
                 .set(userProfileSet)
                 .addOnSuccessListener {
@@ -118,7 +123,7 @@ class SignupProfileInfoActivity :AppCompatActivity() {
 
     // back 버튼 클릭 리스너 재정의
     override fun onBackPressed() {
-        if(supportFragmentManager.backStackEntryCount == 0) {
+        if (supportFragmentManager.backStackEntryCount == 0) {
             val tempTime = System.currentTimeMillis()
             val intervalTime = tempTime - backPressedTime
 
