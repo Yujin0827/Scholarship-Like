@@ -57,7 +57,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
 
         // 초기 화면 장학금 데이터 가져오기
-        user(object  : ThridCallback{
+  /*      user(object  : ThridCallback{
             override fun tCallback() {
                 userScholar(object : SecondCallback{
                     override fun sCallback(){
@@ -70,7 +70,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                     }
                 })
             }
-        })
+        })*/
     }
 
 
@@ -114,7 +114,6 @@ class ScholarshipMyscholarFragment : Fragment() {
 
         reset_bt.setOnClickListener {
             initSetCondition()
-            Log.w("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", dataList.toString())
         } //초기화 버튼
     }
 
@@ -255,7 +254,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     }
 
     // 유저 대학 장학금 가져오기
-    private fun userScholar(secondCallback: SecondCallback){
+/*    private fun userScholar(secondCallback: SecondCallback){
         // 작업할 문서
         db.collection("Scholarship")
             .document("UnivScholar")
@@ -390,5 +389,5 @@ class ScholarshipMyscholarFragment : Fragment() {
         super.onDestroyView()
         mbinding = null
     }
-
+*/
 }
