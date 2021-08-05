@@ -14,9 +14,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.R.*
+import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipAllScholarBinding
 import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipMyScholarBinding
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
@@ -24,13 +27,14 @@ import java.text.SimpleDateFormat
 
 class ScholarshipMyscholarFragment : Fragment() {
 
+    private var mbinding: FragmentScholarshipMyScholarBinding? = null   // 바인딩 객체
+    private val binding get() = mbinding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
-    private var db = Firebase.firestore
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
     var dataList: MutableList<Scholarship> = arrayListOf()
     private lateinit var mContext : Context //프래그먼트의 정보 받아오는 컨텍스트 선언
-
-    private lateinit var binding: FragmentScholarshipMyScholarBinding
 
     // 조건 저장 변수
     var userIncome :String? = null  // 학자금 지원구간
@@ -41,53 +45,62 @@ class ScholarshipMyscholarFragment : Fragment() {
     var userNationalMerit :Boolean? = false  //보훈 보상 대상자 여부
     var userDisabled :Boolean? = false   //장애 여부
 
-    var user = Firebase.auth.currentUser // 사용자 가져오기
-    private lateinit var userUid : String
-    private lateinit var userUniv : String
+
+    private lateinit var userUniv: String
 
     lateinit var listSize : String
-
-
-
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
 
         mContext = requireActivity()
 
-        getData()
 
-        allData(object : MyCallback{
-            override fun onCallback(value: MutableList<Scholarship>) {
-                listSize = dataList.size.toString()
-                binding.scholarCount.text = listSize
+        // 초기 화면 장학금 데이터 가져오기
+        user(object  : ThridCallback{
+            override fun tCallback() {
+                userScholar(object : SecondCallback{
+                    override fun sCallback(){
+                        allData(object : MyCallback{
+                            override fun onCallback(value: MutableList<Scholarship>) {
+                                listSize = dataList.size.toString()
+                                binding.scholarCount.text = listSize
+
+                            } })
+                    }
+                })
             }
         })
-
-
     }
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        binding = FragmentScholarshipMyScholarBinding.inflate(layoutInflater)
-
-
+        mbinding = FragmentScholarshipMyScholarBinding.inflate(inflater, container, false)
+        val view = binding.root
 
 
         initSetCondition()
 
-
-
-
-        return binding.root
+        return view
 
     }
 
+    //allDate에서 list 크기 콜백
     interface MyCallback {
         fun onCallback(value : MutableList<Scholarship>)
 
+    }
+    // userScholar에서 all Data 콜백
+    interface SecondCallback{
+        fun sCallback()
+    }
+    // user에서 userScholar 콜백
+    interface ThridCallback{
+        fun tCallback()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -101,11 +114,9 @@ class ScholarshipMyscholarFragment : Fragment() {
 
         reset_bt.setOnClickListener {
             initSetCondition()
+            Log.w("wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", dataList.toString())
         } //초기화 버튼
-
-
     }
-
 
     // 초기 조건 데이터 set
     private fun initSetCondition() {
@@ -150,8 +161,6 @@ class ScholarshipMyscholarFragment : Fragment() {
                 binding.incomeSpinner.setSelection(adapter.getPosition(userIncome))
             }
         }
-
-
 
         //'이수 학기' 스피너 설정
         ArrayAdapter.createFromResource(
@@ -245,15 +254,13 @@ class ScholarshipMyscholarFragment : Fragment() {
         }
     }
 
-    private fun getData(){ // 유저 대학 장학금
-
-
-
+    // 유저 대학 장학금 가져오기
+    private fun userScholar(secondCallback: SecondCallback){
         // 작업할 문서
         db.collection("Scholarship")
             .document("UnivScholar")
             .collection("ScholarshipList")
-            .whereEqualTo("univ", "한림대학교")
+            .whereEqualTo("univ", userUniv)
             .get()
             .addOnSuccessListener{ result ->
 
@@ -272,18 +279,21 @@ class ScholarshipMyscholarFragment : Fragment() {
                         if(startdate == null && enddate == null){
                             val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
                             dataList.add(item)
+                            Log.w("ScholarshipMyscholarFragment", document.id)
                         }
                         else if(startdate == enddate){
                             val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
                             dataList.add(item)
+                            Log.w("ScholarshipMyscholarFragment", document.id)
                         }
                         else{
                             val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
                             dataList.add(item)
+                            Log.w("ScholarshipMyscholarFragment", document.id)
                         }
 
                         listAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                        Log.w("ScholarshipMyscholarFragment", "UnivScholar Data")
                     }
                 }
             }
@@ -291,10 +301,14 @@ class ScholarshipMyscholarFragment : Fragment() {
                 // 실패할 경우
                 Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
             }
+        secondCallback.sCallback()
+
+
     }
 
 
-    private fun allData(myCallback: MyCallback) { // 데이터 가져오기
+    // 국가, 교외 장학금 가져오기
+    private fun allData(myCallback: MyCallback) {
         // 작업할 문서
         val some = listOf("Nation", "OutScholar")
         for (i in some) {
@@ -316,6 +330,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
 
 
+
                             if(startdate == null && enddate == null){
                                 val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
                                 dataList.add(item)
@@ -330,7 +345,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                             }
                             myCallback.onCallback(dataList)
                             listAdapter.submitList(dataList)
-                            Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                            Log.w("ScholarshipAllscholarFragment", "all Data")
                         }
                     }
                 }
@@ -342,9 +357,38 @@ class ScholarshipMyscholarFragment : Fragment() {
                     )
                 }
         }
+    }
+    // 유저 정보
+    private fun user(thridCallback : ThridCallback){
+        // Firebase
+        auth = Firebase.auth
+        db = Firebase.firestore
+
+        val user = auth.currentUser
+
+        //User's Univ
+        if (user != null) {
+            db.collection("Users")
+                .document(user.uid)
+                .get()
+                .addOnSuccessListener{ document ->
+                    if (document != null){
+                        if(document.getString("univ") != null){
+                            userUniv = document.getString("univ")!!
+                        }
+                    }
+                    thridCallback.tCallback()
+
+
+                }
+        }
 
     }
 
-
+    // 프래그먼트 파괴
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mbinding = null
+    }
 
 }
