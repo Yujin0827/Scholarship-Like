@@ -51,10 +51,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         mContext1 = requireActivity()
 
-        // 모든 장학금 불러오기
-        allData("Nation")
-        allData("OutScholar")
-        allData("UnivScholar")
+
     }
 
 
@@ -158,7 +155,7 @@ class ScholarshipAllscholarFragment : Fragment() {
             }
     }
 
-    private fun getData( kind : String, field_key : String, field_value : String){ // 데이터 가져오기
+   private fun getData( kind : String, field_key : String, field_value : String){ // 데이터 가져오기
 
         // 작업할 문서
         db.collection("Scholarship")
@@ -173,32 +170,56 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                 for(document in result){
                     if(document != null){
-                        //  필드값 가져오기
-                        val paymentType = document["paymentType"].toString()
-                        val period = document["period"] as Map<String, Timestamp>
-                        val startdate = period.get("startDate")?.toDate()
-                        val enddate = period.get("endDate")?.toDate()
-                        val institution = document["paymentInstitution"].toString()
+                        if(document["period2"] != null){
+                            //  필드값 가져오기
+                            val paymentType = document["paymentType"].toString()
+                            val period = document["period"] as Map<String, Timestamp>
+                            val startdate = period.get("startDate")?.toDate()
+                            val enddate = period.get("endDate")?.toDate()
+                            val period2 = document["period2"] as Map<String, Timestamp>
+                            val startdate2 = period2.get("startDate2")?.toDate()
+                            val enddate2 = period2.get("endDate2")?.toDate()
 
-                        val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+                            val institution = document["paymentInstitution"].toString()
 
+                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-
-                        if(startdate == null && enddate == null){
-                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                             dataList.add(item)
-                        }
-                        else if(startdate == enddate){
-                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                            dataList.add(item)
+
+                            RlistAdapter.submitList(dataList)
+                            Log.w("ScholarshipAllscholarFragment-allData",  document.id)
+
+
                         }
                         else{
-                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                            dataList.add(item)
-                        }
+                            //  필드값 가져오기
+                            val paymentType = document["paymentType"].toString()
+                            val period = document["period"] as Map<String, Timestamp>
+                            val startdate = period.get("startDate")?.toDate()
+                            val enddate = period.get("endDate")?.toDate()
 
-                        RlistAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                            val institution = document["paymentInstitution"].toString()
+
+                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+
+                            if(startdate == null && enddate == null){
+                                val item = Scholarship(paymentType, document.id, "자동 신청", "","","", institution)
+                                dataList.add(item)
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, " 추후 기간 공지", "","", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                dataList.add(item)
+                            }
+
+                            RlistAdapter.submitList(dataList)
+                            Log.w("ScholarshipAllscholarFragment-allData",  document.id)
+                        }
                     }
                 }
             }
@@ -218,31 +239,60 @@ class ScholarshipAllscholarFragment : Fragment() {
                 .addOnSuccessListener { result ->
                     for (document in result) {
                         if (document != null) {
-                            //  필드값 가져오기
-                            val paymentType = document["paymentType"].toString()
-                            val period = document["period"] as Map<String, Timestamp>
-                            val startdate = period.get("startDate")?.toDate()
-                            val enddate = period.get("endDate")?.toDate()
-                            val institution = document["paymentInstitution"].toString()
+                            val period2 = document["period2"]
+                            if(period2 == null){
+                                //  필드값 가져오기
+                                val paymentType = document["paymentType"].toString()
+                                val period = document["period"] as Map<String, Timestamp>
+                                val startdate = period.get("startDate")?.toDate()
+                                val enddate = period.get("endDate")?.toDate()
 
-                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+                                val institution = document["paymentInstitution"].toString()
+
+                                val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
 
-                            if(startdate == null && enddate == null){
-                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                                dataList.add(item)
-                            }
-                            else if(startdate == enddate){
-                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                                dataList.add(item)
+
+
+                                if(startdate == null && enddate == null){
+                                    val item = Scholarship(paymentType, document.id, "자동 신청", "","","", institution)
+                                    dataList.add(item)
+                                }
+                                else if(startdate == enddate){
+                                    val item = Scholarship(paymentType, document.id, "추후 공지", "","", "", institution)
+                                    dataList.add(item)
+                                }
+                                else{
+                                    val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                    dataList.add(item)
+                                }
+
+                                RlistAdapter.submitList(dataList)
+                                Log.w("ScholarshipAllscholarFragment-allData",  document.id)
+
                             }
                             else{
-                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
-                                dataList.add(item)
-                            }
+                                //  필드값 가져오기
+                                val paymentType = document["paymentType"].toString()
+                                val period = document["period"] as Map<String, Timestamp>
+                                val startdate = period.get("startDate")?.toDate()
+                                val enddate = period.get("endDate")?.toDate()
 
-                            RlistAdapter.submitList(dataList)
-                            Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                                val period2 = document["period2"] as Map<String, Timestamp>
+                                val startdate2 = period2.get("startDate2")?.toDate()
+                                val enddate2 = period2.get("endDate2")?.toDate()
+
+                                val institution = document["paymentInstitution"].toString()
+
+                                val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
+                                dataList.add(item)
+
+                                RlistAdapter.submitList(dataList)
+                                Log.w("ScholarshipAllscholarFragment-allData",  document.id)
+
+                            }
                         }
                     }
                 }
@@ -253,6 +303,17 @@ class ScholarshipAllscholarFragment : Fragment() {
                         "Error getting UnivScholar documents: $exception"
                     )
                 }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 모든 장학금 불러오기
+        allData("Nation")
+        allData("OutScholar")
+        allData("UnivScholar")
+
 
     }
     // 프래그먼트 파괴

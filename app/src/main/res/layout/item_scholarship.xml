@@ -52,16 +52,21 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scholar_title"
-            app:layout_constraintBottom_toTopOf="@id/scholar_institution">
+            app:layout_constraintBottom_toTopOf="@id/scholar_period2"
+            android:layout_marginLeft="3dp">
 
-
+            <TextView
+                android:id="@+id/one_period"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/period1"
+                android:textSize="12sp"/>
 
             <TextView
                 android:id="@+id/scholar_startDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:layout_marginLeft="3dp"
                 android:layout_marginRight="3dp"/>
 
             <TextView
@@ -79,40 +84,49 @@
 
         </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:id="@id/scholar_period2"-->
-<!--            android:orientation="horizontal"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/scholar_period"-->
-<!--            app:layout_constraintBottom_toTopOf="@id/scholar_institution">-->
+        <LinearLayout
+            android:id="@+id/scholar_period2"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/scholar_period"
+            app:layout_constraintBottom_toTopOf="@id/scholar_institution"
+            android:layout_marginLeft="3dp"
+            >
+
+            <TextView
+                android:id="@+id/two_period"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="@string/period2"
+
+                android:textSize="12sp"/>
 
 
+            <TextView
+                android:id="@+id/scholar_startDate2"
+                android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginLeft="3dp"
+                android:layout_marginRight="3dp"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/scholar_startDate2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textSize="12sp"-->
-<!--                android:layout_marginLeft="3dp"-->
-<!--                android:layout_marginRight="3dp"/>-->
+            <TextView
+                android:id="@+id/startDateToEndDate2"
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:text="@string/to" />
 
-<!--            <TextView-->
-<!--                android:id="@+id/startDateToEndDate2"-->
-<!--                android:layout_width="10dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="@string/to" />-->
+            <TextView
+                android:id="@+id/scholar_endDate2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="12sp"
+                android:layout_marginLeft="3dp"/>
 
-<!--            <TextView-->
-<!--                android:id="@+id/scholar_endDate2"-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textSize="12sp"-->
-<!--                android:layout_marginLeft="3dp"/>-->
-
-<!--        </LinearLayout>-->
+        </LinearLayout>
 
 
         <TextView
@@ -123,7 +137,7 @@
             android:layout_marginLeft="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/scholar_period"/>
+            app:layout_constraintTop_toBottomOf="@+id/scholar_period2"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
