@@ -9,12 +9,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.cookandroid.scholarshiplike.databinding.ActivityProfileMyConChangeBinding
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityProfileMyConChangeBinding
+
+    var imm: InputMethodManager? = null // 키보드
 
     // 조건 저장 변수
     var userIncome :String? = null  // 학자금 지원구간
@@ -38,6 +41,8 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
         //화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         initSetCondition()
         btnClick()
@@ -206,6 +211,11 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             setUserConditioinData()
             saveUserConditionData()
             finish()
+        }
+        
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityProfileMyConChange.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 

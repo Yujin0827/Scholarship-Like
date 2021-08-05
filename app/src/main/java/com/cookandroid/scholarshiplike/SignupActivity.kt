@@ -1,22 +1,19 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivitySignupBinding
-import com.cookandroid.scholarshiplike.databinding.FragmentLoginTermsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_signup.*
-import kotlinx.android.synthetic.main.fragment_profile_logout.*
 
 class SignupActivity :AppCompatActivity() {
     @Suppress("PrivatePropertyName")
@@ -33,11 +30,14 @@ class SignupActivity :AppCompatActivity() {
     lateinit var txtUniv:String
     var univList: ArrayList<String> = arrayListOf()    // 대학교 자동완성을 위한 리스트
 
+    var imm: InputMethodManager? = null // 키보드
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         setUnivList()
         //버튼 클릭을 통합 처리
@@ -90,6 +90,11 @@ class SignupActivity :AppCompatActivity() {
         // 돌아가기 버튼 클릭 시
         binding.btnGotoBack.setOnClickListener() {
             finish()    // 현재 액티비티 제거
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivitySignup.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 

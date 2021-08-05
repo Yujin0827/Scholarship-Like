@@ -1,8 +1,10 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +17,7 @@ class SignupProfileInfoActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignupProfileInfoBinding
     val auth = Firebase.auth
     val db = Firebase.firestore
+    var imm: InputMethodManager? = null // 키보드
 
     lateinit var txtNickname: String
     lateinit var txtUniv: String
@@ -32,8 +35,9 @@ class SignupProfileInfoActivity : AppCompatActivity() {
         binding = ActivitySignupProfileInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUnivInput()  // 대학교 입력 자동완성
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
+        setUnivInput()  // 대학교 입력 자동완성
         btnClick()
     }
 
@@ -73,6 +77,11 @@ class SignupProfileInfoActivity : AppCompatActivity() {
             if (checkInputData()) {  // 사용자의 입력 데이터 확인
                 updateUserDB()  // 유저 DB 업데이트
             }
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivitySignupProfileInfo.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 

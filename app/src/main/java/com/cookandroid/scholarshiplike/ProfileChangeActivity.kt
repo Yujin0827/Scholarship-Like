@@ -1,8 +1,10 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivityProfileChangeBinding
@@ -26,11 +28,14 @@ class ProfileChangeActivity : AppCompatActivity() {
     private val TAG = javaClass.simpleName
 
     var user = Firebase.auth.currentUser // 사용자 가져오기
+    var imm: InputMethodManager? = null // 키보드
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileChangeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         getUserInfo()   // User 정보 가져오기
         btnClick()  // 클릭 리스너 정의 메소드
@@ -115,6 +120,11 @@ class ProfileChangeActivity : AppCompatActivity() {
             if (checkInputData()) { // 사용자의 입력 데이터 확인
                 updateUserDB()  // 사용자 DB 업데이트
             }
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityProfileChange.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 
