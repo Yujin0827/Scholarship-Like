@@ -1,18 +1,25 @@
 package com.cookandroid.scholarshiplike
 
-import android.content.Intent
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cookandroid.scholarshiplike.databinding.ActivityLoginPasswordResetBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
-import kotlinx.android.synthetic.main.activity_login_password_reset.*
 
 class LoginPasswordResetActivity : AppCompatActivity(){
+    private lateinit var binding: ActivityLoginPasswordResetBinding
+    var imm: InputMethodManager? = null // 키보드
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login_password_reset)
+        binding = ActivityLoginPasswordResetBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         btnClick()  // 버튼 클릭을 통합 처리
     }
@@ -20,19 +27,19 @@ class LoginPasswordResetActivity : AppCompatActivity(){
     // 버튼 클릭 통합 처리
     fun btnClick() {
         // X 아이콘 클릭 시
-        btn_close_password.setOnClickListener {
+        binding.btnClosePassword.setOnClickListener {
             finish()
         }
 
         // 비밀번호 재설정 버튼 클릭 시
-        btn_reset_password.setOnClickListener {
-            var userEmail :String = txt_email_password.text.toString()
+        binding.btnResetPassword.setOnClickListener {
+            var userEmail :String = binding.txtEmailPassword.text.toString()
             if(!userEmail.isEmpty()) {
                 // 이메일 보내기
                 FirebaseAuth.getInstance().sendPasswordResetEmail(userEmail)
                     .addOnCompleteListener(this){ task ->
                         if(task.isSuccessful) {
-                            result_send_mail.visibility = View.VISIBLE  // 전송 결과 출력
+                            binding.resultSendMail.visibility = View.VISIBLE  // 전송 결과 출력
                         }
                         else {
                             // 예외 토스트 메시지
@@ -48,6 +55,11 @@ class LoginPasswordResetActivity : AppCompatActivity(){
                         }
                     }
             }
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityLoginPasswordReset.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 }

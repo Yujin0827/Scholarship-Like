@@ -26,6 +26,8 @@ class ProfileSignoutActivity : AppCompatActivity() {
 
     private val TAG = "ProfileSignoutActivity"
 
+    var imm: InputMethodManager? = null // 키보드
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileSignoutBinding.inflate(layoutInflater)
@@ -34,6 +36,8 @@ class ProfileSignoutActivity : AppCompatActivity() {
         // Firebase
         auth = Firebase.auth
         db = Firebase.firestore
+
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         btnClick()
     }
@@ -59,6 +63,11 @@ class ProfileSignoutActivity : AppCompatActivity() {
             } else {
                 binding.edittxtSignoutEtcAdd.visibility = View.GONE
             }
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityProfileSignout.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 

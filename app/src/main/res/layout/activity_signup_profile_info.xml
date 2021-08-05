@@ -1,29 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView_activity_signup_profile_info"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginBottom="60dp"
-            android:text="@string/signup_profile_title"
-            android:textColor="@color/maincolor"
-            android:textSize="20sp" />
+        android:layout_height="match_parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:layout_gravity="center">
@@ -31,75 +18,95 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/signup_profile_essen"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginBottom="60dp"
+                android:text="@string/signup_profile_title"
                 android:textColor="@color/maincolor"
-                android:layout_marginBottom="10dp"
-                android:textSize="12sp"/>
+                android:textSize="20sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:orientation="horizontal">
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:layout_width="80dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/nickname"
-                    android:textColor="@color/text_black" />
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/signup_profile_essen"
+                    android:textColor="@color/maincolor"
+                    android:textSize="12sp" />
 
-                <EditText
-                    android:id="@+id/txt_nickname1"
-                    android:layout_width="200dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/ic_edittext_box_background"
-                    android:maxLength="10"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:singleLine="true" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nickname"
+                        android:textColor="@color/text_black" />
+
+                    <EditText
+                        android:id="@+id/txt_signPro_nickname"
+                        android:layout_width="200dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/ic_edittext_box_background"
+                        android:maxLength="10"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:text="@string/myUniv"
+                        android:textColor="@color/text_black" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/txt_SignPro_univ"
+                        android:layout_width="200dp"
+                        android:layout_height="35dp"
+                        android:background="@drawable/ic_edittext_box_background"
+                        android:completionThreshold="1"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true" />
+                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
+                android:layout_marginTop="60dp"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:layout_width="80dp"
+                <Button
+                    android:id="@+id/btn_signPro_start"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/myUniv"
-                    android:textColor="@color/text_black" />
-
-                <EditText
-                    android:id="@+id/txt_univ1"
-                    android:layout_width="200dp"
-                    android:layout_height="35dp"
-                    android:background="@drawable/ic_edittext_box_background"
-                    android:paddingLeft="2dp"
-                    android:paddingRight="2dp"
-                    android:singleLine="true" />
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:background="@color/maincolor"
+                    android:text="@string/start"
+                    android:textColor="#ffffff" />
             </LinearLayout>
+
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="60dp">
-
-            <Button
-                android:id="@+id/btn_easy_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/start"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@color/maincolor"
-                android:textColor="#ffffff"/>
-        </LinearLayout>
-
-    </LinearLayout>
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

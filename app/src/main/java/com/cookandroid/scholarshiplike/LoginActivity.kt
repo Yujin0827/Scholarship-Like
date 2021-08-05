@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -7,6 +8,7 @@ import android.view.KeyEvent
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.cookandroid.scholarshiplike.databinding.ActivityLoginBinding
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
@@ -14,23 +16,24 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity :AppCompatActivity(){
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
+
+    private lateinit var binding: ActivityLoginBinding
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
     private lateinit var db :FirebaseFirestore
     private val RC_SIGN_IN = 99
 
+    var imm: InputMethodManager? = null // 키보드
 
     // onBackPressed 메소드 변수
     var backPressedTime : Long = 0
@@ -38,7 +41,10 @@ class LoginActivity :AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        binding = ActivityLoginBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         firebaseAuth = FirebaseAuth.getInstance()   // firebase auth 객체
         db = Firebase.firestore
@@ -59,9 +65,9 @@ class LoginActivity :AppCompatActivity(){
     // 버튼 클릭 통합 처리
     private fun btnClick() {
         // 로그인 버튼 클릭 시
-        btn_login.setOnClickListener() {
-            val txtEmail : String = login_txt_email.text.toString()
-            val txtPassword : String = login_txt_password.text.toString()
+        binding.btnLogin.setOnClickListener() {
+            val txtEmail : String = binding.loginTxtEmail.text.toString()
+            val txtPassword : String = binding.loginTxtPassword.text.toString()
 
             if (txtEmail.isNotEmpty() && txtPassword.isNotEmpty()) {
                 FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
@@ -95,19 +101,19 @@ class LoginActivity :AppCompatActivity(){
         }
 
         // 비밀번호 찾기 클릭 시
-        goto_findPw.setOnClickListener {
+        binding.gotoFindPw.setOnClickListener {
             val iT = Intent(this, LoginPasswordResetActivity::class.java)
             startActivity(iT)
         }
 
         // 회원가입 클릭 시
-        goto_signup.setOnClickListener {
+        binding.gotoSignup.setOnClickListener {
             val iT = Intent(this, SignupActivity::class.java)
             startActivity(iT)
         }
 
         //구글 로그인
-        login_google.setOnClickListener {
+        binding.loginGoogle.setOnClickListener {
             // Google 로그인 옵션 구성 (requestIdToken, Email 요청)
             val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
@@ -120,14 +126,17 @@ class LoginActivity :AppCompatActivity(){
         }
 
         //엔터 입력 시 키보드 내리기
-        login_txt_password.setOnKeyListener { _, keyCode, event ->
+        binding.loginTxtPassword.setOnKeyListener { _, keyCode, event ->
             //Enter key Action
             if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
-                val imm: InputMethodManager =
-                    getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.hideSoftInputFromWindow(login_txt_password.windowToken, 0) //hide keyboard
+                imm?.hideSoftInputFromWindow(binding.loginTxtPassword.windowToken, 0) //hide keyboard
                 true
             } else false
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityLogin.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 
