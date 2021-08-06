@@ -51,13 +51,13 @@ class ScholarshipMyscholarFragment : Fragment() {
     lateinit var listSize : String
 
     override fun onAttach(context: Context) {
-        super.onAttach(context)
 
+        super.onAttach(context)
         mContext = requireActivity()
 
 
         // 초기 화면 장학금 데이터 가져오기
-  /*      user(object  : ThridCallback{
+        user(object  : ThridCallback{
             override fun tCallback() {
                 userScholar(object : SecondCallback{
                     override fun sCallback(){
@@ -70,7 +70,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                     }
                 })
             }
-        })*/
+        })
     }
 
 
@@ -254,7 +254,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     }
 
     // 유저 대학 장학금 가져오기
-/*    private fun userScholar(secondCallback: SecondCallback){
+    private fun userScholar(secondCallback: SecondCallback){
         // 작업할 문서
         db.collection("Scholarship")
             .document("UnivScholar")
@@ -270,29 +270,35 @@ class ScholarshipMyscholarFragment : Fragment() {
                         val period = document["period"] as Map<String, Timestamp>
                         val startdate = period.get("startDate")?.toDate()
                         val enddate = period.get("endDate")?.toDate()
+                        val startdate2 = period.get("startDate2")?.toDate()
+                        val enddate2 = period.get("endDate2")?.toDate()
                         val institution = document["paymentInstitution"].toString()
 
                         val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
+                        if((startdate2 == null)&& enddate2 == null){
+                            if(startdate == null && enddate == null){
+                                val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                dataList.add(item)
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                dataList.add(item)
+                            }
 
-                        if(startdate == null && enddate == null){
-                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                            dataList.add(item)
-                            Log.w("ScholarshipMyscholarFragment", document.id)
-                        }
-                        else if(startdate == enddate){
-                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                            dataList.add(item)
-                            Log.w("ScholarshipMyscholarFragment", document.id)
                         }
                         else{
-                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                             dataList.add(item)
-                            Log.w("ScholarshipMyscholarFragment", document.id)
                         }
 
+
                         listAdapter.submitList(dataList)
-                        Log.w("ScholarshipMyscholarFragment", "UnivScholar Data")
+                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
                     }
                 }
             }
@@ -323,28 +329,36 @@ class ScholarshipMyscholarFragment : Fragment() {
                             val period = document["period"] as Map<String, Timestamp>
                             val startdate = period.get("startDate")?.toDate()
                             val enddate = period.get("endDate")?.toDate()
+                            val startdate2 = period.get("startDate2")?.toDate()
+                            val enddate2 = period.get("endDate2")?.toDate()
                             val institution = document["paymentInstitution"].toString()
 
                             val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
+                            if((startdate2 == null)&& enddate2 == null){
+                                if(startdate == null && enddate == null){
+                                    val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                    dataList.add(item)
+                                }
+                                else if(startdate == enddate){
+                                    val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
+                                    dataList.add(item)
+                                }
+                                else{
+                                    val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                    dataList.add(item)
+                                }
 
-
-
-                            if(startdate == null && enddate == null){
-                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                                dataList.add(item)
-                            }
-                            else if(startdate == enddate){
-                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                                dataList.add(item)
                             }
                             else{
-                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                                 dataList.add(item)
                             }
-                            myCallback.onCallback(dataList)
+
+
                             listAdapter.submitList(dataList)
-                            Log.w("ScholarshipAllscholarFragment", "all Data")
+                            myCallback.onCallback(dataList)
+                            Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
                         }
                     }
                 }
@@ -389,5 +403,5 @@ class ScholarshipMyscholarFragment : Fragment() {
         super.onDestroyView()
         mbinding = null
     }
-*/
+
 }

@@ -48,19 +48,21 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
             scholar_title.text = data.title
             scholar_institution.text = data.institution
 
-            if(data.enddate == ""){ // 기간이 없을 때 '~' 숨기기
+            if(data.enddate.isNullOrEmpty()){ // 기간이 없을 때 '~' 숨기기
                 startToend1.visibility = GONE
             }
-            else if (data.enddate2 == ""){
+
+            if(data.enddate2.isNullOrEmpty()){
                 one_period.visibility = GONE
-                two_period.visibility = GONE
                 scholar_perioid2.visibility = GONE
             }
-
+            else{
+                scholar_startDate2.text = data.startdate2
+                scholar_endDate2.text = data.enddate2
+            }
             scholar_startDate.text = data.startdate
             scholar_endDate.text = data.enddate
-            scholar_startDate2.text = data.startdate2
-            scholar_endDate2.text = data.enddate2
+
 
 
 
