@@ -19,7 +19,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ProfileSignoutActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProfileSignoutBinding
+    private var mBinding: ActivityProfileSignoutBinding? = null
+    private val binding get() = mBinding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private var reasonList = mutableListOf<String>()
@@ -30,7 +31,7 @@ class ProfileSignoutActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileSignoutBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileSignoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Firebase
@@ -215,5 +216,10 @@ class ProfileSignoutActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

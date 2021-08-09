@@ -11,12 +11,13 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 
 class LoginPasswordResetActivity : AppCompatActivity(){
-    private lateinit var binding: ActivityLoginPasswordResetBinding
+    private var mBinding: ActivityLoginPasswordResetBinding? = null
+    private val binding get() = mBinding!!
     var imm: InputMethodManager? = null // 키보드
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginPasswordResetBinding.inflate(layoutInflater)
+        mBinding = ActivityLoginPasswordResetBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
@@ -61,5 +62,10 @@ class LoginPasswordResetActivity : AppCompatActivity(){
         binding.rootViewActivityLoginPasswordReset.setOnClickListener {
             imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

@@ -15,7 +15,8 @@ import com.cookandroid.scholarshiplike.databinding.ActivityProfileMyConChangeBin
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProfileMyConChangeBinding
+    private var mBinding: ActivityProfileMyConChangeBinding? = null
+    private val binding get() = mBinding!!
 
     var imm: InputMethodManager? = null // 키보드
 
@@ -36,7 +37,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileMyConChangeBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileMyConChangeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //화면 전환 방지 (세로로 고정)
@@ -317,5 +318,10 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         editor.apply()
 
 
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

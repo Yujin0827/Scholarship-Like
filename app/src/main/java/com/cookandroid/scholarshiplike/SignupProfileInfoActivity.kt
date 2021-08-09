@@ -14,7 +14,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class SignupProfileInfoActivity : AppCompatActivity() {
-    private lateinit var binding: ActivitySignupProfileInfoBinding
+    private var mBinding: ActivitySignupProfileInfoBinding? = null
+    private val binding get() = mBinding!!
     val auth = Firebase.auth
     val db = Firebase.firestore
     var imm: InputMethodManager? = null // 키보드
@@ -32,7 +33,7 @@ class SignupProfileInfoActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignupProfileInfoBinding.inflate(layoutInflater)
+        mBinding = ActivitySignupProfileInfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
@@ -147,5 +148,10 @@ class SignupProfileInfoActivity : AppCompatActivity() {
             }
         }
         super.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

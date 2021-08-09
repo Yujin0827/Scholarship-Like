@@ -17,7 +17,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ProfileQuestionsActivity: AppCompatActivity() {
-    private lateinit var binding: ActivityProfileQuestionsBinding
+    private var mBinding: ActivityProfileQuestionsBinding? = null
+    private val binding get() = mBinding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var content: String    // 입력받는 문의 내용
 
@@ -25,7 +26,7 @@ class ProfileQuestionsActivity: AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileQuestionsBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileQuestionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = Firebase.auth
@@ -79,5 +80,10 @@ class ProfileQuestionsActivity: AppCompatActivity() {
         }
 
         return fill
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

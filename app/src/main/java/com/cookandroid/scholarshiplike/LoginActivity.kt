@@ -26,7 +26,8 @@ class LoginActivity :AppCompatActivity(){
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
-    private lateinit var binding: ActivityLoginBinding
+    private var mBinding: ActivityLoginBinding? = null
+    private val binding get() = mBinding!!
 
     private lateinit var googleSignInClient: GoogleSignInClient
     private lateinit var firebaseAuth: FirebaseAuth
@@ -41,7 +42,7 @@ class LoginActivity :AppCompatActivity(){
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityLoginBinding.inflate(layoutInflater)
+        mBinding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
@@ -228,5 +229,10 @@ class LoginActivity :AppCompatActivity(){
             }
         }
         super.onBackPressed()
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

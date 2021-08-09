@@ -19,7 +19,8 @@ class SignupActivity :AppCompatActivity() {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
-    private lateinit var binding: ActivitySignupBinding
+    private var mBinding: ActivitySignupBinding? = null
+    private val binding get() = mBinding!!
     val auth = Firebase.auth
     val db = Firebase.firestore
 
@@ -34,7 +35,7 @@ class SignupActivity :AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySignupBinding.inflate(layoutInflater)
+        mBinding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
@@ -173,5 +174,10 @@ class SignupActivity :AppCompatActivity() {
             .addOnFailureListener {e ->
                 Log.w(TAG, "Error writting user DB!", e)
             }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

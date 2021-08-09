@@ -2,6 +2,7 @@ package com.cookandroid.scholarshiplike
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.cookandroid.scholarshiplike.adapter.MagazineRecyclerViewAdapter
+import com.cookandroid.scholarshiplike.databinding.FragmentMagazineBinding
 import com.google.firebase.firestore.*
 import com.google.firebase.firestore.ktx.toObject
-import kotlinx.android.synthetic.main.fragment_magazine.*
-import kotlinx.android.synthetic.main.fragment_magazine.view.*
 
 class MagazineFragment : Fragment() {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
+
+    // 뷰 바인딩
+    private var mBinding: FragmentMagazineBinding? = null
+    private val binding get() = mBinding!!
 
     private var firestore : FirebaseFirestore? = null // Firestore 인스턴스
     private var postList : ArrayList<Post> = arrayListOf() // 파이어스토어에서 불러온 데이터 전체 저장하는 리스트 (게시물 리스트)
@@ -56,7 +60,8 @@ class MagazineFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_magazine, container, false)
+        mBinding = FragmentMagazineBinding.inflate(inflater, container, false)
+        val view = binding.root
 
         return view
 
@@ -70,16 +75,16 @@ class MagazineFragment : Fragment() {
         Mconnect()
 
         //버튼 클릭 시 리스트 변경
-        view.all.setOnClickListener {
+        binding.all.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
             Mconnect()}
-        view.finance.setOnClickListener {
+        binding.finance.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postfinanceList,mContext)
             Mconnect()}
-        view.life.setOnClickListener {
+        binding.life.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postlifeList,mContext)
             Mconnect()}
-        view.etc.setOnClickListener {
+        binding.etc.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postetcList,mContext)
             Mconnect()}
 
@@ -87,20 +92,34 @@ class MagazineFragment : Fragment() {
 
     // 매거진 리사이클러뷰-어댑터 연결
     fun Mconnect() {
-        magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정
-        magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
-        magazinerecyclerView.adapter = postlistAdapter //어댑터 연결
+        binding.magazinerecyclerView.layoutManager = GridLayoutManager(activity, 2) //그리드 레아이웃 지정
+        binding.magazinerecyclerView.setHasFixedSize(true) //리사이클러뷰 성능 개선 방안
+        binding.magazinerecyclerView.adapter = postlistAdapter //어댑터 연결
     }
 
     // 프래그먼트 생성시 툴바 hide
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+
+        // 아래 스와이프로 새로고침
+        binding.swipeRefreshFragmentMagazine.setOnRefreshListener {
+            Handler().postDelayed({// 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+                if (binding.swipeRefreshFragmentMagazine.isRefreshing)
+                    binding.swipeRefreshFragmentMagazine.isRefreshing = false
+            }, 1000)
+            Mconnect()
+        }
     }
 
     // 프래그먼트 종료시 툴바 show
     override fun onStop() {
         super.onStop()
         (activity as AppCompatActivity?)!!.supportActionBar!!.show()
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

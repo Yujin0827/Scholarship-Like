@@ -7,6 +7,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentTransaction
 import com.cookandroid.scholarshiplike.databinding.ActivityProfileChangeBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -16,7 +17,10 @@ import kotlin.collections.ArrayList
 
 
 class ProfileChangeActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProfileChangeBinding
+    // 뷰 바인딩
+    private var mBinding: ActivityProfileChangeBinding? = null
+    private val binding get() = mBinding!!
+
     private var db = Firebase.firestore
     private var univList: ArrayList<String> = arrayListOf() // 대학교 이름 리스트
     lateinit var userEmail: String  // 사용자 이메일
@@ -32,7 +36,7 @@ class ProfileChangeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileChangeBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileChangeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
@@ -73,7 +77,6 @@ class ProfileChangeActivity : AppCompatActivity() {
 
         sRef.get().addOnSuccessListener { doc ->
             val json = doc.data
-            Log.d(TAG, "[Test] Object.keys(doc) : " + json?.keys)
             json?.keys?.let { univList.addAll(it) }
         }
 
@@ -113,9 +116,6 @@ class ProfileChangeActivity : AppCompatActivity() {
         binding.save.setOnClickListener {
             userNickname = binding.nickNameInput.text.toString()
             userUniv = binding.univeInput.text.toString()
-
-            Log.d(TAG, "[test] userNickname" + userNickname)
-            Log.d(TAG, "[test] userUniv" + userUniv)
             
             if (checkInputData()) { // 사용자의 입력 데이터 확인
                 updateUserDB()  // 사용자 DB 업데이트
@@ -158,6 +158,8 @@ class ProfileChangeActivity : AppCompatActivity() {
             )
             .addOnSuccessListener {
                 Log.d(TAG, "[Success] update user nickname!")
+
+                // !프로필 수정시 홈탭 자동 새로고침 시도중!
 //                HomeFragment().setUserInfo()
 //                (supportFragmentManager.findFragmentByTag("Home_Fragment") as HomeFragment).setUserInfo()
 //                val cont = this
@@ -165,11 +167,19 @@ class ProfileChangeActivity : AppCompatActivity() {
 //                val manager = (MainActivity().context_main as MainActivity).supportFragmentManager
 //                (manager.findFragmentByTag("Home_Fragment") as HomeFragment).setUserInfo()
 
+//                val ft = supportFragmentManager.beginTransaction()
+//                ft.detach(HomeFragment()).attach(HomeFragment()).commit()
+
                 finish()
             }
             .addOnFailureListener { e ->
                 Log.w(TAG, "[Fail] update user nickname!", e)
             }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 
 }
