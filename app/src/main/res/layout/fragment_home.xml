@@ -5,18 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".HomeFragment" >
+    tools:context=".HomeFragment">
 
     <!-- 상단바 (로고, 검색창, 알람, 좋아요) -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topBar"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:padding="10dp"
         android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" >
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
             android:id="@+id/logo"
@@ -54,271 +54,281 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-    <!-- 본문 -->
-    <ScrollView
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_refresh_fragment_home"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/topBar"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        tools:ignore="MissingConstraints">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <!-- 본문 -->
+        <ScrollView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" >
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/topBar">
 
-            <!-- banner -->
-            <com.denzcoskun.imageslider.ImageSlider
-                android:id="@+id/banner_slider"
-                android:layout_width="match_parent"
-                android:layout_height="300dp"
-                app:iss_auto_cycle="true"
-                app:iss_period="2500"
-                app:iss_delay="0"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent" />
-
-
-            <!-- 장학금 최대 건수 -->
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/scholar_cnt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/banner_slider"
-                app:layout_constraintBottom_toTopOf="@+id/go_web" >
+                android:orientation="vertical">
 
-                <!-- 이름 -->
-                <LinearLayout
-                    android:id="@+id/scholarship_name"
+                <!-- banner -->
+                <com.denzcoskun.imageslider.ImageSlider
+                    android:id="@+id/banner_slider"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    app:iss_auto_cycle="true"
+                    app:iss_delay="0"
+                    app:iss_period="2500"
+                    app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+                <!-- 장학금 최대 건수 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/scholar_cnt"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_margin="20dp"
+                    app:layout_constraintBottom_toTopOf="@+id/go_web"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toTopOf="@+id/scholarship_cnt" >
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/banner_slider">
 
-                    <TextView
-                        android:id="@+id/user_name"
-                        android:layout_width="wrap_content"
+                    <!-- 이름 -->
+                    <LinearLayout
+                        android:id="@+id/scholarship_name"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="3dp"
-                        android:textColor="@color/text_black"
-                        android:textSize="33sp"
-                        android:textStyle="bold"/>
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/scholarship_cnt"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                        <TextView
+                            android:id="@+id/user_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="3dp"
+                            android:textColor="@color/text_black"
+                            android:textSize="33sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/scholar_input_name"
+                            android:textColor="@color/text_black"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- 최대 건수 -->
+                    <LinearLayout
+                        android:id="@+id/scholarship_cnt"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/scholar_input_name"
-                        android:textColor="@color/text_black"
-                        android:textSize="32sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toTopOf="@+id/scholarship_get"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/scholarship_name">
 
-                </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/scholar_cnt_max"
+                            android:textColor="@color/text_black"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
 
-                <!-- 최대 건수 -->
-                <LinearLayout
-                    android:id="@+id/scholarship_cnt"
+                        <TextView
+                            android:id="@+id/scholar_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dp"
+                            android:text="@string/scholar_num"
+                            android:textColor="@color/maincolor"
+                            android:textSize="35sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/scholar_cnt_num"
+                            android:textColor="@color/text_black"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- 받을 수 있어요! -->
+                    <LinearLayout
+                        android:id="@+id/scholarship_get"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/scholarship_cnt">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/scholar_get"
+                            android:textColor="@color/text_black"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- 이동 버튼 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/go_web"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
                     android:gravity="center"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:orientation="horizontal"
+                    android:paddingTop="25dp"
+                    android:paddingBottom="25dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/scholarship_name"
-                    app:layout_constraintBottom_toTopOf="@+id/scholarship_get" >
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/scholar_cnt">
 
-                    <TextView
+                    <!-- 한국장학재단 -->
+                    <LinearLayout
+                        android:id="@+id/kosafWeb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/scholar_cnt_max"
-                        android:textColor="@color/text_black"
-                        android:textSize="32sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/univWeb"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
-                        android:id="@+id/scholar_num"
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/ic_nation" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/go_nation_web"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <!-- 대학교 -->
+                    <LinearLayout
+                        android:id="@+id/univWeb"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dp"
-                        android:text="@string/scholar_num"
-                        android:textColor="@color/maincolor"
-                        android:textSize="35sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/profile_change"
+                        app:layout_constraintStart_toEndOf="@+id/kosafWeb"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                    <TextView
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/ic_university" />
+
+                        <TextView
+                            android:id="@+id/univ_text"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- 내 조건 수정 -->
+                    <LinearLayout
+                        android:id="@+id/profile_change"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/scholar_cnt_num"
-                        android:textColor="@color/text_black"
-                        android:textSize="32sp"
-                        android:textStyle="bold" />
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/univWeb"
+                        app:layout_constraintTop_toTopOf="parent">
 
-                </LinearLayout>
+                        <ImageView
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginBottom="5dp"
+                            android:background="@drawable/ic_my" />
 
-                <!-- 받을 수 있어요! -->
-                <LinearLayout
-                    android:id="@+id/scholarship_get"
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/go_condition"
+                            android:textColor="@color/text_gray"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- admob -->
+                <com.google.android.gms.ads.AdView
+                    android:id="@+id/adView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_marginTop="10dp"
+                    app:adSize="SMART_BANNER"
+                    app:adUnitId="ca-app-pub-3940256099942544/6300978111"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/scholarship_cnt"
-                    app:layout_constraintBottom_toBottomOf="parent" >
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/go_web" />
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/scholar_get"
-                        android:textColor="@color/text_black"
-                        android:textSize="32sp"
-                        android:textStyle="bold" />
+                <!-- calendar -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/adView"
+                    tools:context=".ViewPagerFragment">
+
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/calendarViewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_margin="15sp" />
 
                 </LinearLayout>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- 이동 버튼 -->
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/go_web"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="25dp"
-                android:paddingBottom="25dp"
-                android:gravity="center"
-                android:orientation="horizontal"
-                app:layout_constraintTop_toBottomOf="@+id/scholar_cnt"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" >
+        </ScrollView>
 
-                <!-- 한국장학재단 -->
-                <LinearLayout
-                    android:id="@+id/kosafWeb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/univWeb" >
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/ic_nation"
-                        android:layout_marginBottom="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/go_nation_web"
-                        android:textColor="@color/text_gray"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
-
-                <!-- 대학교 -->
-                <LinearLayout
-                    android:id="@+id/univWeb"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/kosafWeb"
-                    app:layout_constraintEnd_toStartOf="@+id/profile_change" >
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/ic_university"
-                        android:layout_marginBottom="5dp" />
-
-                    <TextView
-                        android:id="@+id/univ_text"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/text_gray"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-                <!-- 내 조건 수정 -->
-                <LinearLayout
-                    android:id="@+id/profile_change"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@+id/univWeb" >
-
-                    <ImageView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
-                        android:background="@drawable/ic_my"
-                        android:layout_marginBottom="5dp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/go_condition"
-                        android:textColor="@color/text_gray"
-                        android:textSize="12sp"
-                        android:textStyle="bold" />
-
-                </LinearLayout>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <!-- admob -->
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:adSize="SMART_BANNER"
-                app:adUnitId="ca-app-pub-3940256099942544/6300978111"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/go_web" />
-
-            <!-- calendar -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/adView"
-                tools:context=".ViewPagerFragment">
-
-                <androidx.viewpager2.widget.ViewPager2
-                    android:layout_margin="15sp"
-                    android:id="@+id/calendarViewPager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
-
-            </LinearLayout>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

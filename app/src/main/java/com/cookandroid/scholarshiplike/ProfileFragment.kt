@@ -2,6 +2,7 @@ package com.cookandroid.scholarshiplike
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -77,6 +78,15 @@ class ProfileFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+
+        // 아래 스와이핑으로 새로고침
+        binding.swipeRefreshFragmentProfile.setOnRefreshListener {
+            Handler().postDelayed({ // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+                if (binding.swipeRefreshFragmentProfile.isRefreshing)
+                    binding.swipeRefreshFragmentProfile.isRefreshing = false
+            }, 1000)
+            setUserNickname()
+        }
     }
 
     // 프래그먼트 종료시 툴바 show
