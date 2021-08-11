@@ -263,8 +263,7 @@ class ScholarshipAllscholarFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting All Scholar documents: $exception"
-                )
+                Log.w("ScholarshipAllscholarFragment", "Error getting All Scholar documents: $exception")
             }
 
     }
