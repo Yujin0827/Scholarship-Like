@@ -2,6 +2,7 @@ package com.cookandroid.scholarshiplike
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,10 +52,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         mContext1 = requireActivity()
 
-        // 모든 장학금 불러오기
-        allData("Nation")
-        allData("OutScholar")
-        allData("UnivScholar")
+
     }
 
 
@@ -206,13 +204,13 @@ class ScholarshipAllscholarFragment : Fragment() {
 
 
                         RlistAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                        Log.w("ScholarshipAllscholarFragment", "Each Scholar Data")
                     }
                 }
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
+                Log.w("ScholarshipAllscholarFragment", "Error getting Each Scholar documents: $exception")
             }
 
     }
@@ -259,17 +257,41 @@ class ScholarshipAllscholarFragment : Fragment() {
 
 
                         RlistAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                        Log.w("ScholarshipAllscholarFragment", "All Scholar Data")
                     }
                 }
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w(
-                    "ScholarshipAllscholarFragment",
-                    "Error getting UnivScholar documents: $exception"
+                Log.w("ScholarshipAllscholarFragment", "Error getting All Scholar documents: $exception"
                 )
             }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 모든 장학금 불러오기
+        allData("Nation")
+        allData("OutScholar")
+        allData("UnivScholar")
+
+        // 아래로 스와이프 새로고침
+        binding.swipeRefreshFragmentScholarship.setOnRefreshListener {
+            Handler().postDelayed({ // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+                if (binding.swipeRefreshFragmentScholarship.isRefreshing)
+                    binding.swipeRefreshFragmentScholarship.isRefreshing = false
+            }, 1000)
+
+            RlistAdapter.notifyDataSetChanged()
+            dataList.clear() // 리스트 재정의
+
+            allData("Nation")
+            allData("OutScholar")
+            allData("UnivScholar")
+
+        }
 
     }
     // 프래그먼트 파괴
