@@ -71,7 +71,7 @@ class ScholarshipFragment : Fragment() {
 
     }
 
-    // 뷰페이저 레리아웃 연결 , 생성
+    // 뷰페이저 레이아웃 연결 , 생성
     private fun setUpViewPager(){
         viewPagers = scholar_viewpager
         tabLayouts = scholar_tabLayout
@@ -106,9 +106,10 @@ class ScholarshipFragment : Fragment() {
 
 
     // 프래그먼트 파괴
-//    override fun onDestroy() {
-//        super.onDestroy()
-//    }
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
 }
 
 

@@ -4,12 +4,14 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -52,12 +54,10 @@ class ScholarshipMyscholarFragment : Fragment() {
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         mContext = requireActivity()
 
-
         // 초기 화면 장학금 데이터 가져오기
-  /*      user(object  : ThridCallback{
+        user(object  : ThridCallback{
             override fun tCallback() {
                 userScholar(object : SecondCallback{
                     override fun sCallback(){
@@ -65,45 +65,31 @@ class ScholarshipMyscholarFragment : Fragment() {
                             override fun onCallback(value: MutableList<Scholarship>) {
                                 listSize = dataList.size.toString()
                                 binding.scholarCount.text = listSize
+                                Log.w("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ", listSize)
 
                             } })
                     }
                 })
             }
-        })*/
+        })
+
+
     }
 
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         mbinding = FragmentScholarshipMyScholarBinding.inflate(inflater, container, false)
         val view = binding.root
 
 
-        initSetCondition()
-
         return view
 
     }
 
-    //allDate에서 list 크기 콜백
-    interface MyCallback {
-        fun onCallback(value : MutableList<Scholarship>)
 
-    }
-    // userScholar에서 all Data 콜백
-    interface SecondCallback{
-        fun sCallback()
-    }
-    // user에서 userScholar 콜백
-    interface ThridCallback{
-        fun tCallback()
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) { // 어뎁터 연결
         super.onViewCreated(view, savedInstanceState)
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
@@ -112,10 +98,64 @@ class ScholarshipMyscholarFragment : Fragment() {
         // RecyclerView.adapter에 지정
         myrecyclerView.adapter = listAdapter
 
-        reset_bt.setOnClickListener {
-            initSetCondition()
-        } //초기화 버튼
+
     }
+
+    override fun onActivityCreated(savedInstanceState: Bundle?) {
+        super.onActivityCreated(savedInstanceState)
+
+
+
+        reset_bt.setOnClickListener { initSetCondition() } //초기화 버튼
+
+    }
+
+    override fun onStart() { // 사용자에게 보여지기 전 호출되는 함수
+        super.onStart()
+
+        initSetCondition() // 초기 조건 데이터 set
+
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 아래로 스와이프 새로고침
+        binding.swipeRefreshFragmentScholarship.setOnRefreshListener {
+            Handler().postDelayed({ // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+                if (binding.swipeRefreshFragmentScholarship.isRefreshing)
+                    binding.swipeRefreshFragmentScholarship.isRefreshing = false
+            }, 1000)
+
+            listAdapter.notifyDataSetChanged()
+            dataList.clear() // 리스트 재정의
+
+            // 초기 화면 장학금 데이터 가져오기
+            user(object  : ThridCallback{
+                override fun tCallback() {
+                    userScholar(object : SecondCallback{
+                        override fun sCallback(){
+                            allData(object : MyCallback{
+                                override fun onCallback(value: MutableList<Scholarship>) {
+                                    listSize = dataList.size.toString()
+                                    binding.scholarCount.text = listSize
+                                } })
+                        }
+                    })
+                }
+            })
+        }
+
+    }
+
+    // 프래그먼트 파괴
+    override fun onDestroyView() {
+        super.onDestroyView()
+        mbinding = null
+    }
+
+    // -------------------- 함수 -------------
 
     // 초기 조건 데이터 set
     private fun initSetCondition() {
@@ -253,8 +293,24 @@ class ScholarshipMyscholarFragment : Fragment() {
         }
     }
 
+
+    //allDate에서 list 크기 콜백
+    interface MyCallback {
+        fun onCallback(value : MutableList<Scholarship>)
+    }
+
+    // userScholar에서 all Data 콜백
+    interface SecondCallback{
+        fun sCallback()
+    }
+
+    // user에서 userScholar 콜백
+    interface ThridCallback{
+        fun tCallback()
+    }
+
     // 유저 대학 장학금 가져오기
-/*    private fun userScholar(secondCallback: SecondCallback){
+    private fun userScholar(secondCallback: SecondCallback){
         // 작업할 문서
         db.collection("Scholarship")
             .document("UnivScholar")
@@ -262,7 +318,6 @@ class ScholarshipMyscholarFragment : Fragment() {
             .whereEqualTo("univ", userUniv)
             .get()
             .addOnSuccessListener{ result ->
-
                 for(document in result){
                     if(document != null){
                         //  필드값 가져오기
@@ -270,25 +325,29 @@ class ScholarshipMyscholarFragment : Fragment() {
                         val period = document["period"] as Map<String, Timestamp>
                         val startdate = period.get("startDate")?.toDate()
                         val enddate = period.get("endDate")?.toDate()
+                        val startdate2 = period.get("startDate2")?.toDate()
+                        val enddate2 = period.get("endDate2")?.toDate()
                         val institution = document["paymentInstitution"].toString()
 
                         val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-
-                        if(startdate == null && enddate == null){
-                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                            dataList.add(item)
-                            Log.w("ScholarshipMyscholarFragment", document.id)
-                        }
-                        else if(startdate == enddate){
-                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                            dataList.add(item)
-                            Log.w("ScholarshipMyscholarFragment", document.id)
+                        if((startdate2 == null)&& enddate2 == null){
+                            if(startdate == null && enddate == null){
+                                val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                dataList.add(item)
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                dataList.add(item)
+                            }
                         }
                         else{
-                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                             dataList.add(item)
-                            Log.w("ScholarshipMyscholarFragment", document.id)
                         }
 
                         listAdapter.submitList(dataList)
@@ -298,7 +357,7 @@ class ScholarshipMyscholarFragment : Fragment() {
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
+                Log.w("ScholarshipMyscholarFragment", "Error getting UnivScholar documents: $exception")
             }
         secondCallback.sCallback()
 
@@ -323,37 +382,40 @@ class ScholarshipMyscholarFragment : Fragment() {
                             val period = document["period"] as Map<String, Timestamp>
                             val startdate = period.get("startDate")?.toDate()
                             val enddate = period.get("endDate")?.toDate()
+                            val startdate2 = period.get("startDate2")?.toDate()
+                            val enddate2 = period.get("endDate2")?.toDate()
                             val institution = document["paymentInstitution"].toString()
 
                             val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
+                            if((startdate2 == null)&& enddate2 == null){
+                                if(startdate == null && enddate == null){
+                                    val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                    dataList.add(item)
+                                }
+                                else if(startdate == enddate){
+                                    val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
+                                    dataList.add(item)
+                                }
+                                else{
+                                    val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                    dataList.add(item)
+                                }
 
-
-
-                            if(startdate == null && enddate == null){
-                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                                dataList.add(item)
-                            }
-                            else if(startdate == enddate){
-                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                                dataList.add(item)
                             }
                             else{
-                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                                 dataList.add(item)
                             }
-                            myCallback.onCallback(dataList)
                             listAdapter.submitList(dataList)
-                            Log.w("ScholarshipAllscholarFragment", "all Data")
+                            myCallback.onCallback(dataList)
+                            Log.w("ScholarshipMyscholarFragment", "all Data")
                         }
                     }
                 }
                 .addOnFailureListener { exception ->
                     // 실패할 경우
-                    Log.w(
-                        "ScholarshipAllscholarFragment",
-                        "Error getting UnivScholar documents: $exception"
-                    )
+                    Log.w("ScholarshipMyscholarFragment", "Error getting UnivScholar documents: $exception")
                 }
         }
     }
@@ -367,9 +429,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
         //User's Univ
         if (user != null) {
-            db.collection("Users")
-                .document(user.uid)
-                .get()
+            db.collection("Users").document(user.uid).get()
                 .addOnSuccessListener{ document ->
                     if (document != null){
                         if(document.getString("univ") != null){
@@ -377,17 +437,13 @@ class ScholarshipMyscholarFragment : Fragment() {
                         }
                     }
                     thridCallback.tCallback()
-
-
                 }
         }
 
     }
 
-    // 프래그먼트 파괴
-    override fun onDestroyView() {
-        super.onDestroyView()
-        mbinding = null
-    }
-*/
+
+
+
+
 }
