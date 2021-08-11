@@ -2,6 +2,7 @@ package com.cookandroid.scholarshiplike
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -51,10 +52,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         mContext1 = requireActivity()
 
-        // 모든 장학금 불러오기
-        allData("Nation")
-        allData("OutScholar")
-        allData("UnivScholar")
+
     }
 
 
@@ -178,81 +176,121 @@ class ScholarshipAllscholarFragment : Fragment() {
                         val period = document["period"] as Map<String, Timestamp>
                         val startdate = period.get("startDate")?.toDate()
                         val enddate = period.get("endDate")?.toDate()
+                        val startdate2 = period.get("startDate2")?.toDate()
+                        val enddate2 = period.get("endDate2")?.toDate()
                         val institution = document["paymentInstitution"].toString()
 
                         val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
+                        if(startdate2 == null && enddate2 == null){
+                            if(startdate == null && enddate == null){
+                                val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                dataList.add(item)
+                            }
+                            else if(startdate == enddate){
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
+                                dataList.add(item)
+                            }
+                            else{
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                dataList.add(item)
+                            }
 
-
-                        if(startdate == null && enddate == null){
-                            val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
-                            dataList.add(item)
-                        }
-                        else if(startdate == enddate){
-                            val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
-                            dataList.add(item)
                         }
                         else{
-                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                             dataList.add(item)
                         }
 
+
                         RlistAdapter.submitList(dataList)
-                        Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
+                        Log.w("ScholarshipAllscholarFragment", "Each Scholar Data")
                     }
                 }
             }
             .addOnFailureListener { exception ->
                 // 실패할 경우
-                Log.w("ScholarshipAllscholarFragment", "Error getting UnivScholar documents: $exception")
+                Log.w("ScholarshipAllscholarFragment", "Error getting Each Scholar documents: $exception")
             }
 
     }
 
     private fun allData(kind : String){ // 데이터 가져오기
-            // 작업할 문서
-            db.collection("Scholarship")
-                .document(kind)
-                .collection("ScholarshipList")
-                .get()
-                .addOnSuccessListener { result ->
-                    for (document in result) {
-                        if (document != null) {
-                            //  필드값 가져오기
-                            val paymentType = document["paymentType"].toString()
-                            val period = document["period"] as Map<String, Timestamp>
-                            val startdate = period.get("startDate")?.toDate()
-                            val enddate = period.get("endDate")?.toDate()
-                            val institution = document["paymentInstitution"].toString()
+        // 작업할 문서
+        db.collection("Scholarship")
+            .document(kind)
+            .collection("ScholarshipList")
+            .get()
+            .addOnSuccessListener { result ->
+                for (document in result) {
+                    if (document != null) {
+                        //  필드값 가져오기
+                        val paymentType = document["paymentType"].toString()
+                        val period = document["period"] as Map<String, Timestamp>
+                        val startdate = period.get("startDate")?.toDate()
+                        val enddate = period.get("endDate")?.toDate()
+                        val startdate2 = period.get("startDate2")?.toDate()
+                        val enddate2 = period.get("endDate2")?.toDate()
+                        val institution = document["paymentInstitution"].toString()
 
-                            val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+                        val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
 
-
+                        if((startdate2 == null)&& enddate2 == null){
                             if(startdate == null && enddate == null){
-                                val item = Scholarship(paymentType, document.id, "자동 신청", "", institution)
+                                val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
                                 dataList.add(item)
                             }
                             else if(startdate == enddate){
-                                val item = Scholarship(paymentType, document.id, "추후 공지", "", institution)
+                                val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
                                 dataList.add(item)
                             }
                             else{
-                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), institution)
+                                val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
                                 dataList.add(item)
                             }
 
-                            RlistAdapter.submitList(dataList)
-                            Log.w("ScholarshipAllscholarFragment", "UnivScholar Data")
                         }
+                        else{
+                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
+                            dataList.add(item)
+                        }
+
+
+                        RlistAdapter.submitList(dataList)
+                        Log.w("ScholarshipAllscholarFragment", "All Scholar Data")
                     }
                 }
-                .addOnFailureListener { exception ->
-                    // 실패할 경우
-                    Log.w(
-                        "ScholarshipAllscholarFragment",
-                        "Error getting UnivScholar documents: $exception"
-                    )
-                }
+            }
+            .addOnFailureListener { exception ->
+                // 실패할 경우
+                Log.w("ScholarshipAllscholarFragment", "Error getting All Scholar documents: $exception")
+            }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // 모든 장학금 불러오기
+        allData("Nation")
+        allData("OutScholar")
+        allData("UnivScholar")
+
+        // 아래로 스와이프 새로고침
+        binding.swipeRefreshFragmentScholarship.setOnRefreshListener {
+            Handler().postDelayed({ // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+                if (binding.swipeRefreshFragmentScholarship.isRefreshing)
+                    binding.swipeRefreshFragmentScholarship.isRefreshing = false
+            }, 1000)
+
+            RlistAdapter.notifyDataSetChanged()
+            dataList.clear() // 리스트 재정의
+
+            allData("Nation")
+            allData("OutScholar")
+            allData("UnivScholar")
+
+        }
 
     }
     // 프래그먼트 파괴
