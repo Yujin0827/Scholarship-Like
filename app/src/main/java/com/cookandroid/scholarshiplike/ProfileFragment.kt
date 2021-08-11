@@ -1,8 +1,10 @@
 package com.cookandroid.scholarshiplike
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,11 +22,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
+import kotlin.concurrent.thread
 
 // Fragment 변수 생성
 private const val ProfileTab = "Profile_Fragment"
 private const val ProfileTabEtc = "Profile_Etc_Fragment"
 
+@SuppressLint("HandlerLeak")
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -36,8 +40,17 @@ class ProfileFragment : Fragment() {
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
 
-//    lateinit var fm: FragmentManager
-//    lateinit var transaction: FragmentTransaction
+    // 핸들러
+    val displayHandler = object : Handler() {
+        override fun handleMessage(msg: Message) {
+            when (msg.what) {
+                // 유저 닉네임 표기
+                0 -> {
+                    binding.btnProfileUserName.text = msg.obj.toString()
+                }
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -64,7 +77,7 @@ class ProfileFragment : Fragment() {
             }
             val profiletab = fm.findFragmentByTag(ProfileTab)
             val profiletabEtc = fm.findFragmentByTag(ProfileTabEtc)
-            profiletab?.let { it ->  transaction.hide(it)}
+            profiletab?.let { it -> transaction.hide(it) }
             profiletabEtc?.let { it -> transaction.show(it) }
             transaction.addToBackStack("ProfileTab")
             transaction.setReorderingAllowed(true)
@@ -137,15 +150,22 @@ class ProfileFragment : Fragment() {
         val user = auth.currentUser
 
         if (user != null) {
-            db.collection("Users")
-                .document(user.uid)
-                .get()
-                .addOnSuccessListener { result ->
-                    binding.btnProfileUserName.text = result.getField<String>("nickname")
-                }
-                .addOnFailureListener() { exception ->
-                    Log.e(TAG, "Fail to get user nickname from DB!", exception)
-                }
+            thread(start = true) {
+                db.collection("Users")
+                    .document(user.uid)
+                    .get()
+                    .addOnSuccessListener { result ->
+                        displayHandler.sendMessage(
+                            displayHandler.obtainMessage(
+                                0,
+                                result.getField<String>("nickname")
+                            )
+                        )
+                    }
+                    .addOnFailureListener() { exception ->
+                        Log.e(TAG, "Fail to get user nickname from DB!", exception)
+                    }
+            }
         }
     }
 
