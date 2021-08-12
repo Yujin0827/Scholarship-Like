@@ -140,6 +140,7 @@
     <string name="note">비고</string>
     <string name="to">~</string>
 
+
     <!-- 탈퇴하기 -->
     <string name="signout_really">정말 탈퇴하시겠어요?</string>
     <string name="signout_req_reason">장학라이크를 탈퇴하시려는 이유를 선택해주세요. 어플 개선에 많은 도움이 됩니다.</string>

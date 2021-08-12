@@ -1,6 +1,8 @@
 package com.cookandroid.scholarshiplike
 
+import android.util.Log
 import java.util.*
+import kotlin.collections.ArrayList
 
 class HomeCalendarDateCalculate(date: Date) {
 
@@ -16,8 +18,7 @@ class HomeCalendarDateCalculate(date: Date) {
     var currentMaxDate = 0
 
     var dateList = arrayListOf<Int>()
-    var dateList_2D: ArrayList<MutableList<Int>> = arrayListOf()
-
+    var dateList_2D: ArrayList<List<Int>> = arrayListOf()
 
     init {
         calendar.time = date
@@ -67,14 +68,16 @@ class HomeCalendarDateCalculate(date: Date) {
         var list:MutableList<Int> = mutableListOf()
         var i=0
         for(item in dateList) {
+            Log.w("item: ","$item")
             if (i%7==0 && i!=0) {
-                dateList_2D.add(list.toMutableList())
+                dateList_2D.add(list.toList())
                 list.clear()
             }
             list.add(item)
+            Log.e("list: ", "$list")
+            Log.e("dateList_2D: ", "$dateList_2D")
             i++
         }
-        dateList_2D.add(list.toMutableList())
+        dateList_2D.add(list.toList())
     }
-
 }

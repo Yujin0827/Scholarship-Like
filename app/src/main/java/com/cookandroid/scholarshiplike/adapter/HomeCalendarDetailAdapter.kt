@@ -17,10 +17,7 @@ import kotlin.collections.ArrayList
 class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, val date: Date, val pageindex: Int, val scholar:ArrayList<tmpScholarship>) :
     RecyclerView.Adapter<HomeCalendarDetailAdapter.CalendarItemHolder>() {
 
-    private val TAG = javaClass.simpleName
-    private var dataList: ArrayList<Int> = arrayListOf() //날짜 데이터 리스트
-    private var dataList_2D: ArrayList<MutableList<Int>> = arrayListOf() //날짜 데이터 리스트 2D
-    private var dateIntList: ArrayList<MutableList<Int>> = arrayListOf() //날짜 int형 리스트
+    private var dataList_2D: ArrayList<List<Int>> = arrayListOf() //날짜 데이터 리스트 2D
 
     private lateinit var binding: FragmentHomeCalendarItemListBinding
 
@@ -29,7 +26,6 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
 
     init {
         calculatedDate.initBaseCalendar()
-        dataList = calculatedDate.dateList
         dataList_2D = calculatedDate.dateList_2D
     }
 
@@ -48,7 +44,9 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
 
     inner class CalendarItemHolder(val binding : FragmentHomeCalendarItemListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: MutableList<Int>, position: Int) {
+        fun bind(data: List<Int>, position: Int) {
+
+            //날짜 추가
             binding.date1.text = data[0].toString()
             binding.date2.text = data[1].toString()
             binding.date3.text = data[2].toString()
@@ -59,6 +57,10 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
 
             //스케줄 추가(임시)
             if( pageindex == 0) {
+
+                if(position==0) {
+
+                }
                 if(position==1) {
                     binding.contents.addView(createscheduelView("국가장학금 Ⅰ 유형(학생직접지원형)", 0, 0, 5, "#f2d7d7"))
                     binding.contents.addView(createscheduelView("한림 리더십 장학금", 2, 0, 5, "#c9ddf2"))

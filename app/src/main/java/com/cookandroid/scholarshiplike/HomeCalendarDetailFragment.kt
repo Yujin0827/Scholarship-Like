@@ -96,11 +96,11 @@ class HomeCalendarDetailFragment : Fragment() {
                                             document.id, "", startdate?.toDate(), enddate?.toDate()))
                                     }
                                 }
-
-                                binding.calendarView.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
-                                binding.calendarView.adapter = HomeCalendarDetailAdapter(this,mContext,currentDate,pageIndex,scholar)
-
                             }
+
+                            binding.calendarView.layoutManager = LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false)
+                            binding.calendarView.adapter = HomeCalendarDetailAdapter(this,mContext,currentDate,pageIndex,scholar)
+
                         }.addOnFailureListener { exception ->
                             Log.w(TAG, "Error getting documents: $exception")
                         }
