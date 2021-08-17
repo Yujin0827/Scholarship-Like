@@ -92,6 +92,11 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
         holder.bind(list[position], position)
     }
 
+    override fun getItemViewType (position : Int) : Int{
+        return position;
+    }
+
+
 }
 
 object DiffCallbackScholar : DiffUtil.ItemCallback<Scholarship>() {
