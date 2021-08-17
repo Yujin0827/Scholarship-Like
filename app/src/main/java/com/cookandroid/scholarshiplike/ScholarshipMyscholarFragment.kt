@@ -626,7 +626,9 @@ class ScholarshipMyscholarFragment : Fragment() {
 
                         }
                         if (incomelist.isEmpty()){
+                            dataList.clear()
                             listAdapterA.notifyDataSetChanged()
+                            listAdapter.notifyDataSetChanged()
                             scholar_count.text = incomelist.size.toString()
                         }
                         Log.w("dataList ", incomelist.toString())
