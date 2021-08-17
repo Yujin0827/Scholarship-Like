@@ -3,6 +3,7 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -11,26 +12,32 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeCalendarItemListBinding
+import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, val date: Date, val pageindex: Int, val scholar:ArrayList<tmpScholarship>) :
     RecyclerView.Adapter<HomeCalendarDetailAdapter.CalendarItemHolder>() {
 
-    private var dataList_2D: ArrayList<List<Int>> = arrayListOf() //날짜 데이터 리스트 2D
-
     private lateinit var binding: FragmentHomeCalendarItemListBinding
 
+    private var dateList_2D: ArrayList<List<Int>> = arrayListOf()
+    private var intList_2D: ArrayList<List<Int>> = arrayListOf()
+    private var currentMonth: Int =0
+
     // HomeCalendarDateCalculate을 이용하여 날짜 리스트 세팅
-    var calculatedDate: HomeCalendarDateCalculate = HomeCalendarDateCalculate(date)
+    var calculatedDate: HomeCalendarDateCalculate = HomeCalendarDateCalculate(date, pageindex)
 
     init {
         calculatedDate.initBaseCalendar()
-        dataList_2D = calculatedDate.dateList_2D
+        dateList_2D = calculatedDate.dateList_2D
+        intList_2D = calculatedDate.intList_2D
+        currentMonth = calculatedDate.currentMonth
+        Log.e("scholar:     ","$scholar")
     }
 
     override fun onBindViewHolder(holder: CalendarItemHolder, position: Int) {
-        holder?.bind(dataList_2D[position], position)
+        holder?.bind(dateList_2D[position], intList_2D[position], position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarItemHolder {
@@ -40,35 +47,54 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
         return CalendarItemHolder(binding)
     }
 
-    override fun getItemCount(): Int = dataList_2D.size
+    override fun getItemCount(): Int = dateList_2D.size
 
     inner class CalendarItemHolder(val binding : FragmentHomeCalendarItemListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(data: List<Int>, position: Int) {
+        fun bind(data: List<Int>, intList: List<Int>,position: Int) {
 
-            //날짜 추가
+            //View text, id 설정
             binding.date1.text = data[0].toString()
+            binding.date1.id = intList[0]
+
             binding.date2.text = data[1].toString()
+            binding.date2.id = intList[1]
+
             binding.date3.text = data[2].toString()
+            binding.date3.id = intList[2]
+
             binding.date4.text = data[3].toString()
+            binding.date4.id = intList[3]
+
             binding.date5.text = data[4].toString()
+            binding.date5.id = intList[4]
+
             binding.date6.text = data[5].toString()
+            binding.date6.id = intList[5]
+
             binding.date7.text = data[6].toString()
+            binding.date7.id = intList[6]
 
-            //스케줄 추가(임시)
-            if( pageindex == 0) {
+            //스케줄 추가
+            val dateFormat = SimpleDateFormat("MMdd")
 
-                if(position==0) {
+            for(item in scholar) {
+                val start = dateFormat.format(item.startdate).toInt()
+                val end = dateFormat.format(item.enddate).toInt()
+                var width = 0
+                var leftmargin = 0
+                var rightmargin = 0
 
-                }
-                if(position==1) {
-                    binding.contents.addView(createscheduelView("국가장학금 Ⅰ 유형(학생직접지원형)", 0, 0, 5, "#f2d7d7"))
-                    binding.contents.addView(createscheduelView("한림 리더십 장학금", 2, 0, 5, "#c9ddf2"))
-                }
-
-                if(position==2) {
-                    binding.contents.addView(createscheduelView("교외 장학금", 1, 0, 3, "#caf1c8"))
-                }
+                if(binding.date1.id in start..end)  width++ else { if (binding.date1.id<start) leftmargin++ else rightmargin++ }
+//                var data = binding.date1.id
+//                Log.w("start, end, data, leftmargin, rightmargin, width, position","$start, $end, $data, $leftmargin, $rightmargin, $width, $position")
+                if(binding.date2.id in start..end)  width++ else { if (binding.date2.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date3.id in start..end)  width++ else { if (binding.date3.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date4.id in start..end)  width++ else { if (binding.date4.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date5.id in start..end)  width++ else { if (binding.date5.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date6.id in start..end)  width++ else { if (binding.date6.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date7.id in start..end)  width++ else { if (binding.date7.id<start) leftmargin++ else rightmargin++ }
+                if(width !=0) binding.contents.addView(createscheduelView(item.title, leftmargin, rightmargin, width, "#f2d7d7"))
             }
         }
     }
