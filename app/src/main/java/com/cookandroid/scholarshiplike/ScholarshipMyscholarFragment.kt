@@ -119,7 +119,7 @@ class ScholarshipMyscholarFragment : Fragment() {
         myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
         myrecyclerView.adapter = listAdapter
-        myrecyclerView.adapter = listAdapterA
+
 
     }
 
@@ -153,9 +153,9 @@ class ScholarshipMyscholarFragment : Fragment() {
                     binding.swipeRefreshFragmentScholarship.isRefreshing = false
             }, 1000)
 
+            myrecyclerView.adapter = listAdapter
             listAdapter.notifyDataSetChanged()
             dataList.clear() // 리스트 재정의
-
 
             // 초기 화면 장학금 데이터 가져오기
             user(object  : ThridCallback{
@@ -598,6 +598,7 @@ class ScholarshipMyscholarFragment : Fragment() {
             val item = Scholarship(paymentType, snap.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
             list.add(item)
         }
+        myrecyclerView.adapter = listAdapterA
         listAdapterA.submitList(list)
         scholar_count.text = list.size.toString()
 
@@ -609,9 +610,6 @@ class ScholarshipMyscholarFragment : Fragment() {
     var ref =  db.collectionGroup("ScholarshipList")
 
     private fun income( incomen : Long) {
-
-        listAdapterA.notifyDataSetChanged()
-        dataList.clear()
         incomelist.clear()
 
         thread(start = true){
@@ -627,7 +625,11 @@ class ScholarshipMyscholarFragment : Fragment() {
                             setDataShape(incomelist, snap)
 
                         }
-                        Log.w("dataList ", dataList.toString())
+                        if (incomelist.isEmpty()){
+                            listAdapterA.notifyDataSetChanged()
+                            scholar_count.text = incomelist.size.toString()
+                        }
+                        Log.w("dataList ", incomelist.toString())
 
                     }
                     .addOnFailureListener { exception ->
