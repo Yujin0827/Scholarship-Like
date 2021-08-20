@@ -75,9 +75,6 @@
             android:orientation="vertical"
             android:background="@color/maincolor_background">
 
-            <ScrollView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -101,7 +98,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="15dp">
+                        android:layout_marginBottom="5dp">
 
                     </Spinner>
 
@@ -172,8 +169,7 @@
                             android:maxLength="2"
                             android:textSize="12sp"
                             android:hint="18"
-                            android:gravity="center"
-                            />
+                            android:gravity="center" />
                     </LinearLayout>
 
 
@@ -181,7 +177,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="33dp"
                         android:layout_marginLeft="20dp"
-                        android:layout_marginBottom="15dp"
+
                         android:orientation="horizontal">
 
                         <TextView
@@ -191,8 +187,7 @@
                             android:gravity="center"
                             android:text="@string/pre_semester_score"
                             android:textColor="@color/text_black"
-                            android:textSize="12sp"
-                            />
+                            android:textSize="12sp" />
 
                         <EditText
                             android:id="@+id/myPreScore"
@@ -208,10 +203,19 @@
                     </LinearLayout>
 
                     <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score_standard"
+                        android:textSize="10sp"
+                        android:layout_gravity="right"
+                        android:layout_marginRight="10dp"/>
+
+                    <TextView
                         android:id="@+id/areaText"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:layout_marginTop="15dp"
                         android:text="@string/area"
                         android:textSize="13sp"
                         android:textColor="#312E2E"/>
@@ -256,7 +260,6 @@
                         android:id="@+id/disabled"
                         android:layout_width="match_parent"
                         android:layout_marginLeft="10dp"
-                        android:layout_marginBottom="10dp"
                         android:layout_height="18dp"
                         android:text="@string/extra_disabled"
                         android:textColor="#312E2E"
@@ -273,13 +276,12 @@
                         android:textStyle="bold"
                         android:layout_marginTop="15dp"/>
                 </LinearLayout>
-            </ScrollView>
         </LinearLayout>
 
         <!-- 장학금 리스트 -->
 
-        <ScrollView
-            android:id="@+id/myScholarListScrolView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_fragment_scholarship"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3">
@@ -287,21 +289,13 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/myrecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content">
 
+            </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
-
-    <LinearLayout
-        android:id ="@+id/koreaScholarship"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-
-        android:orientation="vertical"
-        >
-    </LinearLayout>
-
     </LinearLayout>
 
 

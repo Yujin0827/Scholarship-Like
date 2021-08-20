@@ -36,9 +36,8 @@
 
         <!-- 장학금 리스트 -->
 
-
-        <ScrollView
-            android:id="@+id/myScholarListScrolView"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/swipe_refresh_fragment_scholarship"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="3">
@@ -46,10 +45,12 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/allrecyclerView"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content">
 
+            </androidx.recyclerview.widget.RecyclerView>
 
-        </ScrollView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
     </LinearLayout>
 
 
