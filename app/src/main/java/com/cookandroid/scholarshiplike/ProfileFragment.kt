@@ -28,7 +28,6 @@ import kotlin.concurrent.thread
 private const val ProfileTab = "Profile_Fragment"
 private const val ProfileTabEtc = "Profile_Etc_Fragment"
 
-@SuppressLint("HandlerLeak")
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -39,18 +38,6 @@ class ProfileFragment : Fragment() {
     // Firebase
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
-
-    // 핸들러
-    val displayHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                // 유저 닉네임 표기
-                0 -> {
-                    binding.btnProfileUserName.text = msg.obj.toString()
-                }
-            }
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -155,12 +142,9 @@ class ProfileFragment : Fragment() {
                     .document(user.uid)
                     .get()
                     .addOnSuccessListener { result ->
-                        displayHandler.sendMessage(
-                            displayHandler.obtainMessage(
-                                0,
-                                result.getField<String>("nickname")
-                            )
-                        )
+                        activity?.runOnUiThread {
+                            binding.btnProfileUserName.text = result.getField<String>("nickname")
+                        }
                     }
                     .addOnFailureListener() { exception ->
                         Log.e(TAG, "Fail to get user nickname from DB!", exception)

@@ -45,44 +45,6 @@ class LoginActivity : AppCompatActivity() {
     var backPressedTime: Long = 0
     val FINISH_INTERVAL_TIME = 2000
 
-    val handler = @SuppressLint("HandlerLeak")
-    object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when (msg.what) {
-                // 로그인 성공(MainActivity 실행)
-                0 -> {
-                    Toast.makeText(this@LoginActivity, "로그인 성공", Toast.LENGTH_LONG).show()
-                    toMainActivity()
-                }
-
-                // 로그인 실패시 에러 토스트메시지 띄우기
-                1 -> {
-                    when (msg.obj) {
-                        "ERROR_INVALID_EMAIL" -> {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "올바른 이메일 주소의 형식을 입력하세요",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                        "ERROR_USER_NOT_FOUND" -> {
-                            Toast.makeText(
-                                this@LoginActivity,
-                                "가입되어 있지 않은 이메일입니다",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-                }
-
-                // 구글 계정으로 로그인 실패시
-                2 -> {
-                    Toast.makeText(this@LoginActivity, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-        }
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityLoginBinding.inflate(layoutInflater)
@@ -118,18 +80,33 @@ class LoginActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().signInWithEmailAndPassword(txtEmail, txtPassword)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-                                handler.sendEmptyMessage(0) // MainAcitivty로 이동
+                                runOnUiThread {
+                                    Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
+                                }
+                                toMainActivity()    // MainAcitivty로 이동
                             }
                         }
                         .addOnFailureListener {
                             // 예외 토스트 메시지
                             val errorCode = (it as FirebaseAuthException).errorCode
-                            handler.sendMessage(
-                                handler.obtainMessage(
-                                    1,
-                                    errorCode
-                                )
-                            )    // 에러 토스트 메시지 띄우기
+                            runOnUiThread {
+                                when (errorCode) {
+                                    "ERROR_INVALID_EMAIL" -> {
+                                        Toast.makeText(
+                                            this,
+                                            "올바른 이메일 주소의 형식을 입력하세요",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                    "ERROR_USER_NOT_FOUND" -> {
+                                        Toast.makeText(
+                                            this,
+                                            "가입되어 있지 않은 이메일입니다",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                }
+                            }
                         }
                 }
             } else if (txtEmail.isEmpty()) {
@@ -231,10 +208,15 @@ class LoginActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         Log.w(TAG, "firebaseAuthWithGoogle 성공", task.exception)
+                        runOnUiThread {
+                            Toast.makeText(this, "로그인 성공", Toast.LENGTH_LONG).show()
+                        }
                         confirmUserDB()
                     } else {
                         Log.w(TAG, "firebaseAuthWithGoogle 실패", task.exception)
-                        handler.sendEmptyMessage(2)
+                        runOnUiThread {
+                            Toast.makeText(this, "로그인에 실패하였습니다.", Toast.LENGTH_SHORT).show()
+                        }
                     }
                 }
         }

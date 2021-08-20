@@ -23,8 +23,6 @@ import kotlinx.android.synthetic.main.item_calendar_popup.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
-
-@SuppressLint("HandlerLeak")
 class ProfileChangeActivity : AppCompatActivity() {
     // 뷰 바인딩
     private var mBinding: ActivityProfileChangeBinding? = null
@@ -41,50 +39,6 @@ class ProfileChangeActivity : AppCompatActivity() {
 
     var user = Firebase.auth.currentUser // 사용자 가져오기
     var imm: InputMethodManager? = null // 키보드
-
-    // 핸들러
-    val displayHandler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            when(msg.what) {
-                // 사용자 email 표기
-                0 -> {
-                    binding.emailInput.text = userEmail
-                }
-
-                // 사용자 nickname 표기
-                1 -> {
-                    if (userNickname != null) {
-                        binding.nickNameInput.setText(userNickname)
-                    }
-                }
-
-                // 대학교 ArrayAdapter 적용, 초기화
-                2 -> {
-                    binding.univeInput.setAdapter<ArrayAdapter<String>>(
-                        ArrayAdapter<String>(
-                            this@ProfileChangeActivity,
-                            R.layout.dropdown_size, R.id.dropdown_size, univList
-                        )
-                    )
-
-                    // 사용자 대학교로 초기화
-                    if (userUniv != null) {
-                        binding.univeInput.setText(userUniv, false)
-                    }
-                }
-
-                // 비밀번호 변경 이메일 전송 완료시 결과 출력
-                3 -> {
-                    binding.sendMailResultText.visibility = View.VISIBLE  // 전송 결과 출력
-                }
-
-                // 비밀번호 변경 이메일 전송 실패시 토스트 메시지 출력
-                4 -> {
-                    Toast.makeText(this@ProfileChangeActivity, msg.obj.toString(), Toast.LENGTH_LONG).show()
-                }
-            }
-        }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -106,7 +60,9 @@ class ProfileChangeActivity : AppCompatActivity() {
                 userEmail = user!!.email.toString()
                 userUid = user!!.uid
             }
-            displayHandler.sendEmptyMessage(0)
+            runOnUiThread {
+                binding.emailInput.text = userEmail
+            }
 
             //User Nickname & Univ
             db.collection("Users")
@@ -116,7 +72,11 @@ class ProfileChangeActivity : AppCompatActivity() {
                     if (document != null) {
                         userNickname = document.getString("nickname")
                         userUniv = document.getString("univ")
-                        displayHandler.sendEmptyMessage(1)
+                        runOnUiThread {
+                            if (userNickname != null) {
+                                binding.nickNameInput.setText(userNickname)
+                            }
+                        }
                         univSearch()    // 대학교 입력 자동완성 & 초기화
                     }
                 }
@@ -133,7 +93,19 @@ class ProfileChangeActivity : AppCompatActivity() {
             sRef.get().addOnSuccessListener { doc ->
                 val json = doc.data
                 json?.keys?.let { univList.addAll(it) }
-                displayHandler.sendEmptyMessage(2)
+                runOnUiThread {
+                    binding.univeInput.setAdapter<ArrayAdapter<String>>(
+                        ArrayAdapter<String>(
+                            this,
+                            R.layout.dropdown_size, R.id.dropdown_size, univList
+                        )
+                    )
+
+                    // 사용자 대학교로 초기화
+                    if (userUniv != null) {
+                        binding.univeInput.setText(userUniv, false)
+                    }
+                }
             }
         }
     }
@@ -149,12 +121,13 @@ class ProfileChangeActivity : AppCompatActivity() {
                     FirebaseAuth.getInstance().sendPasswordResetEmail(userEmail)
                         .addOnCompleteListener(this) { task ->
                             if (task.isSuccessful) {
-//                                binding.sendMailResultText.visibility = View.VISIBLE  // 전송 결과 출력
-                                displayHandler.sendEmptyMessage(3)
+                                runOnUiThread {
+                                    binding.sendMailResultText.visibility = View.VISIBLE  // 전송 결과 출력
+                                }
                             } else {
-//                                Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG)
-//                                    .show()
-                                displayHandler.sendMessage(displayHandler.obtainMessage(4, task.exception))
+                                runOnUiThread {
+                                    Toast.makeText(this, task.exception.toString(), Toast.LENGTH_LONG).show()
+                                }
                             }
                         }
                 }

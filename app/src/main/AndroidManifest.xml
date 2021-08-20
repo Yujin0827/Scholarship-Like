@@ -51,7 +51,8 @@
         <activity android:name=".ProfileChangeActivity" />
         <activity
             android:name=".MainActivity"
-            android:theme="@style/SplashTheme">
+            android:theme="@style/SplashTheme"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -107,7 +108,8 @@
         <activity android:name=".AlarmDetailActivity" />
 
         <!-- 매거진 상세 -->
-        <activity android:name=".MagazineDetailActivity" />
+        <activity android:name=".MagazineDetailActivity"
+            android:hardwareAccelerated="true"/>
 
         <!-- 장학금 상세 -->
         <activity android:name=".ScholarshipDetailActivity" />

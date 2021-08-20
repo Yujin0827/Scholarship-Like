@@ -7,6 +7,9 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivityScholarshipDetailBinding
+import com.google.android.gms.ads.*
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -21,6 +24,9 @@ class ScholarshipDetailActivity : AppCompatActivity() {
 
     private var db = Firebase.firestore
     private var scholar: detailScholarship ?= null //장학금 정보 저장 변수
+    private var mInterstitialAd: InterstitialAd? = null //Admob
+
+    private val TAG = "ScholarshipDetailActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +64,12 @@ class ScholarshipDetailActivity : AppCompatActivity() {
 
                         //홈페이지 버튼 연결
                         binding.movetoweb.setOnClickListener {
+                            if (mInterstitialAd != null) {
+                                mInterstitialAd?.show(this)
+                            } else {
+                                Log.d(TAG, "The interstitial ad wasn't ready yet.")
+                            }
+
                             val uri = Uri.parse(URL)
                             val intent = Intent(Intent.ACTION_VIEW, uri)
                             startActivity(intent)
@@ -73,5 +85,57 @@ class ScholarshipDetailActivity : AppCompatActivity() {
         likeButton.setOnClickListener{
             likeButton.isSelected = likeButton.isSelected != true
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        loadAd()    // admob 광고 초기화
+    }
+
+    // Admob 광고 초기화
+    private fun loadAd() {
+        // 배너광고
+        MobileAds.initialize(this) {}
+        val mAdView = binding.scholarshipDetailAdView
+        var adRequest = AdRequest.Builder().build()
+        mAdView.loadAd(adRequest)
+
+        // 전면광고
+        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
+                Log.d(TAG, adError?.message)
+                mInterstitialAd = null
+            }
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                Log.d(TAG, "Ad was loaded.")
+                mInterstitialAd = interstitialAd
+            }
+        })
+
+        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+                Log.d(TAG, "Ad was dismissed.")
+                adRequest = AdRequest.Builder().build() // 같은 광고 방지
+            }
+
+            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
+                Log.d(TAG, "Ad failed to show.")
+            }
+
+            override fun onAdShowedFullScreenContent() {
+                Log.d(TAG, "Ad showed fullscreen content.")
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        if (mInterstitialAd != null) {
+            mInterstitialAd?.show(this)
+            Log.d(TAG, "show admob before onDestroy")
+        } else {
+            Log.d(TAG, "The interstitial ad wasn't ready yet.")
+        }
+        mInterstitialAd = null  // 광고 null
     }
 }
