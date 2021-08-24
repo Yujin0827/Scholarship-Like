@@ -150,7 +150,7 @@
                         android:orientation="horizontal">
 
                         <TextView
-                            android:id="@+id/myPreGradeText"
+                            android:id="@+id/myPreClassText"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_gravity="center"
@@ -160,7 +160,7 @@
                             android:gravity="center"/>
 
                         <EditText
-                            android:id="@+id/myPreGrade"
+                            android:id="@+id/myPreClass"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
                             android:layout_marginLeft="10dp"
@@ -193,13 +193,13 @@
                             android:id="@+id/myPreScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:ems="3"
                             android:layout_marginLeft="35dp"
+                            android:ems="3"
+                            android:gravity="center"
+                            android:hint="3.5"
                             android:inputType="numberDecimal"
                             android:maxLength="3"
-                            android:hint="3.5"
-                            android:gravity="center"/>
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <TextView
@@ -249,12 +249,12 @@
                     <CheckBox
                         android:id="@+id/nationalMerit"
                         android:layout_width="match_parent"
-                        android:layout_height="18dp"
+                        android:layout_height="15dp"
                         android:layout_marginLeft="10dp"
                         android:layout_marginBottom="3dp"
                         android:text="@string/extra_national_merit"
                         android:textColor="#312E2E"
-                        android:textSize="12sp"/>
+                        android:textSize="12sp" />
 
                     <CheckBox
                         android:id="@+id/disabled"
