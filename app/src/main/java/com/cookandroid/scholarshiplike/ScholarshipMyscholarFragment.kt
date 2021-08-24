@@ -1,6 +1,7 @@
 package com.cookandroid.scholarshiplike
 
 
+import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -11,6 +12,8 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
@@ -31,6 +34,10 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.model.Document
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
 import kotlin.properties.Delegates
@@ -44,6 +51,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     private lateinit var incomeListAdapter: ScholarshipRecyclerViewAdapter
     private lateinit var semesterListAdapter: ScholarshipRecyclerViewAdapter
     private lateinit var preClassListAdapter: ScholarshipRecyclerViewAdapter
+    private lateinit var preScoreListAdapter: ScholarshipRecyclerViewAdapter
 
     private lateinit var auth: FirebaseAuth
     private var  db = Firebase.firestore
@@ -53,7 +61,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     var incomelist: MutableList<Scholarship> = arrayListOf()
     var semesterlist: MutableList<Scholarship> = arrayListOf()
     var preclasslist: MutableList<Scholarship> = arrayListOf()
-    var scorelist: MutableList<Scholarship> = arrayListOf()
+    var prescorelist: MutableList<Scholarship> = arrayListOf()
     var arealist: MutableList<Scholarship> = arrayListOf()
     var nationalMeritlist: MutableList<Scholarship> = arrayListOf()
     var disabledlist: MutableList<Scholarship> = arrayListOf()
@@ -85,13 +93,20 @@ class ScholarshipMyscholarFragment : Fragment() {
     var isAreaSpinnerSelected : Boolean = false // 초기 스피너 이벤트 자동 실행 방지
 
     var changeIncome : Long = -10 // 사용자가 입력한 incomeSpinner
+    var changeDad : Boolean = false
+    var changeMom : Boolean = false
+    var changeChildAll : Long? = null
+    var changeChildMe : Long? = null
     var changeSemester : Long = 30 // 사용자가 입력한 semesterSpinner
     var changePreclass : Long = 30 // 사용자가 입력한 semesterSpinner
-    var changePreScore : Long = 30 // 사용자가 입력한 semesterSpinner
-    var changeArea : Long? = null // 사용자가 입력한 areaSpinner
-    var changeNationMerit : Boolean? = null // 사용자가 입력한 areaSpinner
-    var changeDisabled : Boolean? = null // 사용자가 입력한 areaSpinner
+    var changePreScore : Double = 30.0 // 사용자가 입력한 semesterSpinner
+    var changeArea : String? = null // 사용자가 입력한 areaSpinner
+    var changeCountry : String? = null // 사용자가 입력한 areaSpinner
+    var changeNationMerit : Boolean? = false // 사용자가 입력한 areaSpinner
+    var changeDisabled : Boolean? = false // 사용자가 입력한 areaSpinner
     var change : Long? = null // 사용자가 입력한 areaSpinner
+
+
 
 
 
@@ -104,22 +119,10 @@ class ScholarshipMyscholarFragment : Fragment() {
         mContext = requireActivity()
 
 
-        // 초기 화면 장학금 데이터 가져오기
-        user(object  : ThridCallback{
-            override fun tCallback() {
-                userScholar(object : SecondCallback{
-                    override fun sCallback(){
-                        allData(object : MyCallback{
-                            override fun onCallback(value: MutableList<Scholarship>) {
-                                listSize = dataList.size.toString()
-                                binding.scholarCount.text = listSize
 
-                            } })
-                    }
-                })
-            }
-        })
-    }
+
+
+}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?): View? {
@@ -127,33 +130,14 @@ class ScholarshipMyscholarFragment : Fragment() {
         mbinding = FragmentScholarshipMyScholarBinding.inflate(inflater, container, false)
         val view = binding.root
 
+        binding.myPreClass.imeOptions = EditorInfo.IME_ACTION_DONE
+        binding.myPreScore.imeOptions = EditorInfo.IME_ACTION_DONE
+
+
+
         initSetCondition() // 초기 조건 데이터 set
 
         spinnerEvent() // 스피너 이벤트
-
-        // 직전학기 이수학점 edittext 실시간으로 가져오기
-        binding.myPreClass.addTextChangedListener(object  : TextWatcher{
-            override fun afterTextChanged(preClassTxt: Editable?) { // 입력이 끝날 때 작동
-              if(preClassTxt != null && !preClassTxt.equals(30)){
-
-              }
-
-
-            }
-
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) { // 입력하기 전에 작동
-
-            }
-
-            override fun onTextChanged(preClassTxt: CharSequence?, p1: Int, p2: Int, p3: Int) { //타이핑되는 텍스트에 변화가 있으면 작동
-                if(preClassTxt != null && !preClassTxt.equals(30)){
-
-                }
-
-
-            }
-
-        })
 
 
         return view
@@ -163,10 +147,11 @@ class ScholarshipMyscholarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext) // 전체 장학금
-        incomeListAdapter = ScholarshipRecyclerViewAdapter(incomelist,mContext) // 전체 장학금
-        semesterListAdapter = ScholarshipRecyclerViewAdapter(semesterlist,mContext) // 전체 장학금
-        preClassListAdapter = ScholarshipRecyclerViewAdapter(preclasslist,mContext) // 전체 장학금
+        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext)
+        incomeListAdapter = ScholarshipRecyclerViewAdapter(incomelist,mContext)
+        semesterListAdapter = ScholarshipRecyclerViewAdapter(semesterlist,mContext)
+        preClassListAdapter = ScholarshipRecyclerViewAdapter(preclasslist,mContext)
+        preScoreListAdapter = ScholarshipRecyclerViewAdapter(prescorelist,mContext)
 
         myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
@@ -177,6 +162,40 @@ class ScholarshipMyscholarFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        binding.myPreClass.setOnEditorActionListener{ textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 숨기기
+                var imm : InputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+
+                var txt = binding.myPreClass.getText().toString()
+                changePreclass = txt.toLong()
+                Log.w("에딧 텍스트 값",  changePreclass.toString())
+                conditionSearch()
+                handled = true
+            }
+            handled
+        }
+
+        binding.myPreScore.setOnEditorActionListener{ textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 숨기기
+                var imm : InputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+
+                var txt = binding.myPreScore.getText().toString()
+                changePreScore = txt.toDouble()
+                Log.w("에딧 텍스트 값",  changePreScore.toString())
+                conditionSearch()
+                handled = true
+            }
+            handled
+        }
+
+
 
         reset_bt.setOnClickListener {
             initSetCondition()
@@ -200,18 +219,11 @@ class ScholarshipMyscholarFragment : Fragment() {
                     })
                 }
             })
-
         }
-
-
-
-
     }
 
     override fun onStart() { // 사용자에게 보여지기 전 호출되는 함수
         super.onStart()
-
-
 
 
 
@@ -229,7 +241,14 @@ class ScholarshipMyscholarFragment : Fragment() {
                     binding.swipeRefreshFragmentScholarship.isRefreshing = false
             }, 1000)
 
-            setInitView()
+
+            setInitView() // 유저 조건 초기화
+
+            // 변수값도 모두 초기화
+            changeIncome = -10
+            changeSemester = 30
+            changePreclass = 30
+            changePreScore = 30.0
 
             myrecyclerView.adapter = listAdapter
             listAdapter.notifyDataSetChanged()
@@ -286,6 +305,7 @@ class ScholarshipMyscholarFragment : Fragment() {
         userCountry = pref.getString("KEY_USER_COUNTRY", null)
         userNationalMerit = pref.getBoolean("KEY_USER_NATIONAL_MERIT", false)
         userDisabled = pref.getBoolean("KEY_USER_DISABLED", false)
+
     }
 
 
@@ -345,6 +365,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                         }
                         else -> {   //이수학기 1 이상일 때 : '직전 학기' Layout 활성화
                             abledPreSemester()
+
                         }
                     }
                 }
@@ -602,16 +623,7 @@ class ScholarshipMyscholarFragment : Fragment() {
         binding.semesterSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
-//                thread (start = true){
-//                    ref.get().addOnSuccessListener { document ->
-//                        for (snap in document) {
-//
-//                            setDataShape(semesterlist, snap)
-//                            Log.w("semesterlist", semesterlist.toString())
-//
-//                        }
-//                    }
-//                }
+
         }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
@@ -647,7 +659,7 @@ class ScholarshipMyscholarFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (isAreaSpinnerSelected){
                     // 이수학기
-                    changeArea = binding.semesterSpinner.getItemIdAtPosition(position)
+                    changeArea = binding.semesterSpinner.getItemIdAtPosition(position).toString()
                     Log.w("선택한 거주지", changeArea.toString())
                 }
                 isAreaSpinnerSelected = true
@@ -662,10 +674,12 @@ class ScholarshipMyscholarFragment : Fragment() {
             incomelist.clear()
             semesterlist.clear()
             preclasslist.clear()
+            prescorelist.clear()
             alist.clear()
 
 
             //학자금 지원구간
+            Log.w("db 가져오기 직전에 유저 학자금지원구간 값", changeSemester.toString())
             ref.whereGreaterThanOrEqualTo("condition.income", changeIncome)
                 .get()
                 .addOnSuccessListener { document ->
@@ -683,6 +697,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
                     if (incomelist.isNotEmpty()){
                         // 이수학기
+                        Log.w("db 가져오기 직전에 유저 이수학기 값", changeSemester.toString())
                         ref.whereLessThanOrEqualTo("condition.semester", changeSemester)
                             .get()
                             .addOnSuccessListener { document ->
@@ -712,9 +727,9 @@ class ScholarshipMyscholarFragment : Fragment() {
                                 if (semesterlist.isNotEmpty()){
                                     // 직전학기 이수학점
 
-                                    Log.w("ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ", "ㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁㅁ")
                                     alist.clear()
-                                    ref.whereLessThanOrEqualTo("condition.semester", changePreclass)
+                                    Log.w("db 가져오기 직전에 유저 직전학기 이수학점 값", changePreclass.toString())
+                                    ref.whereLessThanOrEqualTo("condition.preclass", changePreclass)
                                         .get()
                                         .addOnSuccessListener { document ->
                                             for (snap in document){
@@ -737,6 +752,48 @@ class ScholarshipMyscholarFragment : Fragment() {
                                             preClassListAdapter.notifyDataSetChanged()
                                             preClassListAdapter.submitList(preclasslist)
                                             scholar_count.text = preclasslist.size.toString()
+
+                                            if(preclasslist.isNotEmpty()){
+                                                // 직전학기 성적
+                                                alist.clear()
+                                                Log.w("db 가져오기 직전에 유저 직전학기 성적 값", changePreScore.toString())
+
+                                                ref.whereLessThanOrEqualTo("condition.prescore", changePreScore)
+                                                    .get()
+                                                    .addOnSuccessListener { document ->
+                                                        for (snap in document){
+                                                            setDataShape(alist, snap)
+                                                            Log.w("alist(직전학기 성적)", alist.toString())
+                                                        }
+
+                                                        for (i in 0 until preclasslist.size){
+                                                            for (j in 0 until alist.size){
+                                                                if (preclasslist[i] == alist[j]){
+                                                                    prescorelist.add(alist[j])
+                                                                }
+                                                                Log.w("MyScholar prescorelist", prescorelist.toString())
+                                                            }
+                                                        }
+
+                                                        //리사이클러뷰 갱신
+                                                        myrecyclerView.adapter = preScoreListAdapter
+                                                        preScoreListAdapter.notifyDataSetChanged()
+                                                        preScoreListAdapter.submitList(preclasslist)
+                                                        scholar_count.text = prescorelist.size.toString()
+
+                                                        if (prescorelist.isNotEmpty()){
+
+                                                        }
+
+                                                    }
+                                                    .addOnFailureListener { exception ->
+                                                        Log.w("ScholarshipMyscholarFragment - prescoreScholar", "Error getting data: $exception")
+
+                                                    }
+
+                                            }
+
+
                                         }
                                         .addOnFailureListener { exception ->
                                             Log.w("ScholarshipMyscholarFragment - preClassScholar", "Error getting data: $exception")
@@ -884,9 +941,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                 ref.whereLessThanOrEqualTo("condition.prescore", score)
                     .get()
                     .addOnSuccessListener { document ->
-                        for (snap in document){
-                            setDataShape(scorelist, snap)
-                        }
+
                     }
                     .addOnFailureListener { exception ->
                         Log.w("ScholarshipMyscholarFragment - scoreScholar", "Error getting data: $exception")

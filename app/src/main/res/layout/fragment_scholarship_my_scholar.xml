@@ -193,13 +193,13 @@
                             android:id="@+id/myPreScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="12sp"
-                            android:ems="3"
                             android:layout_marginLeft="35dp"
+                            android:ems="3"
+                            android:gravity="center"
+                            android:hint="3.5"
                             android:inputType="numberDecimal"
                             android:maxLength="3"
-                            android:hint="3.5"
-                            android:gravity="center"/>
+                            android:textSize="12sp" />
                     </LinearLayout>
 
                     <TextView
