@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import com.cookandroid.scholarshiplike.databinding.ActivityProfileMyConChangeBinding
 
 class ProfileMyConChangeActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityProfileMyConChangeBinding
+    private var mBinding: ActivityProfileMyConChangeBinding? = null
+    private val binding get() = mBinding!!
+
+    var imm: InputMethodManager? = null // 키보드
 
     // 조건 저장 변수
     var userIncome :String? = null  // 학자금 지원구간
@@ -33,11 +37,13 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
     @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileMyConChangeBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileMyConChangeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         //화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
+        
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         initSetCondition()
         btnClick()
@@ -207,6 +213,11 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             saveUserConditionData()
             finish()
         }
+        
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityProfileMyConChange.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
+        }
     }
 
     // 유저 조건 데이터 변수 저장
@@ -307,5 +318,10 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         editor.apply()
 
 
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

@@ -19,21 +19,26 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ProfileSignoutActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityProfileSignoutBinding
+    private var mBinding: ActivityProfileSignoutBinding? = null
+    private val binding get() = mBinding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private var reasonList = mutableListOf<String>()
 
     private val TAG = "ProfileSignoutActivity"
 
+    var imm: InputMethodManager? = null // 키보드
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileSignoutBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileSignoutBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Firebase
         auth = Firebase.auth
         db = Firebase.firestore
+
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         btnClick()
     }
@@ -59,6 +64,11 @@ class ProfileSignoutActivity : AppCompatActivity() {
             } else {
                 binding.edittxtSignoutEtcAdd.visibility = View.GONE
             }
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityProfileSignout.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 
@@ -206,5 +216,10 @@ class ProfileSignoutActivity : AppCompatActivity() {
                     }
             }
         }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

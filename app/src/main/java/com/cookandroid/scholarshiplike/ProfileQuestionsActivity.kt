@@ -17,16 +17,20 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 
 class ProfileQuestionsActivity: AppCompatActivity() {
-    private lateinit var binding: ActivityProfileQuestionsBinding
+    private var mBinding: ActivityProfileQuestionsBinding? = null
+    private val binding get() = mBinding!!
     private lateinit var auth: FirebaseAuth
     private lateinit var content: String    // 입력받는 문의 내용
 
+    var imm: InputMethodManager? = null // 키보드
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityProfileQuestionsBinding.inflate(layoutInflater)
+        mBinding = ActivityProfileQuestionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         auth = Firebase.auth
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         btn_Click()
     }
@@ -48,6 +52,11 @@ class ProfileQuestionsActivity: AppCompatActivity() {
                 email.putExtra(Intent.EXTRA_TEXT, content)
                 startActivity(email)
             }
+        }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivityProfileQuestions.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
         }
     }
 
@@ -71,5 +80,10 @@ class ProfileQuestionsActivity: AppCompatActivity() {
         }
 
         return fill
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

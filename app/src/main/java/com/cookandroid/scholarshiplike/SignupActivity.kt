@@ -1,28 +1,26 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.PersistableBundle
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivitySignupBinding
-import com.cookandroid.scholarshiplike.databinding.FragmentLoginTermsBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.auth.ktx.userProfileChangeRequest
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_signup.*
-import kotlinx.android.synthetic.main.fragment_profile_logout.*
 
 class SignupActivity :AppCompatActivity() {
     @Suppress("PrivatePropertyName")
     private val TAG = javaClass.simpleName
 
-    private var _binding: ActivitySignupBinding? = null
-    private val binding get() = _binding!!
+    private var mBinding: ActivitySignupBinding? = null
+    private val binding get() = mBinding!!
     val auth = Firebase.auth
     val db = Firebase.firestore
 
@@ -31,28 +29,32 @@ class SignupActivity :AppCompatActivity() {
     lateinit var txtPasswordConfirm:String
     lateinit var txtNickname:String
     lateinit var txtUniv:String
-    lateinit var univList: ArrayList<String>
+    var univList: ArrayList<String> = arrayListOf()    // 대학교 자동완성을 위한 리스트
 
+    var imm: InputMethodManager? = null // 키보드
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        _binding = ActivitySignupBinding.inflate(layoutInflater)
+        mBinding = ActivitySignupBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        getUnivList()
+        imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
+
+        setUnivList()
         //버튼 클릭을 통합 처리
-//        btnClick()
+        btnClick()
     }
 
     // DB에서 대학교 이름 가져오기
-    private fun getUnivList() {
+    private fun setUnivList() {
         // 대학교 리스트 가져오기
         val sRef = db.collection("Scholarship").document("UnivScholar")
-        Log.d(TAG, "--------------------------------------------------------------------")
         sRef.get()
             .addOnSuccessListener { document ->
             if (document != null) {
                 Log.d(TAG, "DocumentSnapshot data: ${document.data}")
+                val json = document.data
+                json?.keys?.let { univList.addAll(it) }
             } else {
                 Log.d(TAG, "No such document")
             }
@@ -60,42 +62,64 @@ class SignupActivity :AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Log.d(TAG, "get failed with ", exception)
             }
+
+        binding.txtUniv.setAdapter<ArrayAdapter<String>>(
+            ArrayAdapter<String>(
+                this,
+                R.layout.dropdown_size, R.id.dropdown_size, univList
+            )
+        )
     }
 
 
     // 버튼 클릭 통합 처리
     fun btnClick(){
-        var isExistBlank = false
-        var isPWSame = false
-
         //회원가입 버튼을 클릭하였을 때
-        btn_signup.setOnClickListener() {
+        binding.btnSignup.setOnClickListener() {
             txtEmail = binding.txtEmail.text.toString()
             txtPassword = binding.txtPassword.text.toString()
             txtPasswordConfirm = binding.txtPasswordConfirm.text.toString()
             txtNickname = binding.txtNickname.text.toString()
             txtUniv = binding.txtUniv.text.toString()
 
-            isExistBlank = txtEmail.isEmpty() || txtPassword.isEmpty() || txtPasswordConfirm.isEmpty() || txtNickname.isEmpty() || txtUniv.isEmpty()
-            isPWSame = txtPassword == txtPasswordConfirm
-
-            if (isExistBlank) {
-                Toast.makeText(this, "빈 항목이 있습니다", Toast.LENGTH_SHORT).show()
-            }
-            else if (!isPWSame) {
-                Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
-            }
-
-            // 조건 만족시, 아이디 생성 & 유저 DB 업데이트
-            if(!isExistBlank && isPWSame) {
-                createEmailId(txtEmail, txtPassword)    // 유저 계정 만들기
+            // 입력데이터 확인 후, 아이디 생성 & 유저 DB 업데이트
+            if (checkInputData()) {
+                createEmailId(txtEmail, txtPassword)
             }
         }
 
         // 돌아가기 버튼 클릭 시
-        btn_goto_back.setOnClickListener() {
+        binding.btnGotoBack.setOnClickListener() {
             finish()    // 현재 액티비티 제거
         }
+
+        // 배경 클릭시 키보드 내리기
+        binding.rootViewActivitySignup.setOnClickListener {
+            imm?.hideSoftInputFromWindow(it.windowToken, 0)
+        }
+    }
+
+    private fun checkInputData(): Boolean {
+        var result = false
+        var isExistBlank = false
+        var isPWSame = false
+
+        isExistBlank = txtEmail.isEmpty() || txtPassword.isEmpty() || txtPasswordConfirm.isEmpty() || txtNickname.isEmpty() || txtUniv.isEmpty()
+        isPWSame = txtPassword == txtPasswordConfirm
+
+        if (isExistBlank) {
+            Toast.makeText(this, "빈 항목이 있습니다", Toast.LENGTH_SHORT).show()
+        }
+        else if (!isPWSame) {
+            Toast.makeText(this, "비밀번호가 일치하지 않습니다", Toast.LENGTH_SHORT).show()
+        }
+        else if (!univList.contains(txtUniv)) {
+            Toast.makeText(this, "대학교를 선택해주세요", Toast.LENGTH_SHORT).show()
+        } else {
+            result = true
+        }
+
+        return result
     }
 
     // 아이디 생성
@@ -133,8 +157,8 @@ class SignupActivity :AppCompatActivity() {
         )
 
         val userLikeContentSet = hashMapOf(
-            "scholarship" to arrayListOf<String>(),
-            "magazine" to arrayListOf<String>()
+            "scholarship" to arrayListOf<String?>(null),
+            "magazine" to arrayListOf<String?>(null)
         )
 
         userProfileSet["likeContent"] = userLikeContentSet
@@ -150,5 +174,10 @@ class SignupActivity :AppCompatActivity() {
             .addOnFailureListener {e ->
                 Log.w(TAG, "Error writting user DB!", e)
             }
+    }
+
+    override fun onDestroy() {
+        mBinding = null
+        super.onDestroy()
     }
 }

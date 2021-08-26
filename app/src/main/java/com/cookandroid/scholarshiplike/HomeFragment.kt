@@ -4,6 +4,7 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,6 +18,7 @@ import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
+import com.google.ads.AdSize
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdView
 import com.google.android.gms.ads.MobileAds
@@ -170,7 +172,7 @@ class HomeFragment : Fragment() {
     }
 
     // 유저 정보 가져오기 - name, univ
-    private fun setUserInfo() {
+    fun setUserInfo() {
         val user = auth.currentUser
 
         user?.let {
@@ -216,6 +218,18 @@ class HomeFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+
+        // 아래 스와이핑으로 새로고침
+        binding.swipeRefreshFragmentHome.setOnRefreshListener {
+            Handler().postDelayed({ // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+                if (binding.swipeRefreshFragmentHome.isRefreshing)
+                    binding.swipeRefreshFragmentHome.isRefreshing = false
+            }, 1000)
+
+            // !새로고침에 적용할 메소드 추가하기!
+            setUserInfo()
+            initView()
+        }
     }
 
     // 프래그먼트 종료시 툴바 show
