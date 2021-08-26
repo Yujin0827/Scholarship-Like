@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivityScholarshipDetailBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -20,7 +21,10 @@ class ScholarshipDetailActivity : AppCompatActivity() {
     val binding by lazy { ActivityScholarshipDetailBinding.inflate(layoutInflater) }
 
     private var db = Firebase.firestore
+    private val user = Firebase.auth.currentUser
+    private val user_ref = db.collection("Users")
     private var scholar: detailScholarship ?= null //장학금 정보 저장 변수
+    private var scholarList: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,10 +72,37 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                 Log.w("세부페이지", "Error getting documents: $exception")
             }
 
-        //좋아요 버튼 클릭 유지
+        //좋아요 버튼
         var likeButton : Button = findViewById(R.id.like)
+
+        //유저가 좋아요한 목록 가져와 장학금 이름이랑 비교
+        if (user != null) {
+            user_ref.document(user.uid).get().addOnSuccessListener { document ->
+                if (document.data != null) {
+                    if (document.data!!.get("likeScholarship") != null) {
+                         scholarList = document["likeScholarship"] as ArrayList<String>
+                        for (item in scholarList) {
+                            if(item==title) likeButton.isSelected = true //좋아요 클릭 유지
+                        }
+                    }
+                }
+            }
+        }
+
         likeButton.setOnClickListener{
             likeButton.isSelected = likeButton.isSelected != true
+
+            if(likeButton.isSelected) { //눌리면 유저 좋아요 목록에 추가하기
+                Log.w("isSelected: ",  "Enter")
+
+                if (user != null) {
+                    user_ref.document(user.uid).update("likeScholarship", FieldValue.arrayUnion(title))
+                }
+            } else { //해제되면 유저 좋아요 목록에서 삭제하기
+                if (user != null) {
+                    user_ref.document(user.uid).update("likeScholarship", FieldValue.arrayRemove(title))
+                }
+            }
         }
     }
 }

@@ -74,14 +74,13 @@ class HomeCalendarDetailFragment : Fragment() {
             ref.document(user.uid).get().
             addOnSuccessListener { document ->
                 if (document.data != null){
-                        if (document.data!!.get("likeContent") != null) {
-                            val data = document.data!!["likeContent"] as Map<String, String>
-                            scholarList = data["scholarship"] as ArrayList<String> //장학금 이름을 리스트에 넣음
-                        }
+                    if (document.data!!.get("likeScholarship") != null) {
+                        scholarList = document["likeScholarship"] as ArrayList<String> //장학금 이름을 리스트에 넣음
+                    }
 
                     Log.w(TAG, scholarList.toString())
 
-                    db.collection("국가").get()
+                    db.collection("Scholarship").document("Nation").collection("ScholarshipList").get()
                         .addOnSuccessListener { result ->
                             for (document in result) {
                                 Log.w(TAG, document.id)
@@ -89,8 +88,8 @@ class HomeCalendarDetailFragment : Fragment() {
                                     if(document.id == title){
                                         //날짜가져오기
                                         var period = document["period"] as Map<String,Timestamp>
-                                        var startdate : Timestamp? = period.get("startdate")
-                                        var enddate : Timestamp? = period.get("enddate")
+                                        var startdate : Timestamp? = period.get("startDate")
+                                        var enddate : Timestamp? = period.get("endDate")
 
                                         scholar.add(tmpScholarship( //장학금 이름으로 장학금 정보 빼와서 scholar에 정보 포함 리스트 넘겨줌
                                             document.id, "", startdate?.toDate(), enddate?.toDate()))

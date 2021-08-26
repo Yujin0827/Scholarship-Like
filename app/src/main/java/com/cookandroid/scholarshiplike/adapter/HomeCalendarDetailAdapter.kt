@@ -94,6 +94,7 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
                 if(binding.date5.id in start..end)  width++ else { if (binding.date5.id<start) leftmargin++ else rightmargin++ }
                 if(binding.date6.id in start..end)  width++ else { if (binding.date6.id<start) leftmargin++ else rightmargin++ }
                 if(binding.date7.id in start..end)  width++ else { if (binding.date7.id<start) leftmargin++ else rightmargin++ }
+
                 if(width !=0) binding.contents.addView(createscheduelView(item.title, leftmargin, rightmargin, width, "#f2d7d7"))
             }
         }

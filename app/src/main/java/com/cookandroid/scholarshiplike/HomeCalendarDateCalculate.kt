@@ -14,7 +14,8 @@ class HomeCalendarDateCalculate(date: Date, pageindex: Int) {
 
     val calendar = Calendar.getInstance()
 
-    var currentMonth = (pageindex+calendar.get(Calendar.MONTH)+1)%12
+    var plusvalue = 1
+    var currentMonth = pageindex+calendar.get(Calendar.MONTH)+plusvalue
     var prevTail = 0
     var nextHead = 0
     var currentMaxDate = 0
@@ -29,7 +30,10 @@ class HomeCalendarDateCalculate(date: Date, pageindex: Int) {
 
     init {
         calendar.time = date
-        if (currentMonth==0) currentMonth=12
+        if (currentMonth==0) {
+            currentMonth=12
+            plusvalue += 2
+        }
     }
 
     fun initBaseCalendar() {
@@ -73,7 +77,6 @@ class HomeCalendarDateCalculate(date: Date, pageindex: Int) {
     }
 
     private fun toIntList() {
-
         for (i in 0..41) {
             if (i == prevTail) flag = true
 
