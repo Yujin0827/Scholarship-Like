@@ -7,11 +7,9 @@ import android.util.Log
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivityScholarshipDetailBinding
-import com.google.android.gms.ads.*
-import com.google.android.gms.ads.interstitial.InterstitialAd
-import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -23,10 +21,10 @@ class ScholarshipDetailActivity : AppCompatActivity() {
     val binding by lazy { ActivityScholarshipDetailBinding.inflate(layoutInflater) }
 
     private var db = Firebase.firestore
+    private val user = Firebase.auth.currentUser
+    private val user_ref = db.collection("Users")
     private var scholar: detailScholarship ?= null //장학금 정보 저장 변수
-    private var mInterstitialAd: InterstitialAd? = null //Admob
-
-    private val TAG = "ScholarshipDetailActivity"
+    private var scholarList: ArrayList<String> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,12 +62,6 @@ class ScholarshipDetailActivity : AppCompatActivity() {
 
                         //홈페이지 버튼 연결
                         binding.movetoweb.setOnClickListener {
-                            if (mInterstitialAd != null) {
-                                mInterstitialAd?.show(this)
-                            } else {
-                                Log.d(TAG, "The interstitial ad wasn't ready yet.")
-                            }
-
                             val uri = Uri.parse(URL)
                             val intent = Intent(Intent.ACTION_VIEW, uri)
                             startActivity(intent)
@@ -80,62 +72,37 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                 Log.w("세부페이지", "Error getting documents: $exception")
             }
 
-        //좋아요 버튼 클릭 유지
+        //좋아요 버튼
         var likeButton : Button = findViewById(R.id.like)
+
+        //유저가 좋아요한 목록 가져와 장학금 이름이랑 비교
+        if (user != null) {
+            user_ref.document(user.uid).get().addOnSuccessListener { document ->
+                if (document.data != null) {
+                    if (document.data!!.get("likeScholarship") != null) {
+                         scholarList = document["likeScholarship"] as ArrayList<String>
+                        for (item in scholarList) {
+                            if(item==title) likeButton.isSelected = true //좋아요 클릭 유지
+                        }
+                    }
+                }
+            }
+        }
+
         likeButton.setOnClickListener{
             likeButton.isSelected = likeButton.isSelected != true
-        }
-    }
 
-    override fun onStart() {
-        super.onStart()
-        loadAd()    // admob 광고 초기화
-    }
+            if(likeButton.isSelected) { //눌리면 유저 좋아요 목록에 추가하기
+                Log.w("isSelected: ",  "Enter")
 
-    // Admob 광고 초기화
-    private fun loadAd() {
-        // 배너광고
-        MobileAds.initialize(this) {}
-        val mAdView = binding.scholarshipDetailAdView
-        var adRequest = AdRequest.Builder().build()
-        mAdView.loadAd(adRequest)
-
-        // 전면광고
-        InterstitialAd.load(this,"ca-app-pub-3940256099942544/1033173712", adRequest, object : InterstitialAdLoadCallback() {
-            override fun onAdFailedToLoad(adError: LoadAdError) {
-                Log.d(TAG, adError?.message)
-                mInterstitialAd = null
-            }
-            override fun onAdLoaded(interstitialAd: InterstitialAd) {
-                Log.d(TAG, "Ad was loaded.")
-                mInterstitialAd = interstitialAd
-            }
-        })
-
-        mInterstitialAd?.fullScreenContentCallback = object: FullScreenContentCallback() {
-            override fun onAdDismissedFullScreenContent() {
-                Log.d(TAG, "Ad was dismissed.")
-                adRequest = AdRequest.Builder().build() // 같은 광고 방지
-            }
-
-            override fun onAdFailedToShowFullScreenContent(adError: AdError?) {
-                Log.d(TAG, "Ad failed to show.")
-            }
-
-            override fun onAdShowedFullScreenContent() {
-                Log.d(TAG, "Ad showed fullscreen content.")
+                if (user != null) {
+                    user_ref.document(user.uid).update("likeScholarship", FieldValue.arrayUnion(title))
+                }
+            } else { //해제되면 유저 좋아요 목록에서 삭제하기
+                if (user != null) {
+                    user_ref.document(user.uid).update("likeScholarship", FieldValue.arrayRemove(title))
+                }
             }
         }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        if (mInterstitialAd != null) {
-            mInterstitialAd?.show(this)
-            Log.d(TAG, "show admob before onDestroy")
-        } else {
-            Log.d(TAG, "The interstitial ad wasn't ready yet.")
-        }
-        mInterstitialAd = null  // 광고 null
     }
 }
