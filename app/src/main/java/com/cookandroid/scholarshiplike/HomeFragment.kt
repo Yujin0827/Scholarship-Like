@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.cookandroid.scholarshiplike.adapter.HomeBannerAdapter
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -58,19 +59,21 @@ class HomeFragment : Fragment() {
         db = Firebase.firestore
 
         // Banner
-        db.collection("Banner")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    if (document.getString("URL") != null) {
-                        banner_list.add(SlideModel(document.getString("URL")))
-                    }
-                }
-                binding.bannerSlider.setImageList(banner_list, ScaleTypes.FIT)
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+        setBanner()
+
+//        db.collection("Banner")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    if (document.getString("URL") != null) {
+//                        banner_list.add(SlideModel(document.getString("URL")))
+//                    }
+//                }
+//                binding.banner.setImageList(banner_list, ScaleTypes.FIT)
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
 
         // user 정보 세팅 - 이름, 대학교
         setUserInfo()
@@ -193,6 +196,18 @@ class HomeFragment : Fragment() {
                     binding.userName.text = " "
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
+        }
+    }
+
+    // banner
+    fun setBanner() {
+        val homeBannerAdapter = HomeBannerAdapter(requireActivity())
+
+        binding.bannerViewpager.adapter = homeBannerAdapter
+        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+
+        homeBannerAdapter.apply {
+            binding.bannerViewpager.setCurrentItem(this.firstFragmentPosition, false)
         }
     }
 

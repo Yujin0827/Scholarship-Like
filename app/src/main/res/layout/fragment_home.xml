@@ -78,18 +78,34 @@
                 android:orientation="vertical">
 
                 <!-- banner -->
-                <com.denzcoskun.imageslider.ImageSlider
-                    android:id="@+id/banner_slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:iss_auto_cycle="true"
-                    app:iss_delay="0"
-                    app:iss_period="2500"
+<!--                <com.denzcoskun.imageslider.ImageSlider-->
+<!--                    android:id="@+id/banner"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="300dp"-->
+<!--                    app:iss_auto_cycle="true"-->
+<!--                    app:iss_delay="0"-->
+<!--                    app:iss_period="2500"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <LinearLayout
+                    android:id="@+id/banner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent" >
 
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/banner_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
+
+                </LinearLayout>
 
                 <!-- 장학금 최대 건수 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -100,7 +116,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/go_web"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/banner_slider">
+                    app:layout_constraintTop_toBottomOf="@+id/banner">
 
                     <!-- 이름 -->
                     <LinearLayout
@@ -315,7 +331,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/adView"
-                    tools:context=".ViewPagerFragment">
+                    tools:context=".ViewPagerFragment" >
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/calendarViewPager"
