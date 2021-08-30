@@ -88,10 +88,8 @@ class DataService : Service() {
         withContext(Dispatchers.IO) {
             Log.d(TAG, "likeContent() active")
             userDb.document(user.uid).get().addOnSuccessListener { document ->
-                val likeContent = document.data!!["likeContent"] as Map<*, *>
-
-                mMagazineList = likeContent["magazine"] as ArrayList<String>
-                mScholarshipList = likeContent["scholarship"] as ArrayList<String>
+                mMagazineList = document.data!!["likeMagazine"] as ArrayList<String>
+                mScholarshipList = document.data!!["likeScholarship"] as ArrayList<String>
 
                 Log.w(TAG, "$mMagazineList : magazineList")
                 Log.w(TAG, "$mScholarshipList : scholarshipList")

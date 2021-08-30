@@ -21,13 +21,13 @@
 
             <TextView
                 android:id="@+id/title1"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:textColor="#000000"
-            android:text="@string/title1" />
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textColor="#000000"
+                android:text="@string/title1" />
 
             <TextView
                 android:id="@+id/scholar_count"
@@ -56,24 +56,24 @@
         </LinearLayout>
 
 
-    <LinearLayout
-        android:id="@+id/mySchloarshipLaygout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        android:weightSum="5">
-
-
-
-        <!-- 조건 -->
-
         <LinearLayout
-            android:id="@+id/condition"
-            android:layout_width="0dp"
+            android:id="@+id/mySchloarshipLaygout"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="2"
-            android:orientation="vertical"
-            android:background="@color/maincolor_background">
+            android:orientation="horizontal"
+            android:weightSum="5">
+
+
+
+            <!-- 조건 -->
+
+            <LinearLayout
+                android:id="@+id/condition"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
+                android:orientation="vertical"
+                android:background="@color/maincolor_background">
 
 
                 <LinearLayout
@@ -276,26 +276,26 @@
                         android:textStyle="bold"
                         android:layout_marginTop="15dp"/>
                 </LinearLayout>
+            </LinearLayout>
+
+            <!-- 장학금 리스트 -->
+
+            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:id="@+id/swipe_refresh_fragment_scholarship"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="3">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/myrecyclerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+
+            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
         </LinearLayout>
-
-        <!-- 장학금 리스트 -->
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_fragment_scholarship"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="3">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/myrecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-    </LinearLayout>
     </LinearLayout>
 
 
