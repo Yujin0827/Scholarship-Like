@@ -78,6 +78,9 @@
     <string name="msg_token_fmt">토큰 정보</string>
     <string name="period_middle">~</string>
     <string name="reset">초기화</string>
+    <string name="period1">1차 :</string>
+    <string name="period2">2차 :</string>
+    <string name="score_standard">※ 4.5만점 기준</string>
 
     <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
@@ -139,6 +142,7 @@
     <string name="condition">조건</string>
     <string name="note">비고</string>
     <string name="to">~</string>
+
 
     <!-- 탈퇴하기 -->
     <string name="signout_really">정말 탈퇴하시겠어요?</string>

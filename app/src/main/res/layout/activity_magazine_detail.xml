@@ -112,7 +112,7 @@
             tools:layout_editor_absoluteY="16dp" />
 
         <TextView
-            android:id="@+id/scholarname"
+            android:id="@+id/magazinename"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/m_title"
