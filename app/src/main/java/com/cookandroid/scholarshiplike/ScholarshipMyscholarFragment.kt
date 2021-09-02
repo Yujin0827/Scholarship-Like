@@ -54,7 +54,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     private lateinit var preScoreListAdapter: ScholarshipRecyclerViewAdapter
 
     private lateinit var auth: FirebaseAuth
-    private var  db = Firebase.firestore
+    private var db = Firebase.firestore
 
     var dataList: MutableList<Scholarship> = arrayListOf()
     var alist: MutableList<Scholarship> = arrayListOf()
@@ -72,60 +72,57 @@ class ScholarshipMyscholarFragment : Fragment() {
     private var smallSize by Delegates.notNull<Int>()
 
 
-    private lateinit var mContext : Context //프래그먼트의 정보 받아오는 컨텍스트 선언
+    private lateinit var mContext: Context //프래그먼트의 정보 받아오는 컨텍스트 선언
 
     // 조건 저장 변수
-    var userIncome :String? = null  // 학자금 지원구간
-    var userDad :Boolean? = false    // 가족관계 - 부 여부
-    var userMom :Boolean? = false    // 가족관계 - 모 여부
-    var userChildAll :Int? = -5   // 형제 - 전체
-    var userChildMe :Int? = -5    // 형제 - 자신
-    var userSemester :Int? = -5   // 이수학기
-    var userPreSemClass :Int? = -5    // 직전학기 이수학점
-    var userPreSemScore : Float? = -5.0f // 직전학기 성적
-    var userArea :String? = null    // 거주지
-    var userCountry :String? = null // 국적
-    var userNationalMerit :Boolean? = false  //보훈 보상 대상자 여부
-    var userDisabled :Boolean? = false   //장애 여부
-
-    var isIncomeSpinnerSelected : Boolean = false // 초기 스피너 이벤트 자동 실행 방지
-    var isSemesterSpinnerSelected : Boolean = false // 초기 스피너 이벤트 자동 실행 방지
-    var isAreaSpinnerSelected : Boolean = false // 초기 스피너 이벤트 자동 실행 방지
-
-    var changeIncome : Long = -10 // 사용자가 입력한 incomeSpinner
-    var changeDad : Boolean = false
-    var changeMom : Boolean = false
-    var changeChildAll : Long? = null
-    var changeChildMe : Long? = null
-    var changeSemester : Long = 30 // 사용자가 입력한 semesterSpinner
-    var changePreclass : Long = 30 // 사용자가 입력한 semesterSpinner
-    var changePreScore : Double = 30.0 // 사용자가 입력한 semesterSpinner
-    var changeArea : String? = null // 사용자가 입력한 areaSpinner
-    var changeCountry : String? = null // 사용자가 입력한 areaSpinner
-    var changeNationMerit : Boolean? = false // 사용자가 입력한 areaSpinner
-    var changeDisabled : Boolean? = false // 사용자가 입력한 areaSpinner
-    var change : Long? = null // 사용자가 입력한 areaSpinner
+    var userIncome: Long = -10  // 학자금 지원구간
+    var userDad: Boolean = false    // 가족관계 - 부 여부
+    var userMom: Boolean = false    // 가족관계 - 모 여부
+    var userChildAll: Long = 0   // 형제 - 전체
+    var userChildMe: Long = 0    // 형제 - 자신
+    var userSemester: Long = 30   // 이수학기
+    var userPreSemClass: Long = 30    // 직전학기 이수학점
+    var userPreSemScore: Float = 30f // 직전학기 성적
+    var userArea: String? = null    // 거주지
+    var userCountry: String? = null // 국적
+    var userNationalMerit: Boolean = false  //보훈 보상 대상자 여부
+    var userDisabled: Boolean = false   //장애 여부
 
 
+    var isIncomeSpinnerSelected: Boolean = false // 초기 스피너 이벤트 자동 실행 방지
+    var isSemesterSpinnerSelected: Boolean = false // 초기 스피너 이벤트 자동 실행 방지
+    var isAreaSpinnerSelected: Boolean = false // 초기 스피너 이벤트 자동 실행 방지
 
+    var changeIncome: Long = -10 // 사용자가 입력한 incomeSpinner
+    var changeDad: Boolean = false
+    var changeMom: Boolean = false
+    var changeChildAll: Long? = null
+    var changeChildMe: Long? = null
+    var changeSemester: Long = 30 // 사용자가 입력한 semesterSpinner
+    var changePreclass: Long = 30 // 사용자가 입력한 semesterSpinner
+    var changePreScore: Double = 30.0 // 사용자가 입력한 semesterSpinner
+    var changeArea: String? = null // 사용자가 입력한 areaSpinner
+    var changeCountry: String? = null // 사용자가 입력한 areaSpinner
+    var changeNationMerit: Boolean? = false // 사용자가 입력한 areaSpinner
+    var changeDisabled: Boolean? = false // 사용자가 입력한 areaSpinner
+    var change: Long? = null // 사용자가 입력한 areaSpinner
 
 
     private lateinit var userUniv: String
 
-    lateinit var listSize : String
+    lateinit var listSize: String
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mContext = requireActivity()
 
 
+    }
 
-
-
-}
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment.
         mbinding = FragmentScholarshipMyScholarBinding.inflate(inflater, container, false)
         val view = binding.root
@@ -134,10 +131,43 @@ class ScholarshipMyscholarFragment : Fragment() {
         binding.myPreScore.imeOptions = EditorInfo.IME_ACTION_DONE
 
 
-
         initSetCondition() // 초기 조건 데이터 set
 
         spinnerEvent() // 스피너 이벤트
+
+        binding.myPreClass.setOnEditorActionListener { textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 숨기기
+                var imm: InputMethodManager =
+                    activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+
+                var txt = binding.myPreClass.getText().toString()
+                changePreclass = txt.toLong()
+                Log.w("에딧 텍스트 값", changePreclass.toString())
+                conditionSearch()
+                handled = true
+            }
+            handled
+        }
+
+        binding.myPreScore.setOnEditorActionListener { textView, action, event ->
+            var handled = false
+            if (action == EditorInfo.IME_ACTION_DONE) {
+                // 키보드 숨기기
+                var imm: InputMethodManager =
+                    activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
+
+                var txt = binding.myPreScore.getText().toString()
+                changePreScore = txt.toDouble()
+                Log.w("에딧 텍스트 값", changePreScore.toString())
+                conditionSearch()
+                handled = true
+            }
+            handled
+        }
 
 
         return view
@@ -147,54 +177,20 @@ class ScholarshipMyscholarFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
-        listAdapter = ScholarshipRecyclerViewAdapter(dataList,mContext)
-        incomeListAdapter = ScholarshipRecyclerViewAdapter(incomelist,mContext)
-        semesterListAdapter = ScholarshipRecyclerViewAdapter(semesterlist,mContext)
-        preClassListAdapter = ScholarshipRecyclerViewAdapter(preclasslist,mContext)
-        preScoreListAdapter = ScholarshipRecyclerViewAdapter(prescorelist,mContext)
+        listAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext)
+        incomeListAdapter = ScholarshipRecyclerViewAdapter(incomelist, mContext)
+        semesterListAdapter = ScholarshipRecyclerViewAdapter(semesterlist, mContext)
+        preClassListAdapter = ScholarshipRecyclerViewAdapter(preclasslist, mContext)
+        preScoreListAdapter = ScholarshipRecyclerViewAdapter(prescorelist, mContext)
 
         myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
-
 
 
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        binding.myPreClass.setOnEditorActionListener{ textView, action, event ->
-            var handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                // 키보드 숨기기
-                var imm : InputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
-
-                var txt = binding.myPreClass.getText().toString()
-                changePreclass = txt.toLong()
-                Log.w("에딧 텍스트 값",  changePreclass.toString())
-                conditionSearch()
-                handled = true
-            }
-            handled
-        }
-
-        binding.myPreScore.setOnEditorActionListener{ textView, action, event ->
-            var handled = false
-            if (action == EditorInfo.IME_ACTION_DONE) {
-                // 키보드 숨기기
-                var imm : InputMethodManager = activity?.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-                imm.toggleSoftInput(InputMethodManager.HIDE_IMPLICIT_ONLY, 0)
-
-                var txt = binding.myPreScore.getText().toString()
-                changePreScore = txt.toDouble()
-                Log.w("에딧 텍스트 값",  changePreScore.toString())
-                conditionSearch()
-                handled = true
-            }
-            handled
-        }
-
 
 
         reset_bt.setOnClickListener {
@@ -206,15 +202,16 @@ class ScholarshipMyscholarFragment : Fragment() {
             dataList.clear() // 리스트 재정의
 
             // 초기 화면 장학금 데이터 가져오기
-            user(object  : ThridCallback{
+            user(object : ThridCallback {
                 override fun tCallback() {
-                    userScholar(object : SecondCallback{
-                        override fun sCallback(){
-                            allData(object : MyCallback{
+                    userScholar(object : SecondCallback {
+                        override fun sCallback() {
+                            allData(object : MyCallback {
                                 override fun onCallback(value: MutableList<Scholarship>) {
                                     listSize = dataList.size.toString()
                                     binding.scholarCount.text = listSize
-                                } })
+                                }
+                            })
                         }
                     })
                 }
@@ -226,17 +223,16 @@ class ScholarshipMyscholarFragment : Fragment() {
         super.onStart()
 
 
-
     }
 
     override fun onResume() {
         super.onResume()
 
 
-
         // 아래로 스와이프 새로고침
         binding.swipeRefreshFragmentScholarship.setOnRefreshListener {
-            Handler().postDelayed({ // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
+            Handler().postDelayed({
+                // 아래로 스와이핑 이후 1초 후에 리플래쉬 아이콘 없애기
                 if (binding.swipeRefreshFragmentScholarship.isRefreshing)
                     binding.swipeRefreshFragmentScholarship.isRefreshing = false
             }, 1000)
@@ -255,15 +251,16 @@ class ScholarshipMyscholarFragment : Fragment() {
             dataList.clear() // 리스트 재정의
 
             // 초기 화면 장학금 데이터 가져오기
-            user(object  : ThridCallback{
+            user(object : ThridCallback {
                 override fun tCallback() {
-                    userScholar(object : SecondCallback{
-                        override fun sCallback(){
-                            allData(object : MyCallback{
+                    userScholar(object : SecondCallback {
+                        override fun sCallback() {
+                            allData(object : MyCallback {
                                 override fun onCallback(value: MutableList<Scholarship>) {
                                     listSize = dataList.size.toString()
                                     binding.scholarCount.text = listSize
-                                } })
+                                }
+                            })
                         }
                     })
                 }
@@ -290,54 +287,60 @@ class ScholarshipMyscholarFragment : Fragment() {
 
     // 데이터 파일에서 가져온 데이터를 변수에 저장
     private fun loadAndSetData() {
-        val pref : SharedPreferences = requireActivity().getSharedPreferences("SharedData", Context.MODE_PRIVATE)
+        val pref: SharedPreferences =
+            requireActivity().getSharedPreferences("SharedData", Context.MODE_PRIVATE)
 
         // key에 해당하는 value 가져오기
-        userIncome = pref.getString("KEY_USER_INCOME", null)
+        userIncome = pref.getLong("KEY_USER_INCOME", -10)
         userDad = pref.getBoolean("KEY_USER_DAD", false)
         userMom = pref.getBoolean("KEY_USER_MOM", false)
-        userChildAll = pref.getInt("KEY_USER_CHILD_ALL", -5)
-        userChildMe = pref.getInt("KEY_USER_CHILD_ME", -5)
-        userSemester = pref.getInt("KEY_USER_SEMESTER", -5)
-        userPreSemClass = pref.getInt("KEY_USER_PRE_SEM_CLASS", -5)
-        userPreSemScore = pref.getFloat("KEY_USER_PRE_SEM_SCORE", -5.0f)
+        userChildAll = pref.getLong("KEY_USER_CHILD_ALL", 0)
+        userChildMe = pref.getLong("KEY_USER_CHILD_ME", 0)
+        userSemester = pref.getLong("KEY_USER_SEMESTER", 30)
+        userPreSemClass = pref.getLong("KEY_USER_PRE_SEM_CLASS", 30)
+        userPreSemScore = pref.getFloat("KEY_USER_PRE_SEM_SCORE", 30f)
         userArea = pref.getString("KEY_USER_AREA", null)
         userCountry = pref.getString("KEY_USER_COUNTRY", null)
         userNationalMerit = pref.getBoolean("KEY_USER_NATIONAL_MERIT", false)
         userDisabled = pref.getBoolean("KEY_USER_DISABLED", false)
-
     }
 
 
     // 변수에 저장된 값으로 초기 view 설정
-     private fun setInitView() {
+
+
+
+
+    private fun setInitView() {
+
         isIncomeSpinnerSelected = false
         isSemesterSpinnerSelected = false
         isAreaSpinnerSelected = false
 
+
+
         //'학자금 지원구간' 스피너 설정
         ArrayAdapter.createFromResource(
             requireContext(),
-            array.incomeList,
-            android.R.layout.simple_spinner_dropdown_item
+            R.array.incomeList,
+            android.R.layout.simple_spinner_item
         ).also { adapter ->
+            // 스피너의 레이아웃 구체화
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
             // 스피너에 어뎁터 적용
             binding.incomeSpinner.adapter = adapter
 
-            // 스피너의 레이아웃 구체화
-            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-
-
             // 변수에 저장된 데이터가 있으면 초기값으로 설정
-            if (userIncome != null) {
-                binding.incomeSpinner.setSelection(adapter.getPosition(userIncome))
+            if (userIncome != -10L) {
+                binding.incomeSpinner.setSelection(userIncome.toInt() + 1)
             }
         }
+
 
         //'이수 학기' 스피너 설정
         ArrayAdapter.createFromResource(
             requireContext(),
-            array.semester,
+            R.array.semester,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             // 스피너의 레이아웃 구체화
@@ -346,8 +349,8 @@ class ScholarshipMyscholarFragment : Fragment() {
             binding.semesterSpinner.adapter = adapter
 
             // 변수에 저장된 데이터가 있으면 초기값으로 설정
-            if (userSemester!! >= 0) {
-                binding.semesterSpinner.setSelection(userSemester!!)
+            if (userSemester >= 0 && userSemester != 30L) {
+                binding.semesterSpinner.setSelection(userSemester.toInt())
             }
         }
 
@@ -365,16 +368,16 @@ class ScholarshipMyscholarFragment : Fragment() {
                         }
                         else -> {   //이수학기 1 이상일 때 : '직전 학기' Layout 활성화
                             abledPreSemester()
-
                         }
                     }
                 }
             }
 
+
         //'거주지' 스피너 설정
         ArrayAdapter.createFromResource(
             requireContext(),
-            array.local,
+            R.array.local,
             android.R.layout.simple_spinner_item
         ).also { adapter ->
             // 스피너의 레이아웃 구체화
@@ -388,43 +391,46 @@ class ScholarshipMyscholarFragment : Fragment() {
             }
         }
 
+
         // '추가사항' 설정
-        binding.nationalMerit.isChecked = userNationalMerit!!
-        binding.disabled.isChecked = userDisabled!!
+        binding.nationalMerit.isChecked = userNationalMerit
+        binding.disabled.isChecked = userDisabled
     }
 
-    //'직전학기' 레이아웃 비활성화 함수
-    fun disabledPreSemester() {
-        binding.myPreClassText.alpha = 0.3F
-        binding.myPreScoreText.alpha = 0.3F
-        binding.myPreClass.isEnabled = false
-        binding.myPreScore.isEnabled = false
 
-        binding.myPreClass.setText("")
-        binding.myPreScore.setText("")
-    }
+        //'직전학기' 레이아웃 비활성화 함수
+    private fun disabledPreSemester() {
+            binding.myPreText.alpha = 0.3F
+            binding.myPreClassText.alpha = 0.3F
+            binding.myPreScoreText.alpha = 0.3F
+            binding.myPreClass.isEnabled = false
+            binding.myPreScore.isEnabled = false
 
-    //'직전학기' 레이아웃 활성화 함수
-    fun abledPreSemester() {
-        binding.myPreClassText.alpha = 1F
-        binding.myPreScoreText.alpha = 1F
-        binding.myPreClass.isEnabled = true
-        binding.myPreScore.isEnabled = true
-
-        if (userPreSemClass == -5) {
             binding.myPreClass.setText("")
-        }
-        else {
-            binding.myPreClass.setText(userPreSemClass.toString())
-        }
-
-        if (userPreSemScore == -5.0f) {
             binding.myPreScore.setText("")
         }
-        else {
-            binding.myPreScore.setText(userPreSemScore.toString())
+
+        //'직전학기' 레이아웃 활성화 함수
+    private fun abledPreSemester() {
+            binding.myPreText.alpha = 1F
+            binding.myPreClassText.alpha = 1F
+            binding.myPreScoreText.alpha = 1F
+            binding.myPreClass.isEnabled = true
+            binding.myPreScore.isEnabled = true
+
+            if (userPreSemClass == 30L) {
+                binding.myPreClass.setText("")
+            } else {
+                binding.myPreClass.setText(userPreSemClass.toString())
+            }
+
+            if (userPreSemScore == 30f) {
+                binding.myPreScore.setText("")
+            } else {
+                binding.myPreScore.setText(userPreSemScore.toString())
+
+            }
         }
-    }
 
 
 
@@ -627,7 +633,23 @@ class ScholarshipMyscholarFragment : Fragment() {
         }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                if (userSemester != 0L && userSemester != 30L){
+                    abledPreSemester()
+                }
+
+
+
                 if(isSemesterSpinnerSelected){
+
+                    when(position) {
+                        0 -> {  //이수학기 0일 때 : '직전 학기' Layout 비활성화
+                            disabledPreSemester()
+                        }
+                        else -> {   //이수학기 1 이상일 때 : '직전 학기' Layout 활성화
+                            abledPreSemester()
+                        }
+                    }
+
                     // 이수학기
                     changeSemester = binding.semesterSpinner.getItemIdAtPosition(position)
                     Log.w("선택한 이수학기", changeSemester.toString())

@@ -186,7 +186,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             if(startdate2 == null && enddate2 == null){
                                 if(startdate == null && enddate == null){
-                                    val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                    val item = Scholarship(paymentType, document.id, "자동 선발", "", "", "", institution)
                                     dataList.add(item)
                                 }
                                 else if(startdate == enddate){
@@ -245,7 +245,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             if((startdate2 == null)&& enddate2 == null){
                                 if(startdate == null && enddate == null){
-                                    val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                    val item = Scholarship(paymentType, document.id, "자동 선발", "", "", "", institution)
                                     dataList.add(item)
                                 }
                                 else if(startdate == enddate){
