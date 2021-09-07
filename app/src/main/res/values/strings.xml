@@ -28,6 +28,8 @@
     <string name="questions">문의</string>
     <string name="logout">로그아웃</string>
     <string name="signout">탈퇴하기</string>
+    <string name="terms_service">서비스 이용약관</string>
+    <string name="terms_privacy">개인정보 처리방침 </string>
 
     <!-- 내 조건 수정 페이지 -->
     <string name="save">저장</string>

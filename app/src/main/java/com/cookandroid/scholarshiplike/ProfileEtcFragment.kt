@@ -45,6 +45,22 @@ class ProfileEtcFragment : Fragment() {
             }
         }
 
+        // '서비스 이용약관' 클릭 리스너
+        binding.etcTermsService.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileTermsServiceActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
+        // '개인정보 처리방침' 클릭 리스너
+        binding.etcTermsPrivacy.setOnClickListener {
+            activity?.let {
+                val intent = Intent(it, ProfileTermsPrivacyActivity::class.java)
+                it?.startActivity(intent)
+            }
+        }
+
         // '로그아웃' 클릭 리스너
         binding.etcLogout.setOnClickListener {
             val dialog = ProfileLogoutFragment()

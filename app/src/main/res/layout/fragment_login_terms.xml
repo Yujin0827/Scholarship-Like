@@ -40,7 +40,9 @@
             android:orientation="vertical"
             android:layout_gravity="center"
             android:layout_marginBottom="20dp">
+
             <LinearLayout
+                android:id="@+id/view_terms_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
@@ -61,13 +63,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/see" />
             </LinearLayout>
-            <TextView
-                android:id="@+id/tv_terms_service"
+
+            <LinearLayout
+                android:id="@+id/view_web_terms_service"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_edittext_box_background"
-                android:layout_marginLeft="30dp"
-                android:visibility="gone"/>
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:visibility="gone">
+                <WebView
+                    android:id="@+id/webView_init_terms_service"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"/>
+            </LinearLayout>
+
         </LinearLayout>
 
         <LinearLayout
@@ -96,13 +104,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/see" />
             </LinearLayout>
-            <TextView
-                android:id="@+id/tv_terms_privacy"
+
+            <LinearLayout
+                android:id="@+id/view_web_terms_privacy"
                 android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:background="@drawable/ic_edittext_box_background"
-                android:layout_marginLeft="30dp"
-                android:visibility="gone"/>
+                android:layout_height="match_parent"
+                android:padding="10dp"
+                android:visibility="gone">
+                <WebView
+                    android:id="@+id/webView_init_terms_privacy"
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"/>
+            </LinearLayout>
+
         </LinearLayout>
     </LinearLayout>
 
