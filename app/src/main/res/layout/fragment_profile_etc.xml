@@ -88,6 +88,52 @@
 
             </LinearLayout>
 
+            <!-- 서비스 이용약관 -->
+            <LinearLayout
+                android:id="@+id/etc_terms_service"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_profile_list_background"
+                android:gravity="left|center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="15dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_service"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+            <!-- 개인정보 처리방침 -->
+            <LinearLayout
+                android:id="@+id/etc_terms_privacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@drawable/ic_profile_list_background"
+                android:gravity="left|center_vertical"
+                android:orientation="vertical"
+                android:paddingLeft="30dp"
+                android:paddingTop="15dp"
+                android:paddingRight="30dp"
+                android:paddingBottom="15dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/terms_privacy"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
             <!-- 로그아웃 -->
             <LinearLayout
                 android:id="@+id/etc_logout"

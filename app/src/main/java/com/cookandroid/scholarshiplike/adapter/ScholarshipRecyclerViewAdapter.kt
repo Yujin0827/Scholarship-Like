@@ -93,7 +93,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
     }
 
     override fun getItemViewType (position : Int) : Int{
-        return position;
+        return position
     }
 
 
