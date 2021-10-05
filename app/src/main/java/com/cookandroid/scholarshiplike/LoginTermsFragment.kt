@@ -89,6 +89,7 @@ class LoginTermsFragment : DialogFragment(){
                 binding.webViewInitTermsService.apply {
                     webViewClient = WebViewClient()
                     settings.javaScriptEnabled = true
+
                 }
                 binding.webViewInitTermsService.loadUrl(it.toString())
             }
