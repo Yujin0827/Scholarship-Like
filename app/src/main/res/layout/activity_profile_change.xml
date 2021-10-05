@@ -2,183 +2,172 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_view_activity_profile_change"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileChangeActivity"
-    android:id="@+id/root_view_activity_profile_change">
+    android:background="@color/color_background"
+    tools:context=".ProfileChangeActivity">
 
-
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginBottom="372dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="80dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginLeft="25dp"
-        android:orientation="vertical">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/basicInpoText"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:text="@string/basicInpo"
-            android:textSize="18sp"
-            android:textColor="#312E2E"/>
-        <LinearLayout
-            android:id="@+id/emailLayout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
+            android:paddingLeft="40dp"
+            android:paddingTop="60dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="60dp"
+            android:orientation="vertical">
 
+            <!-- '프로필 수정' 타이틀 -->
             <TextView
-                android:id="@+id/emailtext"
+                android:id="@+id/profile_change_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:textSize="14sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
+                android:text="@string/change_profile"
+                android:textColor="@color/text_black"
+                android:textSize="38sp"
+                android:textStyle="bold" />
 
-            <TextView
-            android:id="@+id/emailInput"
-            android:layout_width="wrap_content"
-            android:layout_height="35dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="80dp"
-            android:backgroundTint = "#777470"
-                android:gravity="center"
-                android:textColor="#4A4A4A"/>
-
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/nickNameLayout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-
-            <TextView
-                android:id="@+id/nickNameText"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nickname"
-                android:textSize="14sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
-
-            <EditText
-                android:id="@+id/nickNameInput"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="bottom"
-                android:layout_marginLeft="50dp"
-                android:layout_marginRight="80dp"
-                android:backgroundTint="#777470"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textSize="14sp"
-                android:textColorHint="#4A4A4A"
-                android:textColor="#4A4A4A"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/univLayout"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:layout_marginLeft="10dp">
-
-            <TextView
-                android:id="@+id/univText"
-                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/myUniv"
-                android:textSize="14sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
+                android:orientation="vertical"
+                android:layout_marginTop="60dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/univeInput"
+                <LinearLayout
+                    android:id="@+id/emailLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/emailtext"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/email"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/emailInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:focusable="false"
+                        android:clickable="false"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/nickNameLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/nickNameText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/nickname"
+                        android:textSize="12sp" />
+
+                    <EditText
+                        android:id="@+id/nickNameInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/univLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="10dp">
+
+                    <TextView
+                        android:id="@+id/univText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/myUniv"
+                        android:textSize="12sp" />
+
+                    <AutoCompleteTextView
+                        android:id="@+id/univeInput"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:clickable="false"
+                        android:paddingLeft="2dp"
+                        android:paddingRight="2dp"
+                        android:singleLine="true"
+                        android:textSize="16sp"/>
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 비밀번호 재설정 -->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/profile_change_reset_pw_layout"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="80dp"
-                android:completionThreshold="1"
-                android:imeOptions="actionDone"
-                android:inputType="text"
-                android:maxLines="1"
-                android:textSize="14sp"
-                android:layout_gravity="bottom"
-                android:textColorHint="#4A4A4A"
-                android:textColor="#4A4A4A"
-                android:dropDownHeight="88dp"/>
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:orientation="horizontal">
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/reSetPasswordText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/send_pw_reset_email"
+                    android:textColor="@color/text_black"
+                    android:textSize="18sp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"/>
 
+                <ImageView
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:src="@drawable/ic_arrow_right"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/image_desc_arrow_right"/>
 
-        <!-- 대학 리스트 -->
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:orientation="horizontal"
-            android:layout_marginTop="50dp"
-            android:gravity="center">
-        
             <TextView
-                android:id="@+id/reSetPasswordText"
+                android:id="@+id/sendMailResultText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/changePw"
-                android:textSize="18sp"
-                android:textColor="#312E2E"
-                android:layout_gravity="center"/>
-            
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="20dp"
+                android:gravity="center_horizontal"
+                android:text="@string/reset_password_result"
+                android:visibility="invisible" />
+
             <Button
-                android:id="@+id/reSetPwBt"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="@string/reSetPwBt"
-                android:layout_marginLeft="60dp"/>
-            
-            
-            
-        </LinearLayout>
-        <TextView
-            android:id="@+id/sendMailResultText"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/reset_password_result"
-            android:visibility="invisible"/>
+                android:id="@+id/btn_save_profile_change"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:background="@drawable/ic_rounded_rectangle_button"
+                android:backgroundTint="@color/maincolor"
+                android:textColor="@color/white"
+                android:text="@string/save" />
 
-        <Button
-            android:id="@+id/save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/save"
-            android:layout_gravity="center"
-            android:layout_marginTop="100dp"/>
-        
-    </LinearLayout>
-    
+        </LinearLayout>
+    </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

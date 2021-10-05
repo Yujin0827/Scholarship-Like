@@ -52,11 +52,6 @@ class ProfileSignoutActivity : AppCompatActivity() {
             }
         }
 
-        // 뒤로가기 클릭 리스너
-        binding.btnSignoutBack.setOnClickListener {
-            finish()
-        }
-
         // 기타 클릭 리스너
         binding.cbRsnEtc.setOnClickListener {
             if (binding.cbRsnEtc.isChecked) {

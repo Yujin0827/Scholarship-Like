@@ -102,9 +102,6 @@
         <!-- 좋아요 -->
         <activity android:name=".LikeContentActivity" />
 
-        <!-- 앱 정보 -->
-        <activity android:name=".AppInfoActivity" />
-
         <!-- 알림 상세 -->
         <activity android:name=".AlarmDetailActivity" />
 

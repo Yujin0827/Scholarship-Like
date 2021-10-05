@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -22,21 +23,20 @@ class ProfileEtcFragment : Fragment() {
 
         _binding = FragmentProfileEtcBinding.inflate(inflater, container, false)
 
+        binding.txtEtcAppVersion.text = getAppVersion()
         btnClick()
 
         return binding.root
     }
 
+    // 앱 버전 가져오기
+    private fun getAppVersion(): String {
+        var appVersion = BuildConfig.VERSION_NAME
+        return appVersion
+    }
+
     // 버튼 클릭 통합 처리
     private fun btnClick() {
-        // '앱 정보' 클릭 리스너
-        binding.etcAppInfo.setOnClickListener {
-            activity?.let {
-                val intent = Intent(it, AppInfoActivity::class.java)
-                it?.startActivity(intent)
-            }
-        }
-
         // '문의' 클릭 리스너
         binding.etcQuestions.setOnClickListener {
             activity?.let {
