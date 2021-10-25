@@ -6,7 +6,9 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.View
 import android.widget.Button
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
 import com.cookandroid.scholarshiplike.databinding.ActivityMagazineDetailBinding
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
@@ -15,6 +17,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.android.gms.ads.*
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.firebase.storage.ktx.storage
 import java.util.ArrayList
 
 class MagazineDetailActivity : AppCompatActivity() {
@@ -35,6 +38,21 @@ class MagazineDetailActivity : AppCompatActivity() {
         // 매거진 프래그먼트에서 정보 전달 받아 텍스트뷰에 저장
         val titlename = intent.getStringExtra("title")
         val contents = intent.getStringExtra("contents")
+        val imageURL = intent.getStringExtra("imageURL")
+        val imageView = findViewById<ImageView>(R.id.imageView)
+
+        val storageRef = Firebase.storage
+
+        if(imageURL != null) {
+            storageRef.getReferenceFromUrl(imageURL).downloadUrl.addOnSuccessListener {
+                Glide.with(this)
+                    .load(it)
+                    .into(imageView)
+            }.addOnFailureListener {
+                // Handle any errors
+            }
+        }
+
         binding.titleText.text = titlename
         binding.contentsText.text = contents
         binding.magazinename.text = titlename
