@@ -67,11 +67,12 @@ class HomeCalendarDetailFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         //유저가 좋아요한 목록 가져오기
-        var ref = db.collection("Users")
+        var user_ref = db.collection("Users")
+        var scholar_ref =  db.collectionGroup("ScholarshipList")
 
         Log.w(TAG, "Load Firestore")
         if (user != null) {
-            ref.document(user.uid).get().
+            user_ref.document(user.uid).get().
             addOnSuccessListener { document ->
                 if (document.data != null){
                     if (document.data!!.get("likeScholarship") != null) {
@@ -80,7 +81,7 @@ class HomeCalendarDetailFragment : Fragment() {
 
                     Log.w(TAG, scholarList.toString())
 
-                    db.collection("Scholarship").document("Nation").collection("ScholarshipList").get()
+                    scholar_ref.get()
                         .addOnSuccessListener { result ->
                             for (document in result) {
                                 Log.w(TAG, document.id)
@@ -92,7 +93,8 @@ class HomeCalendarDetailFragment : Fragment() {
                                         var enddate : Timestamp? = period.get("endDate")
 
                                         scholar.add(tmpScholarship( //장학금 이름으로 장학금 정보 빼와서 scholar에 정보 포함 리스트 넘겨줌
-                                            document.id, "", startdate?.toDate(), enddate?.toDate()))
+                                            document.id, "", startdate?.toDate(), enddate?.toDate(), document["category"] as String?
+                                        ))
                                     }
                                 }
                             }
@@ -103,6 +105,9 @@ class HomeCalendarDetailFragment : Fragment() {
                         }.addOnFailureListener { exception ->
                             Log.w(TAG, "Error getting documents: $exception")
                         }
+
+//                    //구경로
+//                    db.collection("Scholarship").document("Nation").collection("ScholarshipList").get()
                 }
             }.addOnFailureListener { exception ->
                 // 실패할 경우
