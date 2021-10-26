@@ -1,324 +1,360 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/rootView_activity_profile_my_con_change">
-
-    <LinearLayout
-        android:id="@+id/myConChangeTitle_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:paddingTop="50dp"
-        android:paddingBottom="40dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/scrollView_condition"
-        android:background="#FFFFFFFF">
-        <TextView
-            android:id="@+id/myConChangeTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/change_my_condition"
-            android:textColor="@color/maincolor"
-            android:textSize="20sp"
-            />
-    </LinearLayout>
+    android:id="@+id/rootView_activity_profile_my_con_change"
+    android:background="@color/color_background">
 
     <ScrollView
         android:id="@+id/scrollView_condition"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/view_myConChange_btn"
-        app:layout_constraintTop_toBottomOf="@+id/myConChangeTitle_view"
-        android:paddingLeft="30dp"
-        android:background="#FFFFFFFF">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="40dp"
+            android:paddingTop="60dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="60dp">
 
-            <!-- 학지금 지원구간 -->
-            <LinearLayout
+            <TextView
+                android:id="@+id/myConChangeTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:text="@string/change_my_condition"
+                android:textColor="@color/text_black"
+                android:textSize="38sp"
+                android:textStyle="bold"/>
 
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/income"
-                    android:textColor="@color/text_black" />
-
-                <Spinner
-                    android:id="@+id/myIncome"
-                    android:layout_width="150dp"
-                    android:layout_height="25dp" />
-            </LinearLayout>
-
-            <!-- 가족관계 -->
+            <!-- 조건 layout -->
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_marginTop="40dp">
 
-                <TextView
-                    android:layout_width="110dp"
+                <!-- 학지금 지원구간 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/family_rel"
-                    android:textColor="@color/text_black" />
+                    android:layout_marginBottom="20dp">
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/income" />
 
-                        <CheckBox
-                            android:id="@+id/myDad"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginRight="20dp"
-                            android:text="@string/family_rel_dad" />
+                    <Spinner
+                        android:id="@+id/myIncome"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-                        <CheckBox
-                            android:id="@+id/myMom"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/family_rel_mom" />
-                    </LinearLayout>
+                <!-- 가족관계 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
 
-                    <LinearLayout
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/family_rel" />
 
-                        <TextView
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.5"
+                        android:orientation="vertical"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent">
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/child_all"
-                            android:textColor="@color/text_black" />
+                            android:orientation="horizontal">
 
-                        <EditText
-                            android:id="@+id/myChildAll"
+                            <CheckBox
+                                android:id="@+id/myDad"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="20dp"
+                                android:text="@string/family_rel_dad" />
+
+                            <CheckBox
+                                android:id="@+id/myMom"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/family_rel_mom" />
+                        </LinearLayout>
+
+                        <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:ems="2"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:gravity="center"/>
+                            android:orientation="horizontal">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/child_me"
-                            android:textColor="@color/text_black" />
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/child_all"
+                                android:textColor="@color/text_black" />
 
-                        <EditText
-                            android:id="@+id/myChildMe"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:ems="2"
-                            android:inputType="number"
-                            android:maxLength="2"
-                            android:gravity="center"/>
+                            <EditText
+                                android:id="@+id/myChildAll"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="2"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:gravity="center"
+                                android:textSize="16sp"/>
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/child_me"
+                                android:textColor="@color/text_black" />
+
+                            <EditText
+                                android:id="@+id/myChildMe"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:ems="2"
+                                android:inputType="number"
+                                android:maxLength="2"
+                                android:gravity="center"
+                                android:textSize="16sp"/>
+                        </LinearLayout>
                     </LinearLayout>
-                </LinearLayout>
-            </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- 이수학기 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="match_parent"
-                    android:text="@string/semester"
-                    android:textColor="@color/text_black" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <!-- 이수학기 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/semester"/>
 
                     <Spinner
                         android:id="@+id/mySemester"
-                        android:layout_width="80dp"
-                        android:layout_height="wrap_content" />
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <LinearLayout
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- 직전 학기 -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                        android:text="@string/pre_semester"/>
+
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/txt_myPreSemClass"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/pre_semester_class"
-                            android:textColor="@color/text_black" />
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@id/myPreSemClass"
+                            android:layout_marginStart="30dp"
+                            android:text="@string/pre_semester_class"/>
 
                         <EditText
                             android:id="@+id/myPreSemClass"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            app:layout_constraintWidth_percent="0.5"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
                             android:ems="2"
                             android:inputType="number"
                             android:maxLength="2"
-                            android:gravity="center"/>
-                    </LinearLayout>
+                            android:gravity="center"
+                            android:textSize="16sp"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
 
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="horizontal">
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
 
                         <TextView
                             android:id="@+id/txt_myPreSemScore"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:text="@string/pre_semester_score"
-                            android:textColor="@color/text_black" />
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBaseline_toBaselineOf="@id/myPreSemScore"
+                            android:layout_marginStart="30dp"
+                            android:text="@string/pre_semester_score" />
 
                         <EditText
                             android:id="@+id/myPreSemScore"
-                            android:layout_width="wrap_content"
+                            android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            app:layout_constraintWidth_percent="0.5"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
                             android:ems="3"
                             android:inputType="numberDecimal"
                             android:maxLength="4"
-                            android:gravity="center"/>
+                            android:gravity="center"
+                            android:textSize="16sp"/>
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/score_standard"
+                        android:layout_gravity="end"/>
+
+                </LinearLayout>
+
+                <!-- 거주지 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:text="@string/area" />
+
+                    <Spinner
+                        android:id="@+id/myArea"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent"/>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- 국적 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/country" />
+
+                    <RadioGroup
+                        android:id="@+id/rg_myCountry"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:orientation="vertical">
+
+                        <RadioButton
+                            android:id="@+id/myCountry_in"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/country_local" />
+
+                        <RadioButton
+                            android:id="@+id/myCountry_out"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/country_foreigner" />
+                    </RadioGroup>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <!-- 추가사항 -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="@string/extra" />
+
+                    <LinearLayout
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintWidth_percent="0.5"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:orientation="vertical">
+
+                        <!-- 국가유공자 -->
+                        <CheckBox
+                            android:id="@+id/myNationalMerit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/extra_national_merit" />
+
+                        <!-- 장애 여부 -->
+                        <CheckBox
+                            android:id="@+id/myDisabled"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/extra_disabled" />
                     </LinearLayout>
-                </LinearLayout>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </LinearLayout>
 
-            <!-- 거주지 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/area"
-                    android:textColor="@color/text_black" />
-
-                <Spinner
-                    android:id="@+id/myArea"
-                    android:layout_width="120dp"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
-            <!-- 국적 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/country"
-                    android:textColor="@color/text_black" />
-
-                <RadioGroup
-                    android:id="@+id/rg_myCountry"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-
-                    <RadioButton
-                        android:id="@+id/myCountry_in"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/country_local" />
-
-                    <RadioButton
-                        android:id="@+id/myCountry_out"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/country_foreigner" />
-                </RadioGroup>
-            </LinearLayout>
-
-            <!-- 추가사항 -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="110dp"
-                    android:layout_height="wrap_content"
-                    android:text="@string/extra"
-                    android:textColor="@color/text_black" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <!-- 국가유공자 -->
-                    <CheckBox
-                        android:id="@+id/myNationalMerit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/extra_national_merit" />
-
-                    <!-- 장애 여부 -->
-                    <CheckBox
-                        android:id="@+id/myDisabled"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/extra_disabled" />
-                </LinearLayout>
-            </LinearLayout>
+                android:layout_marginTop="30dp"
+                android:background="@drawable/ic_rounded_rectangle_button"
+                android:backgroundTint="@color/maincolor"
+                android:text="@string/save"
+                android:textColor="@color/white"
+                android:textSize="16sp"/>
 
         </LinearLayout>
+
     </ScrollView>
-
-    <LinearLayout
-        android:id="@+id/view_myConChange_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="30dp"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView_condition"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:background="#FFFFFFFF">
-
-        <Button
-            android:id="@+id/btn_save"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/maincolor"
-            android:text="@string/save"
-            android:textColor="#ffffff" />
-    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

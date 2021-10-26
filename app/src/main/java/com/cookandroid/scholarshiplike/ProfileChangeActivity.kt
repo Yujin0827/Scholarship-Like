@@ -1,25 +1,17 @@
 package com.cookandroid.scholarshiplike
 
-import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentTransaction
 import com.cookandroid.scholarshiplike.databinding.ActivityProfileChangeBinding
-import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
-import com.google.firebase.installations.remote.TokenResult
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.item_calendar_popup.*
 import kotlin.collections.ArrayList
 import kotlin.concurrent.thread
 
@@ -61,7 +53,7 @@ class ProfileChangeActivity : AppCompatActivity() {
                 userUid = user!!.uid
             }
             runOnUiThread {
-                binding.emailInput.text = userEmail
+                binding.emailInput.setText(userEmail)
             }
 
             //User Nickname & Univ
@@ -113,7 +105,7 @@ class ProfileChangeActivity : AppCompatActivity() {
     // 버튼 클릭 통합 메소드
     private fun btnClick() {
         // 이메일 보내기 버튼 클릭 시
-        binding.reSetPwBt.setOnClickListener {
+        binding.profileChangeResetPwLayout.setOnClickListener {
             if (!userEmail.isEmpty()) {
                 thread(start=true) {
                     Log.d(TAG, "[Thread] btnClick() - reSetPwBt : ${Thread.currentThread()}")
@@ -135,7 +127,7 @@ class ProfileChangeActivity : AppCompatActivity() {
         }
 
         // 저장 버튼 클릭 리스너
-        binding.save.setOnClickListener {
+        binding.btnSaveProfileChange.setOnClickListener {
             userNickname = binding.nickNameInput.text.toString()
             userUniv = binding.univeInput.text.toString()
             
