@@ -13,15 +13,18 @@ import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipMyScholarBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_scholarship.*
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
@@ -32,7 +35,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     private val binding get() = mbinding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
     private lateinit var listAdapter: ScholarshipRecyclerViewAdapter
-    private lateinit var incomeListAdapter: ScholarshipRecyclerViewAdapter
+    private lateinit var resultListAdapter: ScholarshipRecyclerViewAdapter
     private lateinit var semesterListAdapter: ScholarshipRecyclerViewAdapter
     private lateinit var preClassListAdapter: ScholarshipRecyclerViewAdapter
     private lateinit var preScoreListAdapter: ScholarshipRecyclerViewAdapter
@@ -40,7 +43,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     private lateinit var nationMeritListAdapter: ScholarshipRecyclerViewAdapter
     private lateinit var disabledListAdapter: ScholarshipRecyclerViewAdapter
 
-    private lateinit var auth: FirebaseAuth
+    var user = Firebase.auth.currentUser // 사용자 가져오기
     private var db = Firebase.firestore
 
     var dataList: MutableList<Scholarship> = arrayListOf()
@@ -52,6 +55,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     var arealist: MutableList<Scholarship> = arrayListOf()
     var nationalMeritlist: MutableList<Scholarship> = arrayListOf()
     var disabledlist: MutableList<Scholarship> = arrayListOf()
+    var resultlist: MutableList<Scholarship> = arrayListOf()
 
 
 
@@ -61,6 +65,7 @@ class ScholarshipMyscholarFragment : Fragment() {
     var isSemesterSpinnerSelected: Boolean = false // 초기 스피너 이벤트 자동 실행 방지
     var isAreaSpinnerSelected: Boolean = false // 초기 스피너 이벤트 자동 실행 방지
 
+    var changeUniv : String? = null
     var changeIncome: Long = -10 // 사용자가 입력한 incomeSpinner
     var changeDad: Boolean = false
     var changeMom: Boolean = false
@@ -73,6 +78,11 @@ class ScholarshipMyscholarFragment : Fragment() {
     var changeCountry: String? = null // 사용자가 입력한 areaSpinner
     var changeNationMerit: Boolean = false // 사용자가 입력한 areaSpinner
     var changeDisabled: Boolean = false // 사용자가 입력한 areaSpinner
+
+    private lateinit var userUid : String
+    private lateinit var userUniv : String
+
+    private lateinit var scholar_count : TextView
 
 
 
@@ -91,6 +101,8 @@ class ScholarshipMyscholarFragment : Fragment() {
         // Inflate the layout for this fragment.
         mbinding = FragmentScholarshipMyScholarBinding.inflate(inflater, container, false)
         val view = binding.root
+
+        scholar_count = view.findViewById(R.id.scholar_count)
 
         binding.myPreClass.imeOptions = EditorInfo.IME_ACTION_DONE
         binding.myPreScore.imeOptions = EditorInfo.IME_ACTION_DONE
@@ -144,12 +156,22 @@ class ScholarshipMyscholarFragment : Fragment() {
                 changeNationMerit = true
                 conditionSearch()
             }
+            else{
+                changeNationMerit = false
+                conditionSearch()
+
+            }
+
         }
 
         // 장애 체크
         binding.disabled.setOnCheckedChangeListener { button, isChecked ->
             if (isChecked){
                 changeDisabled = true
+                conditionSearch()
+            }
+            else {
+                changeDisabled = false
                 conditionSearch()
             }
 
@@ -165,15 +187,15 @@ class ScholarshipMyscholarFragment : Fragment() {
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
         listAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext)
-        incomeListAdapter = ScholarshipRecyclerViewAdapter(incomelist, mContext)
-        semesterListAdapter = ScholarshipRecyclerViewAdapter(semesterlist, mContext)
-        preClassListAdapter = ScholarshipRecyclerViewAdapter(preclasslist, mContext)
-        preScoreListAdapter = ScholarshipRecyclerViewAdapter(prescorelist, mContext)
-        areaListAdapter = ScholarshipRecyclerViewAdapter(arealist, mContext)
-        nationMeritListAdapter = ScholarshipRecyclerViewAdapter(nationalMeritlist, mContext)
+        resultListAdapter = ScholarshipRecyclerViewAdapter(resultlist, mContext)
+//        semesterListAdapter = ScholarshipRecyclerViewAdapter(semesterlist, mContext)
+//        preClassListAdapter = ScholarshipRecyclerViewAdapter(preclasslist, mContext)
+//        preScoreListAdapter = ScholarshipRecyclerViewAdapter(prescorelist, mContext)
+//        areaListAdapter = ScholarshipRecyclerViewAdapter(arealist, mContext)
+//        nationMeritListAdapter = ScholarshipRecyclerViewAdapter(nationalMeritlist, mContext)
         disabledListAdapter = ScholarshipRecyclerViewAdapter(disabledlist, mContext)
 
-        myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        binding.myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
 
     }
@@ -212,7 +234,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
             setInitView() // 유저 조건 초기화
 
-            myrecyclerView.adapter = listAdapter
+            binding.myrecyclerView.adapter = listAdapter
             listAdapter.notifyDataSetChanged()
             dataList.clear() // 리스트 재정의
 
@@ -462,17 +484,10 @@ class ScholarshipMyscholarFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     for (snap in document) {
                         setDataShape(incomelist, snap)
+                        Log.w("incomelist ", snap.id)
                     }
 
-
-                    Log.w("incomelist ", incomelist.toString())
-
-                    //리사이클러뷰 갱신
-                    myrecyclerView.adapter = incomeListAdapter
-                    incomeListAdapter.notifyDataSetChanged()
-                    incomeListAdapter.submitList(incomelist)
-                    //scholar_count.text = incomelist.size.toString()
-
+                    Log.w("MyScholar incomelist", incomelist.toString())
                     if (incomelist.isNotEmpty()){
                         // 이수학기
                         Log.w("db 가져오기 직전에 유저 이수학기 값", changeSemester.toString())
@@ -485,7 +500,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                                 .addOnSuccessListener{ document ->
                                     for (snap in document){
                                         setDataShape(alist, snap)
-                                        //Log.w("alist(이수학기-신입생)", alist.toString())
+                                        Log.w("alist(이수학기-신입생)", snap.id)
 
                                     }
                                     remainConditionSearch()
@@ -504,8 +519,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                                 .addOnSuccessListener { document ->
                                     for (snap in document){
                                         setDataShape(alist, snap)
-                                        //Log.w("alist(이수학기)", alist.toString())
-
+                                        Log.w("alist(이수학기(신입생 말고))", snap.id)
                                     }
 
                                     remainConditionSearch()
@@ -526,8 +540,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
     private fun remainConditionSearch(){
 
-        Log.w("incomelist 크기", incomelist.size.toString())
-        Log.w("alist 크기", alist.size.toString())
+
 
         if (alist.isEmpty()){
             for (i in 0 until incomelist.size){
@@ -541,17 +554,13 @@ class ScholarshipMyscholarFragment : Fragment() {
                     if (incomelist[i] == alist[j]){
                         semesterlist.add(alist[j])
                     }
-                    Log.w("MyScholar semsterlist", semesterlist.toString())
+
                 }
             }
         }
 
-        myrecyclerView.adapter = semesterListAdapter
-        semesterListAdapter.notifyDataSetChanged()
-        semesterListAdapter.submitList(semesterlist)
-       // scholar_count.text = semesterlist.size.toString()
 
-
+        Log.w("MyScholar semsterlist", semesterlist.toString())
         if (semesterlist.isNotEmpty()){
             // 직전학기 이수학점
 
@@ -562,7 +571,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     for (snap in document){
                         setDataShape(alist, snap)
-                       // Log.w("alist(직전학기 학점)", alist.toString())
+                       Log.w("alist(직전학기 학점)", snap.id)
 
                     }
 
@@ -577,18 +586,12 @@ class ScholarshipMyscholarFragment : Fragment() {
                                 if (semesterlist[i] == alist[j]){
                                     preclasslist.add(alist[j])
                                 }
-                                Log.w("MyScholar preclasslist", preclasslist.toString())
+
                             }
                         }
                     }
 
-
-                    //리사이클러뷰 갱신
-                    myrecyclerView.adapter = preClassListAdapter
-                    preClassListAdapter.notifyDataSetChanged()
-                    preClassListAdapter.submitList(preclasslist)
-                    //scholar_count.text = preclasslist.size.toString()
-
+                    Log.w("MyScholar preclasslist", preclasslist.toString())
                     if(preclasslist.isNotEmpty()){
                         // 직전학기 성적
                         alist.clear()
@@ -599,7 +602,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                             .addOnSuccessListener { document ->
                                 for (snap in document){
                                     setDataShape(alist, snap)
-                                    Log.w("alist(직전학기 성적)", alist.toString())
+                                    Log.w("alist(직전학기 성적)", snap.id)
                                 }
 
                                 if (alist.isEmpty()){
@@ -614,17 +617,12 @@ class ScholarshipMyscholarFragment : Fragment() {
                                             if (preclasslist[i] == alist[j]){
                                                 prescorelist.add(alist[j])
                                             }
-                                            Log.w("MyScholar prescorelist", prescorelist.toString())
+
                                         }
                                     }
                                 }
 
-                                //리사이클러뷰 갱신
-                                myrecyclerView.adapter = preScoreListAdapter
-                                preScoreListAdapter.notifyDataSetChanged()
-                                preScoreListAdapter.submitList(preclasslist)
-                                //scholar_count.text = prescorelist.size.toString()
-
+                                Log.w("MyScholar prescorelist", prescorelist.toString())
                                 if (prescorelist.isNotEmpty()){
 
                                     // 거주지
@@ -637,7 +635,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                                             Log.w("거주지", "유저")
                                             for(snap in document){
                                                 setDataShape(alist, snap)
-                                               // Log.w("alist(거주지-유저)", alist.toString())
+                                               Log.w("alist(거주지-유저)", snap.id)
                                             }
 
                                             ref.whereEqualTo("condition.area", "전체")
@@ -645,7 +643,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                                                     Log.w("거주지", "전체")
                                                     for (snap in document){
                                                         setDataShape(alist, snap)
-                                                       // Log.w("alist(거주지-전체)", alist.toString())
+                                                       Log.w("alist(거주지-전체)", snap.id)
                                                     }
 
                                                     if (alist.isEmpty()){
@@ -660,106 +658,222 @@ class ScholarshipMyscholarFragment : Fragment() {
                                                                 if (prescorelist[i] == alist[j]){
                                                                     arealist.add(alist[j])
                                                                 }
-                                                                Log.w("MyScholar arealist", arealist.toString())
+
                                                             }
                                                         }
                                                     }
-
-                                                    myrecyclerView.adapter = areaListAdapter
-                                                    areaListAdapter.notifyDataSetChanged()
-                                                    areaListAdapter.submitList(arealist)
-                                                    //scholar_count.text = arealist.size.toString()
+                                                    Log.w("MyScholar arealist", arealist.toString())
 
                                                     if (arealist.isNotEmpty()){
-
                                                         alist.clear()
+
                                                         Log.w("db 가져오기 직전에 유저 보훈보상대상자", changeNationMerit.toString())
 
-
-                                                        ref.whereEqualTo("condtion.nationalmerit", changeNationMerit)
-                                                            .get()
-                                                            .addOnSuccessListener { document ->
-                                                                for(snap in document){
-                                                                    setDataShape(alist, snap)
-                                                                    Log.w("alsit(보훈대상자)", alist.toString())
-                                                                }
-                                                                if (alist.isEmpty()){
-                                                                    for(i in 0 until arealist.size){
-                                                                        nationalMeritlist.add(arealist[i])
+                                                        if(changeNationMerit){
+                                                            ref.whereEqualTo("condition.nationalmerit", true)
+                                                                .get().addOnSuccessListener { document ->
+                                                                    for(snap in document){
+                                                                        setDataShape(alist, snap)
+                                                                        Log.w("alist(보훈 true)", snap.id)
                                                                     }
-                                                                }
-                                                                else{
-                                                                    for (i in 0 until arealist.size){
-                                                                        for(j in 0 until alist.size){
-                                                                            if(arealist[i] == alist[j]){
-                                                                                nationalMeritlist.add(alist[j])
-                                                                            }
-                                                                            Log.w("MyScholar nationMeritlist", nationalMeritlist.toString())
+                                                                    if(alist.isEmpty()){
+                                                                        for(i in 0 until arealist.size){
+                                                                            nationalMeritlist.add(arealist[i])
                                                                         }
                                                                     }
-                                                                }
-
-                                                                myrecyclerView.adapter = nationMeritListAdapter
-                                                                nationMeritListAdapter.notifyDataSetChanged()
-                                                                nationMeritListAdapter.submitList(nationalMeritlist)
-                                                                //scholar_count.text = nationalMeritlist.size.toString()
-
-                                                                if (nationalMeritlist.isNotEmpty()){
-
-                                                                    alist.clear()
-                                                                    Log.w("db 가져오기 직전 장애여부", changeDisabled.toString())
-
-                                                                    ref.whereEqualTo("condition.disabled", changeDisabled)
-                                                                        .get()
-                                                                        .addOnSuccessListener { document ->
-                                                                            for(snap in document){
-                                                                                setDataShape(alist, snap)
-                                                                                Log.w("alist(장애인)", alist.toString())
-                                                                            }
-
-                                                                            if (alist.isEmpty()){
-                                                                                for(i in 0 until nationalMeritlist.size){
-                                                                                    disabledlist.add(nationalMeritlist[i])
+                                                                    else{
+                                                                        for (i in 0 until arealist.size){
+                                                                            for(j in 0 until alist.size){
+                                                                                if (arealist[i] == alist[j]){
+                                                                                    nationalMeritlist.add(alist[j])
                                                                                 }
+
                                                                             }
-                                                                            else{
-                                                                                for(i in 0 until nationalMeritlist.size){
-                                                                                    for(j in 0 until alist.size){
-                                                                                        if (nationalMeritlist[i] == alist[j]){
-                                                                                            disabledlist.add(alist[j])
-                                                                                        }
-                                                                                        Log.w("MyScholar disabledlist", disabledlist.toString())
+                                                                        }
+                                                                    }
+                                                                    Log.w("MyScholar nationalMerit(true)", nationalMeritlist.toString())
+
+                                                                    if(nationalMeritlist.isNotEmpty()){
+                                                                        alist.clear()
+                                                                        if (changeDisabled){
+                                                                            ref.whereEqualTo("condition.disabled", true)
+                                                                                .get().addOnSuccessListener { document ->
+                                                                                    for(snap in document){
+                                                                                        setDataShape(alist, snap)
+                                                                                        Log.w("alist(보훈 true - 장애 true)", snap.id)
                                                                                     }
+                                                                                    if(alist.isEmpty()){
+                                                                                        for(i in 0 until nationalMeritlist.size){
+                                                                                            disabledlist.add(nationalMeritlist[i])
+                                                                                        }
+                                                                                    }
+                                                                                    else{
+                                                                                        for (i in 0 until nationalMeritlist.size){
+                                                                                            for(j in 0 until alist.size){
+                                                                                                if (nationalMeritlist[i] == alist[j]){
+                                                                                                    disabledlist.add(alist[j])
+                                                                                                }
+
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    Log.w("MyScholar - 보훈 true 장애 true disalbedList", disabledlist.toString())
+                                                                                    resultDate()
+
                                                                                 }
-                                                                            }
+                                                                                .addOnFailureListener { exception ->
+                                                                                    Log.w("ScholarshipMyscholarFragment - disabled", "Error getting data: $exception")
 
-                                                                            myrecyclerView.adapter = disabledListAdapter
-                                                                            disabledListAdapter.notifyDataSetChanged()
-                                                                            disabledListAdapter.submitList(disabledlist)
-                                                                            scholar_count.text = disabledlist.size.toString()
+                                                                                }
+                                                                        }
+
+                                                                        else{
+                                                                            alist.clear()
+                                                                            ref.whereEqualTo("condition.disabled", false)
+                                                                                .get().addOnSuccessListener { document ->
+                                                                                    for(snap in document){
+                                                                                        setDataShape(alist, snap)
+                                                                                        Log.w("alist(보훈 true - 장애 false)", snap.id)
+                                                                                    }
+                                                                                    if(alist.isEmpty()){
+                                                                                        for(i in 0 until nationalMeritlist.size){
+                                                                                            disabledlist.add(nationalMeritlist[i])
+                                                                                        }
+                                                                                    }
+                                                                                    else{
+                                                                                        for (i in 0 until nationalMeritlist.size){
+                                                                                            for(j in 0 until alist.size){
+                                                                                                if (nationalMeritlist[i] == alist[j]){
+                                                                                                    disabledlist.add(alist[j])
+                                                                                                }
+
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    Log.w("MyScholar 보훈 true 장애 false", disabledlist.toString())
+                                                                                    resultDate()
+
+                                                                                }
+                                                                                .addOnFailureListener { exception ->
+                                                                                    Log.w("ScholarshipMyscholarFragment - disabled(false)", "Error getting data: $exception")
+
+                                                                                }
 
                                                                         }
-                                                                        .addOnFailureListener { exception ->
-                                                                            Log.w("ScholarshipMyscholarFragment - disabledScholar", "Error getting data: $exception")
 
-                                                                        }
+                                                                    }
                                                                 }
+                                                                .addOnFailureListener { exception ->
+                                                                    Log.w("ScholarshipMyscholarFragment - nationalmerit", "Error getting data: $exception")
 
-                                                            }
-                                                            .addOnFailureListener { exception ->
-                                                                Log.w("ScholarshipMyscholarFragment - nationMeritScholar", "Error getting data: $exception")
+                                                                }
+                                                        }
+                                                        else{
+                                                            alist.clear()
+                                                            ref.whereEqualTo("condition.nationalmerit", false)
+                                                                .get().addOnSuccessListener { document ->
+                                                                    for(snap in document){
+                                                                        setDataShape(alist, snap)
+                                                                        Log.w("alist(보훈 false)", snap.id)
+                                                                    }
+                                                                    if(alist.isEmpty()){
+                                                                        for(i in 0 until arealist.size){
+                                                                            nationalMeritlist.add(arealist[i])
+                                                                        }
+                                                                    }
+                                                                    else{
+                                                                        for (i in 0 until arealist.size){
+                                                                            for(j in 0 until alist.size){
+                                                                                if (arealist[i] == alist[j]){
+                                                                                    nationalMeritlist.add(alist[j])
+                                                                                }
 
-                                                            }
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                    Log.w("MyScholar nationalMerit(보훈 false)", nationalMeritlist.toString())
+                                                                    if(nationalMeritlist.isNotEmpty()) {
+                                                                        alist.clear()
+
+                                                                        if (changeDisabled) {
+                                                                            ref.whereEqualTo("condition.disabled", true)
+                                                                                .get()
+                                                                                .addOnSuccessListener { document ->
+                                                                                    for (snap in document) {
+                                                                                        setDataShape(alist, snap)
+                                                                                        Log.w("alist(보훈 false - 장애 true)", snap.id)
+                                                                                    }
+                                                                                    if (alist.isEmpty()) {
+                                                                                        for (i in 0 until nationalMeritlist.size) {
+                                                                                            disabledlist.add(nationalMeritlist[i])
+                                                                                        }
+                                                                                    }
+                                                                                    else {
+                                                                                        for (i in 0 until nationalMeritlist.size) {
+                                                                                            for (j in 0 until alist.size) {
+                                                                                                if (nationalMeritlist[i] == alist[j]) {
+                                                                                                    disabledlist.add(alist[j])
+                                                                                                }
+
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    Log.w("MyScholar 보훈 false 장애 true  disablelist", disabledlist.toString())
+                                                                                    resultDate()
+
+                                                                                }
+                                                                                .addOnFailureListener { exception ->
+                                                                                    Log.w("ScholarshipMyscholarFragment - disabled", "Error getting data: $exception")
+
+                                                                                }
+                                                                        }
+                                                                        else {
+                                                                            alist.clear()
+                                                                            ref.whereEqualTo("condition.disabled", false)
+                                                                                .get()
+                                                                                .addOnSuccessListener { document ->
+                                                                                    for (snap in document) {
+                                                                                        setDataShape(alist, snap)
+                                                                                        Log.w("alist(보훈 false - 장애 false)", snap.id)
+                                                                                    }
+                                                                                    if (alist.isEmpty()) {
+                                                                                        for (i in 0 until nationalMeritlist.size) {
+                                                                                            disabledlist.add(nationalMeritlist[i])
+                                                                                        }
+                                                                                    }
+                                                                                    else {
+                                                                                        for (i in 0 until nationalMeritlist.size) {
+                                                                                            for (j in 0 until alist.size) {
+                                                                                                if (nationalMeritlist[i] == alist[j]) {
+                                                                                                    disabledlist.add(alist[j])
+                                                                                                }
+                                                                                            }
+                                                                                        }
+                                                                                    }
+                                                                                    Log.w("MyScholar 보훈 false 장애 false  disableist", disabledlist.toString())
+                                                                                    resultDate()
+
+                                                                                }
+                                                                                .addOnFailureListener { exception ->
+                                                                                    Log.w("ScholarshipMyscholarFragment - disabled", "Error getting data: $exception")
+
+                                                                                }
+                                                                        }
+
+                                                                    }
+                                                                }
+                                                                .addOnFailureListener { exception ->
+                                                                    Log.w("ScholarshipMyscholarFragment - nationalmerit", "Error getting data: $exception")
+
+                                                                }
+                                                        }
                                                     }
+
                                                 }
                                                 .addOnFailureListener { exception ->
                                                     Log.w("ScholarshipMyscholarFragment - areaScholar(전체)", "Error getting data: $exception")
 
                                                 }
-
-
-
-
                                         }
                                         .addOnFailureListener { exception ->
                                             Log.w("ScholarshipMyscholarFragment - areaScholar", "Error getting data: $exception")
@@ -773,12 +887,14 @@ class ScholarshipMyscholarFragment : Fragment() {
 
                             }
                     }
+
                 }
                 .addOnFailureListener { exception ->
                     Log.w("ScholarshipMyscholarFragment - preClassScholar", "Error getting data: $exception")
 
                 }
         }
+
     }
 
 
@@ -814,10 +930,96 @@ class ScholarshipMyscholarFragment : Fragment() {
             val item = Scholarship(paymentType, snap.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
             list.add(item)
         }
-        Log.w("장학금 이름", snap.id)
+
 
     }
 
+    private fun resultDate(){
+        alist.clear()
+        db.collection("Scholarship").document("Nation").collection("ScholarshipList")
+            .get().addOnSuccessListener { document ->
+                for(snap in document){
+                    setDataShape(alist, snap)
+                    Log.w("for univlist - Nation", snap.id)
+                }
+                if(alist.isNotEmpty()){
+                    db.collection("Scholarship").document("OutScholar").collection("ScholarshipList")
+                        .get().addOnSuccessListener { document ->
+                            for(snap in document){
+                                setDataShape(alist, snap)
+                                Log.w("for univlist - OutScholar", snap.id)
+                            }
+
+                            //User Email
+                            user?.let {
+                                userUid  = user!!.uid
+
+                            }
+
+                            //User's Univ
+                            db.collection("Users").document(userUid)
+                                .get().addOnSuccessListener{ document ->
+                                    if (document != null){
+                                        if(document.getString("univ") != null){
+                                            userUniv = document.getString("univ")!!
+                                            Log.w("유저 대학 정보", userUniv)
+                                        }
+                                    }
+
+                                   ref.whereEqualTo("univ", userUniv)
+                                       .get().addOnSuccessListener { document ->
+                                           for(snap in document){
+                                               setDataShape(alist, snap)
+                                               Log.w("for univlist - univ", snap.id)
+                                           }
+
+                                           if (alist.isEmpty()){
+                                               binding.myrecyclerView.adapter = disabledListAdapter
+                                               disabledListAdapter.notifyDataSetChanged()
+                                               disabledListAdapter.submitList(disabledlist)
+                                               scholar_count.text = disabledlist.size.toString()
+                                           }
+                                           else {
+                                               resultlist.clear()
+                                               for (i in 0 until alist.size) {
+                                                   for (j in 0 until disabledlist.size) {
+                                                       if (alist[i] == disabledlist[j]) {
+                                                           resultlist.add(disabledlist[j])
+
+                                                       }
+                                                   }
+                                               }
+                                               binding.myrecyclerView.adapter = resultListAdapter
+                                               resultListAdapter.notifyDataSetChanged()
+                                               resultListAdapter.submitList(resultlist)
+                                               scholar_count.text = resultlist.size.toString()
+                                           }
+
+
+                                           Log.w("최종  list", resultlist.toString())
+                                       }
+                                       .addOnFailureListener { exception ->
+                                           Log.w("ScholarshipMyscholarFragment -for univlist - univ", "Error getting data: $exception")
+
+                                       }
+
+                                }
+
+
+                    }
+                        .addOnFailureListener { exception ->
+                            Log.w("ScholarshipMyscholarFragment -for univlist - OutScholar", "Error getting data: $exception")
+
+                        }
+                }
+
+
+            }
+            .addOnFailureListener { exception ->
+                Log.w("ScholarshipMyscholarFragment -for univlist - Nation", "Error getting data: $exception")
+
+            }
+    }
 
 
 }

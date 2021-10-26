@@ -280,8 +280,6 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         }
 
-
-
     }
 
     private fun allData(kind : String){ // 데이터 가져오기
@@ -374,7 +372,5 @@ class ScholarshipAllscholarFragment : Fragment() {
         super.onDestroyView()
         abinding = null
     }
-
-
 
 }
