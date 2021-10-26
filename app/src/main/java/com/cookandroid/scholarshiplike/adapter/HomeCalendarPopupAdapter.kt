@@ -39,8 +39,8 @@ class HomeCalendarPopupAdapter(val arraylist: ArrayList<tmpScholarship>, val mCo
 
         fun bind(item: tmpScholarship, context: Context) {
             popup_name.text = item.title
-            start.text = format.format(item.startdate).toString()
-            end.text = format.format(item.enddate).toString()
+            start.text = format.format(item.startDate).toString()
+            end.text = format.format(item.endDate).toString()
 
             itemView.setOnClickListener {
                 val intent = Intent(context, ScholarshipDetailActivity::class.java)

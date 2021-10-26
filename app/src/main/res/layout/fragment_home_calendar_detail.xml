@@ -4,9 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:padding="10dp"
+    android:background="#ffffff"
     android:orientation="vertical">
-<!--    tools:context="com.example.calendarpractice.CalendarFragment"-->
 
     <TextView
         android:id="@+id/calendar_year_month_text"
@@ -34,114 +33,55 @@
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
+            android:textColor="@color/text_red_pink"
             android:text="@string/sun" />
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/mon"/>
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/tue"/>
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/wed"/>
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/thu"/>
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
             android:text="@string/fri"/>
         <TextView android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="left"
+            android:gravity="center"
+            android:textColor="@color/maincolor"
             android:text="@string/sat"/>
 
     </LinearLayout>
     <LinearLayout
-        android:id="@+id/week1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-        <!--        <androidx.recyclerview.widget.RecyclerView-->
-        <!--            android:id="@+id/calendar_view"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="match_parent"-->
-        <!--            app:spanCount="7"-->
-        <!--            android:adjustViewBounds="true"-->
-        <!--            app:layout_constrainedHeight="true"-->
-        <!--            tools:listitem="@layout/list_item_calendar"/>-->
+                <androidx.recyclerview.widget.RecyclerView
+                    android:overScrollMode="never"
+                    android:id="@+id/calendar_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:spanCount="7"
+                    android:adjustViewBounds="true"
+                    app:layout_constrainedHeight="true"
+                    tools:listitem="@layout/fragment_home_calendar_item_list"/>
     </LinearLayout>
-    <LinearLayout
-        android:id="@+id/scheduel1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"/>
-    <LinearLayout
-        android:id="@+id/week2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-    <LinearLayout
-        android:id="@+id/scheduel2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"/>
-    <LinearLayout
-        android:id="@+id/week3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-    <LinearLayout
-        android:id="@+id/scheduel3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"/>
-    <LinearLayout
-        android:id="@+id/week4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-    <LinearLayout
-        android:id="@+id/scheduel4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"/>
-    <LinearLayout
-        android:id="@+id/week5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-    <LinearLayout
-        android:id="@+id/scheduel5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"/>
-    <LinearLayout
-        android:id="@+id/week6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"/>
-    <LinearLayout
-        android:id="@+id/scheduel6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:orientation="vertical"/>
 
 </LinearLayout>

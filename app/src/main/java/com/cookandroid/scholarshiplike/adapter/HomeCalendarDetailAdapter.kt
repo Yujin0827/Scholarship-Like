@@ -3,219 +3,138 @@ package com.cookandroid.scholarshiplike
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.Typeface
-import android.os.Bundle
 import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
-import kotlinx.android.synthetic.main.fragment_home_calendar_item_list.view.*
+import com.cookandroid.scholarshiplike.databinding.FragmentHomeCalendarItemListBinding
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-// 높이를 구하는데 필요한 LinearLayout과 HomeCalendarDateCalculate를 사용할 때 필요한 date를 받는다.
-class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, val calendarLayout: LinearLayout, val date: Date, val pageindex: Int, scholar:ArrayList<tmpScholarship>) :
+class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, val date: Date, val pageindex: Int, val scholar:ArrayList<tmpScholarship>) :
     RecyclerView.Adapter<HomeCalendarDetailAdapter.CalendarItemHolder>() {
 
-    private val TAG = javaClass.simpleName
-    private var dataList: ArrayList<Int> = arrayListOf() //날짜 데이터 리스트
-    private var scholarList: ArrayList<tmpScholarship> = scholar //장학금 리스트
+    private lateinit var binding: FragmentHomeCalendarItemListBinding
+
+    private var dateList_2D: ArrayList<List<Int>> = arrayListOf()
+    private var intList_2D: ArrayList<List<Int>> = arrayListOf()
+    private var currentMonth: Int =0
 
     // HomeCalendarDateCalculate을 이용하여 날짜 리스트 세팅
-    var calculatedDate: HomeCalendarDateCalculate = HomeCalendarDateCalculate(date)
+    var calculatedDate: HomeCalendarDateCalculate = HomeCalendarDateCalculate(date, pageindex)
 
     init {
         calculatedDate.initBaseCalendar()
-        dataList = calculatedDate.dateList
+        dateList_2D = calculatedDate.dateList_2D
+        intList_2D = calculatedDate.intList_2D
+        currentMonth = calculatedDate.currentMonth
+        Log.e("scholar:     ","$scholar")
     }
-
-    interface ItemClick {
-        fun onClick(view: View, position: Int)
-    }
-
-    var itemClick: ItemClick? = null
 
     override fun onBindViewHolder(holder: CalendarItemHolder, position: Int) {
-
-        // list_item_calendar 높이 지정
-        val h = calendarLayout.height / 6
-        holder.itemView.layoutParams.height = h
-
-        holder?.bind(dataList[position], position, context)
-        if (itemClick != null) {
-            holder?.itemView?.setOnClickListener { v ->
-                itemClick?.onClick(v, position)
-
-            }
-        }
+        holder?.bind(dateList_2D[position], intList_2D[position], position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarItemHolder {
-        val view =
-            LayoutInflater.from(context)
-                .inflate(R.layout.fragment_home_calendar_item_list, parent, false)
+        binding = FragmentHomeCalendarItemListBinding.inflate(
+            LayoutInflater.from(context), parent, false)
 
-        return CalendarItemHolder(view)
+        return CalendarItemHolder(binding)
     }
 
-    override fun getItemCount(): Int = dataList.size
+    override fun getItemCount(): Int = dateList_2D.size
 
-    inner class CalendarItemHolder(itemView: View?) : RecyclerView.ViewHolder(itemView!!) {
+    inner class CalendarItemHolder(val binding : FragmentHomeCalendarItemListBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        var itemCalendar: LinearLayout = itemView!!.item_calendar //캘린더 세부요소 구성 뷰
-        var itemCalendarDateText: TextView = itemView!!.item_calendar_date_text //해당 날짜 텍스트뷰
-        private val itemCalendarContents: LinearLayout =
-            itemView!!.item_calendar_contents //해당 날짜 밑 리니어 레이아웃
+        fun bind(data: List<Int>, intList: List<Int>,position: Int) {
 
-        fun bind(data: Int, position: Int, context: Context) {
+            //View text, id 설정
+            binding.date1.text = data[0].toString()
+            binding.date1.id = intList[0]
 
-            val firstDateIndex = calculatedDate.prevTail
-            val lastDateIndex = dataList.size - calculatedDate.nextHead - 1
-            val dateString: String = SimpleDateFormat("dd", Locale.KOREA).format(date)
-            val dateInt = dateString.toInt()
+            binding.date2.text = data[1].toString()
+            binding.date2.id = intList[1]
 
-            //현재 달
-            val monthFormat = SimpleDateFormat("MM")
-            val cur = System.currentTimeMillis()
-            val curMonth = pageindex+monthFormat.format(cur).toInt()
-            var givemonth = curMonth
+            binding.date3.text = data[2].toString()
+            binding.date3.id = intList[2]
 
-            // 날짜 표시
-            itemCalendarDateText.setText(data.toString())
+            binding.date4.text = data[3].toString()
+            binding.date4.id = intList[3]
 
-            //오늘 날짜 강조
-            if (dataList[position] == dateInt && pageindex == 0) {
-                //검정색,굵게
-                itemCalendarDateText.setTypeface(itemCalendarDateText.typeface, Typeface.BOLD)
-                itemCalendarDateText.setTextColor(Color.parseColor("#000000"))
+            binding.date5.text = data[4].toString()
+            binding.date5.id = intList[4]
 
-            }
+            binding.date6.text = data[5].toString()
+            binding.date6.id = intList[5]
 
-            // 현재 월의 1일 이전, 현재 월의 마지막일 이후 값 처리
-            if (position < firstDateIndex || position > lastDateIndex) {
-                itemCalendarDateText.setTextColor(Color.parseColor("#DEDEDE"))
-            }
+            binding.date7.text = data[6].toString()
+            binding.date7.id = intList[6]
 
-            //일정 추가
-            for (item in scholarList) {
-                addScheduel("#AFEEEE",item, position, firstDateIndex, lastDateIndex, itemCalendarContents)
-            }
+            //스케줄 추가
+            val dateFormat = SimpleDateFormat("MMdd")
 
-            if(position < firstDateIndex) givemonth = curMonth-1
-            else if (position > lastDateIndex) givemonth = curMonth+1
+            for(item in scholar) {
+                val start = dateFormat.format(item.startDate).toInt()
+                val end = dateFormat.format(item.endDate).toInt()
+                var width = 0
+                var leftmargin = 0
+                var rightmargin = 0
 
-            //클릭 시 팝업창
-            itemCalendar.setOnClickListener {
-                HomeCalendarPopupFragment(scholarList, context, givemonth, dataList[position], position, firstDateIndex, lastDateIndex).show(fragment.parentFragmentManager, "HomeCalendarPopupFragmentDialog")
+                if(binding.date1.id in start..end)  width++ else { if (binding.date1.id<start) leftmargin++ else rightmargin++ }
+//                var data = binding.date1.id
+//                Log.w("start, end, data, leftmargin, rightmargin, width, position","$start, $end, $data, $leftmargin, $rightmargin, $width, $position")
+                if(binding.date2.id in start..end)  width++ else { if (binding.date2.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date3.id in start..end)  width++ else { if (binding.date3.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date4.id in start..end)  width++ else { if (binding.date4.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date5.id in start..end)  width++ else { if (binding.date5.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date6.id in start..end)  width++ else { if (binding.date6.id<start) leftmargin++ else rightmargin++ }
+                if(binding.date7.id in start..end)  width++ else { if (binding.date7.id<start) leftmargin++ else rightmargin++ }
+
+                if(width !=0) binding.contents.addView(createscheduelView(item.title, item.category, leftmargin, rightmargin, width))
             }
         }
     }
 
+    fun createscheduelView(text: CharSequence, category: String?, leftmargin: Int, rightmargin: Int, width: Int): TextView {
 
-    // <뷰 생성 함수>
-    fun createView(text: CharSequence, bgcol: String, textcol: String): TextView{
+        val length = 145
+        val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
+        layoutParams.setMargins(length*leftmargin, 0, length*rightmargin, 5)
+
+        var backColor = "#DEDEDE"
+
+        if(category == "국가") {
+            backColor = "#f2d7d7"
+        } else if (category == "교내") {
+            backColor = "#AED6F1"
+        } else if (category == "교외") {
+            backColor = "#D5F5E3"
+        }
+
         val textView = TextView(context)
         textView.text = text
-
-        //동적 뷰 생성(일정추가)
-        textView.setBackgroundColor(Color.parseColor(bgcol))
+        textView.setBackgroundColor(Color.parseColor(backColor))
         textView.gravity
-        textView.setTextColor(Color.parseColor(textcol))
-        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 8F)
+        textView.width = length*width
+        textView.setPaddingRelative(10,20,10,20)
+        textView.setTextColor(Color.parseColor("#000000"))
+        textView.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 10F)
+        textView.layoutParams = layoutParams
+        textView.isSingleLine = true
+
+        textView.setOnClickListener {
+            val intent = Intent(context, ScholarshipDetailActivity::class.java)
+            intent.apply {
+                this.putExtra("title",text.toString())
+            }
+            context?.startActivity(intent)
+        }
 
         return textView
     }
-
-    // <일정 추가 함수>
-    fun addScheduel(backgroundcolor: String ,item: tmpScholarship, position: Int, firstDateIndex: Int, lastDateIndex: Int, itemCalendarContents: LinearLayout) {
-
-        val monthFormat = SimpleDateFormat("MM")
-        val dateFormat = SimpleDateFormat("dd")
-
-        //현재 달
-        val cur = System.currentTimeMillis()
-        val curMonth = monthFormat.format(cur).toInt()
-
-        val tmpstartdate = dateFormat.format(item.startdate).toInt()
-        val tmpstartmonth = monthFormat.format(item.startdate).toInt() - curMonth
-        val tmpenddate = dateFormat.format(item.enddate).toInt()
-        val tmpendmonth = monthFormat.format(item.enddate).toInt() - curMonth
-        val tmptext = item.title
-        val tmpbgcol = backgroundcolor
-
-        if (tmpstartmonth == tmpendmonth) { //시작-끝 월 같을 때
-
-            if(pageindex == tmpstartmonth) { //해당 달이면
-                if(position in firstDateIndex..lastDateIndex) {
-                    if (dataList[position] in tmpstartdate..tmpenddate) {
-                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
-                        else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
-                    }
-                }
-            }
-
-        } else { //시작-끝 월 다를 때
-            //1. 시작 달 달력
-            if (pageindex == tmpstartmonth) {
-                if (position in firstDateIndex..lastDateIndex) {
-                    if (dataList[position] >= tmpstartdate) {
-                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
-                        else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
-
-                    }
-                }
-            }
-
-            // 2. 시작-끝 사이 달력
-            if (pageindex in (tmpstartmonth + 1) until tmpendmonth) {
-                if(position in firstDateIndex..lastDateIndex) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
-            }
-
-            //3. 끝 달 달력
-            if (pageindex == tmpendmonth) {
-                if(position in firstDateIndex..lastDateIndex) {
-                    if (dataList[position] <= tmpenddate) {
-                        itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
-                    }
-                }
-            }
-
-            //4. 해당 달 앞
-            if(pageindex-1 == tmpstartmonth) {
-                if(position < firstDateIndex) {
-                    if(dataList[position] >= tmpstartdate) {
-                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
-                        else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
-                    }
-                }
-            }
-
-            //5. 해당 달 뒤
-            if(pageindex+1 == tmpendmonth) {
-                if(position > lastDateIndex) {
-                    if(dataList[position] <= tmpenddate) {
-                        if (dataList[position] != tmpstartdate) itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#00000000"))
-                        else itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
-                    }
-                }
-            }
-
-        }
-    }
 }
-
-//            //단일 일정
-//            //임시날짜(계산필요)
-//            val date = 10;
-//            val month = 1;
-//
-//            if (dataList[position] == date && pageindex == month && position > firstDateIndex && position < lastDateIndex) {
-//                itemCalendarContents.addView(createView(tmptext, tmpbgcol, "#000000"))
-//            }
