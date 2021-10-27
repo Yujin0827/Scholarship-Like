@@ -28,4 +28,15 @@
 
     </style>
 
+
+    <!-- fragment_scholar Tablayout TextSize -->
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
+
+
+
 </resources>

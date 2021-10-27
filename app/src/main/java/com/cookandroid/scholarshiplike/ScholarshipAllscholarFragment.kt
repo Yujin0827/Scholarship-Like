@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import VerticalItemDecorator
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +19,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scholarship_detail.*
-import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
@@ -101,18 +101,20 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         // expandableList Adapter 연결
         listAdapter = ScholarshipExpandableLisviewtAdapter(this, head, body)
-        expandableList.setAdapter(listAdapter)
+        binding.expandableList.setAdapter(listAdapter)
 
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
         RlistAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext1)
-        allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        binding.allrecyclerView.addItemDecoration(VerticalItemDecorator(17)) // recyclerview 항목 간격
+        binding.allrecyclerView.addItemDecoration(HorizontalItemDecorator(10))
+        binding.allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
-        allrecyclerView.adapter = RlistAdapter
+        binding.allrecyclerView.adapter = RlistAdapter
 
 
 
-        expandableList.setOnGroupClickListener { // expandlist 부모 리스트 클릭 시 장학금 데이터 가져오기
+        binding.expandableList.setOnGroupClickListener { // expandlist 부모 리스트 클릭 시 장학금 데이터 가져오기
                 head, v, groupPosition :Int, parentPosition ->
 
             when (groupPosition) {
@@ -126,7 +128,7 @@ class ScholarshipAllscholarFragment : Fragment() {
             false
         }
 
-        expandableList.setOnChildClickListener {  // expandlist 자식 리스트 클릭 시 장학금 데이터 가져오기
+        binding.expandableList.setOnChildClickListener {  // expandlist 자식 리스트 클릭 시 장학금 데이터 가져오기
                 head, view, groupPosition, childPosition : Int, l ->
             val areaText : String = outScholar[childPosition]
 
