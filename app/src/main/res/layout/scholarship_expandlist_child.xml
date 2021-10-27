@@ -8,10 +8,14 @@
 
     <TextView
         android:id="@+id/expandlist_child"
-        android:layout_width="match_parent"
+        android:layout_width="100dp"
         android:layout_height="30dp"
         android:gravity="center"
         android:textColor="#000000"
-        android:textSize="12sp"/>
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="3dp"
+        android:background="@drawable/background_scholar_expandablelist_child"/>
 
 </LinearLayout>

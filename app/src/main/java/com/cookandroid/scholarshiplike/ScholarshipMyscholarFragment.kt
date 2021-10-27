@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import VerticalItemDecorator
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
@@ -19,12 +20,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipMyScholarBinding
 import com.google.firebase.Timestamp
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.fragment_scholarship.*
 import kotlinx.android.synthetic.main.fragment_scholarship_my_scholar.*
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
@@ -108,6 +107,8 @@ class ScholarshipMyscholarFragment : Fragment() {
         binding.myPreScore.imeOptions = EditorInfo.IME_ACTION_DONE
 
         //화면 전환 방지 (세로로 고정) <- 이거 구현 해야됨
+
+
 
 
 
@@ -195,8 +196,12 @@ class ScholarshipMyscholarFragment : Fragment() {
 //        nationMeritListAdapter = ScholarshipRecyclerViewAdapter(nationalMeritlist, mContext)
         disabledListAdapter = ScholarshipRecyclerViewAdapter(disabledlist, mContext)
 
+
+        binding.myrecyclerView.addItemDecoration(VerticalItemDecorator(17)) // recyclerview 항목 간격
+        binding.myrecyclerView.addItemDecoration(HorizontalItemDecorator(10))
         binding.myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
+
 
     }
 
