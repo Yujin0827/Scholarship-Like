@@ -91,6 +91,7 @@ class HomeFragment : Fragment() {
         mAdView.loadAd(adRequest)
 
         return view
+
     }
 
     // fragment -> activity 화면 이동
