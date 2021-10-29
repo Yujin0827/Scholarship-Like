@@ -110,7 +110,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                         if(scholar?.maxMoney != null) {
                             binding.maxmoney.setText(scholar?.maxMoney.toString()+"원")
                         } else
-                            binding.maxmoney.setText("지급기관 기준에 따라 상이함.")
+                            binding.maxmoney.setText("기준에 따라 상이함")
 
                         if (disabled != null) {
                             if (disabled == true) {
@@ -185,10 +185,11 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                             } else {
                                 Log.d(TAG, "The interstitial ad wasn't ready yet.")
                             }
-
-                            val uri = Uri.parse(URL)
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            startActivity(intent)
+                            if (URL != null) {
+                                val url = Uri.parse(URL)
+                                val intent = Intent(Intent.ACTION_VIEW, url)
+                                startActivity(intent)
+                            }
                         }
                     }
                 }
@@ -204,7 +205,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
             user_ref.document(user.uid).get().addOnSuccessListener { document ->
                 if (document.data != null) {
                     if (document.data!!.get("likeScholarship") != null) {
-                        scholarList = document["likeScholarship"] as ArrayList<String>
+                         scholarList = document["likeScholarship"] as ArrayList<String>
                         for (item in scholarList) {
                             if(item==title) likeButton.isSelected = true //좋아요 클릭 유지
                         }
