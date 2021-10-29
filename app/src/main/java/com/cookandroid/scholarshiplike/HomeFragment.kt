@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
+import com.cookandroid.scholarshiplike.adapter.HomeBannerAdapter
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -29,7 +30,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.getField
 import com.google.firebase.ktx.Firebase
-
 
 class HomeFragment : Fragment() {
 
@@ -58,19 +58,7 @@ class HomeFragment : Fragment() {
         db = Firebase.firestore
 
         // Banner
-        db.collection("Banner")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    if (document.getString("URL") != null) {
-                        banner_list.add(SlideModel(document.getString("URL")))
-                    }
-                }
-                binding.bannerSlider.setImageList(banner_list, ScaleTypes.FIT)
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+        setBanner()
 
         // user 정보 세팅 - 이름, 대학교
         setUserInfo()
@@ -103,7 +91,6 @@ class HomeFragment : Fragment() {
         mAdView.loadAd(adRequest)
 
         return view
-
     }
 
     // fragment -> activity 화면 이동
@@ -125,13 +112,13 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 검색창(HomeSearchActivity)으로 이동
-        binding.searchAll.setOnClickListener {
-            activity?.let {
-                var intent = Intent(it, HomeSearchActivity::class.java)
-                it?.startActivity(intent)
-            }
-        }
+//        // 검색창(HomeSearchActivity)으로 이동
+//        binding.searchAll.setOnClickListener {
+//            activity?.let {
+//                var intent = Intent(it, HomeSearchActivity::class.java)
+//                it?.startActivity(intent)
+//            }
+//        }
 
         // 한국장학재단 웹사이트로 이동
         binding.kosafWeb.setOnClickListener {
@@ -194,6 +181,18 @@ class HomeFragment : Fragment() {
                     Log.e(TAG, "Fail to get user nickname from DB!", exception)
                 }
         }
+    }
+
+    // banner
+    fun setBanner() {
+//        val homeBannerAdapter = HomeBannerAdapter(requireActivity())
+//
+//        binding.bannerViewpager.adapter = homeBannerAdapter
+//        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+//
+//        homeBannerAdapter.apply {
+//            binding.bannerViewpager.setCurrentItem(this.firstFragmentPosition, false)
+//        }
     }
 
     // calendar

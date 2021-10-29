@@ -12,9 +12,10 @@
         android:layout_width="match_parent"
         android:layout_height="40dp"
         android:gravity="center"
-        android:textColor="#000000"
+        android:textColor="#FFFFFF"
         android:textSize="12sp"
-        android:background="@color/maincolor"
+        android:textStyle="bold"
+        android:background="@drawable/background_scholar_expandablelist_parent"
         android:layout_marginTop="5dp"/>
 
 

@@ -4,7 +4,7 @@
     android:id="@+id/storeItemLayout"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="#00FFFFFF">
+    android:background="@drawable/background_scholar_recyclerview">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="0dp"
@@ -16,7 +16,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+
+
+        >
 
         <TextView
             android:id="@+id/scholar_paymentType"
@@ -34,8 +37,9 @@
             android:id="@+id/scholar_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#000000"
+            android:textColor="@color/text_black"
             android:textSize="13sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/scholar_paymentType"
@@ -60,6 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/period1"
+                android:textColor="@color/text_black"
                 android:textSize="12sp"/>
 
             <TextView
@@ -67,19 +72,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                android:textColor="@color/text_black"
                 android:layout_marginRight="3dp"/>
 
             <TextView
                 android:id="@+id/startDateToEndDate"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:text="@string/to" />
+                android:text="@string/to"
+                android:textColor="@color/text_black"/>
 
             <TextView
                 android:id="@+id/scholar_endDate"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
+                android:textColor="@color/text_black"
                 android:layout_marginLeft="3dp"/>
 
         </LinearLayout>
@@ -101,7 +109,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:text="@string/period2"
-
+                android:textColor="@color/text_black"
                 android:textSize="12sp"/>
 
 
@@ -111,20 +119,23 @@
                android:layout_height="wrap_content"
                 android:textSize="12sp"
                 android:layout_marginLeft="3dp"
-                android:layout_marginRight="3dp"/>
+                android:layout_marginRight="3dp"
+                android:textColor="@color/text_black"/>
 
             <TextView
                 android:id="@+id/startDateToEndDate2"
                 android:layout_width="10dp"
                 android:layout_height="wrap_content"
-                android:text="@string/to" />
+                android:text="@string/to"
+                android:textColor="@color/text_black"/>
 
             <TextView
                 android:id="@+id/scholar_endDate2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="12sp"
-                android:layout_marginLeft="3dp"/>
+                android:layout_marginLeft="3dp"
+                android:textColor="@color/text_black"/>
 
         </LinearLayout>
 
@@ -134,6 +145,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
+            android:textColor="@color/text_gray"
             android:layout_marginLeft="3dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

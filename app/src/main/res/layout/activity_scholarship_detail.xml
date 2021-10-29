@@ -6,218 +6,290 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
-        android:layout_width="0dp"
-        android:layout_height="50dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2">
-
-        <Button
-            android:id="@+id/movetoweb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="홈페이지로 이동"
-            tools:layout_editor_absoluteX="100dp"
-            tools:layout_editor_absoluteY="686dp" />
-
-        <androidx.appcompat.widget.AppCompatImageButton
-            android:id="@+id/share"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="15dp"
-            android:background="@drawable/ic_share"
-            android:padding="5dp"
-            />
-
-        <Button
-            android:id="@+id/like"
-            android:layout_width="35dp"
-            android:layout_height="35dp"
-            android:layout_gravity="right"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_like_selector"
-            android:padding="5dp"
-            tools:layout_editor_absoluteX="355dp"
-            tools:layout_editor_absoluteY="16dp" />
-
-    </androidx.appcompat.widget.Toolbar>
-
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/color_background"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:gravity="center"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="60dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="20dp"
+                android:fontFamily="sans-serif-black"
+                android:gravity="left"
                 android:text="@string/scholarName"
                 android:textColor="#000000"
-                android:textSize="24sp" />
+                android:textSize="32sp" />
 
-            <TextView
-                android:id="@+id/textView5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="45dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:text="@string/contents"
-                android:textColor="#000000"
-                android:textSize="18sp" />
-
-            <TextView
-                android:id="@+id/content"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                android:background="@drawable/ic_text_box_rounded_rectangle_background"
+                android:backgroundTint="#ffffff"
+                android:orientation="vertical"
+                android:paddingLeft="15dp">
 
-            <TextView
-                android:id="@+id/textView7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:text="@string/paymentInstitution"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="20dp"
+                    android:gravity="right"
+                    android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/paymentInstitution"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                    <Button
+                        android:id="@+id/movetoweb"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="30dp"
+                        android:layout_marginRight="10dp"
+                        android:background="#ffffff"
+                        android:text="홈페이지 이동"
+                        android:textSize="15dp"
+                        tools:layout_editor_absoluteX="100dp"
+                        tools:layout_editor_absoluteY="686dp" />
 
-            <TextView
-                android:id="@+id/textView9"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:text="@string/period"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                    />
 
-            <TextView
-                android:id="@+id/period"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                    <Button
+                        android:id="@+id/like"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="right"
+                        android:layout_marginLeft="5dp"
+                        android:layout_marginRight="15dp"
+                        android:background="@drawable/button_like_selector"
+                        android:padding="5dp"
+                        tools:layout_editor_absoluteX="355dp"
+                        tools:layout_editor_absoluteY="16dp" />
+                </LinearLayout>
 
-            <TextView
-                android:id="@+id/textView11"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:text="@string/maxMoney"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView5"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/contents"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/maxmoney"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                <TextView
+                    android:id="@+id/content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/contents"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView13"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:text="@string/paymentType"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView7"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/paymentInstitution"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/paymenttype"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                <TextView
+                    android:id="@+id/paymentInstitution"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/contents"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/textView15"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:text="@string/condition"
-                android:textColor="#000000"
-                android:textSize="18sp" />
+                <TextView
+                    android:id="@+id/textView9"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/period"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/condition"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                <TextView
+                    android:id="@+id/period"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/contents"
+                    android:textSize="18sp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/ic_scholarship_detail_background"
-                android:padding="3dp"
-                android:textColor="#000000"
-                android:textSize="18sp"
-                android:text="@string/note"/>
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/maxMoney"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
 
-            <TextView
-                android:id="@+id/note"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                <TextView
+                    android:id="@+id/maxmoney"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/contents"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView13"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/paymentType"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/paymenttype"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:text="@string/contents"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/textView15"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/condition"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="16dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/area"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/area"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/income"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/income"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="부모님"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/child"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/child_all"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/semester"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/semester"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/prescore"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pre_semester_score"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/preclass"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pre_semester_class"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/nationalmerit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extra_national_merit"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:id="@+id/disabled"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/extra_disabled"
+                        android:textSize="18sp" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="20dp"
+                    android:fontFamily="sans-serif-black"
+                    android:text="@string/note"
+                    android:textColor="@color/maincolor"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/note"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="16dp"
+                    android:paddingBottom="50dp"
+                    android:text="@string/contents"
+                    android:textSize="18sp" />
+
+            </LinearLayout>
 
             <!-- admob -->
             <com.google.android.gms.ads.AdView
@@ -227,9 +299,9 @@
                 android:layout_marginTop="10dp"
                 app:adSize="SMART_BANNER"
                 app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"/>
+                app:layout_constraintStart_toStartOf="parent" />
 
         </LinearLayout>
 

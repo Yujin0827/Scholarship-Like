@@ -3,13 +3,19 @@
     <string name="app_name_korean">장학라이크</string>
 
     <!-- 홈탭 페이지 -->
-    <string name="scholar_input_name">님은</string>
-    <string name="scholar_cnt_max">최대</string>
-    <string name="scholar_num">827</string>
-    <string name="scholar_cnt_num">건의</string>
-    <string name="scholar_get">장학금을 받을 수 있어요!</string>
+    <string name="scholar_input_name">님이</string>
+    <string name="scholar_get">받을 수 있는 장학금을</string>
+    <string name="scholar_conf">확인해 보세요!</string>
     <string name="go_nation_web">한국장학재단</string>
     <string name="go_condition">내조건수정</string>
+
+    <!-- 알람 페이지 -->
+    <string name="alarm_tab_all">전체</string>
+    <string name="alarm_tab_scholar">장학금</string>
+
+    <!-- 좋아요 페이지 -->
+    <string name="like_tab_scholar">장학금</string>
+    <string name="like_tab_magazine">매거진</string>
 
     <!-- 검색창 페이지 -->
     <string name="search">검색어 입력</string>
@@ -124,7 +130,6 @@
     <string name="life">생활</string>
     <string name="etc">기타</string>
 
-
     <!-- 캘린더 관련-->
     <string name="calendar_year_month_format">yyyy년 MM월</string>
     <string name="calendar_month_format">MM</string>
@@ -150,7 +155,6 @@
     <string name="condition">조건</string>
     <string name="note">비고</string>
     <string name="to">~</string>
-
 
     <!-- 탈퇴하기 -->
     <string name="signout_really">정말 탈퇴하시겠어요?</string>

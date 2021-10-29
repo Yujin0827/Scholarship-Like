@@ -16,7 +16,7 @@
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent" >
 
         <ImageView
             android:id="@+id/logo"
@@ -42,7 +42,7 @@
             android:layout_marginLeft="5dp"
             android:padding="5dp"
             android:src="@drawable/ic_alarm" />
-
+<!--
         <ImageView
             android:id="@+id/searchAll"
             android:layout_width="35dp"
@@ -51,6 +51,7 @@
             android:layout_marginLeft="5dp"
             android:padding="5dp"
             android:src="@drawable/ic_search" />
+-->
 
     </androidx.appcompat.widget.Toolbar>
 
@@ -78,20 +79,52 @@
                 android:orientation="vertical">
 
                 <!-- banner -->
-                <com.denzcoskun.imageslider.ImageSlider
-                    android:id="@+id/banner_slider"
-                    android:layout_width="match_parent"
-                    android:layout_height="300dp"
-                    app:iss_auto_cycle="true"
-                    app:iss_delay="0"
-                    app:iss_period="2500"
-                    app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"
+<!--                <com.denzcoskun.imageslider.ImageSlider-->
+<!--                    android:id="@+id/banner"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="300dp"-->
+<!--                    app:iss_auto_cycle="true"-->
+<!--                    app:iss_delay="0"-->
+<!--                    app:iss_period="2500"-->
+<!--                    app:layout_constraintBottom_toTopOf="@+id/scholar_cnt"-->
+<!--                    app:layout_constraintEnd_toEndOf="parent"-->
+<!--                    app:layout_constraintStart_toStartOf="parent"-->
+<!--                    app:layout_constraintTop_toTopOf="parent" />-->
+
+                <LinearLayout
+                    android:id="@+id/banner"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toTopOf="@+id/scholar_cnt" >
 
+                    <androidx.viewpager2.widget.ViewPager2
+                        android:id="@+id/banner_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="300dp" />
 
-                <!-- 장학금 최대 건수 -->
+                    <com.tbuonomo.viewpagerdotsindicator.SpringDotsIndicator
+                        android:id="@+id/banner_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toBottomOf="@+id/banner_viewpager"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:dampingRatio="0.5"
+                        app:dotsColor="@color/maincolor"
+                        app:dotsStrokeColor="@color/maincolor"
+                        app:dotsCornerRadius="2dp"
+                        app:dotsSize="10dp"
+                        app:dotsSpacing="6dp"
+                        app:dotsStrokeWidth="2dp"
+                        app:stiffness="300" />
+
+                </LinearLayout>
+
+                <!-- 장학금 안내 -->
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/scholar_cnt"
                     android:layout_width="match_parent"
@@ -100,7 +133,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/go_web"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/banner_slider">
+                    app:layout_constraintTop_toBottomOf="@+id/banner">
 
                     <!-- 이름 -->
                     <LinearLayout
@@ -109,7 +142,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        app:layout_constraintBottom_toTopOf="@+id/scholarship_cnt"
+                        app:layout_constraintBottom_toTopOf="@+id/scholarship_get"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent">
@@ -119,7 +152,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginRight="3dp"
-                            android:textColor="@color/text_black"
+                            android:textColor="@color/maincolor"
                             android:textSize="33sp"
                             android:textStyle="bold" />
 
@@ -133,57 +166,17 @@
 
                     </LinearLayout>
 
-                    <!-- 최대 건수 -->
-                    <LinearLayout
-                        android:id="@+id/scholarship_cnt"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="center"
-                        android:orientation="horizontal"
-                        app:layout_constraintBottom_toTopOf="@+id/scholarship_get"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/scholarship_name">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/scholar_cnt_max"
-                            android:textColor="@color/text_black"
-                            android:textSize="32sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:id="@+id/scholar_num"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dp"
-                            android:text="@string/scholar_num"
-                            android:textColor="@color/maincolor"
-                            android:textSize="35sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/scholar_cnt_num"
-                            android:textColor="@color/text_black"
-                            android:textSize="32sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <!-- 받을 수 있어요! -->
+                    <!-- 받을 수 있는 장학금을 -->
                     <LinearLayout
                         android:id="@+id/scholarship_get"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:orientation="horizontal"
-                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintBottom_toTopOf="@+id/scholarship_conf"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/scholarship_cnt">
+                        app:layout_constraintTop_toBottomOf="@+id/scholarship_name">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -192,6 +185,34 @@
                             android:textColor="@color/text_black"
                             android:textSize="32sp"
                             android:textStyle="bold" />
+
+                    </LinearLayout>
+
+                    <!-- 확인해 보세요! -->
+                    <LinearLayout
+                        android:id="@+id/scholarship_conf"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/scholarship_get">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="@string/scholar_conf"
+                            android:textColor="@color/text_black"
+                            android:textSize="32sp"
+                            android:textStyle="bold" />
+
+                        <ImageView
+                            android:layout_width="30dp"
+                            android:layout_height="match_parent"
+                            android:src="@drawable/ic_scholar_click"
+                            android:layout_marginLeft="7dp" />
 
                     </LinearLayout>
 
@@ -226,7 +247,7 @@
                             android:layout_width="60dp"
                             android:layout_height="60dp"
                             android:layout_marginBottom="5dp"
-                            android:background="@drawable/ic_nation" />
+                            android:background="@drawable/ic_nation"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -301,6 +322,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
+                    android:background="@drawable/background_adview"
                     app:adSize="SMART_BANNER"
                     app:adUnitId="ca-app-pub-3940256099942544/6300978111"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -315,7 +337,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/adView"
-                    tools:context=".ViewPagerFragment">
+                    tools:context=".ViewPagerFragment" >
 
                     <androidx.viewpager2.widget.ViewPager2
                         android:id="@+id/calendarViewPager"
