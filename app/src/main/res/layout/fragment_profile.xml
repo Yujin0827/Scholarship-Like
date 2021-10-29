@@ -243,7 +243,7 @@
 
                             <!-- 알림설정 - 앱 전체 -->
                             <Switch
-                                android:id="@+id/allAlarmSwitch"
+                                android:id="@+id/set_alarm_all"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:text="@string/alarm_app_all"
@@ -258,22 +258,27 @@
 
                             <!-- 알림설정 - 장학금 -->
                             <Switch
+                                android:id="@+id/set_alarm_scholarship"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
                                 android:text="@string/alarm_scholarship"
                                 android:textSize="16sp" />
 
                             <View
                                 android:layout_width="match_parent"
                                 android:layout_height="1dp"
+                                android:layout_marginLeft="20dp"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginBottom="15dp"
                                 android:background="@color/lightgray" />
 
                             <!-- 알림설정 - 매거진 -->
                             <Switch
+                                android:id="@+id/set_alarm_magazine"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
                                 android:text="@string/alarm_magazine"
                                 android:textSize="16sp" />
 

@@ -7,64 +7,32 @@
     android:layout_height="wrap_content"
     android:background="#00FFFFFF">
 
-    <View
-        android:id="@+id/line"
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:layout_marginStart="30dp"
-        android:layout_marginEnd="30dp"
-        android:background="#80646464"
-        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginStart="20dp"
+    <TextView
+        android:id="@+id/alarm_content"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:maxLines="2"
+        android:text="Text"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        android:textColor="@color/text_black"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line">
+        app:layout_constraintTop_toTopOf="parent"/>
 
-
-        <TextView
-            android:id="@+id/alarm_category"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:text="Text"
-            android:textAlignment="center" />
-
-        <TextView
-            android:id="@+id/alarm_title"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="4"
-            android:gravity="center"
-            android:maxLines="2"
-            android:paddingStart="10sp"
-            android:text="Text"
-            android:textAlignment="textStart"
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/alarm_date"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1.2"
-            android:gravity="center"
-            android:paddingStart="10sp"
-            android:text="TextView"
-            android:textAlignment="viewStart"
-            android:textSize="12sp" />
-    </LinearLayout>
+    <TextView
+        android:id="@+id/alarm_date"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:text="date"
+        android:textSize="15sp"
+        android:textColor="@color/text_gray"
+        android:layout_marginStart="15dp"
+        android:layout_marginEnd="15dp"
+        android:layout_marginTop="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alarm_content" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

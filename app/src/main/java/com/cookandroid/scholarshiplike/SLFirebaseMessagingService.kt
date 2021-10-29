@@ -19,10 +19,13 @@ import com.google.firebase.messaging.RemoteMessage
 
 
 class SLFirebaseMessagingService : FirebaseMessagingService() {
+
+    // 토큰이 갱신될 때마다 호출
     override fun onNewToken(p0: String) {
         super.onNewToken(p0)
     }
 
+    // FCM 수신마다 실행
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
         if (remoteMessage.data.isNotEmpty()) {
             showNotification(remoteMessage.data["title"], remoteMessage.data["message"])
@@ -44,7 +47,7 @@ class SLFirebaseMessagingService : FirebaseMessagingService() {
     }
 
     private fun showNotification(title: String?, message: String?) {
-        val intent = Intent(this, MainActivity::class.java)
+        val intent = Intent(applicationContext, MainActivity::class.java)
         val channel_id = "channel"
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
@@ -58,6 +61,7 @@ class SLFirebaseMessagingService : FirebaseMessagingService() {
             .setVibrate(longArrayOf(1000, 1000, 1000, 1000, 1000))
             .setOnlyAlertOnce(true)
             .setContentIntent(pendingIntent)
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
         builder =
             builder.setContent(getCustomDesign(title, message))
         val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager

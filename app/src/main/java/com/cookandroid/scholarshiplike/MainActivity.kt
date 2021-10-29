@@ -230,4 +230,19 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         updateBottomMenu(tabNav)
     }
 
+    // 새로운 인텐트가 요청될 때
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        val createdAt = intent?.extras!!.getString("createAt")
+
+//        setIntent(intent)   // 새로 들어온 인텐트로 교체
+//        updateResult(true)
+    }
+//
+//    private fun updateResult(isNewIntent: Boolean = false) {
+//        resultTextView.text =
+//
+//    }
+
 }

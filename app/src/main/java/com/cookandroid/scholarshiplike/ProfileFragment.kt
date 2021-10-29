@@ -1,20 +1,16 @@
 package com.cookandroid.scholarshiplike
 
-import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
-import android.os.Message
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
 import com.cookandroid.scholarshiplike.databinding.FragmentProfileBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -28,6 +24,7 @@ import kotlin.concurrent.thread
 private const val ProfileTab = "Profile_Fragment"
 private const val ProfileTabEtc = "Profile_Etc_Fragment"
 
+@Suppress("UNREACHABLE_CODE")
 class ProfileFragment : Fragment() {
 
     private var _binding: FragmentProfileBinding? = null
@@ -38,6 +35,10 @@ class ProfileFragment : Fragment() {
     // Firebase
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
+
+    // SharedPreferences
+    lateinit var pref : SharedPreferences
+    lateinit var editor : SharedPreferences.Editor
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -53,7 +54,12 @@ class ProfileFragment : Fragment() {
         auth = Firebase.auth
         db = Firebase.firestore
 
+        pref= activity!!.getSharedPreferences("SharedData", Context.MODE_PRIVATE)
+        editor = pref.edit()
+
         setUserNickname()
+        setAlarm()
+        alarmStateChange()
 
         // '기타' 클릭 리스너
         binding.profileEtc.setOnClickListener {
@@ -160,4 +166,73 @@ class ProfileFragment : Fragment() {
         super.onDestroyView()
     }
 
+    fun setAlarm() {
+        val al_all = pref.getBoolean("KEY_ALARM_ALL", false)
+        val al_scholarship = pref.getBoolean("KEY_ALARM_SCHOLARSHIP", false)
+        val al_magazine = pref.getBoolean("KEY_ALARM_MAGAZINE", false)
+
+        binding.setAlarmAll.setChecked(al_all)
+        binding.setAlarmScholarship.setChecked(al_scholarship)
+        binding.setAlarmMagazine.setChecked(al_magazine)
+    }
+
+    // 알람 설정 상태 변경 리스너 함수
+    fun alarmStateChange() {
+        // 전체 알림 상태 변경시
+        binding.setAlarmAll.setOnCheckedChangeListener { _, isChecked ->
+            val al_scholarship = binding.setAlarmScholarship.isChecked
+            val al_magazine = binding.setAlarmMagazine.isChecked
+
+            editor.putBoolean("KEY_ALARM_ALL", isChecked)
+
+            if (isChecked || (al_scholarship && al_magazine)) {
+                editor.putBoolean("KEY_ALARM_SCHOLARSHIP", isChecked)
+                editor.putBoolean("KEY_ALARM_MAGAZINE", isChecked)
+
+                binding.setAlarmScholarship.setChecked(isChecked)
+                binding.setAlarmMagazine.setChecked(isChecked)
+            }
+
+            editor.apply()
+        }
+
+        // 장학금 알림 상태 변경시
+        binding.setAlarmScholarship.setOnCheckedChangeListener { _, isChecked ->
+            editor.putBoolean("KEY_ALARM_SCHOLARSHIP", isChecked)
+            editor.apply()
+
+            val al_schorship = binding.setAlarmScholarship.isChecked
+            val al_magazine = binding.setAlarmMagazine.isChecked
+
+            checkAlarmAll()
+        }
+
+        // 매거진 알림 상태 변경시
+        binding.setAlarmMagazine.setOnCheckedChangeListener { _, isChecked ->
+            editor.putBoolean("KEY_ALARM_MAGAZINE", isChecked)
+            editor.apply()
+
+            val al_schorship = binding.setAlarmScholarship.isChecked
+            val al_magazine = binding.setAlarmMagazine.isChecked
+
+            checkAlarmAll()
+        }
+    }
+
+    // 장학금, 매거진 알림 상태가 같을경우, 전체 알림도 같게 설정
+    fun checkAlarmAll() {
+        val al_scholarship = binding.setAlarmScholarship.isChecked
+        val al_magazine = binding.setAlarmMagazine.isChecked
+
+        if (al_scholarship && al_magazine) {
+            binding.setAlarmAll.setChecked(true)
+            editor.putBoolean("KEY_ALARM_ALL", true)
+            editor.apply()
+        }
+        else {
+            binding.setAlarmAll.setChecked(false)
+            editor.putBoolean("KEY_ALARM_ALL", false)
+            editor.apply()
+        }
+    }
 }
