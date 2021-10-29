@@ -45,7 +45,6 @@ class DataService : Service() {
         fun getService(): DataService = this@DataService
     }
 
-
     override fun onCreate() {
         super.onCreate()
         Log.w(TAG, "onCreate()")
@@ -59,7 +58,6 @@ class DataService : Service() {
             joinAll()
             Log.d(TAG, "coroutine dead")
         }
-
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {

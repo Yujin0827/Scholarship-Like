@@ -128,13 +128,13 @@ class HomeFragment : Fragment() {
             }
         }
 
-        // 검색창(HomeSearchActivity)으로 이동
-        binding.searchAll.setOnClickListener {
-            activity?.let {
-                var intent = Intent(it, HomeSearchActivity::class.java)
-                it?.startActivity(intent)
-            }
-        }
+//        // 검색창(HomeSearchActivity)으로 이동
+//        binding.searchAll.setOnClickListener {
+//            activity?.let {
+//                var intent = Intent(it, HomeSearchActivity::class.java)
+//                it?.startActivity(intent)
+//            }
+//        }
 
         // 한국장학재단 웹사이트로 이동
         binding.kosafWeb.setOnClickListener {
@@ -201,14 +201,14 @@ class HomeFragment : Fragment() {
 
     // banner
     fun setBanner() {
-        val homeBannerAdapter = HomeBannerAdapter(requireActivity())
-
-        binding.bannerViewpager.adapter = homeBannerAdapter
-        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-
-        homeBannerAdapter.apply {
-            binding.bannerViewpager.setCurrentItem(this.firstFragmentPosition, false)
-        }
+//        val homeBannerAdapter = HomeBannerAdapter(requireActivity())
+//
+//        binding.bannerViewpager.adapter = homeBannerAdapter
+//        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+//
+//        homeBannerAdapter.apply {
+//            binding.bannerViewpager.setCurrentItem(this.firstFragmentPosition, false)
+//        }
     }
 
     // calendar

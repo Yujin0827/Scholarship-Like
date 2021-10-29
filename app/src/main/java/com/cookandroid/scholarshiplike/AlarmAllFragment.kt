@@ -58,15 +58,15 @@ class AlarmAllFragment: Fragment() {
             )
 
         // item 클릭시 새 activity 호출
-        listAdapter.setOnItemClickListener(object : AlarmRecyclerViewAdapter.OnItemClickListener{
-            override fun onItemClick(v: View, data: Alarm, pos : Int) {
-                Intent(requireActivity(), AlarmDetailActivity::class.java).apply {
-                    //putExtra("data", data)
-                    //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                }.run { startActivity(this) }
-            }
-
-        })
+//        listAdapter.setOnItemClickListener(object : AlarmRecyclerViewAdapter.OnItemClickListener{
+//            override fun onItemClick(v: View, data: Alarm, pos : Int) {
+//                Intent(requireActivity(), AlarmDetailActivity::class.java).apply {
+//                    //putExtra("data", data)
+//                    //addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                }.run { startActivity(this) }
+//            }
+//
+//        })
 
         listView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정

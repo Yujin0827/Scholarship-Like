@@ -13,11 +13,8 @@ class HomeCalendarAdapter (fragmentActivity: FragmentActivity) : FragmentStateAd
     override fun getItemCount(): Int = Int.MAX_VALUE
 
     override fun createFragment(position: Int): Fragment {
-        val homeCalendarDetailFragment =
-            HomeCalendarDetailFragment()
+        val homeCalendarDetailFragment = HomeCalendarDetailFragment()
         homeCalendarDetailFragment.pageIndex = position
         return homeCalendarDetailFragment
     }
 }
-
-
