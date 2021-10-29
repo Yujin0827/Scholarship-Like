@@ -2,6 +2,9 @@
 <resources>
     <color name="maincolor">#3399ff</color>
     <color name="maincolor_background">#CAE5FF</color>
+    <color name="color_background">#F4F4F4</color>
+    <color name="white">#FFFFFF</color>
+    <color name="warnig_dark_red">#EF5660</color>
 
     <color name="clear">#00000000</color>
     <color name="colorPrimary">#008577</color>

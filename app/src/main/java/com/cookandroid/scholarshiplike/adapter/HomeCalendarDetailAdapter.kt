@@ -79,8 +79,8 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
             val dateFormat = SimpleDateFormat("MMdd")
 
             for(item in scholar) {
-                val start = dateFormat.format(item.startdate).toInt()
-                val end = dateFormat.format(item.enddate).toInt()
+                val start = dateFormat.format(item.startDate).toInt()
+                val end = dateFormat.format(item.endDate).toInt()
                 var width = 0
                 var leftmargin = 0
                 var rightmargin = 0
@@ -95,20 +95,30 @@ class HomeCalendarDetailAdapter(val fragment: Fragment, val context: Context, va
                 if(binding.date6.id in start..end)  width++ else { if (binding.date6.id<start) leftmargin++ else rightmargin++ }
                 if(binding.date7.id in start..end)  width++ else { if (binding.date7.id<start) leftmargin++ else rightmargin++ }
 
-                if(width !=0) binding.contents.addView(createscheduelView(item.title, leftmargin, rightmargin, width, "#f2d7d7"))
+                if(width !=0) binding.contents.addView(createscheduelView(item.title, item.category, leftmargin, rightmargin, width))
             }
         }
     }
 
-    fun createscheduelView(text: CharSequence, leftmargin: Int, rightmargin: Int, width: Int, color: String): TextView {
+    fun createscheduelView(text: CharSequence, category: String?, leftmargin: Int, rightmargin: Int, width: Int): TextView {
 
         val length = 145
         val layoutParams = LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(length*leftmargin, 0, length*rightmargin, 5)
 
+        var backColor = "#DEDEDE"
+
+        if(category == "국가") {
+            backColor = "#f2d7d7"
+        } else if (category == "교내") {
+            backColor = "#AED6F1"
+        } else if (category == "교외") {
+            backColor = "#D5F5E3"
+        }
+
         val textView = TextView(context)
         textView.text = text
-        textView.setBackgroundColor(Color.parseColor(color))
+        textView.setBackgroundColor(Color.parseColor(backColor))
         textView.gravity
         textView.width = length*width
         textView.setPaddingRelative(10,20,10,20)

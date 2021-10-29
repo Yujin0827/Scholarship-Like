@@ -36,11 +36,6 @@ class ProfileQuestionsActivity: AppCompatActivity() {
     }
 
     private fun btn_Click() {
-        // 뒤로가기 클릭 리스너
-        binding.btnQuestionsBack.setOnClickListener {
-            finish()
-        }
-
         // 메일 보내기 클릭 리스너
         binding.btnSendMail.setOnClickListener {
             if (isFilled()) {   // 문의 내용 유무 확인

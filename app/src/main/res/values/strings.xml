@@ -22,10 +22,10 @@
 
     <!-- 프로필탭 페이지 -->
     <string name="change_profile">프로필 수정</string>
-    <string name="user_name">홍길동</string>
-    <string name="user_hello"> 님, 반갑습니다!</string>
+    <string name="user_name_default">홍길동</string>
+    <string name="user_email_default">xxxxx@xxxxx</string>
     <string name="change_my_condition">내 조건 수정</string>
-    <string name="set_alarm">알림설정 (장학금 관련)</string>
+    <string name="set_alarm">알림설정</string>
     <string name="alarm_app_all">앱 전체</string>
     <string name="alarm_scholarship">장학금</string>
     <string name="alarm_magazine">매거진</string>
@@ -34,6 +34,12 @@
     <string name="questions">문의</string>
     <string name="logout">로그아웃</string>
     <string name="signout">탈퇴하기</string>
+    <string name="terms_service">서비스 이용약관</string>
+    <string name="terms_privacy">개인정보 처리방침 </string>
+    <string name="my_page_eng">My Page</string>
+    <string name="image_desc_user_image">userImage</string>
+    <string name="image_desc_arrow_right">arrowRight</string>
+    <string name="image_desc_pencil">pencil</string>
 
     <!-- 내 조건 수정 페이지 -->
     <string name="save">저장</string>
@@ -68,6 +74,7 @@
     <string name="myUniv">소속 대학교</string>
     <string name="changePw">비밀번호 재설정</string>
     <string name="reSetPwBt">이메일 보내기</string>
+    <string name="send_pw_reset_email">비밀번호 재설정 이메일 보내기</string>
 
     <!-- 로그아웃 페이지 -->
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
@@ -112,6 +119,7 @@
     <string name="welcome">장학라이크에 오신 것을 환영합니다.</string>
     <string name="see">보기</string>
     <string name="confirm">확인</string>
+    <string name="image_desc_logo">logo</string>
 
     <!-- 매거진 관련 -->
     <string name="m_title">매거진 제목</string>
@@ -163,6 +171,6 @@
     <string name="write_questions">문의 내용을 작성 해 주세요.</string>
     <string name="send_mail">메일 보내기</string>
     <string name="send_mail_result">답변은 보내신 메일 주소로 수신됩니다.\n2~3일 정도 소요될 수 있습니다.</string>
-    <string name="questions_subtitle">장학라이크로 문의 메일 보내기</string>
+    <string name="questions_subtitle">* 장학라이크로 문의 메일을 보냅니다</string>
 
 </resources>

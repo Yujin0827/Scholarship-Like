@@ -6,6 +6,7 @@
     android:id="@+id/view_root_profile_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/color_background"
     android:orientation="vertical">
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -14,263 +15,277 @@
         android:layout_height="wrap_content"
         tools:ignore="MissingConstraints">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/scrollVIew_profile"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            app:layout_constraintTop_toTopOf="parent">
 
-            <!-- 상단 프로필 사진, "홍길동님, 반갑습니다!" Horizontal Layout-->
             <LinearLayout
-                android:id="@+id/profileTitleLayout"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:background="@color/maincolor_background"
-                android:orientation="horizontal"
-                app:layout_constraintBottom_toTopOf="@+id/scrollVIew_profile"
-                app:layout_constraintHeight_percent="0.14"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+                android:layout_height="wrap_content"
+                android:paddingLeft="40dp"
+                android:paddingTop="60dp"
+                android:paddingRight="40dp"
+                android:paddingBottom="60dp"
+                android:orientation="vertical">
 
-                <!-- 프로필 사진, "프로필 수정" Vertical Layout -->
+                <!-- 상단 프로필 사진 & 닉네임 & 이메일 Layout-->
                 <LinearLayout
-                    android:id="@+id/profileTitleIconLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="20dp"
+                    android:id="@+id/profileTitleLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="10dp">
-
-                    <ImageView
-                        android:id="@+id/btnProfileIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="44dp"
-                        android:layout_gravity="center"
-                        android:layout_weight="2.5"
-                        android:adjustViewBounds="true"
-                        android:src="@drawable/ic_profile_user" />
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <TextView
-                        android:id="@+id/txtProfileChange"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_weight="1"
-                        android:autoSizeMaxTextSize="100sp"
-                        android:autoSizeMinTextSize="10sp"
-                        android:autoSizeStepGranularity="2sp"
-                        android:autoSizeTextType="uniform"
-                        android:gravity="center"
-                        android:paddingTop="6dp"
-                        android:text="@string/change_profile" />
-
-                </LinearLayout>
-
-
-                <!-- "홍길동님, 반갑습니다!" Horizontal Layout -->
-                <LinearLayout
-                    android:id="@+id/profileTitleHelloLayout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_marginLeft="10dp"
-                    android:orientation="horizontal">
+                        android:text="@string/my_page_eng"
+                        android:textColor="@color/text_black"
+                        android:textSize="38sp"
+                        android:textStyle="bold" />
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:orientation="horizontal">
+                        android:layout_marginTop="20dp">
 
-                        <!-- "홍길동" -->
-                        <TextView
-                            android:id="@+id/btnProfileUserName"
+                        <!-- 프로필 사진, "프로필 수정" Vertical Layout -->
+                        <LinearLayout
+                            android:id="@+id/profileTitleIconLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:layout_weight="0.3"
-                            android:textColor="@color/text_black"
-                            android:textSize="24sp"
-                            android:textStyle="bold" />
+                            android:orientation="vertical">
 
-                        <!-- "님, 반갑습니다!" -->
-                        <TextView
-                            android:id="@+id/txtProfileHello"
+                            <ImageView
+                                android:id="@+id/btnProfileIcon"
+                                android:layout_width="85dp"
+                                android:layout_height="85dp"
+                                android:layout_gravity="center"
+                                android:adjustViewBounds="true"
+                                android:contentDescription="@string/image_desc_user_image"
+                                android:src="@drawable/ic_profile_user" />
+
+                        </LinearLayout>
+
+
+                        <!-- 유저 닉네임 & 이메일 Layout -->
+                        <LinearLayout
+                            android:id="@+id/profileUserInfoLayout"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_gravity="bottom"
-                            android:text="@string/user_hello"
-                            android:textColor="@color/text_black"
-                            android:textSize="20sp" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginStart="30dp"
+                            android:orientation="vertical">
 
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <!-- "홍길동" -->
+                                <TextView
+                                    android:id="@+id/profileUserName"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="@string/user_name_default"
+                                    android:textColor="@color/text_black"
+                                    android:textSize="20sp"
+                                    android:textStyle="bold" />
+
+                                <ImageView
+                                    android:layout_width="15dp"
+                                    android:layout_height="15dp"
+                                    android:layout_marginStart="10dp"
+                                    android:contentDescription="@string/image_desc_pencil"
+                                    android:src="@drawable/ic_pencil" />
+
+                            </LinearLayout>
+
+                            <!-- 유저 이메일 -->
+                            <TextView
+                                android:id="@+id/txtUserEmail"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/user_email_default"
+                                android:textSize="14sp" />
+
+                        </LinearLayout>
                     </LinearLayout>
-
                 </LinearLayout>
-
-
-            </LinearLayout>
-
-            <ScrollView
-                android:id="@+id/scrollVIew_profile"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                app:layout_constraintHeight_percent="0.86"
-                app:layout_constraintTop_toBottomOf="@id/profileTitleLayout">
 
                 <!-- 내정보  리스트 -->
                 <LinearLayout
                     android:id="@+id/profileListLayout"
                     android:layout_width="match_parent"
-                    android:layout_height="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="60dp"
                     android:orientation="vertical"
-                    android:padding="20dp"
-                    app:layout_constraintTop_toBottomOf="@+id/profileTitleLayout"
-                    tools:layout_editor_absoluteX="-29dp">
+                    app:layout_constraintTop_toBottomOf="@+id/profileTitleLayout">
 
                     <!-- 내 조건 수정 -->
-                    <LinearLayout
+                    <androidx.constraintlayout.widget.ConstraintLayout
                         android:id="@+id/myConChange"
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/ic_profile_list_background"
-                        android:gravity="left|center_vertical"
-                        android:orientation="vertical"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="15dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="15dp"
-                        tools:ignore="RtlHardcoded">
+                        android:layout_height="wrap_content">
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="@string/change_my_condition"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent" />
 
-                    </LinearLayout>
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:contentDescription="@string/image_desc_arrow_right"
+                            android:src="@drawable/ic_arrow_right"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
 
-                    <!-- 알림설정 (장학금 관련) -->
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 구분선 -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/lightgray" />
+
+                    <!-- 좋아요 누른 게시물 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/likeContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="@string/heart_post"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:contentDescription="@string/image_desc_arrow_right"
+                            android:src="@drawable/ic_arrow_right"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 구분선 -->
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="15dp"
+                        android:background="@color/lightgray" />
+
+                    <!-- 기타 -->
+                    <androidx.constraintlayout.widget.ConstraintLayout
+                        android:id="@+id/profile_etc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:layout_constraintLeft_toLeftOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"
+                            android:text="@string/etc"
+                            android:textColor="@color/text_black"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
+                            android:contentDescription="@string/image_desc_arrow_right"
+                            android:src="@drawable/ic_arrow_right"
+                            app:layout_constraintRight_toRightOf="parent"
+                            app:layout_constraintTop_toTopOf="parent"
+                            app:layout_constraintBottom_toBottomOf="parent"/>
+
+                    </androidx.constraintlayout.widget.ConstraintLayout>
+
+                    <!-- 알림설정 -->
                     <LinearLayout
                         android:id="@+id/alarmSet"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/ic_profile_list_background"
-                        android:gravity="left|center_vertical"
-                        android:orientation="vertical"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="15dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="15dp">
+                        android:layout_marginTop="70dp"
+                        android:orientation="vertical">
 
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="@string/set_alarm"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
+                            android:textSize="12sp" />
 
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:orientation="vertical"
-                            android:padding="10dp">
+                            android:layout_marginTop="30dp"
+                            android:orientation="vertical">
 
                             <!-- 알림설정 - 앱 전체 -->
-
                             <Switch
                                 android:id="@+id/allAlarmSwitch"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="10dp"
-                                android:text="@string/alarm_app_all" />
+                                android:text="@string/alarm_app_all"
+                                android:textSize="16sp" />
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:background="#c9c9c9" />
+                                android:layout_height="1dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:background="@color/lightgray" />
 
                             <!-- 알림설정 - 장학금 -->
                             <Switch
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="10dp"
-                                android:text="@string/alarm_scholarship" />
+                                android:text="@string/alarm_scholarship"
+                                android:textSize="16sp" />
 
                             <View
                                 android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:background="#c9c9c9" />
+                                android:layout_height="1dp"
+                                android:layout_marginTop="15dp"
+                                android:layout_marginBottom="15dp"
+                                android:background="@color/lightgray" />
 
                             <!-- 알림설정 - 매거진 -->
                             <Switch
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:layout_weight="1"
-                                android:padding="10dp"
-                                android:text="@string/alarm_magazine" />
+                                android:text="@string/alarm_magazine"
+                                android:textSize="16sp" />
 
-                            <View
-                                android:layout_width="match_parent"
-                                android:layout_height="2dp"
-                                android:background="#c9c9c9" />
                         </LinearLayout>
 
                     </LinearLayout>
 
-                    <!-- 좋아요 누른 게시물 -->
-                    <LinearLayout
-                        android:id="@+id/likeContent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/ic_profile_list_background"
-                        android:gravity="left|center_vertical"
-                        android:orientation="vertical"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="15dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="15dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/heart_post"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
-                    <!-- 기타 -->
-                    <LinearLayout
-                        android:id="@+id/profile_etc"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="6dp"
-                        android:background="@drawable/ic_profile_list_background"
-                        android:gravity="left|center_vertical"
-                        android:orientation="vertical"
-                        android:paddingLeft="30dp"
-                        android:paddingTop="15dp"
-                        android:paddingRight="30dp"
-                        android:paddingBottom="15dp">
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:text="@string/etc"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-                    </LinearLayout>
-
                 </LinearLayout>
 
-            </ScrollView>
+            </LinearLayout>
+        </ScrollView>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <!--</ScrollView>-->

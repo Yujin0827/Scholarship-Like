@@ -2,166 +2,163 @@
 
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rootView_activity_profile_signout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:id="@+id/rootView_activity_profile_signout">
-
-    <!-- 타이틀 -->
-    <FrameLayout
-        android:id="@+id/view_etc_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/maincolor_background"
-        android:orientation="horizontal"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        app:layout_constraintBottom_toTopOf="@id/scrollView_signout"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:id="@+id/btn_signout_back"
-            android:layout_width="23dp"
-            android:layout_height="23dp"
-            android:src="@drawable/ic_back"
-            android:layout_gravity="left|center_vertical"
-            android:layout_marginLeft="20dp"
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/signout"
-            android:textColor="@color/text_black"
-            android:textSize="20sp"
-            android:layout_gravity="center_horizontal"/>
-
-    </FrameLayout>
+    android:orientation="vertical">
 
     <!-- 스크롤뷰 -->
     <ScrollView
         android:id="@+id/scrollView_signout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/view_etc_title">
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:paddingTop="20dp"
-            android:paddingBottom="20dp">
+            android:paddingLeft="40dp"
+            android:paddingTop="60dp"
+            android:paddingRight="40dp"
+            android:paddingBottom="60dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/signout_really"
-                android:textColor="@color/maincolor"
-                android:textSize="20sp"
-                android:layout_marginBottom="5dp" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/signout_req_reason"
+                android:text="@string/signout"
                 android:textColor="@color/text_black"
-                android:textSize="18sp"/>
+                android:textSize="38sp"
+                android:textStyle="bold"/>
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_marginTop="30dp"
-                android:layout_marginBottom="20dp"
-                android:padding="10dp">
-
-                <CheckBox
-                    android:id="@+id/cb_rsn_Info"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rsn_info"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"/>
-                <CheckBox
-                    android:id="@+id/cb_rsn_uncom"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rsn_uncom"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"/>
-                <CheckBox
-                    android:id="@+id/cb_rsn_better"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rsn_better"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"/>
-                <CheckBox
-                    android:id="@+id/cb_rsn_useless"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/rsn_useless"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"/>
-                <CheckBox
-                    android:id="@+id/cb_rsn_etc"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/etc"
-                    android:textSize="16sp"
-                    android:layout_marginBottom="5dp"/>
-                <EditText
-                    android:id="@+id/edittxt_signout_etc_add"
-                    android:layout_width="280dp"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/ic_edittext_box_background"
-                    android:layout_marginLeft="28dp"
-                    android:padding="4dp"
-                    android:hint="@string/write_rsn"
-                    android:inputType="textMultiLine"
-                    android:lines="2"
-                    android:textSize="16sp"
-                    android:gravity="start"
-                    android:visibility="gone"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginBottom="20dp"
-                android:layout_marginLeft="10dp">
+                android:layout_marginTop="40dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="@string/password_confirm"
-                    android:textColor="@color/text_black"
+                    android:layout_marginBottom="10dp"
+                    android:text="@string/signout_really"
+                    android:textColor="@color/maincolor"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/signout_req_reason"
+                    android:textSize="16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:layout_marginBottom="20dp"
+                    android:background="@drawable/ic_text_box_rounded_rectangle_background"
+                    android:backgroundTint="@color/white"
+                    android:orientation="vertical"
+                    android:paddingTop="20dp"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp"
+                    android:paddingBottom="20dp">
+
+                    <CheckBox
+                        android:id="@+id/cb_rsn_Info"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/rsn_info"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/cb_rsn_uncom"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/rsn_uncom"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/cb_rsn_better"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/rsn_better"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/cb_rsn_useless"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/rsn_useless"
+                        android:textSize="16sp" />
+
+                    <CheckBox
+                        android:id="@+id/cb_rsn_etc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="5dp"
+                        android:text="@string/etc"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/edittxt_signout_etc_add"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/ic_text_box_rounded_rectangle_background"
+                        android:backgroundTint="@color/color_background"
+                        android:gravity="start"
+                        android:hint="@string/write_rsn"
+                        android:inputType="textMultiLine"
+                        android:lines="2"
+                        android:paddingVertical="10dp"
+                        android:paddingHorizontal="20dp"
+                        android:textSize="14sp"
+                        android:visibility="gone" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/password_confirm"
+                        android:textSize="16sp" />
+
+                    <EditText
+                        android:id="@+id/edittxt_signout_pw"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:inputType="textPassword"
+                        android:paddingLeft="4dp"
+                        android:paddingRight="4dp"
+                        android:singleLine="true" />
+
+                </LinearLayout>
+
+                <Button
+                    android:id="@+id/btn_signout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="40dp"
+                    android:background="@drawable/ic_rounded_rectangle_button"
+                    android:backgroundTint="@color/warnig_dark_red"
+                    android:text="@string/signout"
+                    android:textColor="@color/white"
                     android:textSize="16sp"/>
 
-                <EditText
-                    android:id="@+id/edittxt_signout_pw"
-                    android:layout_width="260dp"
-                    android:layout_height="40dp"
-                    android:paddingLeft="4dp"
-                    android:paddingRight="4dp"
-                    android:inputType="textPassword"
-                    android:singleLine="true"/>
-
             </LinearLayout>
-
-            <Button
-                android:id="@+id/btn_signout"
-                android:layout_width="wrap_content"
-                android:layout_height="35dp"
-                android:text="@string/signout"
-                android:background="#D5D32929"
-                android:textColor="#ffffff"
-                android:layout_gravity="right"
-                android:textSize="16sp"/>
 
         </LinearLayout>
 

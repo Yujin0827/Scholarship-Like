@@ -190,14 +190,70 @@
                 android:textColor="#000000"
                 android:textSize="18sp" />
 
-            <TextView
-                android:id="@+id/condition"
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:orientation="vertical"
                 android:layout_marginLeft="16dp"
-                android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                android:layout_marginTop="10dp">
+
+                <TextView
+                    android:id="@+id/area"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/area" />
+
+                <TextView
+                    android:id="@+id/income"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/income" />
+
+                <TextView
+                    android:id="@+id/mom"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/family_rel_mom" />
+
+                <TextView
+                    android:id="@+id/child"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/child_all" />
+
+                <TextView
+                    android:id="@+id/semester"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/semester" />
+
+                <TextView
+                    android:id="@+id/prescore"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pre_semester_score" />
+
+                <TextView
+                    android:id="@+id/preclass"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pre_semester_class" />
+
+                <TextView
+                    android:id="@+id/nationalmerit"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/extra_national_merit" />
+
+                <TextView
+                    android:id="@+id/disabled"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/extra_disabled" />
+
+            </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -217,7 +273,8 @@
                 android:layout_marginLeft="16dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="16dp"
-                android:text="@string/contents" />
+                android:text="@string/contents"
+                android:paddingBottom="50dp"/>
 
             <!-- admob -->
             <com.google.android.gms.ads.AdView
@@ -230,6 +287,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"/>
+
+            <TextView
+                android:id="@+id/dad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/family_rel_dad" />
 
         </LinearLayout>
 

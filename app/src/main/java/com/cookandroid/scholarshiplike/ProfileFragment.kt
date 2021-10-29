@@ -122,8 +122,8 @@ class ProfileFragment : Fragment() {
             }
         }
 
-        // '닉네임' 클릭 리스너
-        binding.btnProfileUserName.setOnClickListener {
+        // 사용자 정보 레이아웃 클릭 리스너
+        binding.profileUserInfoLayout.setOnClickListener {
             activity?.let {
                 val intent = Intent(it, ProfileChangeActivity::class.java)
                 it?.startActivity(intent)
@@ -143,7 +143,8 @@ class ProfileFragment : Fragment() {
                     .get()
                     .addOnSuccessListener { result ->
                         activity?.runOnUiThread {
-                            binding.btnProfileUserName.text = result.getField<String>("nickname")
+                            binding.profileUserName.text = result.getField<String>("nickname")
+                            binding.txtUserEmail.text = user.email.toString()
                         }
                     }
                     .addOnFailureListener() { exception ->

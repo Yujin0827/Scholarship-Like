@@ -35,12 +35,12 @@ class HomeCalendarPopupFragment(val scholar:ArrayList<tmpScholarship>, val mCont
 
         Log.e("팝업창 인자 Month,selectedDate","$Month,$selectedDate")
 
-        for(item in scholar) {
-            val start = format.format(item.startdate).toInt()
-            val end = format.format(item.enddate).toInt()
-
-            if(selectedDate in start..end) visibleList.add(item)
-        }
+//        for(item in scholar) {
+//            val start = format.format(item.startdate).toInt()
+//            val end = format.format(item.enddate).toInt()
+//
+//            if(selectedDate in start..end) visibleList.add(item)
+//        }
     }
 
     override fun onCreateView(
