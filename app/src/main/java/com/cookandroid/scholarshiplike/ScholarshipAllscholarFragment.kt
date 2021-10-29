@@ -12,14 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.adapter.ScholarshipExpandableLisviewtAdapter
-import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipAllScholarBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_scholarship_detail.*
-import kotlinx.coroutines.*
+
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
 
