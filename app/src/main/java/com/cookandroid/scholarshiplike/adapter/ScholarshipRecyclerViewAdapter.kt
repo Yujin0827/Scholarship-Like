@@ -1,21 +1,18 @@
 package com.cookandroid.scholarshiplike
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.text.format.DateFormat
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.GONE
-import android.view.View.VISIBLE
 import android.view.ViewGroup
 import android.widget.LinearLayout
 import android.widget.TextView
-import androidx.constraintlayout.solver.GoalRow
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+
 
 class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>, val mContext: Context):
     ListAdapter<Scholarship, ScholarshipRecyclerViewAdapter.ScholarItemViewHolder>(DiffCallbackScholar){
@@ -92,9 +89,7 @@ class ScholarshipRecyclerViewAdapter (private var list: MutableList<Scholarship>
         holder.bind(list[position], position)
     }
 
-    override fun getItemViewType (position : Int) : Int{
-        return position;
-    }
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import VerticalItemDecorator
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -18,7 +19,6 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_scholarship_detail.*
-import kotlinx.android.synthetic.main.fragment_scholarship_all_scholar.*
 import kotlinx.coroutines.*
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
@@ -101,18 +101,20 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         // expandableList Adapter 연결
         listAdapter = ScholarshipExpandableLisviewtAdapter(this, head, body)
-        expandableList.setAdapter(listAdapter)
+        binding.expandableList.setAdapter(listAdapter)
 
 
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
         RlistAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext1)
-        allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+        binding.allrecyclerView.addItemDecoration(VerticalItemDecorator(17)) // recyclerview 항목 간격
+        binding.allrecyclerView.addItemDecoration(HorizontalItemDecorator(10))
+        binding.allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
-        allrecyclerView.adapter = RlistAdapter
+        binding.allrecyclerView.adapter = RlistAdapter
 
 
 
-        expandableList.setOnGroupClickListener { // expandlist 부모 리스트 클릭 시 장학금 데이터 가져오기
+        binding.expandableList.setOnGroupClickListener { // expandlist 부모 리스트 클릭 시 장학금 데이터 가져오기
                 head, v, groupPosition :Int, parentPosition ->
 
             when (groupPosition) {
@@ -126,11 +128,74 @@ class ScholarshipAllscholarFragment : Fragment() {
             false
         }
 
-        expandableList.setOnChildClickListener {  // expandlist 자식 리스트 클릭 시 장학금 데이터 가져오기
+        binding.expandableList.setOnChildClickListener {  // expandlist 자식 리스트 클릭 시 장학금 데이터 가져오기
                 head, view, groupPosition, childPosition : Int, l ->
             val areaText : String = outScholar[childPosition]
 
-            getData("OutScholar", "place", areaText)
+            if(areaText == "전체"){
+                thread(start = true){
+
+                    // 작업할 문서
+                    db.collection("Scholarship")
+                        .document("OutScholar")
+                        .collection("ScholarshipList")
+                        .get()
+                        .addOnSuccessListener{ result ->
+
+                            RlistAdapter.notifyDataSetChanged()
+                            dataList.clear() // 리스트 재정의
+
+                            for(document in result){
+                                if(document != null){
+                                    //  필드값 가져오기
+                                    val paymentType = document["paymentType"].toString()
+                                    val period = document["period"] as Map<String, Timestamp>
+                                    val startdate = period.get("startDate")?.toDate()
+                                    val enddate = period.get("endDate")?.toDate()
+                                    val startdate2 = period.get("startDate2")?.toDate()
+                                    val enddate2 = period.get("endDate2")?.toDate()
+                                    val institution = document["paymentInstitution"].toString()
+
+                                    val date = SimpleDateFormat("yyyy-MM-dd") // 날짜 형식으로 변환
+
+                                    if(startdate2 == null && enddate2 == null){
+                                        if(startdate == null && enddate == null){
+                                            val item = Scholarship(paymentType, document.id, "자동 선발", "", "", "", institution)
+                                            dataList.add(item)
+                                        }
+                                        else if(startdate == enddate){
+                                            val item = Scholarship(paymentType, document.id, "추후 공지", "", "", "", institution)
+                                            dataList.add(item)
+                                        }
+                                        else{
+                                            val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), "", "", institution)
+                                            dataList.add(item)
+                                        }
+
+                                    }
+                                    else{
+                                        val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
+                                        dataList.add(item)
+                                    }
+
+
+                                    RlistAdapter.submitList(dataList)
+                                    Log.w("ScholarshipAllscholarFragment", "Each Scholar Data")
+                                }
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            // 실패할 경우
+                            Log.w("ScholarshipAllscholarFragment", "Error getting Each Scholar documents: $exception")
+                        }
+
+                }
+            }
+            else{
+                getData("OutScholar", "condition.area", areaText)
+            }
+
+
 
             false
         }
@@ -143,12 +208,12 @@ class ScholarshipAllscholarFragment : Fragment() {
                 if (document != null) {
                     val city = document.get("area") as MutableList<String>
                     for(i in 0 until city.size){
-                        if(city[i] == "전국"){
+                        if(city[i] == "전체"){
                             outScholar.add(city[i])
                         }
                     }
                     for(i in 0 until city.size){
-                        if(city[i] != "전국"){
+                        if(city[i] != "전체"){
                             outScholar.add(city[i])
                         }
                     }
@@ -186,7 +251,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             if(startdate2 == null && enddate2 == null){
                                 if(startdate == null && enddate == null){
-                                    val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                    val item = Scholarship(paymentType, document.id, "자동 선발", "", "", "", institution)
                                     dataList.add(item)
                                 }
                                 else if(startdate == enddate){
@@ -217,8 +282,6 @@ class ScholarshipAllscholarFragment : Fragment() {
 
         }
 
-
-
     }
 
     private fun allData(kind : String){ // 데이터 가져오기
@@ -245,7 +308,7 @@ class ScholarshipAllscholarFragment : Fragment() {
 
                             if((startdate2 == null)&& enddate2 == null){
                                 if(startdate == null && enddate == null){
-                                    val item = Scholarship(paymentType, document.id, "자동 신청", "", "", "", institution)
+                                    val item = Scholarship(paymentType, document.id, "자동 선발", "", "", "", institution)
                                     dataList.add(item)
                                 }
                                 else if(startdate == enddate){
@@ -311,7 +374,5 @@ class ScholarshipAllscholarFragment : Fragment() {
         super.onDestroyView()
         abinding = null
     }
-
-
 
 }

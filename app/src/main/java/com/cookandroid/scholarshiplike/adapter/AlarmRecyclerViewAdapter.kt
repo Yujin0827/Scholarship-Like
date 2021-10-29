@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.Alarm
 import com.cookandroid.scholarshiplike.R
 
-class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(
-    DiffCallbackAlarm
-){
+class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(DiffCallbackAlarm){
     interface OnItemClickListener{
         fun onItemClick(v:View, data: Alarm, pos : Int)
     }
@@ -42,7 +40,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
             if(pos!= RecyclerView.NO_POSITION)
             {
                 itemView.setOnClickListener {
-                    listener?.onItemClick(itemView,data,pos)
+                    listener?.onItemClick(itemView, data, pos)
                 }
             }
         }

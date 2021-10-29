@@ -43,7 +43,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
         //화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
-        
+
         imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager  // 키보드
 
         initSetCondition()
@@ -58,6 +58,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
 
     // 데이터 파일에서 가져온 데이터를 변수에 저장
     private fun loadAndSetData() {
+
         val pref : SharedPreferences = getSharedPreferences("SharedData", Context.MODE_PRIVATE)
 
         // key에 해당하는 value 가져오기
@@ -74,7 +75,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
         userNationalMerit = pref.getBoolean("KEY_USER_NATIONAL_MERIT", false)
         userDisabled = pref.getBoolean("KEY_USER_DISABLED", false)
     }
-    
+
     // 변수에 저장된 값으로 초기 view 설정
     private fun setInitView() {
         //'학자금 지원구간' 스피너 설정
@@ -214,7 +215,7 @@ class ProfileMyConChangeActivity : AppCompatActivity() {
             saveUserConditionData()
             finish()
         }
-        
+
         // 배경 클릭시 키보드 내리기
         binding.rootViewActivityProfileMyConChange.setOnClickListener {
             imm?.hideSoftInputFromWindow(it.windowToken, 0)

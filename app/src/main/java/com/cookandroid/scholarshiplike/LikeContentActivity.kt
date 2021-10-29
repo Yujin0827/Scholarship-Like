@@ -1,9 +1,11 @@
 package com.cookandroid.scholarshiplike
 
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -45,6 +47,7 @@ class LikeContentActivity : AppCompatActivity() {
         }
     }
 
+    @SuppressLint("SourceLockedOrientationActivity")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_like_content)
@@ -54,6 +57,9 @@ class LikeContentActivity : AppCompatActivity() {
             this.bindService(intent, connection, Context.BIND_AUTO_CREATE)
             Log.w(TAG, "Service active")
         }
+
+        // 화면 전환 방지 (세로로 고정)
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
         // 어댑터 생성, 연결
             viewAdapter = ViewPageAdapter(this)

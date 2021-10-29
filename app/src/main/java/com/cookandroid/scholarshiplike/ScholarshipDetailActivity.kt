@@ -4,6 +4,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import com.cookandroid.scholarshiplike.databinding.ActivityScholarshipDetailBinding
@@ -16,6 +17,8 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_scholarship_detail.*
+import kotlinx.android.synthetic.main.item_scholarship.*
 import java.text.SimpleDateFormat
 import java.util.ArrayList
 
@@ -39,8 +42,11 @@ class ScholarshipDetailActivity : AppCompatActivity() {
         val title = intent.getStringExtra("title")
         Log.w("세부페이지장학금 title: ",title)
 
+        var ref =  db.collectionGroup("ScholarshipList")
+
+        //데이터 가져오기
         Log.w("장학금세부페이지", "Load Firestore")
-        db.collection("국가").get()
+        ref.get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     if(document.id == title){
@@ -49,22 +55,128 @@ class ScholarshipDetailActivity : AppCompatActivity() {
 
                         val dateFormat = SimpleDateFormat("yyyy.MM.dd")
 
-                        var period = document["period"] as Map<String,Timestamp>
-                        var startdate : Timestamp? = period.get("startdate")
-                        var enddate : Timestamp? = period.get("enddate")
-                        var result = dateFormat.format(startdate?.toDate())+" ~ "+dateFormat.format(enddate?.toDate())
+                        val period = document["period"] as Map<String,Timestamp>
+                        val startdate = period.get("startDate")?.toDate()
+                        val enddate = period.get("endDate")?.toDate()
+                        val startdate2 = period.get("startDate2")?.toDate()
+                        val enddate2 = period.get("endDate2")?.toDate()
+                        var result = "기간"
 
-                        val URL = scholar!!.URL
+                        if((startdate2 == null)&& enddate2 == null){
+                            if(startdate == null && enddate == null){
+                                result = "자동 선발"
+                            }
+                            else if(startdate == enddate){
+                                result = "추후 공지"
+                            }
+                            else{
+                                result =  dateFormat.format(startdate) + "~" +  dateFormat.format(enddate)
+                            }
+                        }
+                        else{
+                            result = "1차: "+dateFormat.format(startdate) + "~" +  dateFormat.format(enddate)+
+                                    "\n2차: "+dateFormat.format(startdate2) + "~" +  dateFormat.format(enddate2)
+                        }
+
 
                         //데이터-뷰 연결
                         binding.title.text = title
                         binding.paymentInstitution.setText(scholar?.paymentInstitution)
                         binding.paymenttype.setText(scholar?.paymentType)
-                        binding.maxmoney.setText(scholar?.maxMoney.toString()+"원")
                         binding.period.setText(result)
-                        binding.condition.setText(scholar?.usercondition)
                         binding.content.setText(scholar?.contents)
                         binding.note.setText(scholar?.note)
+
+                        //조건 연결
+                        val condition = document["condition"] as Map<String,Any>
+                        val area = condition.get("area")
+                        val disabled = condition.get("disabled")
+                        val income = condition.get("income")
+                        val mom = condition.get("mom")
+                        val dad = condition.get("dad")
+                        val semester = condition.get("semester")
+                        val prescore = condition.get("prescore")
+                        val preclass = condition.get("preclass")
+                        val nationalmerit = condition.get("nationalmerit")
+                        val child = condition.get("child")
+
+                        //레이아웃 연결
+                        if (area != null) {
+                            binding.area.setText("거주지: "+area.toString())
+                        } else {
+                            binding.area.visibility = View.GONE
+                        }
+
+                        if(scholar?.maxMoney != null) {
+                            binding.maxmoney.setText(scholar?.maxMoney.toString()+"원")
+                        } else
+                            binding.maxmoney.setText("지급기관 기준에 따라 상이함.")
+
+                        if (disabled != null) {
+                            if (disabled == true) {
+                                binding.disabled.setText("장애 여부 관계 있음")
+                            } else {
+                                binding.disabled.visibility = View.GONE
+                            }
+                        } else {
+                            binding.disabled.visibility = View.GONE
+                        }
+
+                        if (income != null) {
+                            binding.income.setText("학자금 지원구간: "+income.toString()+" 이하")
+                        } else {
+                            binding.income.visibility = View.GONE
+                        }
+
+                        if (mom != null && dad != null) {
+                            if(mom == false && dad == false) {
+                                binding.parent.setText("소년소녀가장")
+                            }
+                            else if(mom == false || dad == false) {
+                                binding.parent.setText("한부모가정")
+                            }
+                        } else {
+                            binding.parent.visibility = View.GONE
+                        }
+
+                        if (semester != null) {
+                            binding.semester.setText("현재 이수 학기: " +semester.toString()+" 이상")
+                        } else {
+                            binding.semester.visibility = View.GONE
+                        }
+
+                        if (prescore != null) {
+                            binding.prescore.setText("직전 학기 성적: "+prescore.toString()+" 이상")
+                        } else {
+                            binding.prescore.visibility = View.GONE
+                        }
+
+                        if (preclass != null) {
+                            binding.preclass.setText("직전 학기 이수 학점: "+preclass.toString()+" 이상")
+                        } else {
+                            binding.preclass.visibility = View.GONE
+                        }
+
+                        if (nationalmerit != null) {
+                            if(nationalmerit == true) {
+                                binding.nationalmerit.setText("보훈보상대상자")
+                            } else {
+                                binding.nationalmerit.visibility = View.GONE
+                            }
+                        } else {
+                            binding.nationalmerit.visibility = View.GONE
+                        }
+
+                        if (child != null) {
+                            if(child == true) {
+                                binding.child.setText("자녀 수 관계 있음 (세부사항은 홈페이지 참고)")
+                            }
+                        } else {
+                            binding.child.visibility = View.GONE
+                        }
+
+
+                        val URL = scholar!!.URL
 
                         //홈페이지 버튼 연결
                         binding.movetoweb.setOnClickListener {
@@ -92,7 +204,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
             user_ref.document(user.uid).get().addOnSuccessListener { document ->
                 if (document.data != null) {
                     if (document.data!!.get("likeScholarship") != null) {
-                         scholarList = document["likeScholarship"] as ArrayList<String>
+                        scholarList = document["likeScholarship"] as ArrayList<String>
                         for (item in scholarList) {
                             if(item==title) likeButton.isSelected = true //좋아요 클릭 유지
                         }

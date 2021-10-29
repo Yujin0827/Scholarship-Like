@@ -3,8 +3,8 @@ package com.cookandroid.scholarshiplike
 import com.google.firebase.Timestamp
 import java.util.*
 
-data class Post (val title: String = "", val category : String = "", val contents : String = "")
-data class tmpScholarship(val title: String, val text: String, val startdate: Date?, val enddate: Date?) //캘린더에 사용
+data class Post (val title: String = "", val category : String = "", val contents : String = "", val imageURL : String = "")
+data class tmpScholarship(val title: String, val text: String, val startDate: Date?, val endDate: Date?, val category:String?) //캘린더에 사용
 data class detailScholarship(val URL:String?=null, val contents:String?=null, val note:String?=null, val paymentInstitution:String?=null, val paymentType:String?=null
                              , val maxMoney:Int?=null, val period:Map<String,Timestamp>? = null, val usercondition:String ?= null, val title:String ?= null)
 data class Alarm(val category: String, val title: String, val date: String)
