@@ -61,20 +61,6 @@ class HomeFragment : Fragment() {
         // Banner
         setBanner()
 
-//        db.collection("Banner")
-//            .get()
-//            .addOnSuccessListener { documents ->
-//                for (document in documents) {
-//                    if (document.getString("URL") != null) {
-//                        banner_list.add(SlideModel(document.getString("URL")))
-//                    }
-//                }
-//                binding.banner.setImageList(banner_list, ScaleTypes.FIT)
-//            }
-//            .addOnFailureListener { exception ->
-//                Log.w(TAG, "Error getting documents: ", exception)
-//            }
-
         // user 정보 세팅 - 이름, 대학교
         setUserInfo()
 
