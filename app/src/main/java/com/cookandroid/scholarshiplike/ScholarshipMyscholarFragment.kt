@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import VerticalItemDecorator
 import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
@@ -195,6 +196,8 @@ class ScholarshipMyscholarFragment : Fragment() {
 //        nationMeritListAdapter = ScholarshipRecyclerViewAdapter(nationalMeritlist, mContext)
         disabledListAdapter = ScholarshipRecyclerViewAdapter(disabledlist, mContext)
 
+        binding.myrecyclerView.addItemDecoration(VerticalItemDecorator(17)) // recyclerview 항목 간격
+        binding.myrecyclerView.addItemDecoration(HorizontalItemDecorator(10))
         binding.myrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         // RecyclerView.adapter에 지정
 

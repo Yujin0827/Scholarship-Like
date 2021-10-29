@@ -21,11 +21,13 @@
         <item name="android:background">@color/lightgray</item>
     </style>
 
-
-
+    <!-- Alarm, Like Tab -->
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
         <item name="tabBackground">@drawable/tab_background</item>
-
+    </style>
+    <style name="tab_text" parent="TextAppearance.Design.Tab">
+        <item name="android:textSize">25sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
 

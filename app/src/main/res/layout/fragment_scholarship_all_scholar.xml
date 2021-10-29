@@ -24,12 +24,16 @@
             <!-- 버튼 클릭시 가시되는 레이아웃(expandableList) -->
 
 
-                <ExpandableListView
-                    android:id="@+id/expandableList"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:groupIndicator="@null"
-                    android:layout_gravity="center"/>
+
+            <ExpandableListView
+                android:id="@+id/expandableList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:groupIndicator="@null"
+                android:layout_gravity="center"
+                android:childDivider="#FFFFFF"
+                android:divider="#FFFFFF"/>
+
 
 
         </LinearLayout>

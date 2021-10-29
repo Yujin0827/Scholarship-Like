@@ -11,9 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.Alarm
 import com.cookandroid.scholarshiplike.R
 
-class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(
-    DiffCallbackAlarm
-){
+class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapter<Alarm, AlarmRecyclerViewAdapter.AlarmItemViewHolder>(DiffCallbackAlarm){
     interface OnItemClickListener{
         fun onItemClick(v:View, data: Alarm, pos : Int)
     }
@@ -27,7 +25,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
     // inner class로 ViewHolder 정의
     inner class AlarmItemViewHolder(itemView: View?): RecyclerView.ViewHolder(itemView!!) {
 
-        var title: TextView = itemView!!.findViewById(R.id.alarm_title)
+        var title: TextView = itemView!!.findViewById(R.id.alarm_content)
         var date: TextView = itemView!!.findViewById(R.id.alarm_date)
 
         // onBindViewHolder의 역할을 대신한다.
@@ -42,7 +40,7 @@ class AlarmRecyclerViewAdapter (private var list: MutableList<Alarm>): ListAdapt
             if(pos!= RecyclerView.NO_POSITION)
             {
                 itemView.setOnClickListener {
-                    listener?.onItemClick(itemView,data,pos)
+                    listener?.onItemClick(itemView, data, pos)
                 }
             }
         }
