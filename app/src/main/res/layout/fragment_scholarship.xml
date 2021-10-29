@@ -14,27 +14,42 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="?attr/actionBarSize"
+        android:orientation="horizontal"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:background="@color/color_background">
 
+
         <ImageView
             android:id="@+id/like"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_like"
-            android:layout_gravity="right"
-            android:padding="5dp"/>
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right|center"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_like" />
 
         <ImageView
             android:id="@+id/alarm"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/ic_alarm"
-            android:layout_gravity="right"
-            android:padding="5dp"/>
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right|center"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_alarm" />
+        <!--
+                <ImageView
+                    android:id="@+id/searchAll"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="right|center"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_search" />
+        -->
 
     </androidx.appcompat.widget.Toolbar>
 
