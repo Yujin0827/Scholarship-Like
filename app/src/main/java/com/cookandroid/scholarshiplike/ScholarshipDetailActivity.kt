@@ -44,6 +44,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
 
         var ref =  db.collectionGroup("ScholarshipList")
 
+        //데이터 가져오기
         Log.w("장학금세부페이지", "Load Firestore")
         ref.get()
             .addOnSuccessListener { result ->
@@ -99,6 +100,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                         val nationalmerit = condition.get("nationalmerit")
                         val child = condition.get("child")
 
+                        //레이아웃 연결
                         if (area != null) {
                             binding.area.setText("거주지: "+area.toString())
                         } else {
@@ -108,7 +110,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                         if(scholar?.maxMoney != null) {
                             binding.maxmoney.setText(scholar?.maxMoney.toString()+"원")
                         } else
-                            binding.maxmoney.setText("? 원")
+                            binding.maxmoney.setText("기준에 따라 상이함")
 
                         if (disabled != null) {
                             if (disabled == true) {
@@ -128,14 +130,13 @@ class ScholarshipDetailActivity : AppCompatActivity() {
 
                         if (mom != null && dad != null) {
                             if(mom == false && dad == false) {
-                                binding.mom.setText("소년소녀가장")
+                                binding.parent.setText("소년소녀가장")
                             }
                             else if(mom == false || dad == false) {
-                                binding.mom.setText("한부모가정")
+                                binding.parent.setText("한부모가정")
                             }
                         } else {
-                            binding.mom.visibility = View.GONE
-                            binding.dad.visibility = View.GONE
+                            binding.parent.visibility = View.GONE
                         }
 
                         if (semester != null) {
@@ -184,10 +185,11 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                             } else {
                                 Log.d(TAG, "The interstitial ad wasn't ready yet.")
                             }
-
-                            val uri = Uri.parse(URL)
-                            val intent = Intent(Intent.ACTION_VIEW, uri)
-                            startActivity(intent)
+                            if (URL != null) {
+                                val url = Uri.parse(URL)
+                                val intent = Intent(Intent.ACTION_VIEW, url)
+                                startActivity(intent)
+                            }
                         }
                     }
                 }

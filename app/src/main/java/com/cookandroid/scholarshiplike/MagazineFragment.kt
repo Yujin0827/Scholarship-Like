@@ -74,19 +74,41 @@ class MagazineFragment : Fragment() {
         postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
         Mconnect()
 
-        //버튼 클릭 시 리스트 변경
+        binding.all.isSelected = true
+
+        //버튼 클릭 시 리스트 변경 및 버튼 효과
         binding.all.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postList,mContext)
-            Mconnect()}
+            Mconnect()
+            binding.all.isSelected = true
+            binding.finance.isSelected = false
+            binding.life.isSelected = false
+            binding.etc.isSelected = false
+        }
         binding.finance.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postfinanceList,mContext)
-            Mconnect()}
+            Mconnect()
+            binding.all.isSelected = false
+            binding.finance.isSelected = true
+            binding.life.isSelected = false
+            binding.etc.isSelected = false
+        }
         binding.life.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postlifeList,mContext)
-            Mconnect()}
+            Mconnect()
+            binding.all.isSelected = false
+            binding.finance.isSelected = false
+            binding.life.isSelected = true
+            binding.etc.isSelected = false
+        }
         binding.etc.setOnClickListener {
             postlistAdapter = MagazineRecyclerViewAdapter(postetcList,mContext)
-            Mconnect()}
+            Mconnect()
+            binding.all.isSelected = false
+            binding.finance.isSelected = false
+            binding.life.isSelected = false
+            binding.etc.isSelected = true
+        }
 
     }
 

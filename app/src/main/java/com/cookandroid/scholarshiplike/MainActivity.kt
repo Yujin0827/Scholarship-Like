@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.ActivityInfo
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.MenuItem
@@ -87,7 +88,6 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             val db = Firebase.firestore.collection("Users").document("TOKEN")
             db.update("FCM", FieldValue.arrayUnion(token))
         })
-
     }
 
     // 현재 유저 확인

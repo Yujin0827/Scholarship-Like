@@ -55,7 +55,6 @@ class MagazineDetailActivity : AppCompatActivity() {
 
         binding.titleText.text = titlename
         binding.contentsText.text = contents
-        binding.magazinename.text = titlename
 
         //좋아요 버튼
         var likeButton : Button = findViewById(R.id.like)
