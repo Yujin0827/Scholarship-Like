@@ -1,6 +1,7 @@
 package com.cookandroid.scholarshiplike
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -99,6 +100,7 @@ class HomeFragment : Fragment() {
         // 좋아요 게시물 페이지(LikeContentActivity)로 이동
         binding.like.setOnClickListener {
             activity?.let {
+                var intent1 = Intent()
                 var intent = Intent(context, LikeContentActivity::class.java)
                 startActivity(intent)
             }

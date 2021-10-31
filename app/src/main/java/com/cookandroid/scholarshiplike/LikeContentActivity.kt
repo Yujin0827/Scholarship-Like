@@ -8,16 +8,11 @@ import android.content.ServiceConnection
 import android.content.pm.ActivityInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.os.IBinder
-import android.os.Looper
-import android.util.AttributeSet
 import android.util.Log
-import android.view.View
 import com.cookandroid.scholarshiplike.adapter.ViewPageAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_like_content.*
-import kotlinx.coroutines.coroutineScope
 
 class LikeContentActivity : AppCompatActivity() {
     @Suppress("PrivatePropertyName")
@@ -27,7 +22,7 @@ class LikeContentActivity : AppCompatActivity() {
     private lateinit var viewAdapter: ViewPageAdapter
 
     // 서비스 연결
-    lateinit var mService: DataService
+    var mService: DataService = DataService()
     var mBound: Boolean = false
 
     /** Defines callbacks for service binding, passed to bindService()  */
@@ -39,6 +34,10 @@ class LikeContentActivity : AppCompatActivity() {
             mService = binder.getService()
             Log.w(TAG, "Service connected")
             mBound = true
+
+            if(mBound) {
+                setAdpater()
+            }
         }
 
         override fun onServiceDisconnected(arg0: ComponentName) {
@@ -61,16 +60,16 @@ class LikeContentActivity : AppCompatActivity() {
         // 화면 전환 방지 (세로로 고정)
         requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
 
-        // 어댑터 생성, 연결
-            viewAdapter = ViewPageAdapter(this)
-            viewAdapter.addFragment(LikeContentScholarshipFragment())
-            viewAdapter.addFragment(LikeContentMagazineFragment())
-            like_viewpager.adapter = viewAdapter
-
-            // 탭 레이아웃 이름 연결
-            TabLayoutMediator(like_tabLayout, like_viewpager) { tab, position ->
-                tab.text = tabLayoutTextArray[position]
-            }.attach()
+//        // 어댑터 생성, 연결
+//            viewAdapter = ViewPageAdapter(this)
+//            viewAdapter.addFragment(LikeContentScholarshipFragment())
+//            viewAdapter.addFragment(LikeContentMagazineFragment())
+//            like_viewpager.adapter = viewAdapter
+//
+//            // 탭 레이아웃 이름 연결
+//            TabLayoutMediator(like_tabLayout, like_viewpager) { tab, position ->
+//                tab.text = tabLayoutTextArray[position]
+//            }.attach()
 
         Log.w(TAG, "onCreate() end")
     }
@@ -81,6 +80,19 @@ class LikeContentActivity : AppCompatActivity() {
         unbindService(connection)
         Log.w(TAG, "Service deactivate")
         mBound = false
+    }
+
+    fun setAdpater() {
+        // 어댑터 생성, 연결
+        viewAdapter = ViewPageAdapter(this)
+        viewAdapter.addFragment(LikeContentScholarshipFragment())
+        viewAdapter.addFragment(LikeContentMagazineFragment())
+        like_viewpager.adapter = viewAdapter
+
+        // 탭 레이아웃 이름 연결
+        TabLayoutMediator(like_tabLayout, like_viewpager) { tab, position ->
+            tab.text = tabLayoutTextArray[position]
+        }.attach()
     }
 
 }

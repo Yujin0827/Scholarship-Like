@@ -933,8 +933,6 @@ class ScholarshipMyscholarFragment : Fragment() {
             val item = Scholarship(paymentType, snap.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
             list.add(item)
         }
-
-
     }
 
     private fun resultDate(){
