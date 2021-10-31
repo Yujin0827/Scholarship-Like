@@ -92,9 +92,19 @@ class HomeCalendarDetailFragment : Fragment() {
                                         var startdate : Timestamp? = period.get("startDate")
                                         var enddate : Timestamp? = period.get("endDate")
 
+                                        var startdate2 : Timestamp? = period.get("startDate2")
+                                        var enddate2 : Timestamp? = period.get("endDate2")
+
                                         scholar.add(tmpScholarship( //장학금 이름으로 장학금 정보 빼와서 scholar에 정보 포함 리스트 넘겨줌
                                             document.id, "", startdate?.toDate(), enddate?.toDate(), document["category"] as String?
                                         ))
+
+                                        //2차 기간
+                                        if (startdate2 !=null && enddate2 != null) {
+                                            scholar.add(tmpScholarship(
+                                                document.id, "", startdate2?.toDate(), enddate2?.toDate(), document["category"] as String?
+                                            ))
+                                        }
                                     }
                                 }
                             }
