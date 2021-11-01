@@ -142,6 +142,7 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         })
+
 //        binding.banner.setItemClickListener(object : ItemClickListener {
 //            override fun onItemSelected(position: Int) {
 //                var i = banner_list[position].toString()
