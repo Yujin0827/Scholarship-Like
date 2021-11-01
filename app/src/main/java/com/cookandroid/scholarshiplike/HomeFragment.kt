@@ -62,9 +62,6 @@ class HomeFragment : Fragment() {
 
         // Banner
         setBanner()
-//        binding.bannerViewpager.adapter = ViewPagerAdapter(getBannerList())
-//        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-//        binding.bannerViewpager.setCurrentItem(currentPosition, false) // 현재 위치를 지정
 
         // user 정보 세팅 - 이름, 대학교
         setUserInfo()
@@ -125,6 +122,17 @@ class HomeFragment : Fragment() {
 //                it?.startActivity(intent)
 //            }
 //        }
+
+        // banner click
+        binding.banner.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
+                binding.kosafWeb.setOnClickListener {
+                    var uri = Uri.parse("https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship_main")
+                    var intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            }
+        })
 
         // 한국장학재단 웹사이트로 이동
         binding.kosafWeb.setOnClickListener {
@@ -191,12 +199,8 @@ class HomeFragment : Fragment() {
 
     // banner
     fun setBanner() {
-
         val imageList = ArrayList<SlideModel>() // Create image list
 
-//        imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/scholarshiplike-db.appspot.com/o/banner_sample%2Fbanner_nation.png?alt=media&token=85a48081-c762-43ae-b375-0a8c199e2bcb"))
-//        imageList.add(SlideModel("https://bit.ly/2BteuF2"))
-//        imageList.add(SlideModel("https://bit.ly/3fLJf72"))
         db.collection("Banner")
             .get()
             .addOnSuccessListener { documents ->
@@ -210,27 +214,8 @@ class HomeFragment : Fragment() {
                 Log.w(TAG, "Error getting documents: ", exception)
             }
 
-
         binding.banner.setImageList(imageList)
     }
-
-    // banner click
-    private fun clickBanner() {
-        binding.banner.setItemClickListener(object : ItemClickListener {
-            override fun onItemSelected(position: Int) {
-                binding.kosafWeb.setOnClickListener {
-                    var uri = Uri.parse("https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship_main")
-                    var intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                }
-            }
-        })
-
-    }
-
-//    private fun getBannerList(): ArrayList<Int> {
-//        return arrayListOf<Int>(R.drawable.img_magazine_detail_basic, R.drawable.img_magazine_detail_basic, R.drawable.img_magazine_detail_basic)
-//    }
 
     // calendar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
