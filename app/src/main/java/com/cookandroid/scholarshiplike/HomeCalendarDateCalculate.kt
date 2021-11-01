@@ -66,7 +66,8 @@ class HomeCalendarDateCalculate(date: Date, pageindex: Int) {
     }
 
     private fun makeCurrentMonth(calendar: Calendar) {
-        for (i in 1..calendar.getActualMaximum(Calendar.DATE)) dateList.add(i)
+        for (i in 1..calendar.getActualMaximum(Calendar.DATE))
+            dateList.add(i)
     }
 
     private fun makeNextHead() {
