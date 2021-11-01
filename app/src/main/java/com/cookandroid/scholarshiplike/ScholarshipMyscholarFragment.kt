@@ -213,7 +213,7 @@ class ScholarshipMyscholarFragment : Fragment() {
             listAdapter.notifyDataSetChanged()
             dataList.clear() // 리스트 재정의
 
-           conditionSearch() // 초기 화면 장학금 데이터 가져오기
+            conditionSearch() // 초기 화면 장학금 데이터 가져오기
         }
 
     }
@@ -351,39 +351,39 @@ class ScholarshipMyscholarFragment : Fragment() {
     }
 
 
-        //'직전학기' 레이아웃 비활성화 함수
+    //'직전학기' 레이아웃 비활성화 함수
     private fun disabledPreSemester() {
-            binding.myPreText.alpha = 0.3F
-            binding.myPreClassText.alpha = 0.3F
-            binding.myPreScoreText.alpha = 0.3F
-            binding.myPreClass.isEnabled = false
-            binding.myPreScore.isEnabled = false
+        binding.myPreText.alpha = 0.3F
+        binding.myPreClassText.alpha = 0.3F
+        binding.myPreScoreText.alpha = 0.3F
+        binding.myPreClass.isEnabled = false
+        binding.myPreScore.isEnabled = false
 
-            binding.myPreClass.setText("")
-            binding.myPreScore.setText("")
-        }
+        binding.myPreClass.setText("")
+        binding.myPreScore.setText("")
+    }
 
-        //'직전학기' 레이아웃 활성화 함수
+    //'직전학기' 레이아웃 활성화 함수
     private fun abledPreSemester() {
-            binding.myPreText.alpha = 1F
-            binding.myPreClassText.alpha = 1F
-            binding.myPreScoreText.alpha = 1F
-            binding.myPreClass.isEnabled = true
-            binding.myPreScore.isEnabled = true
+        binding.myPreText.alpha = 1F
+        binding.myPreClassText.alpha = 1F
+        binding.myPreScoreText.alpha = 1F
+        binding.myPreClass.isEnabled = true
+        binding.myPreScore.isEnabled = true
 
-            if (changeSemester == 30L) {
-                binding.myPreClass.setText("")
-            } else {
-                binding.myPreClass.setText(changePreclass.toString())
-            }
-
-            if (changePreScore == 30f) {
-                binding.myPreScore.setText("")
-            } else {
-                binding.myPreScore.setText(changePreScore.toString())
-
-            }
+        if (changeSemester == 30L) {
+            binding.myPreClass.setText("")
+        } else {
+            binding.myPreClass.setText(changePreclass.toString())
         }
+
+        if (changePreScore == 30f) {
+            binding.myPreScore.setText("")
+        } else {
+            binding.myPreScore.setText(changePreScore.toString())
+
+        }
+    }
 
 
     // --------------------------------------------- 조건 ------------------------------------------
@@ -419,7 +419,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
             override fun onNothingSelected(p0: AdapterView<*>?) {
 
-        }
+            }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 if (position == 0){
@@ -574,7 +574,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                 .addOnSuccessListener { document ->
                     for (snap in document){
                         setDataShape(alist, snap)
-                       Log.w("alist(직전학기 학점)", snap.id)
+                        Log.w("alist(직전학기 학점)", snap.id)
 
                     }
 
@@ -638,7 +638,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                                             Log.w("거주지", "유저")
                                             for(snap in document){
                                                 setDataShape(alist, snap)
-                                               Log.w("alist(거주지-유저)", snap.id)
+                                                Log.w("alist(거주지-유저)", snap.id)
                                             }
 
                                             ref.whereEqualTo("condition.area", "전체")
@@ -646,7 +646,7 @@ class ScholarshipMyscholarFragment : Fragment() {
                                                     Log.w("거주지", "전체")
                                                     for (snap in document){
                                                         setDataShape(alist, snap)
-                                                       Log.w("alist(거주지-전체)", snap.id)
+                                                        Log.w("alist(거주지-전체)", snap.id)
                                                     }
 
                                                     if (alist.isEmpty()){
@@ -969,47 +969,47 @@ class ScholarshipMyscholarFragment : Fragment() {
                                         }
                                     }
 
-                                   ref.whereEqualTo("univ", userUniv)
-                                       .get().addOnSuccessListener { document ->
-                                           for(snap in document){
-                                               setDataShape(alist, snap)
-                                               Log.w("for univlist - univ", snap.id)
-                                           }
+                                    ref.whereEqualTo("univ", userUniv)
+                                        .get().addOnSuccessListener { document ->
+                                            for(snap in document){
+                                                setDataShape(alist, snap)
+                                                Log.w("for univlist - univ", snap.id)
+                                            }
 
-                                           if (alist.isEmpty()){
-                                               binding.myrecyclerView.adapter = disabledListAdapter
-                                               disabledListAdapter.notifyDataSetChanged()
-                                               disabledListAdapter.submitList(disabledlist)
-                                               scholar_count.text = disabledlist.size.toString()
-                                           }
-                                           else {
-                                               resultlist.clear()
-                                               for (i in 0 until alist.size) {
-                                                   for (j in 0 until disabledlist.size) {
-                                                       if (alist[i] == disabledlist[j]) {
-                                                           resultlist.add(disabledlist[j])
+                                            if (alist.isEmpty()){
+                                                binding.myrecyclerView.adapter = disabledListAdapter
+                                                disabledListAdapter.notifyDataSetChanged()
+                                                disabledListAdapter.submitList(disabledlist)
+                                                scholar_count.text = disabledlist.size.toString()
+                                            }
+                                            else {
+                                                resultlist.clear()
+                                                for (i in 0 until alist.size) {
+                                                    for (j in 0 until disabledlist.size) {
+                                                        if (alist[i] == disabledlist[j]) {
+                                                            resultlist.add(disabledlist[j])
 
-                                                       }
-                                                   }
-                                               }
-                                               binding.myrecyclerView.adapter = resultListAdapter
-                                               resultListAdapter.notifyDataSetChanged()
-                                               resultListAdapter.submitList(resultlist)
-                                               scholar_count.text = resultlist.size.toString()
-                                           }
+                                                        }
+                                                    }
+                                                }
+                                                binding.myrecyclerView.adapter = resultListAdapter
+                                                resultListAdapter.notifyDataSetChanged()
+                                                resultListAdapter.submitList(resultlist)
+                                                scholar_count.text = resultlist.size.toString()
+                                            }
 
 
-                                           Log.w("최종  list", resultlist.toString())
-                                       }
-                                       .addOnFailureListener { exception ->
-                                           Log.w("ScholarshipMyscholarFragment -for univlist - univ", "Error getting data: $exception")
+                                            Log.w("최종  list", resultlist.toString())
+                                        }
+                                        .addOnFailureListener { exception ->
+                                            Log.w("ScholarshipMyscholarFragment -for univlist - univ", "Error getting data: $exception")
 
-                                       }
+                                        }
 
                                 }
 
 
-                    }
+                        }
                         .addOnFailureListener { exception ->
                             Log.w("ScholarshipMyscholarFragment -for univlist - OutScholar", "Error getting data: $exception")
 
@@ -1026,5 +1026,4 @@ class ScholarshipMyscholarFragment : Fragment() {
 
 
 }
-
 
