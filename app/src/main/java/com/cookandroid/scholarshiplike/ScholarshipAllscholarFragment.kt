@@ -12,14 +12,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cookandroid.scholarshiplike.adapter.ScholarshipExpandableLisviewtAdapter
-import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
 import com.cookandroid.scholarshiplike.databinding.FragmentScholarshipAllScholarBinding
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_scholarship_detail.*
-import kotlinx.coroutines.*
+
 import java.text.SimpleDateFormat
 import kotlin.concurrent.thread
 
@@ -68,12 +66,12 @@ class ScholarshipAllscholarFragment : Fragment() {
         area() // 지역 리스트 가져오기
 
         head.add("국가 장학금")
-        head.add("교외 장학금")
         head.add("교내 장학금")
+        head.add("교외 장학금")
 
         body.add(koreaScholar)
-        body.add(outScholar)
         body.add(univScholar)
+        body.add(outScholar)
 
         // Inflate the layout for this fragment
         return view
@@ -121,7 +119,7 @@ class ScholarshipAllscholarFragment : Fragment() {
                 0 -> {  // 국가 장학금 클릭 시
                     getData("Nation", "paymentInstitution", "한국장학재단") // 데이터 불러옴
                 }
-                2 -> { // 교내 장학금 클릭 시
+                1 -> { // 교내 장학금 클릭 시
                     getData("UnivScholar", "univ", userUniv)
                 }
             }
@@ -365,6 +363,18 @@ class ScholarshipAllscholarFragment : Fragment() {
             allData("Nation")
             allData("OutScholar")
             allData("UnivScholar")
+
+            db.collection("Users")
+                .document(userUid)
+                .get()
+                .addOnSuccessListener{ document ->
+                    if (document != null){
+                        if(document.getString("univ") != null){
+                            userUniv = document.getString("univ")!!
+                        }
+                    }
+                }
+
 
         }
 
