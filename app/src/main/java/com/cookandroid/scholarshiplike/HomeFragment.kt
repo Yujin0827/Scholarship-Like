@@ -15,10 +15,9 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
-import com.cookandroid.scholarshiplike.adapter.HomeBannerAdapter
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
-import com.denzcoskun.imageslider.constants.ScaleTypes
+import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.ads.AdSize
 import com.google.android.gms.ads.AdRequest
@@ -38,13 +37,17 @@ class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null   // 바인딩 객체
     private val binding get() = _binding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
+//    // banner
+//    private var numBanner = 3
+//    private var currentPosition = Int.MAX_VALUE / 2
+
     // Firebase
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var userUid: String                            // user id
     private lateinit var userUniv: String                           // user 대학교
     private lateinit var univWebSite: String                        // user 대학교 사이트
-    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
+//    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
     private val HomeTab = "Home_Fragment"                           // fragment_home 변수
     private val ScholarshipTab = "Scholarship_Fragment"             // fragment_scholarship 변수
@@ -60,6 +63,9 @@ class HomeFragment : Fragment() {
 
         // Banner
         setBanner()
+//        binding.bannerViewpager.adapter = ViewPagerAdapter(getBannerList())
+//        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
+//        binding.bannerViewpager.setCurrentItem(currentPosition, false) // 현재 위치를 지정
 
         // user 정보 세팅 - 이름, 대학교
         setUserInfo()
@@ -188,15 +194,46 @@ class HomeFragment : Fragment() {
 
     // banner
     fun setBanner() {
-//        val homeBannerAdapter = HomeBannerAdapter(requireActivity())
-//
-//        binding.bannerViewpager.adapter = homeBannerAdapter
-//        binding.bannerViewpager.orientation = ViewPager2.ORIENTATION_HORIZONTAL
-//
-//        homeBannerAdapter.apply {
-//            binding.bannerViewpager.setCurrentItem(this.firstFragmentPosition, false)
-//        }
+
+        val imageList = ArrayList<SlideModel>() // Create image list
+
+//        imageList.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/scholarshiplike-db.appspot.com/o/banner_sample%2Fbanner_nation.png?alt=media&token=85a48081-c762-43ae-b375-0a8c199e2bcb"))
+//        imageList.add(SlideModel("https://bit.ly/2BteuF2"))
+//        imageList.add(SlideModel("https://bit.ly/3fLJf72"))
+        db.collection("Banner")
+            .get()
+            .addOnSuccessListener { documents ->
+                for (document in documents) {
+                    if (document.getString("URL") != null) {
+                        imageList.add(SlideModel(document.getString("URL")))
+                    }
+                }
+            }
+            .addOnFailureListener { exception ->
+                Log.w(TAG, "Error getting documents: ", exception)
+            }
+
+
+        binding.banner.setImageList(imageList)
     }
+
+    // banner click
+    private fun clickBanner() {
+        binding.banner.setItemClickListener(object : ItemClickListener {
+            override fun onItemSelected(position: Int) {
+                binding.kosafWeb.setOnClickListener {
+                    var uri = Uri.parse("https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship_main")
+                    var intent = Intent(Intent.ACTION_VIEW, uri)
+                    startActivity(intent)
+                }
+            }
+        })
+
+    }
+
+//    private fun getBannerList(): ArrayList<Int> {
+//        return arrayListOf<Int>(R.drawable.img_magazine_detail_basic, R.drawable.img_magazine_detail_basic, R.drawable.img_magazine_detail_basic)
+//    }
 
     // calendar
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
