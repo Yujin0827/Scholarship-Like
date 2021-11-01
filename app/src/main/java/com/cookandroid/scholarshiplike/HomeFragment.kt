@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.viewpager2.widget.ViewPager2
 import com.cookandroid.scholarshiplike.adapter.HomeCalendarAdapter
 import com.cookandroid.scholarshiplike.databinding.FragmentHomeBinding
+import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.interfaces.ItemClickListener
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.ads.AdSize
@@ -47,7 +48,7 @@ class HomeFragment : Fragment() {
     private lateinit var userUid: String                            // user id
     private lateinit var userUniv: String                           // user 대학교
     private lateinit var univWebSite: String                        // user 대학교 사이트
-//    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
+    private var banner_list: ArrayList<SlideModel> = arrayListOf()  // banner list
 
     private val HomeTab = "Home_Fragment"                           // fragment_home 변수
     private val ScholarshipTab = "Scholarship_Fragment"             // fragment_scholarship 변수
@@ -66,6 +67,13 @@ class HomeFragment : Fragment() {
 
         // user 정보 세팅 - 이름, 대학교
         setUserInfo()
+
+        binding.bannerSet.setOnClickListener{
+            var uri = Uri.parse("https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship_main")
+            var intent = Intent(Intent.ACTION_VIEW, uri)
+            startActivity(intent)
+        }
+
 
         // 장학금 최대 건수 ( scholarship 탭으로 이동 )
         binding.scholarCnt.setOnClickListener {
@@ -129,13 +137,27 @@ class HomeFragment : Fragment() {
         // banner click
         binding.banner.setItemClickListener(object : ItemClickListener {
             override fun onItemSelected(position: Int) {
-                binding.kosafWeb.setOnClickListener {
-                    var uri = Uri.parse("https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship_main")
-                    var intent = Intent(Intent.ACTION_VIEW, uri)
-                    startActivity(intent)
-                }
+                var uri = Uri.parse("https://www.kosaf.go.kr/ko/scholar.do?pg=scholarship_main")
+                var intent = Intent(Intent.ACTION_VIEW, uri)
+                startActivity(intent)
             }
         })
+//        binding.banner.setItemClickListener(object : ItemClickListener {
+//            override fun onItemSelected(position: Int) {
+//                var i = banner_list[position].toString()
+//
+//                db.collection("Banner")
+//                    .document(i)
+//                    .get()
+//                    .addOnSuccessListener { document ->
+//                        if(document != null) {
+//                            val uri = Uri.parse(document.getString("link"))
+//                            val intent = Intent(Intent.ACTION_VIEW, uri)
+//                            startActivity(intent)
+//                        }
+//                    }
+//            }
+//        })
 
         // 한국장학재단 웹사이트로 이동
         binding.kosafWeb.setOnClickListener {
@@ -202,22 +224,24 @@ class HomeFragment : Fragment() {
 
     // banner
     fun setBanner() {
-        val imageList = ArrayList<SlideModel>() // Create image list
+        banner_list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/scholarshiplike-db.appspot.com/o/banner_sample%2Fbanner_nation.png?alt=media&token=85a48081-c762-43ae-b375-0a8c199e2bcb"))
+        banner_list.add(SlideModel("https://firebasestorage.googleapis.com/v0/b/scholarshiplike-db.appspot.com/o/banner_sample%2Fhallym%20scholarship.png?alt=media&token=b97e4340-b656-4b71-83c3-8b84f522c2bf"))
 
-        db.collection("Banner")
-            .get()
-            .addOnSuccessListener { documents ->
-                for (document in documents) {
-                    if (document.getString("URL") != null) {
-                        imageList.add(SlideModel(document.getString("URL")))
-                    }
-                }
-            }
-            .addOnFailureListener { exception ->
-                Log.w(TAG, "Error getting documents: ", exception)
-            }
+        binding.banner.setImageList(banner_list)
 
-        binding.banner.setImageList(imageList)
+//        db.collection("Banner")
+//            .get()
+//            .addOnSuccessListener { documents ->
+//                for (document in documents) {
+//                    if (document.getString("URL") != null) {
+//                        banner_list.add(SlideModel(document.getString("URL")))
+//                    }
+//                }
+//                binding.banner.setImageList(banner_list)
+//            }
+//            .addOnFailureListener { exception ->
+//                Log.w(TAG, "Error getting documents: ", exception)
+//            }
     }
 
     // calendar
