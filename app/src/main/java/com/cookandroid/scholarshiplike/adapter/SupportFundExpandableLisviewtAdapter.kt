@@ -9,12 +9,12 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.cookandroid.scholarshiplike.R
 
-class ScholarshipExpandableLisviewtAdapter (var fragment : Fragment, var head : MutableList<String>, var body : MutableList<MutableList<String>>): BaseExpandableListAdapter() {
+class SupportFundExpandableLisviewtAdapter (var fragment : Fragment, var head : MutableList<String>, var body : MutableList<MutableList<String>>): BaseExpandableListAdapter() {
     override fun getGroup(groupPosition: Int): String {
         return head[groupPosition]
     }
 
-    override fun isChildSelectable(groupPosition: Int, childPosition : Int): Boolean {
+    override fun isChildSelectable(groupPosition: Int, childPosition: Int): Boolean {
         return true
     }
 
@@ -22,7 +22,7 @@ class ScholarshipExpandableLisviewtAdapter (var fragment : Fragment, var head : 
         return false
     }
 
-    override fun getGroupView(groupPosition: Int, isExpanded : Boolean, convertView: View?, parent : ViewGroup?): View? {
+    override fun getGroupView(groupPosition: Int, isExpanded: Boolean, convertView: View?, parent: ViewGroup?): View? {
         var convertView = convertView
 
         if(convertView == null){
@@ -69,5 +69,4 @@ class ScholarshipExpandableLisviewtAdapter (var fragment : Fragment, var head : 
     override fun getGroupCount(): Int {
         return head.size
     }
-
 }
