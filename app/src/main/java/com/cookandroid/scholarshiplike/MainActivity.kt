@@ -28,6 +28,7 @@ import com.google.firebase.messaging.FirebaseMessaging
 // fragment 변수 생성
 private const val HomeTab = "Home_Fragment"
 private const val ScholarshipTab = "Scholarship_Fragment"
+private const val SupportFundTab = "Support_Fund_Fragment"
 private const val MagazineTab = "Magazine_Fragment"
 private const val ProfileTab = "Profile_Fragment"
 private const val ProfileTabEtc = "Profile_Etc_Fragment"
@@ -127,6 +128,9 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
             R.id.scholarshipTab -> {
                 setFragment(ScholarshipTab, ScholarshipFragment())
             }
+            R.id.supportfundTab -> {
+                setFragment(SupportFundTab, SupportFundFragment())
+            }
             R.id.magazineTab -> {
                 setFragment(MagazineTab, MagazineFragment())
             }
@@ -151,6 +155,7 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
 
         val hometab = fm.findFragmentByTag(HomeTab)
         val scholarshiptab = fm.findFragmentByTag(ScholarshipTab)
+        val supportfundtab = fm.findFragmentByTag(SupportFundTab)
         val magazinetab = fm.findFragmentByTag(MagazineTab)
         val profiletab = fm.findFragmentByTag(ProfileTab)
         val profiletabEtc = fm.findFragmentByTag(ProfileTabEtc)
@@ -161,6 +166,9 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
         }
         if (scholarshiptab != null) {
             transaction.hide(scholarshiptab)
+        }
+        if (supportfundtab != null) {
+            transaction.hide(supportfundtab)
         }
         if (magazinetab != null) {
             transaction.hide(magazinetab)
@@ -183,6 +191,11 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
                 transaction.show(scholarshiptab)
             }
         }
+        if (tag == SupportFundTab) {
+            if (supportfundtab != null) {
+                transaction.show(supportfundtab)
+            }
+        }
         if (tag == MagazineTab) {
             if (magazinetab != null) {
                 transaction.show(magazinetab)
@@ -201,11 +214,13 @@ open class MainActivity : AppCompatActivity(), BottomNavigationView.OnNavigation
     fun updateBottomMenu(navigation: BottomNavigationView) {
         val homeTab: Fragment? = supportFragmentManager.findFragmentByTag("homeTab")
         val scholarshipTab: Fragment? = supportFragmentManager.findFragmentByTag("scholarshipTab")
+        val supportfundTab: Fragment? = supportFragmentManager.findFragmentByTag("supportfundTab")
         val magazineTab: Fragment? = supportFragmentManager.findFragmentByTag("magazineTab")
         val profileTab: Fragment? = supportFragmentManager.findFragmentByTag("profileTab")
 
         if(homeTab != null && homeTab.isVisible) {navigation.menu.findItem(R.id.homeTab).isChecked = true }
         if(scholarshipTab != null && scholarshipTab.isVisible) {navigation.menu.findItem(R.id.scholarshipTab).isChecked = true }
+        if(supportfundTab != null && supportfundTab.isVisible) {navigation.menu.findItem(R.id.supportfundTab).isChecked = true }
         if(magazineTab != null && magazineTab.isVisible) {navigation.menu.findItem(R.id.magazineTab).isChecked = true }
         if(profileTab != null && profileTab.isVisible) {navigation.menu.findItem(R.id.profileTab).isChecked = true }
     }
