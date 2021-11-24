@@ -74,7 +74,6 @@ class HomeFragment : Fragment() {
             startActivity(intent)
         }
 
-
         // 장학금 최대 건수 ( scholarship 탭으로 이동 )
         binding.scholarCnt.setOnClickListener {
             tabNav = (activity as MainActivity).findViewById<BottomNavigationView>(R.id.tabNav)
@@ -142,6 +141,7 @@ class HomeFragment : Fragment() {
                 startActivity(intent)
             }
         })
+
 //        binding.banner.setItemClickListener(object : ItemClickListener {
 //            override fun onItemSelected(position: Int) {
 //                var i = banner_list[position].toString()
