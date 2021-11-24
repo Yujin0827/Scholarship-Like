@@ -9,6 +9,20 @@
     <string name="go_nation_web">한국장학재단</string>
     <string name="go_condition">내조건수정</string>
 
+    <!-- 캘린더 관련 -->
+    <string name="calendar_year_month_format">yyyy년 MM월</string>
+    <string name="calendar_month_format">MM</string>
+    <string name="sun">일</string>
+    <string name="mon">월</string>
+    <string name="tue">화</string>
+    <string name="wed">수</string>
+    <string name="thu">목</string>
+    <string name="fri">금</string>
+    <string name="sat">토</string>
+    <string name="scheduelTitle">일정 제목</string>
+    <string name="scheduelDate">xx.xx</string>
+    <string name="tilde">~</string>
+
     <!-- 알람 페이지 -->
     <string name="alarm_tab_all">전체</string>
     <string name="alarm_tab_scholar">장학금</string>
@@ -19,6 +33,45 @@
 
     <!-- 검색창 페이지 -->
     <string name="search">검색어 입력</string>
+
+    <!-- 모든 scholarship.xml에 사용 -->
+    <string name="title1">해당 정보로 최대 </string>
+    <string name="title2">건의 장학금을 받으실 수 있습니다.</string>
+    <string name="my_scholarship">내 장학금</string>
+    <string name="all_scholarship">전체 장학금</string>
+    <string name="korea_scholar">국가 장학금</string>
+    <string name="out_scholar">교외 장학금</string>
+    <string name="univ_scholar">교내 장학금</string>
+    <string name="msg_token_fmt">토큰 정보</string>
+    <string name="period_middle">~</string>
+    <string name="reset">초기화</string>
+    <string name="period1">1차 :</string>
+    <string name="period2">2차 :</string>
+    <string name="score_standard">※ 4.5만점 기준</string>
+
+    <!-- 장학금 세부페이지 관련 -->
+    <string name="scholarName">장학금 이름</string>
+    <string name="movetoWebpage">웹페이지로 이동</string>
+    <string name="contents">내용</string>
+    <string name="paymentInstitution">지급기관</string>
+    <string name="period">신청기간</string>
+    <string name="maxMoney">최대금액</string>
+    <string name="paymentType">지급유형</string>
+    <string name="condition">조건</string>
+    <string name="note">비고</string>
+    <string name="to">~</string>
+
+    <!-- 지원금 세부페이지 관련 -->
+    <string name="supportName">지원금 이름</string>
+
+    <!-- 매거진 관련 -->
+    <string name="m_title">매거진 제목</string>
+    <string name="m_contents">매거진 내용</string>
+    <string name="m_announcement">내 돈 어디에 쓸까?</string>
+    <string name="all">전체</string>
+    <string name="finance">금융</string>
+    <string name="life">생활</string>
+    <string name="etc">기타</string>
 
     <!-- 프로필탭 페이지 -->
     <string name="change_profile">프로필 수정</string>
@@ -80,21 +133,6 @@
     <string name="confirmLogoutMsg">로그아웃 하시겠습니까?</string>
     <string name="cancel">취소</string>
 
-    <!-- 모든 scholarship.xml에 사용 -->
-    <string name="title1">해당 정보로 최대 </string>
-    <string name="title2">건의 장학금을 받으실 수 있습니다.</string>
-    <string name="my_scholarship">내 장학금</string>
-    <string name="all_scholarship">전체 장학금</string>
-    <string name="korea_scholar">국가 장학금</string>
-    <string name="out_scholar">교외 장학금</string>
-    <string name="univ_scholar">교내 장학금</string>
-    <string name="msg_token_fmt">토큰 정보</string>
-    <string name="period_middle">~</string>
-    <string name="reset">초기화</string>
-    <string name="period1">1차 :</string>
-    <string name="period2">2차 :</string>
-    <string name="score_standard">※ 4.5만점 기준</string>
-
     <!-- 로그인, 회원가입 -->
     <string name="email">이메일</string>
     <string name="password">비밀번호</string>
@@ -120,41 +158,6 @@
     <string name="see">보기</string>
     <string name="confirm">확인</string>
     <string name="image_desc_logo">logo</string>
-
-    <!-- 매거진 관련 -->
-    <string name="m_title">매거진 제목</string>
-    <string name="m_contents">매거진 내용</string>
-    <string name="m_announcement">내 돈 어디에 쓸까?</string>
-    <string name="all">전체</string>
-    <string name="finance">금융</string>
-    <string name="life">생활</string>
-    <string name="etc">기타</string>
-
-    <!-- 캘린더 관련-->
-    <string name="calendar_year_month_format">yyyy년 MM월</string>
-    <string name="calendar_month_format">MM</string>
-    <string name="sun">일</string>
-    <string name="mon">월</string>
-    <string name="tue">화</string>
-    <string name="wed">수</string>
-    <string name="thu">목</string>
-    <string name="fri">금</string>
-    <string name="sat">토</string>
-    <string name="scheduelTitle">일정 제목</string>
-    <string name="scheduelDate">xx.xx</string>
-    <string name="tilde">~</string>
-
-    <!-- 장학금 세부페이지 관련-->
-    <string name="scholarName">장학금 이름</string>
-    <string name="movetoWebpage">웹페이지로 이동</string>
-    <string name="contents">내용</string>
-    <string name="paymentInstitution">지급기관</string>
-    <string name="period">신청기간</string>
-    <string name="maxMoney">최대금액</string>
-    <string name="paymentType">지급유형</string>
-    <string name="condition">조건</string>
-    <string name="note">비고</string>
-    <string name="to">~</string>
 
     <!-- 탈퇴하기 -->
     <string name="signout_really">정말 탈퇴하시겠어요?</string>
