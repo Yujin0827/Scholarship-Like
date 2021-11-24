@@ -14,6 +14,12 @@
         android:title="scholarship" />
 
     <item
+        android:id="@+id/supportfundTab"
+        android:enabled="true"
+        android:icon="@drawable/ic_support_fund"
+        android:title="support" />
+
+    <item
         android:id="@+id/magazineTab"
         android:enabled="true"
         android:icon="@drawable/ic_magazine"

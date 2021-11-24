@@ -27,43 +27,34 @@ class ScholarshipAllscholarFragment : Fragment() {
     private var abinding: FragmentScholarshipAllScholarBinding? = null   // 바인딩 객체
     private val binding get() = abinding!!              // 바인딩 변수 재선언 (매번 null 체크x)
 
-    private val head: MutableList<String> = ArrayList() // expandableList의 부모 리스트
-    private val body: MutableList<MutableList<String>> = ArrayList() // expandableList의 자식 리스트
+    private val head: MutableList<String> = ArrayList()     // expandableList의 부모 리스트
+    private val body: MutableList<MutableList<String>> = ArrayList()    // expandableList의 자식 리스트
+    lateinit var listAdapter: ScholarshipExpandableLisviewtAdapter      // expandableList 어댑터 선언
+    private lateinit var RlistAdapter: ScholarshipRecyclerViewAdapter   // 리사이클러뷰 어댑터
 
-    lateinit var listAdapter: ScholarshipExpandableLisviewtAdapter // expandableList 어댑터 선언
-    private lateinit var RlistAdapter: ScholarshipRecyclerViewAdapter // 리사이클러뷰 어댑터
     private var db = Firebase.firestore
-    var dataList: MutableList<Scholarship> = arrayListOf() // 특정 장학금 리스트
-    private lateinit var mContext1: Context //프래그먼트의 정보 받아오는 컨텍스트 선언
-
+    var dataList: MutableList<Scholarship> = arrayListOf()  // 특정 장학금 리스트
+    private lateinit var mContext1: Context     //프래그먼트의 정보 받아오는 컨텍스트 선언
 
     private val koreaScholar : MutableList<String> = ArrayList()
     private val outScholar : MutableList<String> = ArrayList()
     private val univScholar : MutableList<String> = ArrayList()
 
-    var user = Firebase.auth.currentUser // 사용자 가져오기
+    // 사용자 가져오기
+    var user = Firebase.auth.currentUser
     private lateinit var userUid : String
     private lateinit var userUniv : String
 
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
-
         mContext1 = requireActivity()
-
-
     }
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         abinding = FragmentScholarshipAllScholarBinding.inflate(inflater, container, false)
         val view = binding.root
 
-        area() // 지역 리스트 가져오기
+        area()  // 지역 리스트 가져오기
 
         head.add("국가 장학금")
         head.add("교내 장학금")
@@ -80,12 +71,12 @@ class ScholarshipAllscholarFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //User Email
+        // User Email
         user?.let {
             userUid  = user!!.uid
         }
 
-        //User's Univ
+        // User's Univ
         db.collection("Users")
             .document(userUid)
             .get()
@@ -101,20 +92,17 @@ class ScholarshipAllscholarFragment : Fragment() {
         listAdapter = ScholarshipExpandableLisviewtAdapter(this, head, body)
         binding.expandableList.setAdapter(listAdapter)
 
-
         // Fragment에서 전달받은 list를 넘기면서 ListAdapter 생성
         RlistAdapter = ScholarshipRecyclerViewAdapter(dataList, mContext1)
         binding.allrecyclerView.addItemDecoration(VerticalItemDecorator(17)) // recyclerview 항목 간격
         binding.allrecyclerView.addItemDecoration(HorizontalItemDecorator(10))
         binding.allrecyclerView.layoutManager = LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
+
         // RecyclerView.adapter에 지정
         binding.allrecyclerView.adapter = RlistAdapter
 
-
-
-        binding.expandableList.setOnGroupClickListener { // expandlist 부모 리스트 클릭 시 장학금 데이터 가져오기
-                head, v, groupPosition :Int, parentPosition ->
-
+        // expandlist 부모 리스트 클릭 시 장학금 데이터 가져오기
+        binding.expandableList.setOnGroupClickListener { head, v, groupPosition :Int, parentPosition ->
             when (groupPosition) {
                 0 -> {  // 국가 장학금 클릭 시
                     getData("Nation", "paymentInstitution", "한국장학재단") // 데이터 불러옴
@@ -126,8 +114,8 @@ class ScholarshipAllscholarFragment : Fragment() {
             false
         }
 
-        binding.expandableList.setOnChildClickListener {  // expandlist 자식 리스트 클릭 시 장학금 데이터 가져오기
-                head, view, groupPosition, childPosition : Int, l ->
+        // expandlist 자식 리스트 클릭 시 장학금 데이터 가져오기
+        binding.expandableList.setOnChildClickListener { head, view, groupPosition, childPosition : Int, l ->
             val areaText : String = outScholar[childPosition]
 
             if(areaText == "전체"){
@@ -139,7 +127,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                         .collection("ScholarshipList")
                         .get()
                         .addOnSuccessListener{ result ->
-
                             RlistAdapter.notifyDataSetChanged()
                             dataList.clear() // 리스트 재정의
 
@@ -176,7 +163,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                                         dataList.add(item)
                                     }
 
-
                                     RlistAdapter.submitList(dataList)
                                     Log.w("ScholarshipAllscholarFragment", "Each Scholar Data")
                                 }
@@ -186,21 +172,17 @@ class ScholarshipAllscholarFragment : Fragment() {
                             // 실패할 경우
                             Log.w("ScholarshipAllscholarFragment", "Error getting Each Scholar documents: $exception")
                         }
-
                 }
             }
             else{
                 getData("OutScholar", "condition.area", areaText)
             }
-
-
-
             false
         }
     }
 
-
-    private fun area(){ // 지역 리스트 가져오기
+    // 지역 리스트 가져오기
+    private fun area(){
         db.collection("Scholarship").document("OutScholar")
             .get().addOnSuccessListener { document ->
                 if (document != null) {
@@ -230,7 +212,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                 .whereEqualTo(field_key, field_value)
                 .get()
                 .addOnSuccessListener{ result ->
-
                     RlistAdapter.notifyDataSetChanged()
                     dataList.clear() // 리스트 재정의
 
@@ -267,7 +248,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                                 dataList.add(item)
                             }
 
-
                             RlistAdapter.submitList(dataList)
                             Log.w("ScholarshipAllscholarFragment", "Each Scholar Data")
                         }
@@ -277,14 +257,12 @@ class ScholarshipAllscholarFragment : Fragment() {
                     // 실패할 경우
                     Log.w("ScholarshipAllscholarFragment", "Error getting Each Scholar documents: $exception")
                 }
-
         }
-
     }
 
-    private fun allData(kind : String){ // 데이터 가져오기
+    // 데이터 가져오기
+    private fun allData(kind : String){
         thread(start = true) {
-
             // 작업할 문서
             db.collection("Scholarship")
                 .document(kind)
@@ -323,8 +301,6 @@ class ScholarshipAllscholarFragment : Fragment() {
                                 val item = Scholarship(paymentType, document.id, date.format(startdate!!), date.format(enddate!!), date.format(startdate2!!), date.format(enddate2!!), institution)
                                 dataList.add(item)
                             }
-
-
                             RlistAdapter.submitList(dataList)
                             Log.w("ScholarshipAllscholarFragment", "All Scholar Data")
                         }
@@ -335,11 +311,7 @@ class ScholarshipAllscholarFragment : Fragment() {
                     Log.w("ScholarshipAllscholarFragment", "Error getting All Scholar documents: $exception"
                     )
                 }
-
-
         }
-
-
     }
 
     override fun onResume() {
@@ -374,15 +346,12 @@ class ScholarshipAllscholarFragment : Fragment() {
                         }
                     }
                 }
-
-
         }
-
     }
+
     // 프래그먼트 파괴
     override fun onDestroyView() {
         super.onDestroyView()
         abinding = null
     }
-
 }

@@ -174,6 +174,15 @@ class HomeFragment : Fragment() {
             db.collection("Scholarship")
                 .document("UnivScholar")
                 .get()
+                .addOnSuccessListener { documents ->
+                    if (documents != null) {
+
+                    }
+                }
+
+            db.collection("Scholarship")
+                .document("UnivScholar")
+                .get()
                 .addOnSuccessListener { document ->
                     if (document != null) {
                         if (document.getString(userUniv) != null) {

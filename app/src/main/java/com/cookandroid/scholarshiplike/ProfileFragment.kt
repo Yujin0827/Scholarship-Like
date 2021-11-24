@@ -40,11 +40,7 @@ class ProfileFragment : Fragment() {
     lateinit var pref : SharedPreferences
     lateinit var editor : SharedPreferences.Editor
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreate(savedInstanceState)
 
         _binding = FragmentProfileBinding.inflate(inflater, container, false)
