@@ -34,12 +34,12 @@
                 android:textColor="#000000"
                 android:textSize="32sp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/support_content"
+                app:layout_constraintBottom_toTopOf="@+id/content"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent" />
 
             <LinearLayout
-                android:id="@+id/support_content"
+                android:id="@+id/content"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_text_box_rounded_rectangle_background"
