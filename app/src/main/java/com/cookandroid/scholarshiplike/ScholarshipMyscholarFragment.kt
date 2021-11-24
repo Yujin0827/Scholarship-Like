@@ -630,7 +630,7 @@ class ScholarshipMyscholarFragment : Fragment() {
 
                                     // 거주지
                                     alist.clear()
-                                    Log.w("db 가져오기 직전에 유저 거주지", changeArea)
+                                    //Log.w("db 가져오기 직전에 유저 거주지", changeArea)
 
                                     ref.whereEqualTo("condition.area", changeArea)
                                         .get()

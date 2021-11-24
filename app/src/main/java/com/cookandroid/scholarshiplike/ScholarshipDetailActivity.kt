@@ -29,9 +29,9 @@ class ScholarshipDetailActivity : AppCompatActivity() {
     private var db = Firebase.firestore
     private val user = Firebase.auth.currentUser
     private val user_ref = db.collection("Users")
-    private var scholar: detailScholarship ?= null //장학금 정보 저장 변수
+    private var scholar: detailScholarship ?= null  // 장학금 정보 저장 변수
     private var scholarList: ArrayList<String> = arrayListOf()
-    private var mInterstitialAd: InterstitialAd? = null //Admob
+    private var mInterstitialAd: InterstitialAd? = null // Admob
 
     private val TAG = "ScholarshipDetailActivity"
 
@@ -40,18 +40,18 @@ class ScholarshipDetailActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val title = intent.getStringExtra("title")
-        Log.w("세부페이지장학금 title: ",title)
+        Log.w("세부페이지 장학금 title : ",title)
 
         var ref =  db.collectionGroup("ScholarshipList")
 
         //데이터 가져오기
-        Log.w("장학금세부페이지", "Load Firestore")
+        Log.w("장학금 세부페이지", "Load Firestore")
         ref.get()
             .addOnSuccessListener { result ->
                 for (document in result) {
                     if(document.id == title){
                         scholar = document.toObject()
-                        Log.w("세부페이지정보1: ",scholar.toString())
+                        Log.w("세부페이지 정보1 : ", scholar.toString())
 
                         val dateFormat = SimpleDateFormat("yyyy.MM.dd")
 
@@ -152,7 +152,7 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                         }
 
                         if (preclass != null) {
-                            binding.preclass.setText("직전 학기 이수 학점: "+preclass.toString()+" 이상")
+                            binding.preclass.setText("직전 학기 이수 학점: " + preclass.toString() + " 이상")
                         } else {
                             binding.preclass.visibility = View.GONE
                         }
