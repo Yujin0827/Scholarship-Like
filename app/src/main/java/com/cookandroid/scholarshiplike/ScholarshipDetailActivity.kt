@@ -1,5 +1,6 @@
 package com.cookandroid.scholarshiplike
 
+import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -17,10 +18,9 @@ import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_scholarship_detail.*
-import kotlinx.android.synthetic.main.item_scholarship.*
 import java.text.SimpleDateFormat
-import java.util.ArrayList
+import java.util.*
+
 
 class ScholarshipDetailActivity : AppCompatActivity() {
 
@@ -227,6 +227,20 @@ class ScholarshipDetailActivity : AppCompatActivity() {
                 if (user != null) {
                     user_ref.document(user.uid).update("likeScholarship", FieldValue.arrayRemove(title))
                 }
+            }
+        }
+
+      // 공유하기
+        binding.sharing.setOnClickListener {
+            try {
+                val sendText = "share test"
+                val sendIntent = Intent()
+                sendIntent.action = Intent.ACTION_SEND
+                sendIntent.putExtra(Intent.EXTRA_TEXT, sendText)
+                sendIntent.type = "text/plain"
+                startActivity(Intent.createChooser(sendIntent, "Share"))
+            } catch (ignored: ActivityNotFoundException) {
+                Log.d("test", "ignored : $ignored")
             }
         }
     }
