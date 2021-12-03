@@ -18,4 +18,6 @@ data class Scholarship(val paymentType: String, val title: String, val startdate
 
 
 
+data class Support(val title: String)
+data class DetailSupport(val title : String, val content:String)
 

@@ -6,15 +6,61 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <!-- 상단바 (알람, 좋아요) -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/topBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_background">
+
+
+        <ImageView
+            android:id="@+id/like"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right|center"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_like" />
+
+        <ImageView
+            android:id="@+id/alarm"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_gravity="right|center"
+            android:layout_marginLeft="5dp"
+            android:padding="5dp"
+            android:src="@drawable/ic_alarm" />
+        <!--
+                <ImageView
+                    android:id="@+id/searchAll"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_gravity="right|center"
+                    android:layout_marginLeft="5dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_search" />
+        -->
+
+    </androidx.appcompat.widget.Toolbar>
+
+
+
+
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh_fragment_support_fund"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        tools:ignore="MissingConstraints" >
+        app:layout_constraintTop_toBottomOf="@id/topBar"
+        app:layout_constraintBottom_toBottomOf="parent">
 
         <LinearLayout
             android:id="@+id/support_fund_layout"
@@ -53,7 +99,7 @@
                 android:background="@color/color_background">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/support_recyclerView"
+                    android:id="@+id/supportRecyclerView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" >
 
