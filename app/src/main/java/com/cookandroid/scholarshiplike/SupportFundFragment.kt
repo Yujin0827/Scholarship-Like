@@ -178,7 +178,6 @@ class SupportFundFragment : Fragment() {
                     listAdapter.notifyDataSetChanged()
                     dataList.clear() // 리스트 재정의
 
-
                     for(document in result){
                         if(document != null){
                             val item = Support(document.id)
