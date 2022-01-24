@@ -1,27 +1,27 @@
 # Scholarship-Like
 
-⦁ ‘장학라이크’ 애플리케이션은 장학금을 이용하는 주체인 대학생들이 장학금에 대한 정보(대상, 기간, 방법)를 한눈에 찾아보기 어렵다는 점과 정보 부족으로 인해 조건이 일치함에도 불구하고 혜택받지 못하는 장학금이 있다는 점에 착안해 개발하게 되었습니다. 
+⦁ ‘장학라이크’ 애플리케이션은 장학금을 이용하는 주체인 대학생들이 장학금에 대한 정보(대상, 기간, 방법)를 한눈에 찾아보기 어렵다는 점과 정보 부족으로 인해 조건이 일치함에도 불구하고 혜택받지 못하는 장학금이 있다는 점에 착안해 개발하게 되었습니다. <br>
 [ The ‘Scholarship Like’ application was developed based on the fact that it is difficult for college students who use scholarships to find information(recipient, period, method) about scholarships at a glance and that there are scholarships that are not benefited despite the consistent conditions due to lack of information. ]
 
-⦁ ‘장학라이크’는 대학생을 대상으로 국가, 교내, 교외 장학금에 대한 통합적인 정보를 제공할 뿐만 아니라, 개인의 조건(학자금 지원 구간, 이수 학기, 학교 등)에 일치하는 장학금을 알려주는 ‘맞춤 장학금 정보 제공’ 애플리케이션입니다. 
+⦁ ‘장학라이크’는 대학생을 대상으로 국가, 교내, 교외 장학금에 대한 통합적인 정보를 제공할 뿐만 아니라, 개인의 조건(학자금 지원 구간, 이수 학기, 학교 등)에 일치하는 장학금을 알려주는 ‘맞춤 장학금 정보 제공’ 애플리케이션입니다. <br>
 [ ‘Scholarship Like’ is a ‘customized scholarship information’ application that not only provides integrated information on national, on-campus, and suburban scholarships for college students, but also informs scholarships that meet individual conditions (school expenses support section, completion semester, university, etc.). ]
 
-⦁ 국가 장학금, 교내 장학금, 교외 장학금에 대한 모든 정보를 카테고리 별로 한곳에서 확인할 수 있습니다. 
+⦁ 국가 장학금, 교내 장학금, 교외 장학금에 대한 모든 정보를 카테고리 별로 한곳에서 확인할 수 있습니다. <br>
 [ All information on national, school, and suburban scholarships can be found in one place for each category. ]
 
-⦁ 사용자는 자신의 조건(학자금 지원 구간, 이수 학기, 거주지 등)을 입력함으로써 수여 가능성이 있는 장학금만을 볼 수 있습니다. 저장된 자신의 조건 외에도 다른 조건으로 변경하며 해당하는 장학금을 실시간으로 확인할 수 있어, 장학금 수여를 위한 계획도 가능합니다. 
+⦁ 사용자는 자신의 조건(학자금 지원 구간, 이수 학기, 거주지 등)을 입력함으로써 수여 가능성이 있는 장학금만을 볼 수 있습니다. 저장된 자신의 조건 외에도 다른 조건으로 변경하며 해당하는 장학금을 실시간으로 확인할 수 있어, 장학금 수여를 위한 계획도 가능합니다. <br>
 [ Users can only see scholarships that they may receive by entering their conditions (school expenses support section, completion semester, residence, etc.). In addition to the stored conditions, you can change it to other conditions and check the scholarship in real time, so you can also plan to award the scholarship. ]
 
-⦁ 다양한 장학금의 종류를 알 수 있고, 각 장학금의 자세한 정보 확인이 가능합니다. 또한, 해당 홈페이지로 이동이 가능하여 바로 신청할 수도 있습니다. 
+⦁ 다양한 장학금의 종류를 알 수 있고, 각 장학금의 자세한 정보 확인이 가능합니다. 또한, 해당 홈페이지로 이동이 가능하여 바로 신청할 수도 있습니다. <br>
 [ You can find out various types of scholarships and check detailed information on each scholarship. Also, you can go to the website and apply right away. ]
 
-⦁ 각 장학금마다 ‘좋아요’를 누를 수 있어 관심 있는 장학금만을 따로 모아서 볼 수 있습니다. ‘좋아요’를 누른 장학금은 애플리케이션 내의 캘린더에 신청 기간이 표시되어, 신청 기간을 놓치는 등의 실수를 줄일 수 있고 효과적으로 관리할 수 있습니다. 더불어, 신청 기간이 임박한 장학금은 푸시 알림을 통해 기간을 놓치지 않도록 도와줍니다. 
+⦁ 각 장학금마다 ‘좋아요’를 누를 수 있어 관심 있는 장학금만을 따로 모아서 볼 수 있습니다. ‘좋아요’를 누른 장학금은 애플리케이션 내의 캘린더에 신청 기간이 표시되어, 신청 기간을 놓치는 등의 실수를 줄일 수 있고 효과적으로 관리할 수 있습니다. 더불어, 신청 기간이 임박한 장학금은 푸시 알림을 통해 기간을 놓치지 않도록 도와줍니다. <br>
 [ User can click ‘Like’ for each scholarship, so you can collect only the scholarships you are interested in. The scholarship that pressed 'Like' displays the application period in the calendar within the application. Therefore, mistakes such as missing the application period can be reduced and managed effectively. In addition, scholarships with an imminent application period help you not miss the period through push notifications. ]
 
-⦁ 장학금 정보 이외에도 지원금 탭을 통해 여러 지원금에 대한 정보들도 확인할 수 있습니다. 
+⦁ 장학금 정보 이외에도 지원금 탭을 통해 여러 지원금에 대한 정보들도 확인할 수 있습니다. <br>
 [ In addition to scholarship information, you can also check information on various subsidies through the Support Fund tab. ]
 
-⦁ 매거진 서비스는 대학생에게 도움 되는 금융 및 대학생활, 경제생활 등의 정보를 제공함으로써 대학생들에게 유용한 팁과 정보를 제공해 줍니다. 
+⦁ 매거진 서비스는 대학생에게 도움 되는 금융 및 대학생활, 경제생활 등의 정보를 제공함으로써 대학생들에게 유용한 팁과 정보를 제공해 줍니다. <br>
 [ Magazine service provides useful tips and information to college students by providing information such as financial and university life and economic life that is helpful to college students. ]
 
 <br>
