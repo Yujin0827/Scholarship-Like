@@ -36,59 +36,51 @@
 <br>
 
 ---
-
     
-## '장학라이크' 애플리케이션 화면
+## '장학라이크' 애플리케이션
 
-> ### Login ('Google' 간편 로그인 가능)<br>
+### Login ('Google' 간편 로그인 가능)
 > <img src="https://user-images.githubusercontent.com/83286706/144756832-8061b6f5-1c0e-44c7-b271-a53a976bbeeb.png" width="200" height="420">
-'''
-google
-'''
-> Google api를 사용하여 간편 로그인 기능을 구현하였습니다
+> 
+> Firebase를 활용하여 회원가입, 로그인 기능을 수행하였고, Google API를 사용하여 간편 로그인 기능을 추가하였습니다.
+
+<br>
+
+### Home Tab
+> <img src="https://user-images.githubusercontent.com/83286706/144756882-ace46699-01d6-4421-be12-41670e126a78.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144756948-87699815-cde7-4fb1-a90e-e7e1cc7a27e0.png" width="200" height="420">
+> 
+> 배너, 캘린더, 알람, 좋아요 기능
+
+<br>
+
+### Scholarship Tab
+> <img src="https://user-images.githubusercontent.com/83286706/144756977-b6f663f3-d207-4df0-9d78-e45ce9740971.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144756993-5117ae42-b57b-4f9c-b643-d72edd0c5ebd.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757026-5d360d8e-fbb0-48c0-85ed-cdbe218725ca.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757061-f22af735-3c33-4a85-abad-0ed329a6a822.png" width="200" height="420">
+> 
+> 개인의 조건에 따라 그에 해당하는 장학금만을 보여줌
+> 전체 장학금을 국가, 교내, 교외 별로 구분하여 보여줌
+
+<br>
+
+### Support Fund Tab
+> <img src="https://user-images.githubusercontent.com/83286706/144757052-24e118ae-5941-4082-bd0f-dec688b640fe.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757082-e34b7402-a6bb-4dd9-8dfd-50a999071a94.png" width="200" height="420">
+> 
+> 지원금을 국가, 지역별로 구분하여 보여줌
+
+<br>
+ 
+### Magazine Tab
+> <img src="https://user-images.githubusercontent.com/83286706/144757098-171a241b-788f-4364-a979-58292bfbae84.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757106-306a9b82-8dff-410b-968a-045bed60690a.png" width="200" height="420">
+> 
+> 여러 금융정보나 생활정보를 모아놓음
+
+<br>
+
+### Profile Tab
+> <img src="https://user-images.githubusercontent.com/83286706/144757145-b480b960-3b1f-4452-b197-11d5e7a66a31.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757151-0f8a3c68-851b-4ca5-8d28-619b8cf361b9.png" width="200" height="420">
+> 
+> 개인 정보나 조건을 수정할 수 있음
 
 
-<div id="home">
-Home Tab<br>
-<img src="https://user-images.githubusercontent.com/83286706/144756882-ace46699-01d6-4421-be12-41670e126a78.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144756948-87699815-cde7-4fb1-a90e-e7e1cc7a27e0.png" width="200" height="420">
-
-</div>
-
-<div id="scholarship">
-    
-Scholarship Tab<br>
-<img src="https://user-images.githubusercontent.com/83286706/144756977-b6f663f3-d207-4df0-9d78-e45ce9740971.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144756993-5117ae42-b57b-4f9c-b643-d72edd0c5ebd.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144757026-5d360d8e-fbb0-48c0-85ed-cdbe218725ca.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144757061-f22af735-3c33-4a85-abad-0ed329a6a822.png" width="200" height="420">
-
-</div>
-
-<div id="support">
-    
-Support Fund Tab<br>
-<img src="https://user-images.githubusercontent.com/83286706/144757052-24e118ae-5941-4082-bd0f-dec688b640fe.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144757082-e34b7402-a6bb-4dd9-8dfd-50a999071a94.png" width="200" height="420">
-
-</div>
-
-<div id="magazine">
-    
-Magazine Tab<br>
-<img src="https://user-images.githubusercontent.com/83286706/144757098-171a241b-788f-4364-a979-58292bfbae84.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144757106-306a9b82-8dff-410b-968a-045bed60690a.png" width="200" height="420">
-
-</div>
-
-<div id="profile">
-
-Profile Tab<br>
-<img src="https://user-images.githubusercontent.com/83286706/144757145-b480b960-3b1f-4452-b197-11d5e7a66a31.png" width="200" height="420">
-<img src="https://user-images.githubusercontent.com/83286706/144757151-0f8a3c68-851b-4ca5-8d28-619b8cf361b9.png" width="200" height="420">
-
-</div>
-    
 <br>
 
 ---
