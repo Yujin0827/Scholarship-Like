@@ -39,7 +39,7 @@
     
 ## '장학라이크' 애플리케이션
 
-### Login ('Google' 간편 로그인 가능)
+### Login
 > <img src="https://user-images.githubusercontent.com/83286706/144756832-8061b6f5-1c0e-44c7-b271-a53a976bbeeb.png" width="200" height="420">
 > 
 > Firebase를 활용하여 회원가입, 로그인 기능을 수행하였고, Google API를 사용하여 간편 로그인 기능을 추가하였습니다.
