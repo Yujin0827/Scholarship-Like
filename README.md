@@ -1,6 +1,6 @@
 # Scholarship-Like
 
-<img src="https://github.com/Yujin0827/Scholarship-Like/blob/master/image/로고이미지.png">
+<img src="https://github.com/Yujin0827/Scholarship-Like/blob/master/image/로고이미지.png?raw=true" width="600" height="350">
 
 - ‘장학라이크’ 애플리케이션은 장학금을 이용하는 주체인 대학생들이 장학금에 대한 정보(대상, 기간, 방법)를 한눈에 찾아보기 어렵다는 점과 정보 부족으로 인해 조건이 일치함에도 불구하고 혜택받지 못하는 장학금이 있다는 점에 착안해 개발하게 되었습니다. <br>
 <!-- [ The ‘Scholarship Like’ application was developed based on the fact that it is difficult for college students who use scholarships to find information(recipient, period, method) about scholarships at a glance and that there are scholarships that are not benefited despite the consistent conditions due to lack of information. ]
