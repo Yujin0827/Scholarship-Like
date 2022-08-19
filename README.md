@@ -16,6 +16,9 @@
 ## 프로젝트 구성도
 <img src="https://user-images.githubusercontent.com/83286706/185340566-ebb5e820-034d-4286-b7c0-e72e7aee2c37.png">
 
+## 포스터
+<img src="https://user-images.githubusercontent.com/83286706/185556593-d2f688e5-922a-4d1d-bede-675f357a1b59.png">
+
 
 
 <!--
@@ -63,36 +66,35 @@
 ### Home Tab
 > <img src="https://user-images.githubusercontent.com/83286706/144756882-ace46699-01d6-4421-be12-41670e126a78.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144756948-87699815-cde7-4fb1-a90e-e7e1cc7a27e0.png" width="200" height="420">
 > 
-> 배너, 캘린더, 알람, 좋아요 기능
+> 배너를 통해 국가 장학금에 대한 정보와 교내 장학금에 대한 정보를 확인할 수 있고, 클릭하여 사이트로 이동할 수 있습니다. 또한, 한국장학재단, 사용자의 대학교 사이트로 바로 이동할 수 있는 버튼과 내 조건 수정 페이지로 이동할 수 있는 버튼이 존재합니다. 하단에는 ‘좋아요’를 누른 장학금의 신청기한이 표시된 캘린더가 존재합니다.
 
 <br>
 
 ### Scholarship Tab
 > <img src="https://user-images.githubusercontent.com/83286706/144756977-b6f663f3-d207-4df0-9d78-e45ce9740971.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144756993-5117ae42-b57b-4f9c-b643-d72edd0c5ebd.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757026-5d360d8e-fbb0-48c0-85ed-cdbe218725ca.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757061-f22af735-3c33-4a85-abad-0ed329a6a822.png" width="200" height="420">
 > 
-> 개인의 조건에 따라 그에 해당하는 장학금만을 보여줌
-> 전체 장학금을 국가, 교내, 교외 별로 구분하여 보여줌
+> ‘내 장학금’과 ‘전체 장학금’으로 나누어 장학금 정보를 확인할 수 있습니다. ‘내 장학금’에서는 사용자가 바로 수정이 가능한 조건 입력 부분이 나타나고, 조건을 기반으로 해당되는 장학금을 볼 수 있습니다. ‘전체 장학금’에서는 국가, 교내, 교외로 크게 나누어 카테고리 별로 장학금을 확인할 수 있습니다. 각 장학금의 리스트를 클릭하면, 장학금의 세부사항을 확인할 수 있을 뿐만 아니라, 해당 기관의 홈페이지로 바로 이동할 수 있어 더 자세한 정보와 신청이 가능합니다.
 
 <br>
 
 ### Support Fund Tab
 > <img src="https://user-images.githubusercontent.com/83286706/144757052-24e118ae-5941-4082-bd0f-dec688b640fe.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757082-e34b7402-a6bb-4dd9-8dfd-50a999071a94.png" width="200" height="420">
 > 
-> 지원금을 국가, 지역별로 구분하여 보여줌
+> 지원금 정보를 국가, 지역으로 나누어 확인할 수 있습니다. 각 지원금을 클릭하면 지원금에 대한 세부사항을 확인할 수 있습니다.
 
 <br>
  
 ### Magazine Tab
 > <img src="https://user-images.githubusercontent.com/83286706/144757098-171a241b-788f-4364-a979-58292bfbae84.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757106-306a9b82-8dff-410b-968a-045bed60690a.png" width="200" height="420">
 > 
-> 여러 금융정보나 생활정보를 모아놓음
+> 금융과 대학생활에 관련된 글을 제공합니다.
 
 <br>
 
 ### Profile Tab
 > <img src="https://user-images.githubusercontent.com/83286706/144757145-b480b960-3b1f-4452-b197-11d5e7a66a31.png" width="200" height="420"> <img src="https://user-images.githubusercontent.com/83286706/144757151-0f8a3c68-851b-4ca5-8d28-619b8cf361b9.png" width="200" height="420">
 > 
-> 개인 정보나 조건을 수정할 수 있음
+> 애플리케이션의 기본적인 기능을 수행할 수 있습니다. 내 정보와 조건 수정, 알림 설정, 문의, 약관 확인, 로그아웃, 탈퇴하기 등 여러 기능이 있습니다.
 
 
 <br>
