@@ -1,5 +1,4 @@
 # Scholarship-Like
-
 <img src="https://user-images.githubusercontent.com/83286706/185306896-5953dcc8-d2f5-4c3d-9c1d-cf44a26dd6aa.png">
 
 
